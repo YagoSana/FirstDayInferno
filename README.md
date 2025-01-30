@@ -108,7 +108,7 @@ El jugador puede desplazarse en **horizontal y vertical** por el mapa.
 
 ### 🔥 5.2 Facultades y Enemigos
 - **Medicina:** Zombies con bata y esqueletos. **Jefe: Ayuso**.
-- **Magisterio:** Enemigos similares. **Jefe: Ayuso**.
+- **Magisterio:** Enemigos similares. **Jefe: ???**.
 - **Filosofía:** Enemigos por definir.
 - **Física:** Enemigos científicos. **Jefe: Bazinga**.
 - **Informática:** Nerds y compuertas NAND. **Jefe final: Profesor de dos fases**.
