@@ -1,89 +1,89 @@
-## First Day Inferno s(Prototipo)
+# First Day Inferno s(Prototipo)
 
-# Equipo de desarrollo: 
+## Equipo de desarrollo: 
 - Samuel Carrillo Menchero
 - Yago Sanabria Gavín
 - Alicia Grado Guerrero
 - Javier Pasamontes Martín 
 - Washington Morocho Lema 
 
-1.- Resumen
-1.1.-Descripción
+## 1 Resumen
+### 1.1 Descripción
 First Day Inferno es un action RPG en el que manejas a un estudiante de informática nuevo en búsqueda de su facultad. Durante su aventura personal irá pasando por distintas facultades que compondrán una especie de mazmorras, en las que el objetivo será derrotar al jefe final.
 Durante el camino podrás recoger objetos e ir mejorando tu personaje.
 
-1.2	Género
+### 1.2	Género
 Action RPG. Videojuego de mazmorras/exploración.
 
-1.3	Setting
-“Pepito” es un estudiante de primer año recién ingresado en la facultad de informática de la UCM, tras salir del metro en ciudad universitaria, se encuentra con que la facultad no está donde esperaba, sino que deberá recorrer un arduo camino lleno de obstáculos, peligros y recompensas para lograr su objetivo de llegar a clase, recorriendo las distintas facultades de la universidad y enfrentando temibles jefes que tienen las pistas que necesita para llegar a la facultad. 
+### 1.3	Setting
+"Pepito" es un estudiante de primer año recién ingresado en la facultad de informática de la UCM, tras salir del metro en ciudad universitaria, se encuentra con que la facultad no está donde esperaba, sino que deberá recorrer un arduo camino lleno de obstáculos, peligros y recompensas para lograr su objetivo de llegar a clase, recorriendo las distintas facultades de la universidad y enfrentando temibles jefes que tienen las pistas que necesita para llegar a la facultad. 
 
-1.4	Características principales
+### 1.4	Características principales
 -	Mueve a Pepito por las salas para ir avanzando entre ellas y llegar al objetivo.
 -	Ataca a los enemigos con lo que puedas para librarte de ellos y conseguir recompensas.
 -	Varios escenarios con diversas ambientaciones.
 -	Visita tiendas y salas secretas para mejorar a Pepito.
 - 	Estilo visual pixel art acompañado de ilustraciones estilo cartoon.
 
-2	Gameplay
-2.1	Objetivo del juego
+## 2 Gameplay
+### 2.1	Objetivo del juego
 El objetivo del juego es recorrer todas las facultades derrotando a los jefes propios de cada una para poder avanzar.
 El juego acaba tras llegar a la facultad de informática y derrotar al último jefe.
 
-2.2	Core loops
+### 2.2	Core loops
 El jugador en cada nivel, tendrá un mapa basado en salas consecutivas en el que deberá derrotar enemigos para avanzar de sala hasta llegar a la sala final que da paso al siguiente nivel.
 Cada sala puede ofrecer opciones de mejora, curación, etc… al jugador.
   
+## 3 Mecánicas
 
-3	Mecánicas
-
-3.1	Movimiento 
+### 3.1	Movimiento 
 El jugador se puede mover en horizontal y en vertical por el mapa.
  
-3.2	Disparo
+### 3.2	Disparo
 El personaje puede disparar para dañar a los enemigos, este disparo será afectado por los distintos potenciadores que podrá encontrar a lo largo de la aventura, modificando su daño y velocidad de disparo.
 
-3.3	Modificación del personaje con objetos
+### 3.3	Modificación del personaje con objetos
 En cada sala el personaje puede obtener items que modificarán (no necesariamente positivamente) los diferentes parámetros del mismo, daño del disparo, velocidad de disparo, vida, velocidad de movimiento. Estas mejoras pueden implicar cambios estéticos en los disparos y en el personaje.
 
-3.4	Recoger objetos
+### 3.4	Recoger objetos
 Cuando el personaje pasa por encima de un objeto este lo recoge directamente. Al recogerlo muestra una ventana con la descripción del objeto y las estadísticas que aporta.
 
-3.5	Usar llave (abrir puerta)
+### 3.5	Usar llave (abrir puerta)
 El personaje usa la llave adquirida a lo largo de las distintas facultades para poder abrir la puerta y combatir contra el final boss. (cada vez que derrotas a un boss recibes un trozo de llave, al combatir contra el último, si lo derrota, tendrá todos los trozos de llave y abrir con ella la puerta final.
 
-3.6	Sistema de vida
+### 3.6	Sistema de vida
 El jugador inicia la partida con una barra de vidas (en forma de corazones) cada vez que recibe el ataque de un enemigo su vida baja dependiendo del daño del ataque. Cuando se queda sin corazones se hace reset de la facultad en la que este y vuelve a aparecer en el mundo principal.
 
-3.7	Comprar
+### 3.7	Comprar
 El personaje usa sus monedas para comprar alguno de los objetos de la tienda, las monedas se gastan y tendrá el objeto comprado en su inventario, más tarde decide cuando usar el objeto.
 
-3.8	Conseguir moneda
+### 3.8	Conseguir moneda
 El jugador conseguirá monedas cuando mate a enemigos (no siempre recibirá monedas por esto) o cuando las recoja (ya que habrá a lo largo del mapa), sirven para usarlas en la tienda.
 
-4	Interfaz
-4.1	Controles
-●	Movimiento Izquierda / Derecha / Arriba / Abajo: Mueve a Pepito en todas direcciones con la pulsación de las teclas W-A-S-D.
-●	Ataque: con el cursor del ratón se apunta en la dirección deseada y al hacer click del botón 1 se dispara un proyectil en dicha dirección. Si se mantiene apretado el botón de ataque, el jugador disparará automáticamente constantemente. Al disparar existe un “cooldown” para que el jugador no abuse de los ataques y aumente la dificultad, dependiendo del arma/objetos que posea el jugador, el cooldown será mayor o menor.
+## 4	Interfaz
+### 4.1	Controles
+- Movimiento Izquierda / Derecha / Arriba / Abajo: Mueve a Pepito en todas direcciones con la pulsación de las teclas W-A-S-D.
+- Ataque: con el cursor del ratón se apunta en la dirección deseada y al hacer click del botón 1 se dispara un proyectil en dicha dirección. Si se mantiene apretado el botón de ataque, el jugador disparará automáticamente constantemente. Al disparar existe un “cooldown” para que el jugador no abuse de los ataques y aumente la dificultad, dependiendo del arma/objetos que posea el jugador, el cooldown será mayor o menor.
  
-4.2	Cámara
+## 4.2	Cámara
 La cámara es fija y muestra todo el nivel de juego (la habitación actual).
-4.3	HUD
+### 4.3	HUD
 El HUD contiene información sobre:
 -	La cantidad de vida que le quedan al jugador.
 -	Los objetos que tiene el jugador.
 -	Icono de mapa que al clickar o presionar la tecla M se abre el mapa.
 
-4.4	Menús
+### 4.4	Menús
 El juego tiene 2 menús diferentes, el de pausa y la tienda.
 -	Menú de pausa: se para el juego, se puede reanudar o salir del nivel
 -	Menú de tienda: al entrar en la habitación de tienda (única) aparece el menú de compra y venta de objetos.
  
-5	Mundo del juego
-5.1	Personajes
-5.1.1	Personaje principal
+## 5	Mundo del juego
+### 5.1	Personajes
+-   Personaje principal
 El personaje principal de la historia es un estudiante de informática, un/una estudiante de la facultad de informática que no conoce el camino a su facultad.
-5.1.2	Enemigos
+
+-   Enemigos
 Dentro de cada facultad hay dos tipos de enemigos: los súbditos y bosses. El comportamiento es similar:
 Los súbditos disparan o atacan al contacto, dependiendo de la facultad en la que te encuentres tendrán un tipo de disparo u otro.
 El ataque de los bosses es ___, el boss tendrá una barra de vida y cuando llegue a la mitad el jefe se enfadará y su ataque y movimiento cambiará siendo más agresivo.
@@ -105,9 +105,10 @@ Estética: Chiki Park.
 -Informática.
 	Estética. Salas de la facultad: Cafetería, labs…
 Enemigos. nerds y NANDS. Boss final: Profesor con 2 fase (cualquier parecido con la realidad es pura coincidencia).
-5.2	Objetos
+
+### 5.2	Objetos
 Los objetos podrán ser comprados u obtenidos tras vencer a los distintos jefes o enemigos.
-5.2.1 Objetos obtenibles
+-   Objetos obtenibles
 Collar de macarrones
 Obtención: Obtenido tras vencer al boss de la Facultad de Magisterio.
 Descripción: Creado con esfuerzo y sudor por un estudiante de magisterio como proyecto de TFG.
@@ -183,19 +184,22 @@ Pantallazo azul
 	Beneficio. Los disparos tienen un 30% de bloquear al enemigo durante 1.5 segundos.
 	Desventaja. Ninguna.
 
-5.3	Niveles
+### 5.3	Niveles
 Todos los “mundos” (facultades) son similares, contienen varias habitaciones y/o pasillos donde se encuentran los enemigos y al final del mundo se encuentra el jefe final.
 
-6	Estética y contenido
+## 6 Estética y contenido
 NOTA SOBRE EL EJEMPLO: Me salto esta parte 
-7	Experiencia de juego
+
+## 7 Experiencia de juego
 TODO
-8	Producción
-8.1	Planificación (roadmap)
+
+## 8 Producción
+### 8.1	Planificación (roadmap)
 TODO
-9	Referencias
+
+## 9	Referencias
 Estas son las referencias usadas para entender este documento. En realidad, deberían ser referencias a otros videojuegos que inspiran el diseño.
-●	The Binding of Isaac Wiki | Fandom: Controles, ataque, enemigos.
-●	The Legend of Zelda (videojuego) - Wikipedia, la enciclopedia libre: Diseño de niveles y mapa.
-●	Nuclear Throne Wiki | Fandom: Estilo visual.
+-   The Binding of Isaac Wiki | Fandom: Controles, ataque, enemigos.
+-   The Legend of Zelda (videojuego) - Wikipedia, la enciclopedia libre: Diseño de niveles y mapa.
+-   Nuclear Throne Wiki | Fandom: Estilo visual.
 
