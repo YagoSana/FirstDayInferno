@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import Bullet from './bullet.js';
 
 /**
  * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando los cursores.
@@ -21,11 +22,29 @@ export default class Player extends Phaser.GameObjects.Sprite {
         // Queremos que el jugador no se salga de los límites del mundo
         this.body.setCollideWorldBounds();
         this.speed = 300;
-        this.jumpSpeed = -500;
+        this.body.setAllowGravity(false);
         // Esta label es la UI en la que pondremos la puntuación del jugador
         this.label = this.scene.add.text(10, 10, "", {fontSize: 20});
         this.cursors = this.scene.input.keyboard.createCursorKeys();
         this.updateScore();
+        // Asignar controles de movimiento
+        this.cursors = scene.input.keyboard.addKeys({
+            up: Phaser.Input.Keyboard.KeyCodes.W,
+            down: Phaser.Input.Keyboard.KeyCodes.S,
+            left: Phaser.Input.Keyboard.KeyCodes.A,
+            right: Phaser.Input.Keyboard.KeyCodes.D
+        });
+
+        // Controles para disparar
+        this.shootKeys = scene.input.keyboard.addKeys({
+            shootUp: Phaser.Input.Keyboard.KeyCodes.UP,
+            shootDown: Phaser.Input.Keyboard.KeyCodes.DOWN,
+            shootLeft: Phaser.Input.Keyboard.KeyCodes.LEFT,
+            shootRight: Phaser.Input.Keyboard.KeyCodes.RIGHT
+        });
+
+        this.lastShot = 0; // Tiempo del último disparo
+        this.shootCooldown = 500; // En milisegundos
     }
 
     /**
@@ -52,18 +71,43 @@ export default class Player extends Phaser.GameObjects.Sprite {
      */
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
-        if (this.cursors.up.isDown && this.body.onFloor()) {
-            this.body.setVelocityY(this.jumpSpeed);
+    
+        let velocityX = 0;
+        let velocityY = 0;
+    
+        if (this.cursors.up.isDown) {
+            velocityY = -this.speed;
+        } else if (this.cursors.down.isDown) {
+            velocityY = this.speed;
         }
+    
         if (this.cursors.left.isDown) {
-            this.body.setVelocityX(-this.speed);
+            velocityX = -this.speed;
+        } else if (this.cursors.right.isDown) {
+            velocityX = this.speed;
         }
-        else if (this.cursors.right.isDown) {
-            this.body.setVelocityX(this.speed);
+
+        // Manejo de disparo
+        if (t > this.lastShot + this.shootCooldown) {
+            if (this.shootKeys.shootUp.isDown) 
+                this.shoot(0, -1);
+            else if (this.shootKeys.shootDown.isDown) 
+                this.shoot(0, 1);
+            else if (this.shootKeys.shootLeft.isDown) 
+                this.shoot(-1, 0);
+            else if (this.shootKeys.shootRight.isDown) 
+                this.shoot(1, 0);
         }
-        else {
-            this.body.setVelocityX(0);
-        }
+    
+        // Aplicar las velocidades al jugador
+        this.body.setVelocity(velocityX, velocityY);
     }
+
+    shoot(dirX, dirY) {
+        console.log("Shooting");
+        new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y);
+        this.lastShot = this.scene.time.now; // Registrar tiempo del disparo
+    }
+    
 
 }
