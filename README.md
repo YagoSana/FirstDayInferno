@@ -78,7 +78,7 @@ El jugador puede desplazarse en **horizontal y vertical** por el mapa.
 
 ### 🎮 4.1 Controles
 - **Movimiento:** W, A, S, D.
-- **Ataque:** Apuntar con el ratón y disparar con **clic izquierdo**.
+- **Ataque:** Flechas del teclado para la direccion del disparo.
 - **Disparo automático:** Mantener pulsado el botón de ataque.
 - **Cooldown:** Controlado según el arma y mejoras.
 
@@ -108,7 +108,7 @@ El jugador puede desplazarse en **horizontal y vertical** por el mapa.
 
 ### 🔥 5.2 Facultades y Enemigos
 - **Medicina:** Zombies con bata y esqueletos. **Jefe: Ayuso**.
-- **Magisterio:** Enemigos similares. **Jefe: Ayuso**.
+- **Magisterio:** Enemigos similares. **Jefe: ???**.
 - **Filosofía:** Enemigos por definir.
 - **Física:** Enemigos científicos. **Jefe: Bazinga**.
 - **Informática:** Nerds y compuertas NAND. **Jefe final: Profesor de dos fases**.
@@ -193,12 +193,12 @@ Pantallazo azul
 ---
 
 ## 🎨 6. Estética y Contenido
-*(Pendiente de Desarrollo)*
+Estética pixel art inspirada en los juegos de 32 bits e inspiración cartoon con diferentes ambientaciones en los distintos niveles, siguiendo la linea estética mencionada pero cambiando elementos para lograr diferentes ambientes.
 
 ---
 
 ## 🎭 7. Experiencia de Juego
-*(Pendiente de Desarrollo)*
+La experiencia debe ser dinámica, sencilla y requerirá poco esfuerzo para entender pero será dificil de masterizar.
 
 ---
 
