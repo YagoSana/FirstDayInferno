@@ -16,6 +16,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, 'player');	
         this.score = 0;
+
         this.setScale(2);
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
@@ -34,6 +35,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
             left: Phaser.Input.Keyboard.KeyCodes.A,
             right: Phaser.Input.Keyboard.KeyCodes.D
         });
+
+        this.lastDirection = 'front'; // Por defecto, mirando al frente
 
         // Controles para disparar
         this.shootKeys = scene.input.keyboard.addKeys({
@@ -77,14 +80,18 @@ export default class Player extends Phaser.GameObjects.Sprite {
     
         if (this.cursors.up.isDown) {
             velocityY = -this.speed;
+            this.lastDirection = 'back';
         } else if (this.cursors.down.isDown) {
             velocityY = this.speed;
+            this.lastDirection = 'front';
         }
     
         if (this.cursors.left.isDown) {
             velocityX = -this.speed;
+            this.lastDirection = 'left';
         } else if (this.cursors.right.isDown) {
             velocityX = this.speed;
+            this.lastDirection = 'right';
         }
 
         // Manejo de disparo
@@ -97,6 +104,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
                 this.shoot(-1, 0);
             else if (this.shootKeys.shootRight.isDown) 
                 this.shoot(1, 0);
+        }
+
+        // Si no se mueve, aplicar la animación idle según la última dirección
+        if (velocityX === 0 && velocityY === 0) {
+            this.play(`idle-${this.lastDirection}`, true);
         }
     
         // Aplicar las velocidades al jugador
