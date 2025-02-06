@@ -114,11 +114,92 @@ El jugador puede desplazarse en **horizontal y vertical** por el mapa.
 - **Informática:** Nerds y compuertas NAND. **Jefe final: Profesor de dos fases**.
 
 ### 🎁 5.3 Objetos
-#### Ejemplos de Objetos
-- **Collar de macarrones:** Mejora la velocidad de disparo pero reduce el daño.
-- **Bono Transporte:** Aumenta la velocidad de movimiento y disparo.
-- **Algoritmo VA:** Dispara en binario, pero reduce la velocidad.
-- **Pantallazo Azul:** Los disparos pueden aturdir enemigos.
+- **Collar de macarrones**
+    > Obtención: Obtenido tras vencer al boss de la Facultad de Magisterio.
+    > Descripción: Creado con esfuerzo y sudor por un estudiante de magisterio como proyecto de TFG.
+    > Efecto: El personaje cambia su proyectil a un cacho de plastilina.
+    > Beneficio: Aumenta la velocidad de disparo.
+    > Desventaja: Reduce el daño causado.
+
+- **Bolsa con contenido sospechoso** 
+    > Obtención. Obtenida tras vencer al boss de la Facultad de Filosofía.
+    > Descripción. Contiene unas hojas verdes secas. Su olor te evoca recuerdos del sur de Madrid.
+    > Efecto. El personaje cambia su proyectil a bolas de humo.
+    > Beneficio. Tu ataque aumenta al doble.
+    > Desventaja. Se invierten los controles.
+
+- **Uff Referencia** 
+    > Obtención. Derrota a un enemigo especial.
+    > Descripción. Te recuerda a otro juego que ya has jugado… 
+    > Efecto. El personaje ahora dispara lágrimas.
+    > Beneficio. Más daño. 
+    > Desventaja. No tiene.
+
+- **Algoritmo VA**
+    > Obtención. Llega a la Facultad de Informática.
+    > Descripción. Algoritmo forjado en las profundidades de uno de los laboratorios de la facultad de informática. Contiene la esencia de un estudiante de informática con depresión.
+    > Efecto. El personaje dispara en binario.
+    > Beneficio. Las balas rebotan en la pared y hacen más daño.
+    > Desventaja. El nombre evoca sentimientos traumáticos y te baja la velocidad.
+
+- **Bono Transporte** 
+    > Obtención. Aparece en las tiendas.
+    > Descripción. Bono joven de transporte de la comunidad de Madrid. ¡Gracias Pedrito!
+    > Efecto. El personaje dispara y se mueve más rápido.
+    > Beneficio. Más velocidad de disparo y más velocidad de movimiento. 
+    > Desventaja. No tiene.
+
+- **Bazinga**
+	> Obtención. Se consigue tras vencer al boss de la facultad de física.
+	> Descripción. Jaja. Bazinga.
+	> Efecto. El personaje obtiene una camiseta de flash. Dispara protones.
+	> Beneficio. Los proyectiles explotan.
+	> Desventaja. Menos daño.
+
+- **Mano en garra**
+	> Obtención. Se consigue tras vencer al boss de la facultad de medicina.
+	> Descripción. Suena a ataque de videojuego pero es una condición médica.
+	> Efecto. El personaje pierde un brazo.
+	> Beneficio. Haces más daño.
+	> Desventaja. Atacas a melé
+
+- **Hamburguesa de pollo**
+	> Obtención. Se compra en la tienda.
+	> Descripción. Fabricado por Sánchez y Andrés, puedes notar el sabor a parrilla (y a sus manos).
+	> Efecto. Nada físico.
+	> Beneficio. Te otorga un corazón extra.
+	> Desventaja. Ninguna.
+
+- **Moneda** 
+	> Es una moneda. Sirve para comprar.
+
+- **Mini de tinto**
+	> Obtención. Se compra en la tienda.
+	> Descripción. Brebaje místico realizado con los mejores vinos.
+	> Efecto. Te mueves más lento (bastante).
+	> Beneficio. Te otorga dos corazones extra.
+	> Desventaja. Ninguna.
+
+- **Maletín de laboratorio**
+	> Obtención. Se compra en la tienda.
+	> Descripción. Maletín que contiene una placa en su interior. Nadie sabe cómo      funciona.
+	> Efecto. Te mueves más lento pero obtienes más escudo.
+	> Beneficio. Los golpes de los enemigos te hacen menos daño.
+	> Desventaja. Tu velocidad de movimiento baja.
+
+- **Código mal optimizado**
+	> Obtención. Se compra en la tienda
+	> Descripción. Código que a veces funciona mal, ha dado time limit en el juez.
+	> Efecto. El código tiene un bug que hace que cada vez que disparas lances dos proyectiles.
+	> Beneficio. Lanzas dos proyectiles cada vez que disparas
+	> Desventaja. Cada proyectil tiene un 10% de posibilidades de fallar
+
+- **Pantallazo azul**
+	> Obtención. Se compra en la tienda
+	> Descripción. Actualizaste a Windows 11. Nadie sabe cómo funciona.
+	> Efecto. Tu disparo puede bloquear a los enemigos durante 1.5 segundos
+	> Beneficio. Los disparos tienen un 30% de bloquear al enemigo durante 1.5 segundos.
+	> Desventaja. Ninguna.
 
 ---
 
