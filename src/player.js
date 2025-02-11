@@ -79,21 +79,26 @@ export default class Player extends Phaser.GameObjects.Sprite {
     
         let velocityX = 0;
         let velocityY = 0;
+        let newAnimation = `idle-${this.lastDirection}`; //animacion por defecto
     
         if (this.cursors.up.isDown) {
             velocityY = -this.speed;
             this.lastDirection = 'back';
+            newAnimation = "walk-back";
         } else if (this.cursors.down.isDown) {
             velocityY = this.speed;
             this.lastDirection = 'front';
+            newAnimation = "walk-front";
         }
     
         if (this.cursors.left.isDown) {
             velocityX = -this.speed;
             this.lastDirection = 'left';
+            newAnimation = "walk-left";
         } else if (this.cursors.right.isDown) {
             velocityX = this.speed;
             this.lastDirection = 'right';
+            newAnimation = "walk-right";
         }
 
         // Manejo de disparo
@@ -108,9 +113,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
                 this.shoot(1, 0);
         }
 
-        // Si no se mueve, aplicar la animación idle según la última dirección
+        // Si no se mueve, aplicar la animacion idle segun la ultima direccion
         if (velocityX === 0 && velocityY === 0) {
             this.play(`idle-${this.lastDirection}`, true);
+        }
+
+        // Cambia la animacion solo si no es la misma ya en ejecucion
+        if (!this.anims.currentAnim || this.anims.currentAnim.key !== newAnimation) {
+            this.anims.play(newAnimation, true);
         }
     
         // Aplicar las velocidades al jugador

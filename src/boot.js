@@ -4,6 +4,7 @@ import platform from "../assets/sprites/platform.png";
 import base from "../assets/sprites/base.png";
 import star from "../assets/sprites/star.png";
 import player from "../assets/sprites/player_idle.png";
+import player_walking from "../assets/sprites/player_walking.png";
 import bullet from "../assets/sprites/bullet.png";
 import enemy from "../assets/sprites/cucaracha.png";
 /**
@@ -41,6 +42,11 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 18, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
     });
+
+    this.load.spritesheet("playerWalk", player_walking, {
+      frameWidth: 18,
+      frameHeight: 32,
+    });
   }
 
   /**
@@ -73,6 +79,35 @@ export default class Boot extends Phaser.Scene {
       key: "idle-right",
       frames: this.anims.generateFrameNames("player", { frames:[15,16,17,18,19]}),
       frameRate: 5,
+      repeat: -1,
+    });
+
+    // Animaciones de caminar
+    this.anims.create({
+      key: "walk-front",
+      frames: this.anims.generateFrameNumbers("playerWalk", { start: 0, end: 7 }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "walk-back",
+      frames: this.anims.generateFrameNumbers("playerWalk", { start: 8, end: 15 }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "walk-left",
+      frames: this.anims.generateFrameNumbers("playerWalk", { start: 16, end: 23 }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "walk-right",
+      frames: this.anims.generateFrameNumbers("playerWalk", { start: 24, end: 31 }),
+      frameRate: 8,
       repeat: -1,
     });
 
