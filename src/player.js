@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import Phaser, { GameObjects } from 'phaser';
 import Bullet from './bullet.js';
 
 /**
@@ -16,7 +16,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, 'player');	
         this.score = 0;
-
+        this.health = 3;
         this.setScale(2);
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
@@ -48,6 +48,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
         this.lastShot = 0; // Tiempo del último disparo
         this.shootCooldown = 500; // En milisegundos
+        this.damageCooldown = 500; // En milisegundos
+        this.lastHurtTime = 0;  // Tiempo del último daño
     }
 
     /**
@@ -63,7 +65,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
      * Actualiza la UI con la puntuación actual
      */
     updateScore() {
-        this.label.text = 'Score: ' + this.score;
+        this.label.text = 'Health: ' + this.health;
     }
 
     /**
@@ -120,6 +122,24 @@ export default class Player extends Phaser.GameObjects.Sprite {
         new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y);
         this.lastShot = this.scene.time.now; // Registrar tiempo del disparo
     }
+
+    /**
+     * El jugador ha sido dañado por un enemigo
+     */
+    hurt() {
+        // Verificamos si el cooldown ha pasado desde el último daño
+        const currentTime = this.scene.time.now; // Obtiene el tiempo actual en milisegundos
+        if (currentTime - this.lastHurtTime >= this.damageCooldown) {
+          this.health--; // Reducir vida
+          this.lastHurtTime = currentTime; // Actualizar el último tiempo de daño
+    
+          if (this.health <= 0) {
+            this.scene.scene.start('end'); // Finalizar el juego si la vida llega a 0
+          }
+    
+          this.updateScore();
+        }
+      }
     
 
 }

@@ -21,13 +21,12 @@ export default class Star extends Phaser.GameObjects.Sprite {
      * @param {number} x coordenada x
      * @param {number} y coordenada y
      */
-    constructor(scene: Phaser.Scene, base: Base, x: number, y: number) {
+    constructor(scene, base: Base, x: number, y: number) {
         super(scene, x, y, 'star');
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this, true);
         this.y -= this.height;
         this.base = base;
-
     }
 
     /**

@@ -1,6 +1,7 @@
 import Platform from './platform.js';
 import Player from './player.js';
 import Phaser from 'phaser';
+import Enemy from './enemy.js';
 
 
 /**
@@ -26,12 +27,16 @@ export default class Level extends Phaser.Scene {
         this.stars = 10;
         this.bases = this.add.group();
         this.player = new Player(this, 200, 300);
+        this.platformGroup = this.physics.add.staticGroup();
+        this.bulletGroup = this.physics.add.group();
+        this.enemyGroup = this.physics.add.group();
 
-        new Platform(this, this.player, this.bases, 150, 350);
-        new Platform(this, this.player, this.bases, 850, 350);
-        new Platform(this, this.player, this.bases, 500, 200);
-        new Platform(this, this.player, this.bases, 150, 100);
-        new Platform(this, this.player, this.bases, 850, 100);
+        this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 350));
+        this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 350));
+        this.platformGroup.add(new Platform(this, this.player, this.bases, 500, 200));
+        this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 100));
+        this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 100));
+        this.enemyGroup.add(new Enemy(this, 500, 250));
         this.spawn();
 
     }

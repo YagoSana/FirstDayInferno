@@ -5,6 +5,7 @@ import base from "../assets/sprites/base.png";
 import star from "../assets/sprites/star.png";
 import player from "../assets/sprites/player_idle.png";
 import bullet from "../assets/sprites/bullet.png";
+import enemy from "../assets/sprites/cucaracha.png";
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
  * Esta escena se puede mejorar añadiendo una imagen del juego y una
@@ -29,6 +30,10 @@ export default class Boot extends Phaser.Scene {
     this.load.image("star", star);
     this.load.image("bullet", bullet);
 
+    this.load.spritesheet("enemy", enemy, {
+      frameWidth: 32, //cada frame tiene este ancho
+      frameHeight: 32, //todos son 32 px de alto
+    });
     // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
     //this.load.setPath('assets/sprites/');
 
@@ -68,6 +73,13 @@ export default class Boot extends Phaser.Scene {
       key: "idle-right",
       frames: this.anims.generateFrameNames("player", { frames:[15,16,17,18,19]}),
       frameRate: 5,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "cuca",
+      frames: this.anims.generateFrameNames("enemy", { frames: [0,1,2,3,4,5,6,7,8,9]}),
+      frameRate: 10,
       repeat: -1,
     });
 
