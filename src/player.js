@@ -115,11 +115,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
         // Si no se mueve, aplicar la animacion idle segun la ultima direccion
         if (velocityX === 0 && velocityY === 0) {
-            this.play(`idle-${this.lastDirection}`, true);
+            if (!this.anims.currentAnim || !this.anims.currentAnim.key.startsWith('shoot')) {
+                this.play(`idle-${this.lastDirection}`, true);
+            }
         }
 
         // Cambia la animacion solo si no es la misma ya en ejecucion
-        if (!this.anims.currentAnim || this.anims.currentAnim.key !== newAnimation) {
+        if (!this.anims.currentAnim || !this.anims.currentAnim.key.startsWith('shoot')) {
             this.anims.play(newAnimation, true);
         }
     
@@ -129,8 +131,36 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     shoot(dirX, dirY) {
         console.log("Shooting");
+         // Verificar si ya está en cooldown
+        if (this.scene.time.now < this.lastShot + this.shootCooldown) return;
+
+         // Determinar la dirección del disparo
+        let shootAnimation = '';
+        if (dirY === -1) {
+            shootAnimation = 'shoot-back';
+        } else if (dirY === 1) {
+            shootAnimation = 'shoot-front';
+        } else if (dirX === -1) {
+            shootAnimation = 'shoot-left';
+        } else if (dirX === 1) {
+            shootAnimation = 'shoot-right';
+        }
+
+        console.log(`disparando hacia: ${shootAnimation}`);
+
+        // Guardar la animación actual para volver a ella después del disparo
+        const currentAnimation = `idle-${this.lastDirection}`;
+
+        // Reproducir la animación de disparo
+        this.play(shootAnimation);
+
         new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y);
         this.lastShot = this.scene.time.now; // Registrar tiempo del disparo
+
+         // Volver a la animación anterior después de que termine la animación de disparo
+        this.once('animationcomplete', () => {
+            this.play(currentAnimation);
+        });
     }
 
     /**

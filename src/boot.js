@@ -5,6 +5,8 @@ import base from "../assets/sprites/base.png";
 import star from "../assets/sprites/star.png";
 import player from "../assets/sprites/player_idle.png";
 import player_walking from "../assets/sprites/player_walking.png";
+import player_shoot from "../assets/sprites/player_shoot.png";
+
 import bullet from "../assets/sprites/bullet.png";
 import enemy from "../assets/sprites/cucaracha.png";
 import background from "../assets/sprites/background.png";
@@ -45,10 +47,15 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32, //todos son 32 px de alto
     });
 
-    this.load.spritesheet("playerWalk", player_walking, {
+    this.load.spritesheet("player_walk", player_walking, {
       frameWidth: 18,
       frameHeight: 32,
     });
+
+    this.load.spritesheet('player_shoot', player_shoot, {
+      frameWidth: 20,
+      frameHeight: 32,
+  });
   }
 
   /**
@@ -87,30 +94,58 @@ export default class Boot extends Phaser.Scene {
     // Animaciones de caminar
     this.anims.create({
       key: "walk-front",
-      frames: this.anims.generateFrameNumbers("playerWalk", { start: 0, end: 7 }),
+      frames: this.anims.generateFrameNumbers("player_walk", { start: 0, end: 7 }),
       frameRate: 8,
       repeat: -1,
     });
 
     this.anims.create({
       key: "walk-back",
-      frames: this.anims.generateFrameNumbers("playerWalk", { start: 8, end: 15 }),
+      frames: this.anims.generateFrameNumbers("player_walk", { start: 8, end: 15 }),
       frameRate: 8,
       repeat: -1,
     });
 
     this.anims.create({
       key: "walk-left",
-      frames: this.anims.generateFrameNumbers("playerWalk", { start: 16, end: 23 }),
+      frames: this.anims.generateFrameNumbers("player_walk", { start: 16, end: 23 }),
       frameRate: 8,
       repeat: -1,
     });
 
     this.anims.create({
       key: "walk-right",
-      frames: this.anims.generateFrameNumbers("playerWalk", { start: 24, end: 31 }),
+      frames: this.anims.generateFrameNumbers("player_walk", { start: 24, end: 31 }),
       frameRate: 8,
       repeat: -1,
+    });
+
+    this.anims.create({
+      key: "shoot-front",
+      frames: this.anims.generateFrameNumbers("player_shoot", { start: 0, end: 4 }),
+      frameRate: 12,
+      repeat: 0
+    });
+  
+    this.anims.create({
+        key: "shoot-back",
+        frames: this.anims.generateFrameNumbers("player_shoot", { start: 5, end: 9 }),
+        frameRate: 12,
+        repeat: 0
+    });
+    
+    this.anims.create({
+        key: "shoot-left",
+        frames: this.anims.generateFrameNumbers("player_shoot", { start: 10, end: 14 }),
+        frameRate: 12,
+        repeat: 0
+    });
+    
+    this.anims.create({
+        key: "shoot-right",
+        frames: this.anims.generateFrameNumbers("player_shoot", { start: 15, end: 19 }),
+        frameRate: 12,
+        repeat: 0
     });
 
     this.anims.create({
