@@ -1,3 +1,70 @@
 h1 {
   text-align: center;
 }
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: url('../assets/imgs/fdi.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Press Start 2P', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.home_containter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.play_button {
+    margin-bottom: 20px;
+}
+
+button {
+    font-size: 20px;
+    padding: 15px 40px;
+    border: 3px solid #ff4500;
+    background: black;
+    color: white;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.8);
+    border-radius: 10px;
+}
+
+button:hover {
+    background: #ff4500;
+    color: black;
+    box-shadow: 0 0 20px rgba(255, 140, 0, 1);
+    transform: scale(1.1);
+}
+
+.start {
+    font-size: 30px;
+    font-weight: bold;
+    border: 5px solid #ff0000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.9);
+}
+
+.start:hover {
+    background: #ff0000;
+    box-shadow: 0 0 30px rgba(255, 69, 0, 1);
+}
+
+.other_buttons {
+    display: flex;
+    flex-direction: row; /* Coloca los botones en línea horizontal */
+    gap: 15px; /* Espaciado entre botones */
+}
