@@ -15,8 +15,8 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
             velocityY=0;
         }
         this.body.setVelocity(
-            (dirX * this.speed) + velocityX * 0.5, // velocidad de la bala + inercia del jugador en el eje X
-            (dirY * this.speed) + velocityY * 0.5 // velocidad de la bala + inercia del jugador en el eje Y
+            (dirX * this.speed) + velocityX * 0.7, // velocidad de la bala + inercia del jugador en el eje X
+            (dirY * this.speed) + velocityY * 0.7 // velocidad de la bala + inercia del jugador en el eje Y
         );
         this.body.setAllowGravity(false);
         this.scene.physics.add.collider(this, scene.platformGroup, this.destroy, null, this);
