@@ -24,6 +24,10 @@ export default class Level extends Phaser.Scene {
      * Creación de los elementos de la escena principal de juego
      */
     create() {
+        this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, "background")
+        .setOrigin(0.5) // Centrar la imagen
+        .setScale(2); // Ajustar el tamaño si es necesario
+        this.physics.world.setBounds((1000-500)/2, 0, 500, 500);
         this.stars = 10;
         this.bases = this.add.group();
         this.player = new Player(this, 200, 300);
@@ -33,9 +37,9 @@ export default class Level extends Phaser.Scene {
 
         this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 350));
         this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 350));
-        this.platformGroup.add(new Platform(this, this.player, this.bases, 500, 200));
-        this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 100));
-        this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 100));
+        //this.platformGroup.add(new Platform(this, this.player, this.bases, 500, 200));
+        //this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 100));
+        //this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 100));
         this.enemyGroup.add(new Enemy(this, 500, 250));
         this.spawn();
 

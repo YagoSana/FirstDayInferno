@@ -7,6 +7,7 @@ import player from "../assets/sprites/player_idle.png";
 import player_walking from "../assets/sprites/player_walking.png";
 import bullet from "../assets/sprites/bullet.png";
 import enemy from "../assets/sprites/cucaracha.png";
+import background from "../assets/sprites/background.png";
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
  * Esta escena se puede mejorar añadiendo una imagen del juego y una
@@ -30,6 +31,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image("base", base);
     this.load.image("star", star);
     this.load.image("bullet", bullet);
+    this.load.image("background", background); // Carga la imagen del fondo
 
     this.load.spritesheet("enemy", enemy, {
       frameWidth: 32, //cada frame tiene este ancho

@@ -14,21 +14,31 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
    */
   constructor(scene, x, y){
     super(scene, x, y, 'enemy');
+    this.health = 2;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
+    this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
   }
 
   hitPlayer(enemy, player) {
     // Llamar a la función playerHurt del jugador cuando lo toca
     player.hurt();
-    // Aquí puedes también destruir al enemigo o agregar otras acciones
-    //enemy.destroy(); // Destruir el enemigo al colisionar (opcional)
+  }
+
+  hitBullet(enemy, bullet){
+    //Enemigo muere
+    this.health--;
+    if(this.health <= 0){
+      this.destroy();
+    }
+    bullet.destroy();
   }
   
   preUpdate(t, dt) {
     super.preUpdate(t, dt);
     this.play(`cuca`, true);
+    this.scene.physics.moveToObject(this, this.scene.player, 120);
   }
 
 }

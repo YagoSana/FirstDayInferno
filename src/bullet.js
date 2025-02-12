@@ -14,5 +14,12 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
         );
         this.body.setAllowGravity(false);
         this.scene.physics.add.collider(this, scene.platformGroup, this.destroy, null, this);
+        this.body.setCollideWorldBounds(true);
+        this.body.onWorldBounds = true;
+        this.scene.physics.world.on('worldbounds', (body) => {
+            if (body.gameObject === this) { // Verificar si es esta bala
+                this.destroy();
+            }
+        });
     }
 }
