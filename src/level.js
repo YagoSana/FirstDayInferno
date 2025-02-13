@@ -30,15 +30,16 @@ export default class Level extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, 2048, 1024);
         this.stars = 10;
         this.bases = this.add.group();
-        this.player = new Player(this, 500, 250);
         this.platformGroup = this.physics.add.staticGroup();
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
+        this.enemyBulletGroup = this.physics.add.group();
         //this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 350));
         //this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 350));
         //this.platformGroup.add(new Platform(this, this.player, this.bases, 500, 200));
         //this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 100));
         //this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 100));
+        this.player = new Player(this, 500, 250);
         this.enemyGroup.add(new Enemy(this, 1000, 250));
         this.enemyGroup.add(new Enemy(this, 2000, 250));
         this.enemyGroup.add(new RangedEnemy(this, 1000, 500));

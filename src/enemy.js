@@ -37,7 +37,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
       this.setTint(0xff0000);
       this.destroy();
     }
-    bullet.destroy();
+    bullet.explode();
   }
   
   preUpdate(t, dt) {

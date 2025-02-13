@@ -36,7 +36,6 @@ export default class RangedEnemy extends Enemy {
     const dirX = this.scene.player.x > this.x ? 1 : -1; // Dirección en X (hacia el jugador)
     const dirY = 0; // No se mueve en Y (disparo horizontal)
     // Crear la bala usando la clase Bullet
-    let bullet = new Bullet(this.scene, this.x, this.y, dirX, dirY, 0, 0); // Pasar las direcciones y velocidades
-    this.scene.bulletGroup.add(bullet); // Añadir el proyectil al grupo de balas
+    new Bullet(this.scene, this.x, this.y, dirX, dirY, 0, 0, false); // Pasar las direcciones y velocidades
   }
 }

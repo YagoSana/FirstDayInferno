@@ -1,11 +1,16 @@
 import Phaser from 'phaser';
 
 export default class Bullet extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, dirX, dirY, velocityX, velocityY) {
+    constructor(scene, x, y, dirX, dirY, velocityX, velocityY, isPlayer) {
         super(scene, x, y, "bullet"); // Asegúrate de tener la imagen cargada en preload()
         scene.add.existing(this);
-        scene.bulletGroup.add(this);
         scene.physics.add.existing(this);
+        if(isPlayer){
+            scene.bulletGroup.add(this);
+        };
+        if(!isPlayer){
+            scene.enemyBulletGroup.add(this);
+        };
         this.speed = 400; // Velocidad de la bala
         // Ajustar la velocidad según la dirección
         if(dirX==1&&velocityX!=0){
@@ -19,7 +24,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
             (dirY * this.speed) + velocityY * 0.7 // velocidad de la bala + inercia del jugador en el eje Y
         );
         this.body.setAllowGravity(false);
-        this.scene.physics.add.collider(this, scene.platformGroup, this.destroy, null, this);
+        this.scene.physics.add.collider(this, scene.platformGroup, this.explode, null, this);
         this.body.setCollideWorldBounds(true);
         this.body.onWorldBounds = true;
         this.scene.physics.world.on('worldbounds', (body) => {

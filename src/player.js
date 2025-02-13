@@ -27,6 +27,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.label = this.scene.add.text(10, 10, "", {fontSize: 20});
         this.label.setScrollFactor(0);
         this.cursors = this.scene.input.keyboard.createCursorKeys();
+        this.scene.physics.add.collider(this, scene.enemyBulletGroup, this.hurt, null, this);
         this.updateHealth();
         // Asignar controles de movimiento
         this.cursors = scene.input.keyboard.addKeys({
@@ -155,7 +156,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         // Reproducir la animación de disparo
         this.play(shootAnimation);
 
-        new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y);
+        new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true);
         this.lastShot = this.scene.time.now; // Registrar tiempo del disparo
 
          // Volver a la animación anterior después de que termine la animación de disparo
@@ -167,7 +168,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     /**
      * El jugador ha sido dañado por un enemigo
      */
-    hurt() {
+    hurt(player, bullet) {
         // Verificamos si el cooldown ha pasado desde el último daño
         const currentTime = this.scene.time.now; // Obtiene el tiempo actual en milisegundos
         if (currentTime - this.lastHurtTime >= this.damageCooldown) {
@@ -181,6 +182,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     
           this.updateHealth();
         }
+        bullet.explode();
       }
     
     healthUp(){
