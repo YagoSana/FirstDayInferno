@@ -182,7 +182,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
     
           this.updateHealth();
         }
-        bullet.explode();
+        if(bullet){
+            bullet.explode();
+        }
       }
     
     healthUp(){

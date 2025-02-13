@@ -32,10 +32,16 @@ export default class RangedEnemy extends Enemy {
 
   // Función para disparar un proyectil
   shoot() {
-    // Crear la bala desde la clase Bullet
-    const dirX = this.scene.player.x > this.x ? 1 : -1; // Dirección en X (hacia el jugador)
-    const dirY = 0; // No se mueve en Y (disparo horizontal)
+    // Calcular la dirección hacia el jugador
+    const dirX = this.scene.player.x - this.x; // Diferencia en X entre el jugador y el enemigo
+    const dirY = this.scene.player.y - this.y; // Diferencia en Y entre el jugador y el enemigo
+    
+    // Normalizar la dirección para que el proyectil tenga velocidad constante
+    const magnitude = Math.sqrt(dirX * dirX + dirY * dirY); // Longitud del vector
+    const normalizedDirX = dirX / magnitude; // Normalizar la dirección X
+    const normalizedDirY = dirY / magnitude; // Normalizar la dirección Y
+    
     // Crear la bala usando la clase Bullet
-    new Bullet(this.scene, this.x, this.y, dirX, dirY, 0, 0, false); // Pasar las direcciones y velocidades
-  }
+    new Bullet(this.scene, this.x, this.y, normalizedDirX, normalizedDirY, 0, 0, false); // Pasar las direcciones y velocidades
+}
 }

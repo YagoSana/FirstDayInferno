@@ -7,11 +7,12 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
         scene.physics.add.existing(this);
         if(isPlayer){
             scene.bulletGroup.add(this);
+            this.speed = 400; // Velocidad de la bala
         };
         if(!isPlayer){
             scene.enemyBulletGroup.add(this);
+            this.speed = 200; // Velocidad de la bala
         };
-        this.speed = 400; // Velocidad de la bala
         // Ajustar la velocidad según la dirección
         if(dirX==1&&velocityX!=0){
             velocityX=0;
