@@ -6,10 +6,10 @@ import item from "../assets/sprites/item.png";
 import player from "../assets/sprites/player_idle.png";
 import player_walking from "../assets/sprites/player_walking.png";
 import player_shoot from "../assets/sprites/player_shoot.png";
-
 import bullet from "../assets/sprites/bullet.png";
 import enemy from "../assets/sprites/cucaracha.png";
 import background from "../assets/sprites/background.png";
+import rangedenemy from "../assets/sprites/arquero.png";
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
  * Esta escena se puede mejorar añadiendo una imagen del juego y una
@@ -41,6 +41,11 @@ export default class Boot extends Phaser.Scene {
     });
     // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
     //this.load.setPath('assets/sprites/');
+
+    this.load.spritesheet("rangedenemy", rangedenemy, {
+      frameWidth: 64, //cada frame tiene este ancho
+      frameHeight: 64, //todos son 32 px de alto
+    });
 
     this.load.spritesheet("player", player, {
       frameWidth: 18, //cada frame tiene este ancho
@@ -152,6 +157,13 @@ export default class Boot extends Phaser.Scene {
       key: "cuca",
       frames: this.anims.generateFrameNames("enemy", { frames: [0,1,2,3,4,5,6,7,8,9]}),
       frameRate: 20,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "move",
+      frames: this.anims.generateFrameNames("rangedenemy", { start: 16, end: 23}),
+      frameRate: 5,
       repeat: -1,
     });
 

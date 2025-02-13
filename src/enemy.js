@@ -25,6 +25,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
   hitPlayer(enemy, player) {
     // Llamar a la función playerHurt del jugador cuando lo toca
+    this.stunCounter=20;
     player.hurt();
   }
 
@@ -44,7 +45,9 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     this.play(`cuca`, true);
     if(this.stunCounter>0){
       this.stunCounter--;
-      this.setTint(0xff0000);
+      if(this.stunCounter>20){
+        this.setTint(0xff0000);
+      }      
       this.body.setVelocity(0, 0);
     } else {
       this.scene.physics.moveToObject(this, this.scene.player, 120);

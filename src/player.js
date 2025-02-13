@@ -124,6 +124,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     
         // Aplicar las velocidades al jugador
         this.body.setVelocity(velocityX, velocityY);
+        //Animacion daño
         if(this.scene.time.now > this.lastHurtTime + this.damageCooldown){
             this.setTint(0xffffff);
         }
