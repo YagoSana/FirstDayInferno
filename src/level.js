@@ -1,4 +1,4 @@
-import Platform from './platform.js';
+import Item from './item.js';
 import Player from './player.js';
 import Phaser from 'phaser';
 import Enemy from './enemy.js';
@@ -43,6 +43,7 @@ export default class Level extends Phaser.Scene {
         this.enemyGroup.add(new Enemy(this, 2000, 250));
         this.cameras.main.setBounds(0, 0, 2048, 1024);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
+        new Item(this, 100, 100);
     }
 
     /**

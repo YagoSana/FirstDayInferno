@@ -2,7 +2,7 @@ import Phaser from "phaser";
 
 import platform from "../assets/sprites/platform.png";
 import base from "../assets/sprites/base.png";
-import star from "../assets/sprites/star.png";
+import item from "../assets/sprites/item.png";
 import player from "../assets/sprites/player_idle.png";
 import player_walking from "../assets/sprites/player_walking.png";
 import player_shoot from "../assets/sprites/player_shoot.png";
@@ -31,7 +31,7 @@ export default class Boot extends Phaser.Scene {
   preload() {
     this.load.image("platform", platform);
     this.load.image("base", base);
-    this.load.image("star", star);
+    this.load.image("item", item);
     this.load.image("bullet", bullet);
     this.load.image("background", background); // Carga la imagen del fondo
 
@@ -151,7 +151,7 @@ export default class Boot extends Phaser.Scene {
     this.anims.create({
       key: "cuca",
       frames: this.anims.generateFrameNames("enemy", { frames: [0,1,2,3,4,5,6,7,8,9]}),
-      frameRate: 10,
+      frameRate: 20,
       repeat: -1,
     });
 

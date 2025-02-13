@@ -15,7 +15,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
      */
     constructor(scene, x, y) {
         super(scene, x, y, 'player');	
-        this.score = 0;
         this.health = 3;
         this.setScale(2);
         this.scene.add.existing(this);
@@ -26,8 +25,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.body.setAllowGravity(false);
         // Esta label es la UI en la que pondremos la puntuación del jugador
         this.label = this.scene.add.text(10, 10, "", {fontSize: 20});
+        this.label.setScrollFactor(0);
         this.cursors = this.scene.input.keyboard.createCursorKeys();
-        this.updateScore();
+        this.updateHealth();
         // Asignar controles de movimiento
         this.cursors = scene.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -56,16 +56,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
      * El jugador ha recogido una estrella por lo que este método añade un punto y
      * actualiza la UI con la puntuación actual.
      */
-    point() {
-        this.score++;
-        this.updateScore();
-    }
 
     /**
      * Actualiza la UI con la puntuación actual
      */
-    updateScore() {
+    updateHealth() {
         this.label.text = 'Health: ' + this.health;
+        this.label.setDepth(10);
     }
 
     /**
@@ -181,9 +178,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
             this.scene.scene.start('end'); // Finalizar el juego si la vida llega a 0
           }
     
-          this.updateScore();
+          this.updateHealth();
         }
       }
     
+    healthUp(){
+        this.health++;
+        this.updateHealth();
+    }
 
 }

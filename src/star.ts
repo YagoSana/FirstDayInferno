@@ -21,12 +21,11 @@ export default class Star extends Phaser.GameObjects.Sprite {
      * @param {number} x coordenada x
      * @param {number} y coordenada y
      */
-    constructor(scene, base: Base, x: number, y: number) {
+    constructor(scene, x: number, y: number) {
         super(scene, x, y, 'star');
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this, true);
         this.y -= this.height;
-        this.base = base;
     }
 
     /**
@@ -40,7 +39,6 @@ export default class Star extends Phaser.GameObjects.Sprite {
         if (this.scene.physics.overlap(this.scene.player as Player, this)) {
             // Delegamos en la escena para decidir qué hacer al 
             // haber cogido una estrella
-            this.scene.starPickt(this.base);
             this.destroy();
         }
     }
