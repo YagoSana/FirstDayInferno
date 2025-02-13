@@ -24,8 +24,22 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
         this.body.onWorldBounds = true;
         this.scene.physics.world.on('worldbounds', (body) => {
             if (body.gameObject === this) { // Verificar si es esta bala
-                this.destroy();
+                this.explode();
             }
+        });
+    }
+
+    explode() {
+        // Deshabilitar colisión y movimiento
+        this.body.setVelocity(0, 0);
+        this.body.enable = false;
+        
+        // Reproducir animación de explosión
+        this.play("bullet-puff");
+        
+        // Esperar el tiempo de duración de la animación antes de destruir la bala
+        this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+            this.destroy();
         });
     }
 }

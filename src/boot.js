@@ -10,6 +10,7 @@ import bullet from "../assets/sprites/bullet.png";
 import enemy from "../assets/sprites/cucaracha.png";
 import background from "../assets/sprites/background.png";
 import rangedenemy from "../assets/sprites/arquero.png";
+import puff from "../assets/sprites/puff.png";
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
  * Esta escena se puede mejorar añadiendo una imagen del juego y una
@@ -60,6 +61,10 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('player_shoot', player_shoot, {
       frameWidth: 20,
       frameHeight: 32,
+   });
+   this.load.spritesheet('puff', puff, {
+    frameWidth: 32,
+    frameHeight: 32,
   });
   }
 
@@ -165,6 +170,13 @@ export default class Boot extends Phaser.Scene {
       frames: this.anims.generateFrameNames("rangedenemy", { start: 16, end: 23}),
       frameRate: 5,
       repeat: -1,
+    });
+
+    this.anims.create({
+      key: "bullet-puff",
+      frames: this.anims.generateFrameNames("puff", { start: 0, end: 7}),
+      frameRate: 24,
+      repeat: 0,
     });
 
     this.scene.start("level");
