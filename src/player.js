@@ -127,6 +127,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
     
         // Aplicar las velocidades al jugador
         this.body.setVelocity(velocityX, velocityY);
+        if(this.scene.time.now > this.lastHurtTime + this.damageCooldown){
+            this.setTint(0xffffff);
+        }
     }
 
     shoot(dirX, dirY) {
@@ -170,6 +173,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         // Verificamos si el cooldown ha pasado desde el último daño
         const currentTime = this.scene.time.now; // Obtiene el tiempo actual en milisegundos
         if (currentTime - this.lastHurtTime >= this.damageCooldown) {
+            this.setTint(0xff0000);
           this.health--; // Reducir vida
           this.lastHurtTime = currentTime; // Actualizar el último tiempo de daño
     

@@ -15,10 +15,12 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y){
     super(scene, x, y, 'enemy');
     this.health = 2;
+    this.stunCounter = 0;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
     this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
+    this.scene.physics.add.collider(this, scene.enemyGroup);
   }
 
   hitPlayer(enemy, player) {
@@ -28,8 +30,10 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
   hitBullet(enemy, bullet){
     //Enemigo muere
+    this.stunCounter = 30;
     this.health--;
     if(this.health <= 0){
+      this.setTint(0xff0000);
       this.destroy();
     }
     bullet.destroy();
@@ -38,7 +42,14 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
   preUpdate(t, dt) {
     super.preUpdate(t, dt);
     this.play(`cuca`, true);
-    this.scene.physics.moveToObject(this, this.scene.player, 120);
+    if(this.stunCounter>0){
+      this.stunCounter--;
+      this.setTint(0xff0000);
+      this.body.setVelocity(0, 0);
+    } else {
+      this.scene.physics.moveToObject(this, this.scene.player, 120);
+      this.setTint(0xffffff);
+    }
   }
 
 }

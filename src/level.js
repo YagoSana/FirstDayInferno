@@ -27,13 +27,14 @@ export default class Level extends Phaser.Scene {
         this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, "background")
         .setOrigin(0.5) // Centrar la imagen
         .setScale(2); // Ajustar el tamaño si es necesario
-        this.physics.world.setBounds((1000-500)/2, 0, 500, 500);
+        //this.physics.world.setBounds((1000-500)/2, 0, 500, 500);
         this.stars = 10;
         this.bases = this.add.group();
         this.player = new Player(this, 200, 300);
         this.platformGroup = this.physics.add.staticGroup();
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
+        this.enemyGroup.addCollidesWith(this.enemyGroup);
 
         this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 350));
         this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 350));
@@ -41,6 +42,8 @@ export default class Level extends Phaser.Scene {
         //this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 100));
         //this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 100));
         this.enemyGroup.add(new Enemy(this, 500, 250));
+        this.enemyGroup.add(new Enemy(this, 400, 250));
+
         this.spawn();
 
     }
