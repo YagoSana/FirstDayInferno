@@ -2,7 +2,8 @@ import Phaser from 'phaser';
 
 export default class Bullet extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, dirX, dirY, velocityX, velocityY, isPlayer) {
-        super(scene, x, y, "bullet"); // Asegúrate de tener la imagen cargada en preload()
+        const spriteKey = isPlayer ? 'bullet' : 'arrow';
+        super(scene, x, y, spriteKey); // Asegúrate de tener la imagen cargada en preload()
         scene.add.existing(this);
         scene.physics.add.existing(this);
         if(isPlayer){
@@ -12,6 +13,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
         if(!isPlayer){
             scene.enemyBulletGroup.add(this);
             this.speed = 200; // Velocidad de la bala
+            this.setScale(1.5);
         };
         // Ajustar la velocidad según la dirección
         if(dirX==1&&velocityX!=0){
@@ -28,6 +30,8 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
         this.scene.physics.add.collider(this, scene.platformGroup, this.explode, null, this);
         this.body.setCollideWorldBounds(true);
         this.body.onWorldBounds = true;
+        const angle = Math.atan2(dirY, dirX); // Obtener el ángulo hacia el que apunta la flecha
+        this.setRotation(angle); // Establecer la rotación de la bala
         this.scene.physics.world.on('worldbounds', (body) => {
             if (body.gameObject === this) { // Verificar si es esta bala
                 this.explode();

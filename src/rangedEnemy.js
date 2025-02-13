@@ -8,6 +8,9 @@ export default class RangedEnemy extends Enemy {
     this.attackCooldown = 0; // Enfriamiento para disparar
     this.attackRange = 300; // Distancia máxima de ataque
     this.attackSpeed = 1000; // Enfriamiento entre disparos en milisegundos
+    this.health=4;
+    this.speed = 90;
+    this.setScale(2);
   }
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
@@ -22,6 +25,9 @@ export default class RangedEnemy extends Enemy {
         this.shoot();
         this.attackCooldown = this.attackSpeed;
       }
+    }
+    else{
+      this.scene.physics.moveToObject(this, this.scene.player, this.speed);
     }
     
     // Reducir el tiempo de cooldown

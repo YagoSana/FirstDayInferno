@@ -40,8 +40,8 @@ export default class Level extends Phaser.Scene {
         //this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 100));
         //this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 100));
         this.player = new Player(this, 500, 250);
-        //this.enemyGroup.add(new Enemy(this, 1000, 250));
-        //this.enemyGroup.add(new Enemy(this, 2000, 250));
+        this.enemyGroup.add(new Enemy(this, 1000, 250));
+        this.enemyGroup.add(new Enemy(this, 2000, 250));
         this.enemyGroup.add(new RangedEnemy(this, 1000, 500));
         this.cameras.main.setBounds(0, 0, 2048, 1024);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
