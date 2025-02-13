@@ -10,19 +10,42 @@
     <title>Inicio</title>
 </head>
 
-<body>
-    <div class="home_containter">
-        <div class="play_button">
-        <button class="start" onclick="window.location.href='/FirstDayInferno/game.html'">JUGAR</button>
-        </div>
-        <div class="other_buttons">
+<body class="h-100">
+    <header th:replace="~{fragments/nav.html :: nav}"></header>
 
+    <div id="homepage-main-container" class="container d-flex flex-column align-items-center justify-content-center text-center mt-5">
+
+        <div class="container">
+
+   
+
+            <!-- Título -->
+            <div class="container mt-5">
+                <h1 id="title" class="display-1">First Day Inferno</h1>
+            </div>
+
+            <div id="keywords-container" class="container">
+             SOBREVIVE AL VERDADERO INFIERNO (ser universitario)
+           
+        </div>
+       
+        <!-- Botones -->
+        <div class="container d-flex align-items-center justify-content-center mt-3 gap-3">
+            <button class="start" onclick="window.location.href='/FirstDayInferno/game.html'">JUGAR</button>
+           <!-- <a href="/ranking"> <button type="button" class="btn-outline-primary">Ranking</button></a>-->
+            <div id="homepage-character-container">
+                <img id="homepage-character" src="/FirstDayInferno/assets/sprites/base.png">
+            </div>
             <button class="control_button" onclick="window.location.href='/FirstDayInferno/controls.html'"> CONTROLES </button>
             <button class="cautores_button" onclick="window.location.href='/FirstDayInferno/autores.html'"> AUTORES </button>
-
-            </button>
         </div>
-    </div>
+
+
+    <!-- Degradado en la parte inferior -->
+    <div class="degradado"></div>
+    <th:block th:replace="~{frEstrateagments/footer.html :: footer}" />
+
+    <script type="module" src="./js/animation.js"></script>
 </body>
 
 </html>
