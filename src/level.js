@@ -24,28 +24,25 @@ export default class Level extends Phaser.Scene {
      * Creación de los elementos de la escena principal de juego
      */
     create() {
-        this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, "background")
-        .setOrigin(0.5) // Centrar la imagen
-        .setScale(2); // Ajustar el tamaño si es necesario
-        //this.physics.world.setBounds((1000-500)/2, 0, 500, 500);
+        this.add.image(2048 / 2, 1024 / 2, "background") // Centrado en (1024, 512)
+    .setOrigin(0.5)
+    .setScale(2); // Escalado al doble
+        this.physics.world.setBounds(0, 0, 2048, 1024);
         this.stars = 10;
         this.bases = this.add.group();
-        this.player = new Player(this, 200, 300);
+        this.player = new Player(this, 500, 250);
         this.platformGroup = this.physics.add.staticGroup();
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
-        this.enemyGroup.addCollidesWith(this.enemyGroup);
-
-        this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 350));
-        this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 350));
+        //this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 350));
+        //this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 350));
         //this.platformGroup.add(new Platform(this, this.player, this.bases, 500, 200));
         //this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 100));
         //this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 100));
-        this.enemyGroup.add(new Enemy(this, 500, 250));
-        this.enemyGroup.add(new Enemy(this, 400, 250));
-
-        this.spawn();
-
+        this.enemyGroup.add(new Enemy(this, 1000, 250));
+        this.enemyGroup.add(new Enemy(this, 2000, 250));
+        this.cameras.main.setBounds(0, 0, 2048, 1024);
+        this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
     }
 
     /**
@@ -53,24 +50,12 @@ export default class Level extends Phaser.Scene {
      * @param {Array<Base>} from Lista de bases sobre las que se puede crear una estrella
      * Si es null, entonces se crea aleatoriamente sobre cualquiera de las bases existentes
      */
-    spawn(from = null) {
-        Phaser.Math.RND.pick(from || this.bases.children.entries).spawn();
-    }
+    
 
     /**
      * Método que se ejecuta al coger una estrella. Se pasa la base
      * sobre la que estaba la estrella cogida para evitar repeticiones
      * @param {Base} base La base sobre la que estaba la estrella que se ha cogido
      */
-    starPickt(base) {
-        this.player.point();
-        if (this.player.score == this.stars) {
-            this.scene.start('end');
-        }
-        else {
-            let s = this.bases.children.entries;
-            this.spawn(s.filter(o => o !== base));
-
-        }
-    }
+    
 }
