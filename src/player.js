@@ -21,7 +21,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.scene.physics.add.existing(this);
         // Queremos que el jugador no se salga de los límites del mundo
         this.body.setCollideWorldBounds();
-        this.speed = 150;
+        this.speed = 180;
         this.body.setAllowGravity(false);
         // Esta label es la UI en la que pondremos la puntuación del jugador
         this.label = this.scene.add.text(10, 10, "", {fontSize: 20});
@@ -74,31 +74,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
      */
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
-    
-        let velocityX = 0;
-        let velocityY = 0;
-        let newAnimation = `idle-${this.lastDirection}`; //animacion por defecto
-    
-        if (this.cursors.up.isDown) {
-            velocityY = -this.speed;
-            this.lastDirection = 'back';
-            newAnimation = "walk-back";
-        } else if (this.cursors.down.isDown) {
-            velocityY = this.speed;
-            this.lastDirection = 'front';
-            newAnimation = "walk-front";
-        }
-    
-        if (this.cursors.left.isDown) {
-            velocityX = -this.speed;
-            this.lastDirection = 'left';
-            newAnimation = "walk-left";
-        } else if (this.cursors.right.isDown) {
-            velocityX = this.speed;
-            this.lastDirection = 'right';
-            newAnimation = "walk-right";
-        }
-
         // Manejo de disparo
         if (t > this.lastShot + this.shootCooldown) {
             if (this.shootKeys.shootUp.isDown) 
@@ -110,25 +85,57 @@ export default class Player extends Phaser.GameObjects.Sprite {
             else if (this.shootKeys.shootRight.isDown) 
                 this.shoot(1, 0);
         }
+        let acceleration = 300; // Aceleración en px/s²
+    let deceleration = 600; // Desaceleración en px/s²
+    let maxSpeed = this.speed; // Velocidad máxima permitida
 
-        // Si no se mueve, aplicar la animacion idle segun la ultima direccion
-        if (velocityX === 0 && velocityY === 0) {
-            if (!this.anims.currentAnim || !this.anims.currentAnim.key.startsWith('shoot')) {
-                this.play(`idle-${this.lastDirection}`, true);
-            }
+    let velocityX = this.body.velocity.x;
+    let velocityY = this.body.velocity.y;
+
+    let newAnimation = `idle-${this.lastDirection}`; // Animación por defecto
+
+    if (this.cursors.up.isDown) {
+        velocityY = Phaser.Math.Clamp(velocityY - acceleration * (dt / 1000), -maxSpeed, maxSpeed);
+        this.lastDirection = 'back';
+        newAnimation = "walk-back";
+    } else if (this.cursors.down.isDown) {
+        velocityY = Phaser.Math.Clamp(velocityY + acceleration * (dt / 1000), -maxSpeed, maxSpeed);
+        this.lastDirection = 'front';
+        newAnimation = "walk-front";
+    } else {
+        // Aplicar desaceleración progresiva cuando no se mueve
+        velocityY = Phaser.Math.Clamp(velocityY - Math.sign(velocityY) * deceleration * (dt / 1000), -maxSpeed, maxSpeed);
+        if (Math.abs(velocityY) < 10) velocityY = 0;
+    }
+
+    if (this.cursors.left.isDown) {
+        velocityX = Phaser.Math.Clamp(velocityX - acceleration * (dt / 1000), -maxSpeed, maxSpeed);
+        this.lastDirection = 'left';
+        newAnimation = "walk-left";
+    } else if (this.cursors.right.isDown) {
+        velocityX = Phaser.Math.Clamp(velocityX + acceleration * (dt / 1000), -maxSpeed, maxSpeed);
+        this.lastDirection = 'right';
+        newAnimation = "walk-right";
+    } else {
+        velocityX = Phaser.Math.Clamp(velocityX - Math.sign(velocityX) * deceleration * (dt / 1000), -maxSpeed, maxSpeed);
+        if (Math.abs(velocityX) < 10) velocityX = 0;
+    }
+
+    if (velocityX === 0 && velocityY === 0) {
+        if (!this.anims.currentAnim || !this.anims.currentAnim.key.startsWith('shoot')) {
+            this.play(`idle-${this.lastDirection}`, true);
         }
-
-        // Cambia la animacion solo si no es la misma ya en ejecucion
+    } else {
         if (!this.anims.currentAnim || !this.anims.currentAnim.key.startsWith('shoot')) {
             this.anims.play(newAnimation, true);
         }
-    
-        // Aplicar las velocidades al jugador
-        this.body.setVelocity(velocityX, velocityY);
-        //Animacion daño
-        if(this.scene.time.now > this.lastHurtTime + this.damageCooldown){
-            this.setTint(0xffffff);
-        }
+    }
+
+    this.body.setVelocity(velocityX, velocityY);
+
+    if (this.scene.time.now > this.lastHurtTime + this.damageCooldown) {
+        this.setTint(0xffffff);
+    }
     }
 
     shoot(dirX, dirY) {

@@ -36,6 +36,17 @@ export default class RangedEnemy extends Enemy {
     }
   }
 
+  hitBullet(enemy, bullet){
+    //Enemigo muere
+    this.stunCounter = 30;
+    this.health--;
+    if(this.health <= 0){
+      this.setTint(0xff0000);
+      this.destroy();
+    }
+    bullet.explode();
+  }
+
   // Función para disparar un proyectil
   shoot() {
     // Calcular la dirección hacia el jugador
