@@ -3,7 +3,7 @@ import Player from './player.js';
 import Phaser from 'phaser';
 import Enemy from './enemy.js';
 import RangedEnemy from './rangedEnemy.js';
-
+import Nerd from "./nerd.js"
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
  * sobre las que se sitúan las bases en las podrán aparecer las estrellas. 
@@ -45,6 +45,8 @@ export default class Level extends Phaser.Scene {
         this.enemyGroup.add(new Enemy(this, 1000, 250));
         this.enemyGroup.add(new Enemy(this, 2000, 250));
         this.enemyGroup.add(new RangedEnemy(this, 1000, 500));
+        //this.enemyGroup.add(new Nerd(this, 900, 500));
+
         this.cameras.main.setBounds(0, 0, 2048, 1024);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
         new Item(this, 100, 100);

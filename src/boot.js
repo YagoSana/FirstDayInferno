@@ -12,6 +12,9 @@ import background from "../assets/sprites/background.png";
 import rangedenemy from "../assets/sprites/arquero.png";
 import puff from "../assets/sprites/puff.png";
 import arrow from "../assets/sprites/arrow.png";
+import nerd from "../assets/sprites/nerd.png";
+//import nerd_shoot from "../assets/sprites/nerd_shoot"
+
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
  * Esta escena se puede mejorar añadiendo una imagen del juego y una
@@ -37,6 +40,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image("bullet", bullet);
     this.load.image("background", background); // Carga la imagen del fondo
     this.load.image("arrow", arrow);
+    this.load.image("nerd", nerd);
 
     this.load.spritesheet("enemy", enemy, {
       frameWidth: 32, //cada frame tiene este ancho
@@ -46,6 +50,11 @@ export default class Boot extends Phaser.Scene {
     //this.load.setPath('assets/sprites/');
 
     this.load.spritesheet("rangedenemy", rangedenemy, {
+      frameWidth: 32, //cada frame tiene este ancho
+      frameHeight: 32, //todos son 32 px de alto
+    });
+
+    this.load.spritesheet("nerd", nerd, {
       frameWidth: 32, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
     });
@@ -68,8 +77,25 @@ export default class Boot extends Phaser.Scene {
     frameWidth: 32,
     frameHeight: 32,
   });
+/*
+  this.load.spritesheet('nerd_shoot', nerd_shoot, {
+    key: "nerd-attack",
+    frames: this.anims.generateFrameNumbers("nerd", { start: 6, end: 10 }), // Ajusta según tu spritesheet
+    frameRate: 10,
+    repeat: 0, // Se ejecuta una sola vez
+  });
+
+  this.load.spritesheet('nerdmove', nerd_move, {
+    key: "nerd-attack",
+    frames: this.anims.generateFrameNumbers("nerd", { start: 6, end: 10 }), // Ajusta según tu spritesheet
+    frameRate: 10,
+    repeat: 0, // Se ejecuta una sola vez
+  });
+*/  
+
   }
 
+  
   /**
    * Creación de la escena. En este caso, solo cambiamos a la escena que representa el
    * nivel del juego
@@ -180,7 +206,20 @@ export default class Boot extends Phaser.Scene {
       frameRate: 24,
       repeat: 0,
     });
-
+    /*
+    this.anims.create({
+      key: "nerd-move",
+      frames: this.anims.generateFrameNumbers("nerd", { start: 0, end: 5 }),
+      frameRate: 12,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "nerd-shoot",
+      frames: this.anims.generateFrameNumbers("nerd", { start: 0, end: 5 }),
+      frameRate: 12,
+      repeat: -1,
+    });
+*/    
     this.scene.start("level");
   }
 }
