@@ -12,8 +12,8 @@ import background from "../assets/sprites/background.png";
 import rangedenemy from "../assets/sprites/arquero.png";
 import puff from "../assets/sprites/puff.png";
 import arrow from "../assets/sprites/arrow.png";
-import nerd from "../assets/sprites/nerd.png";
-//import nerd_shoot from "../assets/sprites/nerd_shoot"
+import nerdmove from "../assets/sprites/nerd-move.png";
+import nerdshoot from "../assets/sprites/nerd-shoot.png"
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -40,7 +40,6 @@ export default class Boot extends Phaser.Scene {
     this.load.image("bullet", bullet);
     this.load.image("background", background); // Carga la imagen del fondo
     this.load.image("arrow", arrow);
-    this.load.image("nerd", nerd);
 
     this.load.spritesheet("enemy", enemy, {
       frameWidth: 32, //cada frame tiene este ancho
@@ -50,11 +49,6 @@ export default class Boot extends Phaser.Scene {
     //this.load.setPath('assets/sprites/');
 
     this.load.spritesheet("rangedenemy", rangedenemy, {
-      frameWidth: 32, //cada frame tiene este ancho
-      frameHeight: 32, //todos son 32 px de alto
-    });
-
-    this.load.spritesheet("nerd", nerd, {
       frameWidth: 32, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
     });
@@ -72,26 +66,22 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('player_shoot', player_shoot, {
       frameWidth: 20,
       frameHeight: 32,
-   });
+    });
    this.load.spritesheet('puff', puff, {
-    frameWidth: 32,
-    frameHeight: 32,
-  });
-/*
-  this.load.spritesheet('nerd_shoot', nerd_shoot, {
-    key: "nerd-attack",
-    frames: this.anims.generateFrameNumbers("nerd", { start: 6, end: 10 }), // Ajusta según tu spritesheet
-    frameRate: 10,
-    repeat: 0, // Se ejecuta una sola vez
-  });
+      frameWidth: 32,
+      frameHeight: 32,
+    });
 
-  this.load.spritesheet('nerdmove', nerd_move, {
-    key: "nerd-attack",
-    frames: this.anims.generateFrameNumbers("nerd", { start: 6, end: 10 }), // Ajusta según tu spritesheet
-    frameRate: 10,
-    repeat: 0, // Se ejecuta una sola vez
-  });
-*/  
+    this.load.spritesheet('nerdshoot', nerdshoot, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet('nerdmove', nerdmove, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+ 
 
   }
 
@@ -206,20 +196,21 @@ export default class Boot extends Phaser.Scene {
       frameRate: 24,
       repeat: 0,
     });
-    /*
+    
     this.anims.create({
-      key: "nerd-move",
-      frames: this.anims.generateFrameNumbers("nerd", { start: 0, end: 5 }),
-      frameRate: 12,
+      key: "nerdmove",
+      frames: this.anims.generateFrameNames("nerdmove", { frames: [0,1,2,3,4,5,6,7,8,9] }),
+      frameRate: 10,
       repeat: -1,
     });
+
     this.anims.create({
-      key: "nerd-shoot",
-      frames: this.anims.generateFrameNumbers("nerd", { start: 0, end: 5 }),
-      frameRate: 12,
-      repeat: -1,
+      key: "nerdshoot",
+      frames: this.anims.generateFrameNames("nerdshoot", { frames: [0,1,2,3,4,5,6,7,8,9] }),
+      frameRate: 10,
+      repeat: 0,
     });
-*/    
+  
     this.scene.start("level");
   }
 }

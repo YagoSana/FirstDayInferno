@@ -1,22 +1,41 @@
-import Enemy from './enemy'; // Importa la clase base
+import Phaser from 'phaser';
 import Bullet from './bullet.js';
 
-export default class RangedEnemy extends Enemy {
+export default class RangedEnemy extends Phaser.GameObjects.Sprite {
   
+  /**
+   * Constructor de la Plataforma
+   * @param {Phaser.Scene} scene Escena a la que pertenece la plataforma
+   * @param {number} x Coordenada x
+   * @param {number} y Coordenada y
+   */
+
   constructor(scene, x, y) {
-    super(scene, x, y, 'rangedenemy'); // Llamada al constructor de la clase base (Enemy)
+    super(scene, x, y, 'nerdmove'); // Llamada al constructor de la clase base (Enemy)
     this.attackCooldown = 0; // Enfriamiento para disparar
     this.attackRange = 300; // Distancia máxima de ataque
     this.attackSpeed = 1000; // Enfriamiento entre disparos en milisegundos
     this.health=4;
     this.speed = 90;
+    this.stunCounter = 0;
     this.setScale(2);
+    this.scene.add.existing(this);
+    this.scene.physics.add.existing(this);
+    this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
+    this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
+    this.scene.physics.add.collider(this, scene.enemyGroup);
   }
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
   preUpdate(t, dt) {
     super.preUpdate(t, dt); // Llamamos a la función preUpdate de la clase base
-    this.play(`move`, true);
+    if (this.anims.currentAnim && this.anims.currentAnim.key === 'nerdshoot') {
+      this.setTint(0xffff00);;
+    }
+    else{
+      this.setTint(0xffffff);
+      this.play(`nerdmove`, true);
+    }
     // Si el enemigo está lejos del jugador, sigue al jugador
     if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <= this.attackRange) {
       this.body.setVelocity(0,0);
@@ -34,6 +53,15 @@ export default class RangedEnemy extends Enemy {
     if (this.attackCooldown > 0) {
       this.attackCooldown -= dt;
     }
+
+    if(this.stunCounter>0){
+      this.stunCounter--;
+      if(this.stunCounter>20){
+        this.setTint(0xff0000);
+      }      
+    } else {
+      this.setTint(0xffffff);
+    }
   }
 
   hitBullet(enemy, bullet){
@@ -49,6 +77,10 @@ export default class RangedEnemy extends Enemy {
 
   // Función para disparar un proyectil
   shoot() {
+    this.play(`nerdshoot`, true);
+    this.once('animationcomplete', () => {
+      this.play(`nerdmove`);
+  });
     // Calcular la dirección hacia el jugador
     const dirX = this.scene.player.x - this.x; // Diferencia en X entre el jugador y el enemigo
     const dirY = this.scene.player.y - this.y; // Diferencia en Y entre el jugador y el enemigo
