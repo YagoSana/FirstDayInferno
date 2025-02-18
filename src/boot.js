@@ -78,7 +78,7 @@ export default class Boot extends Phaser.Scene {
 
     //this.load.image("background", background); // Carga la imagen del fondo
 
-    this.load.tilemapTiledJSON("map", mapa); // Carga el mapa
+    
 
     this.load.image("Grass", img_grass);
     this.load.image("Plantas", img_plantas);
@@ -86,6 +86,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image("Sombras", img_sombras);
     this.load.image("SombrasPlantas", img_sombra_plantas);
 
+    this.load.tilemapTiledJSON("map", mapa); // Carga el mapa
 
   }
 
@@ -95,50 +96,7 @@ export default class Boot extends Phaser.Scene {
    */
   create() {
 
-    this.map = this.make.tilemap({
-      key: "map",
-      tileWidth: 32,
-      tileHeight: 32,
-    });
-
-    const tileset1 = this.map.addTilesetImage('patronGrass', 'Grass');
-    const tileset2 = this.map.addTilesetImage('patronPlantas', 'Plantas');
-    const tileset3 = this.map.addTilesetImage('patronProps', 'Props');
-    const tileset4 = this.map.addTilesetImage('patronSombras', 'Sombras');
-    const tileset5 = this.map.addTilesetImage('patronSombrasPlantas', 'SombrasPlantas');
-
-    const layer1 = this.map.createLayer('suelo', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer2 = this.map.createLayer('cesped', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer3 = this.map.createLayer('propsSinColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer4 = this.map.createLayer('sombrasPropsConColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer5 = this.map.createLayer('propsConColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer6 = this.map.createLayer('arboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer7 = this.map.createLayer('sombrasArboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    /*
-    const layer8 = this.map.getObjectLayer('arbustos');
-    const layer9 = this.map.getObjectLayer('piedras');
-    const layer10 = this.map.getObjectLayer('sombrasPiedras');
-    */
-
-
-    layer1.setVisible(true);
-    layer2.setVisible(true);
-    layer3.setVisible(true);
-    layer4.setVisible(true);
-    layer5.setVisible(true);
-    layer6.setVisible(true);
-    layer7.setVisible(true);
-
-    layer1.depth = 0;
-    layer2.depth = 1;
-    layer3.depth = 2;
-    layer4.depth = 3;
-    layer5.depth = 4;
-    layer6.depth = 5;
-    layer7.depth = 6;
-
-
-
+    
     this.anims.create({
       key: "idle-front",
       frames: this.anims.generateFrameNames("player", {
