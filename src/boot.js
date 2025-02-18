@@ -12,6 +12,14 @@ import background from "../assets/sprites/background.png";
 import rangedenemy from "../assets/sprites/arquero.png";
 import puff from "../assets/sprites/puff.png";
 import arrow from "../assets/sprites/arrow.png";
+
+import mapa from "../assets/map/introMedicina.json";
+import img_grass from "../assets/map/TX Tileset Grass.png";
+import img_plantas from "../assets/map/TX Plant.png";
+import img_props from "../assets/map/TX Props.png";
+import img_sombras from "../assets/map/TX Shadow.png";
+import img_sombra_plantas from "../assets/map/TX Shadow Plant.png";
+
 import nerdmove from "../assets/sprites/nerd-move.png";
 import nerdshoot from "../assets/sprites/nerd-shoot.png"
 
@@ -38,7 +46,6 @@ export default class Boot extends Phaser.Scene {
     this.load.image("base", base);
     this.load.image("item", item);
     this.load.image("bullet", bullet);
-    this.load.image("background", background); // Carga la imagen del fondo
     this.load.image("arrow", arrow);
 
     this.load.spritesheet("enemy", enemy, {
@@ -63,26 +70,14 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
-    this.load.spritesheet('player_shoot', player_shoot, {
+    this.load.spritesheet("player_shoot", player_shoot, {
       frameWidth: 20,
       frameHeight: 32,
-    });
+   });
    this.load.spritesheet('puff', puff, {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
-
-    this.load.spritesheet('nerdshoot', nerdshoot, {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
-
-    this.load.spritesheet('nerdmove', nerdmove, {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
- 
-
+    frameWidth: 32,
+    frameHeight: 32,
+  });
   }
 
   
@@ -91,30 +86,40 @@ export default class Boot extends Phaser.Scene {
    * nivel del juego
    */
   create() {
+
+    
     this.anims.create({
       key: "idle-front",
-      frames: this.anims.generateFrameNames("player", { frames: [0, 1, 2, 3, 4] }),
+      frames: this.anims.generateFrameNames("player", {
+        frames: [0, 1, 2, 3, 4],
+      }),
       frameRate: 5,
       repeat: -1,
     });
 
     this.anims.create({
       key: "idle-back",
-      frames: this.anims.generateFrameNames("player", { frames: [5,6,7,8,9]}),
+      frames: this.anims.generateFrameNames("player", {
+        frames: [5, 6, 7, 8, 9],
+      }),
       frameRate: 5,
       repeat: -1,
     });
 
     this.anims.create({
       key: "idle-left",
-      frames: this.anims.generateFrameNames("player", { frames: [10,11,12,13,14]}),
+      frames: this.anims.generateFrameNames("player", {
+        frames: [10, 11, 12, 13, 14],
+      }),
       frameRate: 5,
       repeat: -1,
     });
 
     this.anims.create({
       key: "idle-right",
-      frames: this.anims.generateFrameNames("player", { frames:[15,16,17,18,19]}),
+      frames: this.anims.generateFrameNames("player", {
+        frames: [15, 16, 17, 18, 19],
+      }),
       frameRate: 5,
       repeat: -1,
     });
@@ -122,77 +127,106 @@ export default class Boot extends Phaser.Scene {
     // Animaciones de caminar
     this.anims.create({
       key: "walk-front",
-      frames: this.anims.generateFrameNumbers("player_walk", { start: 0, end: 7 }),
+      frames: this.anims.generateFrameNumbers("player_walk", {
+        start: 0,
+        end: 7,
+      }),
       frameRate: 8,
       repeat: -1,
     });
 
     this.anims.create({
       key: "walk-back",
-      frames: this.anims.generateFrameNumbers("player_walk", { start: 8, end: 15 }),
+      frames: this.anims.generateFrameNumbers("player_walk", {
+        start: 8,
+        end: 15,
+      }),
       frameRate: 8,
       repeat: -1,
     });
 
     this.anims.create({
       key: "walk-left",
-      frames: this.anims.generateFrameNumbers("player_walk", { start: 16, end: 23 }),
+      frames: this.anims.generateFrameNumbers("player_walk", {
+        start: 16,
+        end: 23,
+      }),
       frameRate: 8,
       repeat: -1,
     });
 
     this.anims.create({
       key: "walk-right",
-      frames: this.anims.generateFrameNumbers("player_walk", { start: 24, end: 31 }),
+      frames: this.anims.generateFrameNumbers("player_walk", {
+        start: 24,
+        end: 31,
+      }),
       frameRate: 8,
       repeat: -1,
     });
 
     this.anims.create({
       key: "shoot-front",
-      frames: this.anims.generateFrameNumbers("player_shoot", { start: 0, end: 4 }),
+      frames: this.anims.generateFrameNumbers("player_shoot", {
+        start: 0,
+        end: 4,
+      }),
       frameRate: 12,
-      repeat: 0
+      repeat: 0,
     });
-  
+
     this.anims.create({
-        key: "shoot-back",
-        frames: this.anims.generateFrameNumbers("player_shoot", { start: 5, end: 9 }),
-        frameRate: 12,
-        repeat: 0
+      key: "shoot-back",
+      frames: this.anims.generateFrameNumbers("player_shoot", {
+        start: 5,
+        end: 9,
+      }),
+      frameRate: 12,
+      repeat: 0,
     });
-    
+
     this.anims.create({
-        key: "shoot-left",
-        frames: this.anims.generateFrameNumbers("player_shoot", { start: 10, end: 14 }),
-        frameRate: 12,
-        repeat: 0
+      key: "shoot-left",
+      frames: this.anims.generateFrameNumbers("player_shoot", {
+        start: 10,
+        end: 14,
+      }),
+      frameRate: 12,
+      repeat: 0,
     });
-    
+
     this.anims.create({
-        key: "shoot-right",
-        frames: this.anims.generateFrameNumbers("player_shoot", { start: 15, end: 19 }),
-        frameRate: 12,
-        repeat: 0
+      key: "shoot-right",
+      frames: this.anims.generateFrameNumbers("player_shoot", {
+        start: 15,
+        end: 19,
+      }),
+      frameRate: 12,
+      repeat: 0,
     });
 
     this.anims.create({
       key: "cuca",
-      frames: this.anims.generateFrameNames("enemy", { frames: [0,1,2,3,4,5,6,7,8,9]}),
+      frames: this.anims.generateFrameNames("enemy", {
+        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      }),
       frameRate: 20,
       repeat: -1,
     });
 
     this.anims.create({
       key: "move",
-      frames: this.anims.generateFrameNames("rangedenemy", { start: 0, end: 15}),
+      frames: this.anims.generateFrameNames("rangedenemy", {
+        start: 0,
+        end: 15,
+      }),
       frameRate: 16,
       repeat: -1,
     });
 
     this.anims.create({
       key: "bullet-puff",
-      frames: this.anims.generateFrameNames("puff", { start: 0, end: 7}),
+      frames: this.anims.generateFrameNames("puff", { start: 0, end: 7 }),
       frameRate: 24,
       repeat: 0,
     });
