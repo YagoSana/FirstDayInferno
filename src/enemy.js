@@ -16,6 +16,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     super(scene, x, y, 'enemy');
     this.health = 2;
     this.stunCounter = 0;
+    this.speed = 120;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
@@ -50,7 +51,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
       }      
       this.body.setVelocity(0, 0);
     } else {
-      this.scene.physics.moveToObject(this, this.scene.player, 120);
+      this.scene.physics.moveToObject(this, this.scene.player, this.speed);
       this.setTint(0xffffff);
     }
   }

@@ -13,7 +13,6 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
         if(!isPlayer){
             scene.enemyBulletGroup.add(this);
             this.speed = 200; // Velocidad de la bala
-            this.setScale(1.5);
         };
         // Ajustar la velocidad según la dirección
         if(dirX==1&&velocityX!=0){

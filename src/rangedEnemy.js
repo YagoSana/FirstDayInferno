@@ -18,7 +18,7 @@ export default class RangedEnemy extends Phaser.GameObjects.Sprite {
     this.health=4;
     this.speed = 90;
     this.stunCounter = 0;
-    this.setScale(2);
+    //this.setScale(2);
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
