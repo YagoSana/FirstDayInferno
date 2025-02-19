@@ -42,6 +42,8 @@ export default class Boot extends Phaser.Scene {
    * Carga de los assets del juego
    */
   preload() {
+
+
     this.load.image("platform", platform);
     this.load.image("base", base);
     this.load.image("item", item);
@@ -73,21 +75,30 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("player_shoot", player_shoot, {
       frameWidth: 20,
       frameHeight: 32,
-   });
-   this.load.spritesheet('puff', puff, {
-    frameWidth: 32,
-    frameHeight: 32,
-  });
+    });
+    this.load.spritesheet('puff', puff, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.image("Grass", img_grass);
+    this.load.image("Plantas", img_plantas);
+    this.load.image("Props", img_props);
+    this.load.image("Sombras", img_sombras);
+    this.load.image("SombrasPlantas", img_sombra_plantas);
+
+    this.load.tilemapTiledJSON("map", mapa); // Carga el mapa
+
   }
 
-  
+
   /**
    * Creación de la escena. En este caso, solo cambiamos a la escena que representa el
    * nivel del juego
    */
   create() {
 
-    
+
     this.anims.create({
       key: "idle-front",
       frames: this.anims.generateFrameNames("player", {
@@ -230,21 +241,21 @@ export default class Boot extends Phaser.Scene {
       frameRate: 24,
       repeat: 0,
     });
-    
+
     this.anims.create({
       key: "nerdmove",
-      frames: this.anims.generateFrameNames("nerdmove", { frames: [0,1,2,3,4,5,6,7,8,9] }),
+      frames: this.anims.generateFrameNames("nerdmove", { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] }),
       frameRate: 10,
       repeat: -1,
     });
 
     this.anims.create({
       key: "nerdshoot",
-      frames: this.anims.generateFrameNames("nerdshoot", { frames: [0,1,2,3,4,5,6,7,8,9] }),
+      frames: this.anims.generateFrameNames("nerdshoot", { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] }),
       frameRate: 10,
       repeat: 0,
     });
-  
+
     this.scene.start("level");
   }
 }

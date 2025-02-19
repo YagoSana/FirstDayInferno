@@ -1,8 +1,8 @@
-import Item from './item.js';
-import Player from './player.js';
-import Phaser from 'phaser';
-import Enemy from './enemy.js';
-import RangedEnemy from './rangedEnemy.js';
+import Item from "./item.js";
+import Player from "./player.js";
+import Phaser from "phaser";
+import Enemy from "./enemy.js";
+import RangedEnemy from "./rangedEnemy.js";
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas
@@ -20,33 +20,54 @@ export default class Level extends Phaser.Scene {
     super({ key: "level" });
   }
 
-    /**
-     * Creación de los elementos de la escena principal de juego
-     */
-    create() {
-        this.add.image(2048 / 2, 1024 / 2, "background") // Centrado en (1024, 512)
-    .setOrigin(0.5)
-    .setScale(2); // Escalado al doble
-        this.physics.world.setBounds(0, 0, 2048, 1024);
-        this.stars = 10;
-        this.bases = this.add.group();
-        this.platformGroup = this.physics.add.staticGroup();
-        this.bulletGroup = this.physics.add.group();
-        this.enemyGroup = this.physics.add.group();
-        this.enemyBulletGroup = this.physics.add.group();
-        //this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 350));
-        //this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 350));
-        //this.platformGroup.add(new Platform(this, this.player, this.bases, 500, 200));
-        //this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 100));
-        //this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 100));
-        this.player = new Player(this, 500, 250);
-        this.enemyGroup.add(new Enemy(this, 1000, 250));
-        this.enemyGroup.add(new Enemy(this, 2000, 250));
-        this.enemyGroup.add(new RangedEnemy(this, 1000, 500));
-        this.cameras.main.setBounds(0, 0, 2048, 1024);
-        this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
-        new Item(this, 100, 100);
-    }
+  /**
+   * Creación de los elementos de la escena principal de juego
+   */
+  create() {
+
+    var map = this.make.tilemap({ key: 'map' }); // Cargamos el mapa
+
+    var tileset1 = map.addTilesetImage('patronGrass', 'Grass');
+    var tileset2 = map.addTilesetImage('patronPlantas', 'Plantas');
+    var tileset3 = map.addTilesetImage('patronProps', 'Props');
+    var tileset4 = map.addTilesetImage('patronSombras', 'Sombras');
+    var tileset5 = map.addTilesetImage('patronSombrasPlantas', 'SombrasPlantas');
+
+    var layer1 = map.createLayer('suelo', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    var layer2 = map.createLayer('cesped', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    var layer3 = map.createLayer('propsSinColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    var layer4 = map.createLayer('sombrasPropsConColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    var layer5 = map.createLayer('propsConColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    var layer6 = map.createLayer('arboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    var layer7 = map.createLayer('sombrasArboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+
+    layer5.setCollisionByExclusion([-1], true);
+
+    //var layer8 = map.getObjectLayer('arbustos');
+    //var layer9 = map.getObjectLayer('piedras');
+    //var layer10 = map.getObjectLayer('sombrasPiedras');
+
+    //this.add.image(2048 / 2, 1024 / 2, "background").setOrigin(0.5).setScale(2); // Escalado al doble
+    this.physics.world.setBounds(0, 0, 2048, 1024);
+    this.stars = 10;
+    this.bases = this.add.group();
+    this.platformGroup = this.physics.add.staticGroup();
+    this.bulletGroup = this.physics.add.group();
+    this.enemyGroup = this.physics.add.group();
+    this.enemyBulletGroup = this.physics.add.group();
+    //this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 350));
+    //this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 350));
+    //this.platformGroup.add(new Platform(this, this.player, this.bases, 500, 200));
+    //this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 100));
+    //this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 100));
+    this.player = new Player(this, 500, 250);
+    this.enemyGroup.add(new Enemy(this, 1000, 250));
+    this.enemyGroup.add(new Enemy(this, 2000, 250));
+    this.enemyGroup.add(new RangedEnemy(this, 1000, 500));
+    this.cameras.main.setBounds(0, 0, 2048, 1024);
+    this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
+    new Item(this, 100, 100);
+  }
 
   /**
    * Genera una estrella en una de las bases del escenario
