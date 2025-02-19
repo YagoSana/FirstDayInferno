@@ -44,14 +44,14 @@ export default class Level extends Phaser.Scene {
     layer5.setCollisionByExclusion([-1], true);
 
     
-    let arbustos = map.createFromObjects('arbustos', 'arbustos', { key: 'arbustos' });
-    let piedras = map.createFromObjects('piedras', 'piedras', { key: 'piedras' });
-    let sombraspiedras = map.createFromObjects('sombraspiedras', 'sombraspiedras', { key: 'sombraspiedras' });
+    //let arbustos = map.createFromObjects('arbustos', 'arbustos', { key: 'arbustos' });
+    //let piedras = map.createFromObjects('piedras', 'piedras', { key: 'piedras' });
+    //let sombraspiedras = map.createFromObjects('sombraspiedras', 'sombraspiedras', { key: 'sombraspiedras' });
     
     // Crear un grupo de físicas para los objetos
-    this.obstaculos = this.physics.add.staticGroup();
-    this.obstaculos.addMultiple(arbustos);
-    this.obstaculos.addMultiple(piedras);
+    //this.obstaculos = this.physics.add.staticGroup();
+    //this.obstaculos.addMultiple(arbustos);
+    //this.obstaculos.addMultiple(piedras);
     //this.add.image(2048 / 2, 1024 / 2, "background").setOrigin(0.5).setScale(2); // Escalado al doble
     this.physics.world.setBounds(0, 0, 1024, 640);
     this.stars = 10;
