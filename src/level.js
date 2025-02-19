@@ -40,6 +40,13 @@ export default class Level extends Phaser.Scene {
     var layer5 = map.createLayer('propsConColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     var layer6 = map.createLayer('arboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     var layer7 = map.createLayer('sombrasArboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    layer1.setScale(2);
+    layer2.setScale(2);
+    layer3.setScale(2);
+    layer4.setScale(2);
+    layer5.setScale(2);
+    layer6.setScale(2);
+    layer7.setScale(2);
 
     layer5.setCollisionByExclusion([-1], true);
 
@@ -48,7 +55,7 @@ export default class Level extends Phaser.Scene {
     //var layer10 = map.getObjectLayer('sombrasPiedras');
 
     //this.add.image(2048 / 2, 1024 / 2, "background").setOrigin(0.5).setScale(2); // Escalado al doble
-    this.physics.world.setBounds(0, 0, 2048, 1024);
+    this.physics.world.setBounds(0, 0, 2048, 1280);
     this.stars = 10;
     this.bases = this.add.group();
     this.platformGroup = this.physics.add.staticGroup();
@@ -64,7 +71,7 @@ export default class Level extends Phaser.Scene {
     this.enemyGroup.add(new Enemy(this, 1000, 250));
     this.enemyGroup.add(new Enemy(this, 2000, 250));
     this.enemyGroup.add(new RangedEnemy(this, 1000, 500));
-    this.cameras.main.setBounds(0, 0, 2048, 1024);
+    this.cameras.main.setBounds(0, 0, 2048, 1280);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
     new Item(this, 100, 100);
   }

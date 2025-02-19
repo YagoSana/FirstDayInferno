@@ -81,6 +81,16 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
+    this.load.spritesheet('nerdmove', nerdmove, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet('nerdshoot', nerdshoot, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
     this.load.image("Grass", img_grass);
     this.load.image("Plantas", img_plantas);
     this.load.image("Props", img_props);
