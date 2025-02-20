@@ -28,6 +28,7 @@ export default class RangedEnemy extends Phaser.GameObjects.Sprite {
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
   preUpdate(t, dt) {
     super.preUpdate(t, dt); // Llamamos a la función preUpdate de la clase base
+    if(this.health>0){
     if (this.anims.currentAnim && this.anims.currentAnim.key === 'nerdshoot') {
       this.setTint(0xffff00);;
     }
@@ -61,6 +62,7 @@ export default class RangedEnemy extends Phaser.GameObjects.Sprite {
     } else {
       this.setTint(0xffffff);
     }
+    }
   }
 
   hitBullet(enemy, bullet){
@@ -68,8 +70,11 @@ export default class RangedEnemy extends Phaser.GameObjects.Sprite {
     this.stunCounter = 30;
     this.health--;
     if(this.health <= 0){
-      this.setTint(0xff0000);
-      this.destroy();
+      this.body.setVelocity(0,0);
+      this.play("enemydeath", true);
+      this.once('animationcomplete', () => {
+        this.destroy();
+      });
     }
     bullet.explode();
   }
@@ -91,5 +96,5 @@ export default class RangedEnemy extends Phaser.GameObjects.Sprite {
     
     // Crear la bala usando la clase Bullet
     new Bullet(this.scene, this.x, this.y, normalizedDirX, normalizedDirY, 0, 0, false); // Pasar las direcciones y velocidades
-}
+  }
 }

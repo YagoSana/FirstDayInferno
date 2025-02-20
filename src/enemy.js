@@ -36,15 +36,19 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     this.stunCounter = 30;
     this.health--;
     if(this.health <= 0){
-      this.setTint(0xff0000);
-      this.destroy();
+      this.body.setVelocity(0,0);
+      this.play("enemydeath", true);
+      this.once('animationcomplete', () => {
+        this.destroy();
+      });
     }
     bullet.explode();
   }
   
   preUpdate(t, dt) {
     super.preUpdate(t, dt);
-    this.play(`cuca`, true);
+    if(this.health>0){
+      this.play(`cuca`, true);
     if(this.stunCounter>0){
       this.stunCounter--;
       if(this.stunCounter>20){
@@ -54,6 +58,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     } else {
       this.scene.physics.moveToObject(this, this.scene.player, this.speed);
       this.setTint(0xffffff);
+    }
     }
   }
 
