@@ -21,11 +21,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.scene.physics.add.existing(this);
         // Queremos que el jugador no se salga de los límites del mundo
         this.body.setCollideWorldBounds();
-        this.speed = 180;
+        this.speed = 100;
         this.body.setAllowGravity(false);
         // Esta label es la UI en la que pondremos la puntuación del jugador
         this.label = this.scene.add.text(10, 10, "", {fontSize: 20});
         this.label.setScrollFactor(0);
+        this.label.setDepth(10);
         this.cursors = this.scene.input.keyboard.createCursorKeys();
         this.scene.physics.add.collider(this, scene.enemyBulletGroup, this.hurt, null, this);
         this.updateHealth();
@@ -49,8 +50,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
         this.lastShot = 0; // Tiempo del último disparo
         this.shootCooldown = 500; // En milisegundos
-        this.damageCooldown = 500; // En milisegundos
+        this.damageCooldown = 200; // En milisegundos
         this.lastHurtTime = 0;  // Tiempo del último daño
+        this.play("idle-front", true);
     }
 
     /**
@@ -74,68 +76,74 @@ export default class Player extends Phaser.GameObjects.Sprite {
      */
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
-        // Manejo de disparo
-        if (t > this.lastShot + this.shootCooldown) {
-            if (this.shootKeys.shootUp.isDown) 
-                this.shoot(0, -1);
-            else if (this.shootKeys.shootDown.isDown) 
-                this.shoot(0, 1);
-            else if (this.shootKeys.shootLeft.isDown) 
-                this.shoot(-1, 0);
-            else if (this.shootKeys.shootRight.isDown) 
-                this.shoot(1, 0);
+        if(this.anims.currentAnim.key != 'player-death'){
+                    // Manejo de disparo
+                if (t > this.lastShot + this.shootCooldown) {
+                    if (this.shootKeys.shootUp.isDown) 
+                        this.shoot(0, -1);
+                    else if (this.shootKeys.shootDown.isDown) 
+                        this.shoot(0, 1);
+                    else if (this.shootKeys.shootLeft.isDown) 
+                        this.shoot(-1, 0);
+                    else if (this.shootKeys.shootRight.isDown) 
+                        this.shoot(1, 0);
+                }
+                let acceleration = 300; // Aceleración en px/s²
+            let deceleration = 600; // Desaceleración en px/s²
+            let maxSpeed = this.speed; // Velocidad máxima permitida
+
+            let velocityX = this.body.velocity.x;
+            let velocityY = this.body.velocity.y;
+
+            let newAnimation = `idle-${this.lastDirection}`; // Animación por defecto
+
+            if (this.cursors.up.isDown) {
+                velocityY = Phaser.Math.Clamp(velocityY - acceleration * (dt / 1000), -maxSpeed, maxSpeed);
+                this.lastDirection = 'back';
+                newAnimation = "walk-back";
+            } else if (this.cursors.down.isDown) {
+                velocityY = Phaser.Math.Clamp(velocityY + acceleration * (dt / 1000), -maxSpeed, maxSpeed);
+                this.lastDirection = 'front';
+                newAnimation = "walk-front";
+            } else {
+                // Aplicar desaceleración progresiva cuando no se mueve
+                velocityY = Phaser.Math.Clamp(velocityY - Math.sign(velocityY) * deceleration * (dt / 1000), -maxSpeed, maxSpeed);
+                if (Math.abs(velocityY) < 10) velocityY = 0;
+            }
+
+            if (this.cursors.left.isDown) {
+                velocityX = Phaser.Math.Clamp(velocityX - acceleration * (dt / 1000), -maxSpeed, maxSpeed);
+                this.lastDirection = 'left';
+                newAnimation = "walk-left";
+            } else if (this.cursors.right.isDown) {
+                velocityX = Phaser.Math.Clamp(velocityX + acceleration * (dt / 1000), -maxSpeed, maxSpeed);
+                this.lastDirection = 'right';
+                newAnimation = "walk-right";
+            } else {
+                velocityX = Phaser.Math.Clamp(velocityX - Math.sign(velocityX) * deceleration * (dt / 1000), -maxSpeed, maxSpeed);
+                if (Math.abs(velocityX) < 10) velocityX = 0;
+            }
+
+            if (velocityX === 0 && velocityY === 0) {
+                if (!this.anims.currentAnim || !this.anims.currentAnim.key.startsWith('shoot')) {
+                    this.play(`idle-${this.lastDirection}`, true);
+                }
+            } else {
+                if (!this.anims.currentAnim || !this.anims.currentAnim.key.startsWith('shoot')) {
+                    this.anims.play(newAnimation, true);
+                }
+            }
+
+            this.body.setVelocity(velocityX, velocityY);
+
+            if (this.scene.time.now > this.lastHurtTime + this.damageCooldown) {
+                this.setTint(0xffffff);
+            }
         }
-        let acceleration = 300; // Aceleración en px/s²
-    let deceleration = 600; // Desaceleración en px/s²
-    let maxSpeed = this.speed; // Velocidad máxima permitida
-
-    let velocityX = this.body.velocity.x;
-    let velocityY = this.body.velocity.y;
-
-    let newAnimation = `idle-${this.lastDirection}`; // Animación por defecto
-
-    if (this.cursors.up.isDown) {
-        velocityY = Phaser.Math.Clamp(velocityY - acceleration * (dt / 1000), -maxSpeed, maxSpeed);
-        this.lastDirection = 'back';
-        newAnimation = "walk-back";
-    } else if (this.cursors.down.isDown) {
-        velocityY = Phaser.Math.Clamp(velocityY + acceleration * (dt / 1000), -maxSpeed, maxSpeed);
-        this.lastDirection = 'front';
-        newAnimation = "walk-front";
-    } else {
-        // Aplicar desaceleración progresiva cuando no se mueve
-        velocityY = Phaser.Math.Clamp(velocityY - Math.sign(velocityY) * deceleration * (dt / 1000), -maxSpeed, maxSpeed);
-        if (Math.abs(velocityY) < 10) velocityY = 0;
-    }
-
-    if (this.cursors.left.isDown) {
-        velocityX = Phaser.Math.Clamp(velocityX - acceleration * (dt / 1000), -maxSpeed, maxSpeed);
-        this.lastDirection = 'left';
-        newAnimation = "walk-left";
-    } else if (this.cursors.right.isDown) {
-        velocityX = Phaser.Math.Clamp(velocityX + acceleration * (dt / 1000), -maxSpeed, maxSpeed);
-        this.lastDirection = 'right';
-        newAnimation = "walk-right";
-    } else {
-        velocityX = Phaser.Math.Clamp(velocityX - Math.sign(velocityX) * deceleration * (dt / 1000), -maxSpeed, maxSpeed);
-        if (Math.abs(velocityX) < 10) velocityX = 0;
-    }
-
-    if (velocityX === 0 && velocityY === 0) {
-        if (!this.anims.currentAnim || !this.anims.currentAnim.key.startsWith('shoot')) {
-            this.play(`idle-${this.lastDirection}`, true);
+        else{
+            this.body.setVelocity(0, 0);
+            this.setTint(0xffffff);
         }
-    } else {
-        if (!this.anims.currentAnim || !this.anims.currentAnim.key.startsWith('shoot')) {
-            this.anims.play(newAnimation, true);
-        }
-    }
-
-    this.body.setVelocity(velocityX, velocityY);
-
-    if (this.scene.time.now > this.lastHurtTime + this.damageCooldown) {
-        this.setTint(0xffffff);
-    }
     }
 
     shoot(dirX, dirY) {
@@ -184,7 +192,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
           this.lastHurtTime = currentTime; // Actualizar el último tiempo de daño
     
           if (this.health <= 0) {
-            this.scene.scene.start('end'); // Finalizar el juego si la vida llega a 0
+            this.play("player-death", true);
+            this.once('animationcomplete', () => {
+                this.scene.scene.start('end'); // Finalizar el juego si la vida llega a 0
+            });
           }
     
           this.updateHealth();

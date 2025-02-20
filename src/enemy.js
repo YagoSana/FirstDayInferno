@@ -22,6 +22,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
     this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
     this.scene.physics.add.collider(this, scene.enemyGroup);
+    this.setScale(0.5);
   }
 
   hitPlayer(enemy, player) {

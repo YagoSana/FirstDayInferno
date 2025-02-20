@@ -13,12 +13,11 @@ export default class RangedEnemy extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, 'nerdmove'); // Llamada al constructor de la clase base (Enemy)
     this.attackCooldown = 0; // Enfriamiento para disparar
-    this.attackRange = 300; // Distancia máxima de ataque
-    this.attackSpeed = 1000; // Enfriamiento entre disparos en milisegundos
+    this.attackRange = 200; // Distancia máxima de ataque
+    this.attackSpeed = 2000; // Enfriamiento entre disparos en milisegundos
     this.health=4;
     this.speed = 90;
     this.stunCounter = 0;
-    //this.setScale(2);
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);

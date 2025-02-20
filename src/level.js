@@ -27,19 +27,19 @@ export default class Level extends Phaser.Scene {
 
     var map = this.make.tilemap({ key: 'map' }); // Cargamos el mapa
 
-    var tileset1 = map.addTilesetImage('patronGrass', 'Grass');
-    var tileset2 = map.addTilesetImage('patronPlantas', 'Plantas');
-    var tileset3 = map.addTilesetImage('patronProps', 'Props');
-    var tileset4 = map.addTilesetImage('patronSombras', 'Sombras');
-    var tileset5 = map.addTilesetImage('patronSombrasPlantas', 'SombrasPlantas');
+    const tileset1 = map.addTilesetImage('patronGrass', 'Grass');
+    const tileset2 = map.addTilesetImage('patronPlantas', 'Plantas');
+    const tileset3 = map.addTilesetImage('patronProps', 'Props');
+    const tileset4 = map.addTilesetImage('patronSombras', 'Sombras');
+    const tileset5 = map.addTilesetImage('patronSombrasPlantas', 'SombrasPlantas');
 
-    var layer1 = map.createLayer('suelo', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    var layer2 = map.createLayer('cesped', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    var layer3 = map.createLayer('propsSinColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    var layer4 = map.createLayer('sombrasPropsConColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    var layer5 = map.createLayer('propsConColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    var layer6 = map.createLayer('arboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    var layer7 = map.createLayer('sombrasArboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    const layer1 = map.createLayer('suelo', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    const layer2 = map.createLayer('cesped', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    const layer3 = map.createLayer('propsSinColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    const layer4 = map.createLayer('sombrasPropsConColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    const layer5 = map.createLayer('propsConColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    const layer6 = map.createLayer('arboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    const layer7 = map.createLayer('sombrasArboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
 
     layer5.setCollisionByExclusion([-1], true);
 
@@ -74,8 +74,14 @@ export default class Level extends Phaser.Scene {
     this.cameras.main.setZoom(1.8);
     this.physics.add.collider(this.player, layer5);
     // Añadir colisión con el jugador
-    this.physics.add.collider(this.player, this.obstaculos);
+    this.physics.add.collider(this.enemyGroup, layer5);
+    this.physics.add.collider(this.bulletGroup, layer5, this.onBulletCollision);
+    this.physics.add.collider(this.enemyBulletGroup, layer5, this.onBulletCollision);
     new Item(this, 100, 100);
+  }
+
+  onBulletCollision(bullet, tile) {
+        bullet.explode();
   }
 
   /**

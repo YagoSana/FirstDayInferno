@@ -2,17 +2,23 @@ import Phaser from 'phaser';
 
 export default class Bullet extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, dirX, dirY, velocityX, velocityY, isPlayer) {
-        const spriteKey = isPlayer ? 'bullet' : 'arrow';
+        const spriteKey = isPlayer ? 'bullet' : 'nerdbullet';
         super(scene, x, y, spriteKey); // Asegúrate de tener la imagen cargada en preload()
         scene.add.existing(this);
         scene.physics.add.existing(this);
         if(isPlayer){
             scene.bulletGroup.add(this);
-            this.speed = 400; // Velocidad de la bala
+            this.speed = 200; // Velocidad de la bala
+            this.setScale(0.7);
         };
         if(!isPlayer){
             scene.enemyBulletGroup.add(this);
             this.speed = 200; // Velocidad de la bala
+            this.play("nerdbullet", true);
+            if(dirX<0){
+                this.flipY = true;
+                this.flipX = true;
+            }
         };
         // Ajustar la velocidad según la dirección
         if(dirX==1&&velocityX!=0){
