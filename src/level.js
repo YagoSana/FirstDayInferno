@@ -41,12 +41,33 @@ export default class Level extends Phaser.Scene {
     const layer6 = map.createLayer('arboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     const layer7 = map.createLayer('sombrasArboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
 
+    layer6.setDepth(10);
     layer5.setCollisionByExclusion([-1], true);
 
+    // **Crear un grupo de colisiones invisibles**
+    this.troncos = this.physics.add.staticGroup();
+
+    let troncosLayer = map.getObjectLayer('colisionesObj');
+    console.log("Capa de troncos:", troncosLayer);
+
+    troncosLayer.objects.forEach(obj => {
+        // Crear un objeto invisible con colisión
+        let tronco = this.add.rectangle(
+            obj.x + obj.width / 2,
+            obj.y - obj.height / 2 + 20,
+            obj.width,
+            obj.height,
+            0x000000,
+            0 // Transparente
+        );
+        // Agregar físicas
+        this.physics.add.existing(tronco, true);
+        this.troncos.add(tronco);
+    });
     
-    //let arbustos = map.createFromObjects('arbustos', 'arbustos', { key: 'arbustos' });
-    //let piedras = map.createFromObjects('piedras', 'piedras', { key: 'piedras' });
-    //let sombraspiedras = map.createFromObjects('sombraspiedras', 'sombraspiedras', { key: 'sombraspiedras' });
+
+    
+
     
     // Crear un grupo de físicas para los objetos
     //this.obstaculos = this.physics.add.staticGroup();
@@ -74,6 +95,7 @@ export default class Level extends Phaser.Scene {
     this.cameras.main.setZoom(1.8);
     this.physics.add.collider(this.player, layer5);
     // Añadir colisión con el jugador
+    this.physics.add.collider(this.player, this.troncos);
     this.physics.add.collider(this.enemyGroup, layer5);
     this.physics.add.collider(this.bulletGroup, layer5, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, layer5, this.onBulletCollision);
