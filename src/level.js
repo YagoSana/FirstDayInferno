@@ -97,6 +97,8 @@ export default class Level extends Phaser.Scene {
     // Añadir colisión con el jugador
     this.physics.add.collider(this.player, this.troncos);
     this.physics.add.collider(this.enemyGroup, layer5);
+    this.physics.add.collider(this.bulletGroup, this.troncos, this.onBulletCollision);
+    this.physics.add.collider(this.enemyBulletGroup, this.troncos, this.onBulletCollision);
     this.physics.add.collider(this.bulletGroup, layer5, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, layer5, this.onBulletCollision);
     new Item(this, 100, 100);
