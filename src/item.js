@@ -12,17 +12,48 @@ export default class Item extends Phaser.GameObjects.Sprite {
    * @param {number} x Coordenada x
    * @param {number} y Coordenada y
    */
-  constructor(scene, x, y){
-    super(scene, x, y, 'item');
+  constructor(scene, x, y, type, manual){
+    super(scene, x, y, type);
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
-    this.scene.physics.add.overlap(this, scene.player, this.pick, null, this);
+
+    this.type = type; // el tipo de objeto
+    this.manualPickup = manual || false;
+
+    this.setScale(0.65)
+    
+    this.actions = {
+      "hamburguesa":(player) => player.healthUp(),
+      "moneda":(player) => player.addCoin(1),
+      //en funcion del objeto aplicar sus efectos
+      "bumbo":(player) => player.itemAppearance("isaac")// cabeza de Isaac
+    };
+
+    // Si el item es automatico, se recoge al tocarlo
+    if (!this.manualPickup) {
+      this.scene.physics.add.overlap(this, scene.player,this.pick, null, this);
+    } else {
+      this.scene.physics.add.overlap(this, scene.player, this.showPickupHint, null, this);
+    }    
+
+    if (type === "moneda"){
+      this.play("coin-idle");
+    }
+
+
   }
 
   pick(item, player) {
-    // Llamar a la función playerHealthUp del jugador cuando lo toca
-    player.healthUp();
+    //console.log("Intentando ejecutar healthUp en:", player);
+    // si el item realiza una accion
+    if(this.actions[this.type]){
+      this.actions[this.type](player);//coste O(1)
+    }
     this.destroy();
+  }
+
+  showPickupHint(item, player) {
+    player.nearItem = this; // Guardamos el objeto cerca
   }
   
   preUpdate(t, dt) {
