@@ -16,6 +16,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, 'player');	
         this.health = 3;
+        this.coins = 0;
+        this.equippedItem = null; // item que cambia apariencia
+        this.itemSprite = null; //Sprite del item visual
+        this.depth = 5; // Asegura que el jugador este en la capa correcta
         //this.setScale(2);
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
@@ -53,6 +57,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.damageCooldown = 200; // En milisegundos
         this.lastHurtTime = 0;  // Tiempo del último daño
         this.play("idle-front", true);
+
+        //item
+        this.nearItem = null; // item cercano que puede recogerse
+        this.pickupKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+
     }
 
     /**
@@ -88,7 +97,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
                     else if (this.shootKeys.shootRight.isDown) 
                         this.shoot(1, 0);
                 }
-                let acceleration = 300; // Aceleración en px/s²
+            let acceleration = 300; // Aceleración en px/s²
             let deceleration = 600; // Desaceleración en px/s²
             let maxSpeed = this.speed; // Velocidad máxima permitida
 
@@ -138,12 +147,58 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
             if (this.scene.time.now > this.lastHurtTime + this.damageCooldown) {
                 this.setTint(0xffffff);
+                if(this.itemSprite){
+                    this.itemSprite.setTint(0xffffff);
+                }
+            }
+
+            // Si el jugador esta cerca de un item y pulsa 'E' lo recoge
+            if (this.nearItem && Phaser.Input.Keyboard.JustDown(this.pickupKey)) {
+                this.nearItem.pick(this,this);
+                this.nearItem = null;
+            }
+
+             // ACTUALIZAR EL SPRITE DEL ITEM SOLO SI HAY UN ITEM EQUIPADO
+            if (this.itemSprite) {
+                this.itemSprite.x = this.x;
+                this.itemSprite.y = this.y;
+
+                // Solo cambiamos el frame si NO está en animacion de disparo
+                if (!this.anims.currentAnim.key.startsWith("shoot")) {
+                    let frameIndex = 0; // índice base para el sprite del ítem
+                    const directionIndex = {
+                        "front": 0,
+                        "back": 1,
+                        "left": 2,
+                        "right": 3
+                    }[this.lastDirection] || 0;
+
+                    this.itemSprite.setFrame(frameIndex + directionIndex);
+                }
             }
         }
         else{
+            if (this.itemSprite) {
+                this.itemSprite.destroy(); // Elimina el sprite anterior si ya hay uno
+            }
             this.body.setVelocity(0, 0);
             this.setTint(0xffffff);
         }
+    }
+
+      //Cambia la apariencia del jugador con un item
+    itemAppearance(itemKey){
+        const spriteKey = `player_item_${itemKey}`;
+
+        if (this.itemSprite) {
+            this.itemSprite.destroy(); // Elimina el sprite anterior si ya hay uno
+        }
+         // Crea el nuevo sprite del ítem sobre el jugador
+        this.itemSprite = this.scene.add.sprite(this.x, this.y, spriteKey);
+        this.itemSprite.setDepth(this.depth + 1); // Asegura que esté sobre el jugador
+
+        this.equippedItem = itemKey; // Guarda el ítem equipado
+        console.log(`Item ${this.equippedItem}: equipado`);
     }
 
     shoot(dirX, dirY) {
@@ -153,17 +208,25 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
          // Determinar la dirección del disparo
         let shootAnimation = '';
+        let newDirection = this.lastDirection; // Guardamos la dirección actual para restaurarla
+
         if (dirY === -1) {
             shootAnimation = 'shoot-back';
+            newDirection = 'back';
         } else if (dirY === 1) {
             shootAnimation = 'shoot-front';
+            newDirection = 'front';
         } else if (dirX === -1) {
             shootAnimation = 'shoot-left';
+            newDirection = 'left';
         } else if (dirX === 1) {
             shootAnimation = 'shoot-right';
+            newDirection = 'right';
         }
 
         console.log(`disparando hacia: ${shootAnimation}`);
+
+        this.lastDirection = newDirection;
 
         // Guardar la animación actual para volver a ella después del disparo
         const currentAnimation = `idle-${this.lastDirection}`;
@@ -171,6 +234,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
         // Reproducir la animación de disparo
         this.play(shootAnimation);
 
+        if (this.itemSprite) {
+            this.itemSprite.setFrame(4 + {
+                "front": 0,
+                "back": 1,
+                "left": 2,
+                "right": 3
+            }[this.lastDirection]);
+        }
+    
         new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true);
         this.lastShot = this.scene.time.now; // Registrar tiempo del disparo
 
@@ -188,12 +260,16 @@ export default class Player extends Phaser.GameObjects.Sprite {
         const currentTime = this.scene.time.now; // Obtiene el tiempo actual en milisegundos
         if (currentTime - this.lastHurtTime >= this.damageCooldown) {
             this.setTint(0xff0000);
-          this.health--; // Reducir vida
-          this.lastHurtTime = currentTime; // Actualizar el último tiempo de daño
+            if(this.itemSprite){
+                this.itemSprite.setTint(0xff0000);
+            }
+
+            this.health--; // Reducir vida
+            this.lastHurtTime = currentTime; // Actualizar el último tiempo de daño
     
-          if (this.health <= 0) {
-            this.play("player-death", true);
-            this.once('animationcomplete', () => {
+             if (this.health <= 0) {
+                this.play("player-death", true);
+                this.once('animationcomplete', () => {
                 this.scene.scene.start('end'); // Finalizar el juego si la vida llega a 0
             });
           }
@@ -208,6 +284,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
     healthUp(){
         this.health++;
         this.updateHealth();
+    }
+
+    addCoin(amount){
+        this.coins += amount;
+        console.log(`Monedas: ${this.coins}€`);
+
     }
 
 }

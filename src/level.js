@@ -101,7 +101,9 @@ export default class Level extends Phaser.Scene {
     this.physics.add.collider(this.enemyBulletGroup, this.troncos, this.onBulletCollision);
     this.physics.add.collider(this.bulletGroup, layer5, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, layer5, this.onBulletCollision);
-    new Item(this, 100, 100);
+    new Item(this, 200, 200,"hamburguesa",false);
+    new Item(this, 600, 250, "moneda", false);
+    new Item(this, 700, 300,"bumbo",true);
   }
 
   onBulletCollision(bullet, tile) {

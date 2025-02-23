@@ -2,7 +2,6 @@ import Phaser from "phaser";
 
 import platform from "../assets/sprites/platform.png";
 import base from "../assets/sprites/base.png";
-import item from "../assets/sprites/item.png";
 import player from "../assets/sprites/player_idle.png";
 import player_walking from "../assets/sprites/player_walking.png";
 import player_shoot from "../assets/sprites/player_shoot.png";
@@ -13,6 +12,7 @@ import background from "../assets/sprites/background.png";
 import puff from "../assets/sprites/puff.png";
 import arrow from "../assets/sprites/arrow.png";
 
+//Mapa y tiles ------------------------------------------------------
 import mapa from "../assets/map/introMedicina.json";
 import img_grass from "../assets/map/TX Tileset Grass.png";
 import img_plantas from "../assets/map/TX Plant.png";
@@ -24,6 +24,14 @@ import nerdmove from "../assets/sprites/nerd-move.png";
 import nerdshoot from "../assets/sprites/nerd-shoot.png"
 import nerdbullet from "../assets/sprites/nerd-bullet.png";
 import enemydeath from "../assets/sprites/enemy_death.png";
+
+//ITEMS----------------------------------------------------------
+import hamburguesa from "../assets/sprites/hamburguesa.png";
+import moneda from "../assets/sprites/coin_sheet.png";
+import bumbo from "../assets/sprites/uff_referencia.png";
+
+//player con items puestos
+import player_item_isaac from "../assets/sprites/player_item_isaac.png";
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -48,9 +56,17 @@ export default class Boot extends Phaser.Scene {
 
     this.load.image("platform", platform);
     this.load.image("base", base);
-    this.load.image("item", item);
     this.load.image("bullet", bullet);
     this.load.image("arrow", arrow);
+
+    this.load.image("hamburguesa", hamburguesa);
+    this.load.image("bumbo", bumbo);
+
+    this.load.spritesheet("moneda", moneda, {
+      frameWidth: 32, //cada frame tiene este ancho
+      frameHeight: 32, //todos son 32 px de alto
+    });
+
 
     this.load.spritesheet("enemy", enemy, {
       frameWidth: 32, //cada frame tiene este ancho
@@ -112,6 +128,12 @@ export default class Boot extends Phaser.Scene {
 
     this.load.tilemapTiledJSON("map", mapa); // Carga el mapa
 
+    //items del player
+    this.load.spritesheet("player_item_isaac", player_item_isaac,{
+      frameWidth:32,
+      frameHeight:32,
+    });
+
   }
 
 
@@ -121,6 +143,12 @@ export default class Boot extends Phaser.Scene {
    */
   create() {
 
+    this.anims.create({
+      key: "coin-idle",
+      frames: this.anims.generateFrameNames("moneda", { start: 0, end: 5 }),
+      frameRate: 8,
+      repeat: -1,
+    });
 
     this.anims.create({
       key: "idle-front",
