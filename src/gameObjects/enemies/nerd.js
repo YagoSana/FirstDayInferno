@@ -1,4 +1,4 @@
-import RangedEnemy from './rangedEnemy';
+import RangedEnemy from '../enemies/rangedEnemy';
 
 export default class Nerd extends RangedEnemy {
   constructor(scene, x, y) {

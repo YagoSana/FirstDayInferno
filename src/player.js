@@ -1,5 +1,5 @@
 import Phaser, { GameObjects } from 'phaser';
-import Bullet from './bullet.js';
+import Bullet from './gameObjects/projectiles/bullet.js';
 
 /**
  * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando los cursores.
