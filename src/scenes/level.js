@@ -1,8 +1,8 @@
-import Item from "./item.js";
-import Player from "./player.js";
+import Item from "../item.js";
+import Player from "../player.js";
 import Phaser from "phaser";
-import Enemy from "./enemy.js";
-import RangedEnemy from "./rangedEnemy.js";
+import Enemy from "../enemy.js";
+import RangedEnemy from "../rangedEnemy.js";
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas
