@@ -28,6 +28,7 @@ import enemydeath from "../assets/sprites/enemy_death.png";
 //ITEMS----------------------------------------------------------
 import hamburguesa from "../assets/sprites/hamburguesa.png";
 import moneda from "../assets/sprites/coin_sheet.png";
+import miniTinto from "../assets/sprites/miniTinto.png";
 import bumbo from "../assets/sprites/uff_referencia.png";
 
 //player con items puestos
@@ -60,6 +61,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image("arrow", arrow);
 
     this.load.image("hamburguesa", hamburguesa);
+    this.load.image("miniTinto", miniTinto);
     this.load.image("bumbo", bumbo);
 
     this.load.spritesheet("moneda", moneda, {

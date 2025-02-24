@@ -25,6 +25,11 @@ export default class Item extends Phaser.GameObjects.Sprite {
     this.actions = {
       "hamburguesa":(player) => player.healthUp(),
       "moneda":(player) => player.addCoin(1),
+      "miniTinto":(player)=>{
+        player.healthUp();
+        player.healthUp();
+        player.slowDown();
+      },
       //en funcion del objeto aplicar sus efectos
       "bumbo":(player) => player.itemAppearance("isaac")// cabeza de Isaac
     };

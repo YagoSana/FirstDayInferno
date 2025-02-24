@@ -292,4 +292,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     }
 
+    slowDown(){
+        this.speed -= 50;
+    }
+
 }
