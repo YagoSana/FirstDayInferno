@@ -1,38 +1,39 @@
 import Phaser from "phaser";
 
-import platform from "../assets/sprites/platform.png";
-import base from "../assets/sprites/base.png";
-import player from "../assets/sprites/player_idle.png";
-import player_walking from "../assets/sprites/player_walking.png";
-import player_shoot from "../assets/sprites/player_shoot.png";
-import player_death from "../assets/sprites/player_death.png";
-import bullet from "../assets/sprites/bullet.png";
-import enemy from "../assets/sprites/cucaracha.png";
-import background from "../assets/sprites/background.png";
-import puff from "../assets/sprites/puff.png";
-import arrow from "../assets/sprites/arrow.png";
+import platform from "../../assets/sprites/platform.png";
+import base from "../../assets/sprites/base.png";
+import player from "../../assets/sprites/player_idle.png";
+import player_walking from "../../assets/sprites/player_walking.png";
+import player_shoot from "../../assets/sprites/player_shoot.png";
+import player_death from "../../assets/sprites/player_death.png";
+import bullet from "../../assets/sprites/bullet.png";
+import enemy from "../../assets/sprites/cucaracha.png";
+import background from "../../assets/sprites/background.png";
+import puff from "../../assets/sprites/puff.png";
+import arrow from "../../assets/sprites/arrow.png";
 
 //Mapa y tiles ------------------------------------------------------
-import mapa from "../assets/map/introMedicina.json";
-import img_grass from "../assets/map/TX Tileset Grass.png";
-import img_plantas from "../assets/map/TX Plant.png";
-import img_props from "../assets/map/TX Props.png";
-import img_sombras from "../assets/map/TX Shadow.png";
-import img_sombra_plantas from "../assets/map/TX Shadow Plant.png";
+import mapa from "../../assets/map/introMedicina.json";
+import img_grass from "../../assets/map/TX Tileset Grass.png";
+import img_plantas from "../../assets/map/TX Plant.png";
+import img_props from "../../assets/map/TX Props.png";
+import img_sombras from "../../assets/map/TX Shadow.png";
+import img_sombra_plantas from "../../assets/map/TX Shadow Plant.png";
 
-import nerdmove from "../assets/sprites/nerd-move.png";
-import nerdshoot from "../assets/sprites/nerd-shoot.png"
-import nerdbullet from "../assets/sprites/nerd-bullet.png";
-import enemydeath from "../assets/sprites/enemy_death.png";
+import nerdmove from "../../assets/sprites/nerd-move.png";
+import nerdshoot from "../../assets/sprites/nerd-shoot.png";
+import nerdbullet from "../../assets/sprites/nerd-bullet.png";
+import enemydeath from "../../assets/sprites/enemy_death.png";
 
 //ITEMS----------------------------------------------------------
-import hamburguesa from "../assets/sprites/hamburguesa.png";
-import moneda from "../assets/sprites/coin_sheet.png";
-import miniTinto from "../assets/sprites/miniTinto.png";
-import bumbo from "../assets/sprites/uff_referencia.png";
+import hamburguesa from "../../assets/sprites/hamburguesa.png";
+import moneda from "../../assets/sprites/coin_sheet.png";
+import miniTinto from "../../assets/sprites/miniTinto.png";
+import bumbo from "../../assets/sprites/uff_referencia.png";
 
 //player con items puestos
-import player_item_isaac from "../assets/sprites/player_item_isaac.png";
+import player_item_isaac from "../../assets/sprites/player_item_isaac.png";
+
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.

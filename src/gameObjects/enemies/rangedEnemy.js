@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import Bullet from './bullet.js';
+import Bullet from '../projectiles/bullet.js';
 
 export default class RangedEnemy extends Phaser.GameObjects.Sprite {
   
