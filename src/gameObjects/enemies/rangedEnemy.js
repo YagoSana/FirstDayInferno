@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
 import Bullet from '../projectiles/bullet.js';
+import Npc from './npc.js';
 
-export default class RangedEnemy extends Phaser.GameObjects.Sprite {
+export default class RangedEnemy extends Npc {
   
   /**
    * Constructor de la Plataforma
@@ -18,11 +19,6 @@ export default class RangedEnemy extends Phaser.GameObjects.Sprite {
     this.health=4;
     this.speed = 90;
     this.stunCounter = 0;
-    this.scene.add.existing(this);
-    this.scene.physics.add.existing(this);
-    this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
-    this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
-    this.scene.physics.add.collider(this, scene.enemyGroup);
   }
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
@@ -63,20 +59,6 @@ export default class RangedEnemy extends Phaser.GameObjects.Sprite {
       this.setTint(0xffffff);
     }
     }
-  }
-
-  hitBullet(enemy, bullet){
-    //Enemigo muere
-    this.stunCounter = 30;
-    this.health--;
-    if(this.health <= 0){
-      this.body.setVelocity(0,0);
-      this.play("enemydeath", true);
-      this.once('animationcomplete', () => {
-        this.destroy();
-      });
-    }
-    bullet.explode();
   }
 
   // Función para disparar un proyectil

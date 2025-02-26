@@ -1,11 +1,10 @@
 import Phaser from 'phaser';
+import SpriteBase from '../spriteBase';
 
-export default class Bullet extends Phaser.GameObjects.Sprite {
+export default class Bullet extends SpriteBase {
     constructor(scene, x, y, dirX, dirY, velocityX, velocityY, isPlayer) {
         const spriteKey = isPlayer ? 'bullet' : 'nerdbullet';
         super(scene, x, y, spriteKey); // Asegúrate de tener la imagen cargada en preload()
-        scene.add.existing(this);
-        scene.physics.add.existing(this);
         if(isPlayer){
             scene.bulletGroup.add(this);
             this.speed = 200; // Velocidad de la bala

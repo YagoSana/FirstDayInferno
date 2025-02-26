@@ -1,10 +1,11 @@
 import Phaser from 'phaser';
+import SpriteBase from '../spriteBase';
 /**
  * Clase que representa las plataformas que aparecen en el escenario de juego.
  * Cada plataforma es responsable de crear la base que aparece sobre ella y en la 
  * que, durante el juego, puede aparecer una estrella
  */
-export default class Item extends Phaser.GameObjects.Sprite {
+export default class Item extends SpriteBase {
   
   /**
    * Constructor de la Plataforma
@@ -14,9 +15,6 @@ export default class Item extends Phaser.GameObjects.Sprite {
    */
   constructor(scene, x, y, type, manual){
     super(scene, x, y, type);
-    this.scene.add.existing(this);
-    this.scene.physics.add.existing(this);
-
     this.type = type; // el tipo de objeto
     this.manualPickup = manual || false;
 

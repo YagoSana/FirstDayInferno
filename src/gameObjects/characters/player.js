@@ -1,11 +1,12 @@
 import Phaser, { GameObjects } from 'phaser';
 import Bullet from '../projectiles/bullet.js';
+import SpriteBase from '../spriteBase.js';
 
 /**
  * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando los cursores.
  * También almacena la puntuación o número de estrellas que ha recogido hasta el momento.
  */
-export default class Player extends Phaser.GameObjects.Sprite {
+export default class Player extends SpriteBase {
 
     /**
      * Constructor del jugador
@@ -15,18 +16,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
      */
     constructor(scene, x, y) {
         super(scene, x, y, 'player');	
+        this.body.setAllowGravity(false);
         this.health = 3;
         this.coins = 0;
         this.equippedItem = null; // item que cambia apariencia
         this.itemSprite = null; //Sprite del item visual
         this.depth = 5; // Asegura que el jugador este en la capa correcta
-        //this.setScale(2);
-        this.scene.add.existing(this);
-        this.scene.physics.add.existing(this);
-        // Queremos que el jugador no se salga de los límites del mundo
-        this.body.setCollideWorldBounds();
         this.speed = 100;
-        this.body.setAllowGravity(false);
         // Esta label es la UI en la que pondremos la puntuación del jugador
         this.label = this.scene.add.text(10, 10, "", {fontSize: 20});
         this.label.setScrollFactor(0);

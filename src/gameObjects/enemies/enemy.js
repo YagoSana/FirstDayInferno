@@ -1,10 +1,11 @@
 import Phaser from 'phaser';
+import Npc from './npc';
 /**
  * Clase que representa las plataformas que aparecen en el escenario de juego.
  * Cada plataforma es responsable de crear la base que aparece sobre ella y en la 
  * que, durante el juego, puede aparecer una estrella
  */
-export default class Enemy extends Phaser.GameObjects.Sprite {
+export default class Enemy extends Npc {
   
   /**
    * Constructor de la Plataforma
@@ -17,34 +18,10 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     this.health = 2;
     this.stunCounter = 0;
     this.speed = 120;
-    this.scene.add.existing(this);
-    this.scene.physics.add.existing(this);
-    this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
-    this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
-    this.scene.physics.add.collider(this, scene.enemyGroup);
-    this.setScale(0.5);
+    
+    this.setScale(0.8);
   }
 
-  hitPlayer(enemy, player) {
-    // Llamar a la función playerHurt del jugador cuando lo toca
-    this.stunCounter=20;
-    player.hurt();
-  }
-
-  hitBullet(enemy, bullet){
-    //Enemigo muere
-    this.stunCounter = 30;
-    this.health--;
-    if(this.health <= 0){
-      this.body.setVelocity(0,0);
-      this.play("enemydeath", true);
-      this.once('animationcomplete', () => {
-        this.destroy();
-      });
-    }
-    bullet.explode();
-  }
-  
   preUpdate(t, dt) {
     super.preUpdate(t, dt);
     if(this.health>0){
