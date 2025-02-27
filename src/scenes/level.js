@@ -3,6 +3,7 @@ import Player from "../gameObjects/characters/player.js";
 import Phaser from "phaser";
 import Enemy from "../gameObjects/enemies/enemy.js";
 import RangedEnemy from "../gameObjects/enemies/rangedEnemy.js";
+import WakeEnemy from "../gameObjects/enemies/wakeEnemy.js";
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas
@@ -90,6 +91,7 @@ export default class Level extends Phaser.Scene {
     this.enemyGroup.add(new Enemy(this, 1000, 250));
     this.enemyGroup.add(new Enemy(this, 2000, 250));
     this.enemyGroup.add(new RangedEnemy(this, 1000, 500));
+    this.enemyGroup.add(new WakeEnemy(this, 500, 200));
     this.cameras.main.setBounds(0, 0, 1024, 640);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
     this.cameras.main.setZoom(1.8);

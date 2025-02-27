@@ -14,12 +14,12 @@ export default class Enemy extends Npc {
    * @param {number} y Coordenada y
    */
   constructor(scene, x, y){
-    super(scene, x, y, 'enemy');
+    super(scene, x, y, 'cucaracha');
     this.health = 2;
     this.stunCounter = 0;
     this.speed = 120;
     
-    this.setScale(0.8);
+    this.setScale(0.6);
   }
 
   preUpdate(t, dt) {

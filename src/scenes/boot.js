@@ -7,10 +7,13 @@ import player_walking from "../../assets/sprites/player_walking.png";
 import player_shoot from "../../assets/sprites/player_shoot.png";
 import player_death from "../../assets/sprites/player_death.png";
 import bullet from "../../assets/sprites/bullet.png";
-import enemy from "../../assets/sprites/cucaracha.png";
+import cucaracha from "../../assets/sprites/cucaracha.png";
 import background from "../../assets/sprites/background.png";
 import puff from "../../assets/sprites/puff.png";
 import arrow from "../../assets/sprites/arrow.png";
+import cat_idle from "../../assets/sprites/cat_idle.png";
+import cat_void from "../../assets/sprites/cat_void.png";
+import cat_wake from "../../assets/sprites/cat_wake.png";
 
 //Mapa y tiles ------------------------------------------------------
 import mapa from "../../assets/map/introMedicina.json";
@@ -71,7 +74,7 @@ export default class Boot extends Phaser.Scene {
     });
 
 
-    this.load.spritesheet("enemy", enemy, {
+    this.load.spritesheet("cucaracha", cucaracha, {
       frameWidth: 32, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
     });
@@ -121,6 +124,21 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("enemydeath", enemydeath, {
       frameWidth: 32, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
+    });
+
+    this.load.spritesheet("cat_idle", cat_idle, {
+      frameWidth: 16,
+      frameHeight: 8,
+    });
+
+    this.load.spritesheet("cat_void", cat_void, {
+      frameWidth: 15,
+      frameHeight: 16,
+    });
+
+    this.load.spritesheet("cat_wake", cat_wake, {
+      frameWidth: 17,
+      frameHeight: 11,
     });
 
     this.load.image("Grass", img_grass);
@@ -282,7 +300,7 @@ export default class Boot extends Phaser.Scene {
 
     this.anims.create({
       key: "cuca",
-      frames: this.anims.generateFrameNames("enemy", {
+      frames: this.anims.generateFrameNames("cucaracha", {
         frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       }),
       frameRate: 20,
@@ -321,6 +339,27 @@ export default class Boot extends Phaser.Scene {
       key: "enemydeath",
       frames: this.anims.generateFrameNames("enemydeath", { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] }),
       frameRate: 24,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "cat_idle",
+      frames: this.anims.generateFrameNames("cat_idle", { frames: [0, 1, 2, 3] }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "cat_void",
+      frames: this.anims.generateFrameNames("cat_void", { frames: [0, 1, 2, 3, 4, 5] }),
+      frameRate: 12,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "cat_wake",
+      frames: this.anims.generateFrameNames("cat_wake", { frames: [0, 1, 2, 3, 4, 5, 6, 7] }),
+      frameRate: 12,
       repeat: 0,
     });
 
