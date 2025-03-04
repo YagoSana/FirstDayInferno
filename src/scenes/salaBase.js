@@ -58,13 +58,17 @@ export default class SalaBase extends Phaser.Scene{
     }
 
     changeRoom(player, zone){
-        if(!zone.spawnRoom) return;
-        this.scene.start(zone.spawnRoom, { x: zone.spawnX, y: zone.spawnY, playerData: {
+        if(!zone.spawnRoom || !this.player.canChangeRoom) return;
+        this.player.canChangeRoom = false;
+        this.scene.switch(zone.spawnRoom, { x: zone.spawnX, y: zone.spawnY, playerData: {
             health: this.player.health,
             coins: this.player.coins,
             equippedItem: this.player.equippedItem,
             itenSprite: this.player.itemSprite,
             speed: this.player.speed
         } });
+        this.time.delayedCall(1000, () => {
+            this.player.canChangeRoom = true;
+        });
     }
 }
