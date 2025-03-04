@@ -20,6 +20,13 @@ import img_props from "../../assets/map/TX Props.png";
 import img_sombras from "../../assets/map/TX Shadow.png";
 import img_sombra_plantas from "../../assets/map/TX Shadow Plant.png";
 
+import bibliofdi from "../../assets/map/biblioteca.json";
+import cafefdi from "../../assets/map/cafe.json";
+import pasillofdi from "../../assets/map/pasillo.json";
+import img_interior from "../../assets/map/Interiors_free_16x16.png";
+import img_muebles from "../../assets/map/Room_Builder_free_16x16.png";
+//TODO AÑADIR MAPA Y TILES
+
 import nerdmove from "../../assets/sprites/nerd-move.png";
 import nerdshoot from "../../assets/sprites/nerd-shoot.png";
 import nerdbullet from "../../assets/sprites/nerd-bullet.png";
@@ -129,7 +136,16 @@ export default class Boot extends Phaser.Scene {
     this.load.image("Sombras", img_sombras);
     this.load.image("SombrasPlantas", img_sombra_plantas);
 
+    //TODO AÑADIR TILES?
+    this.load.image("Interior", img_interior);
+    this.load.image("Muebles", img_muebles);
+
     this.load.tilemapTiledJSON("map", mapa); // Carga el mapa
+
+    //TODO AÑADIR TILEDJSON (MAPA)
+    this.load.tilemapTiledJSON("bibliotecafdi", bibliofdi);
+    this.load.tilemapTiledJSON("cafefdi", cafefdi);
+    this.load.tilemapTiledJSON("pasillofdi", pasillofdi);
 
     //items del player
     this.load.spritesheet("player_item_isaac", player_item_isaac,{
@@ -324,6 +340,6 @@ export default class Boot extends Phaser.Scene {
       repeat: 0,
     });
 
-    this.scene.start("level");
+    this.scene.start("cafeFDI", {x: 408, y: 78});
   }
 }

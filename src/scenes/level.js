@@ -3,6 +3,7 @@ import Player from "../gameObjects/characters/player.js";
 import Phaser from "phaser";
 import Enemy from "../gameObjects/enemies/enemy.js";
 import RangedEnemy from "../gameObjects/enemies/rangedEnemy.js";
+import SalaBase from "../scenes/salaBase.js";
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas
@@ -12,18 +13,22 @@ import RangedEnemy from "../gameObjects/enemies/rangedEnemy.js";
  * El juego termina cuando el jugador ha recogido 10 estrellas.
  * @extends Phaser.Scene
  */
-export default class Level extends Phaser.Scene {
+export default class Level extends SalaBase {
   /**
    * Constructor de la escena
    */
   constructor() {
     super({ key: "level" });
+    this.data = {};
+    this.bound1 = 1024;
+    this.bound2 = 640;
   }
 
   /**
    * Creación de los elementos de la escena principal de juego
    */
   create() {
+    super.create(this.data);
 
     var map = this.make.tilemap({ key: 'map' }); // Cargamos el mapa
 
@@ -69,11 +74,6 @@ export default class Level extends Phaser.Scene {
     
 
     
-    // Crear un grupo de físicas para los objetos
-    //this.obstaculos = this.physics.add.staticGroup();
-    //this.obstaculos.addMultiple(arbustos);
-    //this.obstaculos.addMultiple(piedras);
-    //this.add.image(2048 / 2, 1024 / 2, "background").setOrigin(0.5).setScale(2); // Escalado al doble
     this.physics.world.setBounds(0, 0, 1024, 640);
     this.stars = 10;
     this.bases = this.add.group();
@@ -81,11 +81,6 @@ export default class Level extends Phaser.Scene {
     this.bulletGroup = this.physics.add.group();
     this.enemyGroup = this.physics.add.group();
     this.enemyBulletGroup = this.physics.add.group();
-    //this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 350));
-    //this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 350));
-    //this.platformGroup.add(new Platform(this, this.player, this.bases, 500, 200));
-    //this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 100));
-    //this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 100));
     this.player = new Player(this, 500, 250);
     this.enemyGroup.add(new Enemy(this, 1000, 250));
     this.enemyGroup.add(new Enemy(this, 2000, 250));
@@ -106,6 +101,7 @@ export default class Level extends Phaser.Scene {
     new Item(this, 250, 200, "miniTinto", false);
     new Item(this, 700, 300,"bumbo",true);
   }
+  /*
 
   onBulletCollision(bullet, tile) {
         bullet.explode();
