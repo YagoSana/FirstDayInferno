@@ -14,15 +14,19 @@ export default class Player extends SpriteBase {
      * @param {number} x Coordenada X
      * @param {number} y Coordenada Y
      */
-    constructor(scene, x, y) {
+    constructor(scene, x, y, playerData = {}) {
         super(scene, x, y, 'player');	
+
+        
+
         this.body.setAllowGravity(false);
-        this.health = 3;
-        this.coins = 0;
-        this.equippedItem = null; // item que cambia apariencia
-        this.itemSprite = null; //Sprite del item visual
+        this.health = playerData.health ?? 3;
+        this.coins = playerData.coins ?? 0;
+        this.equippedItem = playerData.equippedItem ?? null; // item que cambia apariencia
+        this.itemSprite = playerData.itemSprite ?? null; //Sprite del item visual
         this.depth = 5; // Asegura que el jugador este en la capa correcta
-        this.speed = 100;
+        this.speed = playerData.speed ?? 100;
+        this.canChangeRoom = true;
         // Esta label es la UI en la que pondremos la puntuación del jugador
         this.label = this.scene.add.text(10, 10, "", {fontSize: 20});
         this.label.setScrollFactor(0);
