@@ -73,7 +73,7 @@ export default class BibliotecaFDI extends SalaBase {
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
         });
-
+        this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.changeRoom, null, this);
     }
 }

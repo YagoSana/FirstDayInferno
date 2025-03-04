@@ -65,7 +65,9 @@ export default class SalaBase extends Phaser.Scene{
             coins: this.player.coins,
             equippedItem: this.player.equippedItem,
             itenSprite: this.player.itemSprite,
-            speed: this.player.speed
+            speed: this.player.speed,
+            velocityX: this.player.body.velocity.x,  // Guarda la velocidad X
+            velocityY: this.player.body.velocity.y   // Guarda la velocidad Y
         } });
         this.time.delayedCall(1000, () => {
             this.player.canChangeRoom = true;

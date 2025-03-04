@@ -1,4 +1,4 @@
-import SalaBase from "../scenes/salaBase.js";
+import SalaBase from "./salaBase.js";
 import Player from "../gameObjects/characters/player.js";
 import Enemy from "../gameObjects/enemies/enemy.js";
 
@@ -65,6 +65,7 @@ export default class PasilloFDI extends SalaBase {
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
         });
+        this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.changeRoom, null, this);
         //this.transitionZones = this.physics.add.group();
         //this.addTransitions(map, this.player, this.transitionZones);

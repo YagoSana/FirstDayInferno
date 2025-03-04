@@ -76,6 +76,7 @@ export default class CafeFDI extends SalaBase {
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
         });
+        this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.changeRoom, null, this);
         //this.transitionZones = this.physics.add.group();
         //this.addTransitions(map, this.player, this.transitionZones);
