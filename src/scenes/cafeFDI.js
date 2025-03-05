@@ -1,6 +1,7 @@
 import SalaBase from "../scenes/salaBase.js";
 import Player from "../gameObjects/characters/player.js";
 import Enemy from "../gameObjects/enemies/enemy.js";
+import Item from "../gameObjects/items/item.js";
 
 
 export default class CafeFDI extends SalaBase {
@@ -34,10 +35,11 @@ export default class CafeFDI extends SalaBase {
         layer4.setCollisionByExclusion([-1], true); 
         layer6.setCollisionByExclusion([-1], true);
 
-        this.player = new Player(this, data.x, data.y, data.playerData);//831, 240
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
+        this.player = new Player(this, data.x, data.y, data.playerData);//831, 240
+        new Item(this, 200, 200,"hamburguesa",false);
 
         //Colisiones
         this.physics.add.collider(this.player, layer2);

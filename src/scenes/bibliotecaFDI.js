@@ -1,5 +1,8 @@
 import SalaBase from "./salaBase.js";
 import Player from "../gameObjects/characters/player.js";
+import Item from "../gameObjects/items/item.js";
+import WakeEnemy from "../gameObjects/enemies/wakeEnemy.js";
+import Enemy from "../gameObjects/enemies/enemy.js";
 
 
 export default class BibliotecaFDI extends SalaBase {
@@ -33,10 +36,13 @@ export default class BibliotecaFDI extends SalaBase {
         layer4.setCollisionByExclusion([-1], true);
         layer6.setCollisionByExclusion([-1], true);
 
-        this.player = new Player(this, data.x, data.y, data.playerData);//865, 195
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
+        this.player = new Player(this, data.x, data.y, data.playerData);//865, 195
+        this.enemyGroup.add(new WakeEnemy(this, 100, 240));
+        this.enemyGroup.add(new Enemy(this, 300, 200));
+        new Item(this, 250, 200, "miniTinto", false);
 
         //Colisiones
         this.physics.add.collider(this.player, layer2);

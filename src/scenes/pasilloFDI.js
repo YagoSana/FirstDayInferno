@@ -1,6 +1,8 @@
 import SalaBase from "./salaBase.js";
 import Player from "../gameObjects/characters/player.js";
 import Enemy from "../gameObjects/enemies/enemy.js";
+import RangedEnemy from "../gameObjects/enemies/rangedEnemy.js";
+import Item from "../gameObjects/items/item.js";
 
 
 export default class PasilloFDI extends SalaBase {
@@ -30,10 +32,13 @@ export default class PasilloFDI extends SalaBase {
         layer3.setCollisionByExclusion([-1], true);
         layer4.setCollisionByExclusion([-1], true); 
 
-        this.player = new Player(this, data.x, data.y, data.playerData);//831, 240
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
+        this.player = new Player(this, data.x, data.y, data.playerData);//831, 240
+        this.enemyGroup.add(new RangedEnemy(this, 100, 80));
+        new Item(this, 600, 80, "moneda", false);
+        new Item(this, 80, 80,"bumbo",true);
 
         //Colisiones
         this.physics.add.collider(this.player, layer2);
