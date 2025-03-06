@@ -3,6 +3,7 @@ import Player from "../gameObjects/characters/player.js";
 import Item from "../gameObjects/items/item.js";
 import WakeEnemy from "../gameObjects/enemies/wakeEnemy.js";
 import Enemy from "../gameObjects/enemies/enemy.js";
+import RangedEnemy from "../gameObjects/enemies/rangedEnemy.js";
 
 
 export default class BibliotecaFDI extends SalaBase {
@@ -44,8 +45,9 @@ export default class BibliotecaFDI extends SalaBase {
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
         this.player = new Player(this, data.x, data.y, data.playerData);//865, 195
-        this.enemyGroup.add(new WakeEnemy(this, 100, 240));
-        this.enemyGroup.add(new Enemy(this, 300, 200));
+        this.enemyGroup.add(new WakeEnemy(this, 100, 240, "cat"));
+        this.enemyGroup.add(new RangedEnemy(this, 300, 200, "zombie"));
+
         new Item(this, 250, 200, "miniTinto", false);
 
         //Colisiones

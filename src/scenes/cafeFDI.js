@@ -68,7 +68,7 @@ export default class CafeFDI extends SalaBase {
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setZoom(1.8);
 
-        this.enemyGroup.add(new Enemy(this, 154, 210));
+        this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
         
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
