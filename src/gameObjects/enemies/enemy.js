@@ -13,19 +13,20 @@ export default class Enemy extends Npc {
    * @param {number} x Coordenada x
    * @param {number} y Coordenada y
    */
-  constructor(scene, x, y){
-    super(scene, x, y, 'cucaracha');
+  constructor(scene, x, y, type){
+    super(scene, x, y, type);
+    this.type = type;
     this.health = 2;
     this.stunCounter = 0;
-    this.speed = 120;
-    
-    this.setScale(0.6);
+    this.speed = 100;
+    this.setScale(0.8);
+    this.body.setSize(20, 20);
   }
 
   preUpdate(t, dt) {
     super.preUpdate(t, dt);
     if(this.health>0){
-      this.play(`cuca`, true);
+      this.play(`${this.type}`, true);
     if(this.stunCounter>0){
       this.stunCounter--;
       if(this.stunCounter>20){

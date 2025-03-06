@@ -11,8 +11,9 @@ export default class RangedEnemy extends Npc {
    * @param {number} y Coordenada y
    */
 
-  constructor(scene, x, y) {
-    super(scene, x, y, 'nerdmove'); // Llamada al constructor de la clase base (Enemy)
+  constructor(scene, x, y, type) {
+    super(scene, x, y, type); // Llamada al constructor de la clase base (Enemy)
+    this.type=type;
     this.attackCooldown = 0; // Enfriamiento para disparar
     this.attackRange = 200; // Distancia máxima de ataque
     this.attackSpeed = 2000; // Enfriamiento entre disparos en milisegundos
@@ -25,12 +26,12 @@ export default class RangedEnemy extends Npc {
   preUpdate(t, dt) {
     super.preUpdate(t, dt); // Llamamos a la función preUpdate de la clase base
     if(this.health>0){
-    if (this.anims.currentAnim && this.anims.currentAnim.key === 'nerdshoot') {
-      this.setTint(0xffff00);;
+    if (this.anims.currentAnim && this.anims.currentAnim.key === `${this.type}_shoot`) {
+      this.setTint(0xffffff);;
     }
     else{
       this.setTint(0xffffff);
-      this.play(`nerdmove`, true);
+      this.play(`${this.type}_move`, true);
     }
     // Si el enemigo está lejos del jugador, sigue al jugador
     if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <= this.attackRange) {
@@ -43,6 +44,12 @@ export default class RangedEnemy extends Npc {
     }
     else{
       this.scene.physics.moveToObject(this, this.scene.player, this.speed);
+      if(this.body.velocity.x < 0){
+        this.flipX = false;
+      }
+      else{
+        this.flipX = true;                 
+      }
     }
     
     // Reducir el tiempo de cooldown
@@ -63,10 +70,10 @@ export default class RangedEnemy extends Npc {
 
   // Función para disparar un proyectil
   shoot() {
-    this.play(`nerdshoot`, true);
+    this.play(`${this.type}_shoot`, true);
     this.once('animationcomplete', () => {
-      this.play(`nerdmove`);
-  });
+      this.play(`${this.type}_move`);
+    });
     // Calcular la dirección hacia el jugador
     const dirX = this.scene.player.x - this.x; // Diferencia en X entre el jugador y el enemigo
     const dirY = this.scene.player.y - this.y; // Diferencia en Y entre el jugador y el enemigo
@@ -75,8 +82,15 @@ export default class RangedEnemy extends Npc {
     const magnitude = Math.sqrt(dirX * dirX + dirY * dirY); // Longitud del vector
     const normalizedDirX = dirX / magnitude; // Normalizar la dirección X
     const normalizedDirY = dirY / magnitude; // Normalizar la dirección Y
+
+    if(dirX < 0){
+      this.flipX = false;
+    }
+    else{
+      this.flipX = true;                 
+    }
     
     // Crear la bala usando la clase Bullet
-    new Bullet(this.scene, this.x, this.y, normalizedDirX, normalizedDirY, 0, 0, false); // Pasar las direcciones y velocidades
+    new Bullet(this.scene, this.x, this.y, normalizedDirX, normalizedDirY, 0, 0, false, `${this.type}bullet`); // Pasar las direcciones y velocidades
   }
 }

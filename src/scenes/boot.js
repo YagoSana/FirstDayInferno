@@ -2,47 +2,51 @@ import Phaser from "phaser";
 
 import platform from "../../assets/sprites/platform.png";
 import base from "../../assets/sprites/base.png";
+//JUGADOR ------------------------------------------------------
 import player from "../../assets/sprites/player_idle.png";
 import player_walking from "../../assets/sprites/player_walking.png";
 import player_shoot from "../../assets/sprites/player_shoot.png";
 import player_death from "../../assets/sprites/player_death.png";
-import bullet from "../../assets/sprites/bullet.png";
-import cucaracha from "../../assets/sprites/cucaracha.png";
-import background from "../../assets/sprites/background.png";
+
+//JUGADOR CON ITEMS ----------------------------------------------
+import player_item_isaac from "../../assets/sprites/player_item_isaac.png";
+
+//BALAS --------------------------------------------------------
+import paperbullet from "../../assets/sprites/bullet.png";
 import puff from "../../assets/sprites/puff.png";
 import arrow from "../../assets/sprites/arrow.png";
+import nerdbullet from "../../assets/sprites/nerd-bullet.png";
+import zombiebullet from "../../assets/sprites/pastilla.png";
+
+//ENEMIGOS -----------------------------------------------------
+import cucaracha from "../../assets/sprites/cucaracha.png";
+import nerdmove from "../../assets/sprites/nerd-move.png";
+import nerdshoot from "../../assets/sprites/nerd-shoot.png";
+import enemydeath from "../../assets/sprites/enemy_death.png";
 import cat_idle from "../../assets/sprites/cat_idle.png";
 import cat_void from "../../assets/sprites/cat_void.png";
 import cat_wake from "../../assets/sprites/cat_wake.png";
+import zombie_move from "../../assets/sprites/zombie_move.png";
+import zombie_shoot from "../../assets/sprites/zombie_shoot.png";
 
-//Mapa y tiles ------------------------------------------------------
+//MAPAS Y TILES ------------------------------------------------------
 import mapa from "../../assets/map/introMedicina.json";
 import img_grass from "../../assets/map/TX Tileset Grass.png";
 import img_plantas from "../../assets/map/TX Plant.png";
 import img_props from "../../assets/map/TX Props.png";
 import img_sombras from "../../assets/map/TX Shadow.png";
 import img_sombra_plantas from "../../assets/map/TX Shadow Plant.png";
-
 import bibliofdi from "../../assets/map/biblioteca.json";
 import cafefdi from "../../assets/map/cafe.json";
 import pasillofdi from "../../assets/map/pasillo.json";
 import img_interior from "../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../assets/map/Room_Builder_free_16x16.png";
-//TODO AÑADIR MAPA Y TILES
 
-import nerdmove from "../../assets/sprites/nerd-move.png";
-import nerdshoot from "../../assets/sprites/nerd-shoot.png";
-import nerdbullet from "../../assets/sprites/nerd-bullet.png";
-import enemydeath from "../../assets/sprites/enemy_death.png";
-
-//ITEMS----------------------------------------------------------
+//ITEMS ----------------------------------------------------------
 import hamburguesa from "../../assets/sprites/hamburguesa.png";
 import moneda from "../../assets/sprites/coin_sheet.png";
 import miniTinto from "../../assets/sprites/miniTinto.png";
 import bumbo from "../../assets/sprites/uff_referencia.png";
-
-//player con items puestos
-import player_item_isaac from "../../assets/sprites/player_item_isaac.png";
 
 
 /**
@@ -68,7 +72,8 @@ export default class Boot extends Phaser.Scene {
 
     this.load.image("platform", platform);
     this.load.image("base", base);
-    this.load.image("bullet", bullet);
+    this.load.image("paperbullet", paperbullet);
+    this.load.image("zombiebullet", zombiebullet);
     this.load.image("arrow", arrow);
 
     this.load.image("hamburguesa", hamburguesa);
@@ -119,6 +124,16 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.load.spritesheet('nerdshoot', nerdshoot, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet('zombie_move', zombie_move, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet('zombie_shoot', zombie_shoot, {
       frameWidth: 32,
       frameHeight: 32,
     });
@@ -315,7 +330,7 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "cuca",
+      key: "cucaracha",
       frames: this.anims.generateFrameNames("cucaracha", {
         frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       }),
@@ -331,15 +346,29 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "nerdmove",
+      key: "nerd_move",
       frames: this.anims.generateFrameNames("nerdmove", { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] }),
       frameRate: 10,
       repeat: -1,
     });
 
     this.anims.create({
-      key: "nerdshoot",
+      key: "nerd_shoot",
       frames: this.anims.generateFrameNames("nerdshoot", { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] }),
+      frameRate: 12,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "zombie_move",
+      frames: this.anims.generateFrameNames("zombie_move", { frames: [0, 1, 2, 3] }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "zombie_shoot",
+      frames: this.anims.generateFrameNames("zombie_shoot", { frames: [0, 1, 2, 3, 4] }),
       frameRate: 12,
       repeat: 0,
     });
@@ -355,27 +384,6 @@ export default class Boot extends Phaser.Scene {
       key: "enemydeath",
       frames: this.anims.generateFrameNames("enemydeath", { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] }),
       frameRate: 24,
-      repeat: 0,
-    });
-
-    this.anims.create({
-      key: "cat_idle",
-      frames: this.anims.generateFrameNames("cat_idle", { frames: [0, 1, 2, 3] }),
-      frameRate: 4,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "cat_void",
-      frames: this.anims.generateFrameNames("cat_void", { frames: [0, 1, 2, 3, 4, 5] }),
-      frameRate: 12,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "cat_wake",
-      frames: this.anims.generateFrameNames("cat_wake", { frames: [0, 1, 2, 3, 4, 5, 6, 7] }),
-      frameRate: 12,
       repeat: 0,
     });
 

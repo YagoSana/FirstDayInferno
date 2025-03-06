@@ -241,7 +241,7 @@ export default class Player extends SpriteBase {
             }[this.lastDirection]);
         }
     
-        new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true);
+        new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
         this.lastShot = this.scene.time.now; // Registrar tiempo del disparo
 
          // Volver a la animación anterior después de que termine la animación de disparo

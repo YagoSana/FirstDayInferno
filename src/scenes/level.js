@@ -83,10 +83,10 @@ export default class Level extends SalaBase {
     this.enemyGroup = this.physics.add.group();
     this.enemyBulletGroup = this.physics.add.group();
     this.player = new Player(this, 500, 250);
-    this.enemyGroup.add(new Enemy(this, 1000, 250));
-    this.enemyGroup.add(new Enemy(this, 2000, 250));
-    this.enemyGroup.add(new RangedEnemy(this, 1000, 500));
-    this.enemyGroup.add(new WakeEnemy(this, 500, 200));
+    this.enemyGroup.add(new Enemy(this, 1000, 250, "cucaracha"));
+    this.enemyGroup.add(new Enemy(this, 2000, 250, "cucaracha"));
+    this.enemyGroup.add(new RangedEnemy(this, 1000, 500, "nerd"));
+    this.enemyGroup.add(new WakeEnemy(this, 500, 200, "cat"));
     this.cameras.main.setBounds(0, 0, 1024, 640);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
     this.cameras.main.setZoom(1.8);
