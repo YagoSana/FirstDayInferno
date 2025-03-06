@@ -26,15 +26,19 @@ export default class BibliotecaFDI extends SalaBase {
         const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
         const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
         const layer3 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
-        const layer4 = map.createLayer('objetos2', [tileset1, tileset2], 0, 0);
+        const layer4 = map.createLayer('sin colision detras', [tileset1, tileset2], 0, 0);
         const layer5 = map.createLayer('sin colision', [tileset1, tileset2], 0, 0);
         const layer6 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
         
-        layer5.setDepth(10);
         layer2.setCollisionByExclusion([-1], true);
         layer3.setCollisionByExclusion([-1], true);
-        layer4.setCollisionByExclusion([-1], true);
         layer6.setCollisionByExclusion([-1], true);
+
+        
+        layer3.setDepth(10);
+        layer5.setDepth(10);
+        layer6.setDepth(11);
+
 
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
