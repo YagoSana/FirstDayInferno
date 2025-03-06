@@ -8,15 +8,14 @@ export default class CafeFDI extends SalaBase {
 
     constructor(key) {
         super({ key: 'cafeFDI' });
-        this.bound1 = 480;
-        this.bound2 = 240;
+        this.bound1 = 550;
+        this.bound2 = 320;
     }
 
     create(data){
         super.create(data);
 
         const map = this.make.tilemap({ key: 'cafefdi' }); // Cargamos el mapa
-
         //Cargar tilesets
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
@@ -63,8 +62,8 @@ export default class CafeFDI extends SalaBase {
         this.physics.add.collider(this.enemyBulletGroup, layer6, this.onBulletCollision);
 
         //Camaras
-        this.physics.world.setBounds(0, 0, this.bound1, this.bound2);
-        this.cameras.main.setBounds(0, 0, this.bound1, this.bound2);
+        this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setZoom(1.8);
 

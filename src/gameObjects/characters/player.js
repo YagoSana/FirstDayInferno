@@ -23,7 +23,7 @@ export default class Player extends SpriteBase {
         this.itemSprite = playerData.itemSprite ?? null; //Sprite del item visual
         this.depth = 5; // Asegura que el jugador este en la capa correcta
         this.speed = playerData.speed ?? 100;
-        this.body.setSize(12, 26);
+        this.body.setSize(12, 32);
         this.canChangeRoom = true;
         // Esta label es la UI en la que pondremos la puntuación del jugador
         this.label = this.scene.add.text(10, 10, "", {fontSize: 20});

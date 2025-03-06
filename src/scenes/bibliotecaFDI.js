@@ -72,8 +72,8 @@ export default class BibliotecaFDI extends SalaBase {
         this.physics.add.collider(this.enemyBulletGroup, layer6, this.onBulletCollision);
 
         //Camaras
-        this.physics.world.setBounds(0, 0, this.bound1, this.bound2);
-        this.cameras.main.setBounds(0, 0, this.bound1, this.bound2);
+        this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setZoom(1.8);
 
