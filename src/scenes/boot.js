@@ -58,11 +58,6 @@ export default class Boot extends Phaser.Scene {
     // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
     //this.load.setPath('assets/sprites/');
 
-    this.load.spritesheet("rangedenemy", rangedenemy, {
-      frameWidth: 32, //cada frame tiene este ancho
-      frameHeight: 32, //todos son 32 px de alto
-    });
-
     this.load.spritesheet("player", player, {
       frameWidth: 18, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
@@ -233,16 +228,6 @@ export default class Boot extends Phaser.Scene {
         frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       }),
       frameRate: 20,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "move",
-      frames: this.anims.generateFrameNames("rangedenemy", {
-        start: 0,
-        end: 15,
-      }),
-      frameRate: 16,
       repeat: -1,
     });
 
