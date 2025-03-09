@@ -1,27 +1,25 @@
 import Phaser from "phaser";
 
-import platform from '../../assets/sprites/platform.png';
-import base from '../../assets/sprites/base.png';
-import item from '../../assets/sprites/item.png';
-import player from '../../assets/sprites/player_idle.png';
-import player_walking from '../../assets/sprites/player_walking.png';
-import player_shoot from '../../assets/sprites/player_shoot.png';
-import bullet from '../../assets/sprites/bullet.png';
-import enemy from '../../assets/sprites/cucaracha.png';
-import background from '../../assets/sprites/background.png';
-import rangedenemy from '../../assets/sprites/arquero.png';
-import puff from '../../assets/sprites/puff.png';
-import arrow from '../../assets/sprites/arrow.png';
+import platform from '/assets/sprites/platform.png';
+import base from '/assets/sprites/base.png';
+import item from '/assets/sprites/item.png';
+import player from '/assets/sprites/player_idle.png';
+import player_walking from '/assets/sprites/player_walking.png';
+import player_shoot from '/assets/sprites/player_shoot.png';
+import bullet from '/assets/sprites/bullet.png';
+import enemy from '/assets/sprites/cucaracha.png';
+import puff from '/assets/sprites/puff.png';
+import arrow from '/assets/sprites/arrow.png';
 
-import mapa from '../../assets/map/introMedicina.json';
-import img_grass from '../../assets/map/TX Tileset Grass.png';
-import img_plantas from '../../assets/map/TX Plant.png';
-import img_props from '../../assets/map/TX Props.png';
-import img_sombras from '../../assets/map/TX Shadow.png';
-import img_sombra_plantas from '../../assets/map/TX Shadow Plant.png';
+import mapa from '/assets/map/introMedicina.json';
+import img_grass from '/assets/map/TX Tileset Grass.png';
+import img_plantas from '/assets/map/TX Plant.png';
+import img_props from '/assets/map/TX Props.png';
+import img_sombras from '/assets/map/TX Shadow.png';
+import img_sombra_plantas from '/assets/map/TX Shadow Plant.png';
 
-import nerdmove from '../../assets/sprites/nerd-move.png';
-import nerdshoot from '../../assets/sprites/nerd-shoot.png';
+import nerdmove from '/assets/sprites/nerd-move.png';
+import nerdshoot from '/assets/sprites/nerd-shoot.png';
 
 
 /**
