@@ -5,6 +5,7 @@ import Enemy from "../gameObjects/enemies/enemy.js";
 import RangedEnemy from "../gameObjects/enemies/rangedEnemy.js";
 import SalaBase from "../scenes/salaBase.js";
 import WakeEnemy from "../gameObjects/enemies/wakeEnemy.js";
+import AssaultEnemy from "../gameObjects/enemies/assaultEnemy.js";
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas
@@ -87,6 +88,7 @@ export default class Level extends SalaBase {
     this.enemyGroup.add(new Enemy(this, 2000, 250, "cucaracha"));
     this.enemyGroup.add(new RangedEnemy(this, 1000, 500, "nerd"));
     this.enemyGroup.add(new WakeEnemy(this, 500, 200, "cat"));
+    this.enemyGroup.add(new AssaultEnemy(this, 500, 500, "embestidaPlaceHolder"));
     this.cameras.main.setBounds(0, 0, 1024, 640);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
     this.cameras.main.setZoom(1.8);
