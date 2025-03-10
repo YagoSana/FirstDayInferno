@@ -6,6 +6,7 @@
     box-sizing: border-box;
 }
 
+
 body {
    background: url('../assets/sprites/backgroundviejo.png') no-repeat center center fixed;
     background-size: cover;
@@ -16,7 +17,6 @@ body {
     align-items: center;
     height: 100vh;
     text-align: center;
-    padding-top: 80px; /* Ajusta el título más arriba */
 }
 
 /* Estilo para el título */
@@ -26,7 +26,7 @@ h1 {
     text-transform: uppercase;
     text-shadow: 0 0 25px #ff4500, 0 0 50px #ff0000, 0 0 75px #8b0000;
     color: #ff4500;
-    margin-bottom: 50px;
+    margin:1rem;
 }
 
 /* Contenedor principal */
