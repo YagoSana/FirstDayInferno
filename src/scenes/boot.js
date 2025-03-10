@@ -28,6 +28,7 @@ import cat_void from "../../assets/sprites/cat_void.png";
 import cat_wake from "../../assets/sprites/cat_wake.png";
 import zombie_move from "../../assets/sprites/zombie_move.png";
 import zombie_shoot from "../../assets/sprites/zombie_shoot.png";
+import embestidaPlaceHolder from "../../assets/sprites/embestidaPlaceHolder.png";
 
 //MAPAS Y TILES ------------------------------------------------------
 import mapa from "../../assets/map/introMedicina.json";
@@ -75,7 +76,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image("paperbullet", paperbullet);
     this.load.image("zombiebullet", zombiebullet);
     this.load.image("arrow", arrow);
-
+  this.load.image("embestidaPlaceHolder", embestidaPlaceHolder);
     this.load.image("hamburguesa", hamburguesa);
     this.load.image("miniTinto", miniTinto);
     this.load.image("bumbo", bumbo);
