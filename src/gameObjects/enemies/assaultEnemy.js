@@ -20,7 +20,7 @@ export default class AssaultEnemy extends Npc {
     this.assaultCooldown = 0; // Enfriamiento para embestida
     this.isAssaulting = false;
     this.assaultTime = 0;  // El tiempo de duración de la embestida
-    this.assaultSpeed = 300; // Velocidad de la embestida (puedes ajustarla)
+    this.assaultSpeed = 250; // Velocidad de la embestida (puedes ajustarla)
     this.assaultDirection = new Phaser.Math.Vector2(); // Dirección de la embestida
     this.setScale(0.4);
   }
@@ -68,7 +68,7 @@ export default class AssaultEnemy extends Npc {
                 direction.normalize(); // Normaliza para que tenga una magnitud de 1
 
                 this.assaultDirection.set(direction.x, direction.y); // Dirección hacia el jugador
-                this.assaultTime = 500; // Duración de la embestida en milisegundos (puedes cambiarlo)
+                this.assaultTime = 800; // Duración de la embestida en milisegundos (puedes cambiarlo)
                 
                 // Reinicia el cooldown de embestida
                 this.assaultCooldown = 2000;
