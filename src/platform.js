@@ -1,5 +1,5 @@
-import Phaser from 'phaser'
-import Base from './gameoObjects/characters/base.js';
+import Phaser from 'phaser';
+import Base from './gameObjects/characters/base.js';
 /**
  * Clase que representa las plataformas que aparecen en el escenario de juego.
  * Cada plataforma es responsable de crear la base que aparece sobre ella y en la 

@@ -1,10 +1,11 @@
 import Phaser from 'phaser';
+import Npc from './npc';
 /**
  * Clase que representa las plataformas que aparecen en el escenario de juego.
  * Cada plataforma es responsable de crear la base que aparece sobre ella y en la 
  * que, durante el juego, puede aparecer una estrella
  */
-export default class Enemy extends Phaser.GameObjects.Sprite {
+export default class Enemy extends Npc {
   
   /**
    * Constructor de la Plataforma
@@ -12,38 +13,20 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
    * @param {number} x Coordenada x
    * @param {number} y Coordenada y
    */
-  constructor(scene, x, y){
-    super(scene, x, y, 'enemy');
+  constructor(scene, x, y, type){
+    super(scene, x, y, type);
+    this.type = type;
     this.health = 2;
     this.stunCounter = 0;
-    this.speed = 120;
-    this.scene.add.existing(this);
-    this.scene.physics.add.existing(this);
-    this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
-    this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
-    this.scene.physics.add.collider(this, scene.enemyGroup);
+    this.speed = 100;
+    this.setScale(0.8);
+    this.body.setSize(20, 20);
   }
 
-  hitPlayer(enemy, player) {
-    // Llamar a la función playerHurt del jugador cuando lo toca
-    this.stunCounter=20;
-    player.hurt();
-  }
-
-  hitBullet(enemy, bullet){
-    //Enemigo muere
-    this.stunCounter = 30;
-    this.health--;
-    if(this.health <= 0){
-      this.setTint(0xff0000);
-      this.destroy();
-    }
-    bullet.explode();
-  }
-  
   preUpdate(t, dt) {
     super.preUpdate(t, dt);
-    this.play(`cuca`, true);
+    if(this.health>0){
+      this.play(`${this.type}`, true);
     if(this.stunCounter>0){
       this.stunCounter--;
       if(this.stunCounter>20){
@@ -53,6 +36,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     } else {
       this.scene.physics.moveToObject(this, this.scene.player, this.speed);
       this.setTint(0xffffff);
+    }
     }
   }
 

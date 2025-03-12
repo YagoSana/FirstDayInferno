@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/gameObjects/enemies/nerd.js
 import RangedEnemy from './rangedEnemy.js';
+========
+import RangedEnemy from '../../rangedEnemy';
+>>>>>>>> Dev:src/gameObjects/characters/nerd.js
 
 export default class Nerd extends RangedEnemy {
   constructor(scene, x, y) {

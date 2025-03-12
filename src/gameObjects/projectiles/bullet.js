@@ -1,24 +1,28 @@
 import Phaser from 'phaser';
+import SpriteBase from '../spriteBase';
 
-export default class Bullet extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, dirX, dirY, velocityX, velocityY, isPlayer) {
-        const spriteKey = isPlayer ? 'bullet' : 'arrow';
-        super(scene, x, y, spriteKey); // Asegúrate de tener la imagen cargada en preload()
-        scene.add.existing(this);
-        scene.physics.add.existing(this);
+export default class Bullet extends SpriteBase {
+    constructor(scene, x, y, dirX, dirY, velocityX, velocityY, isPlayer, type) {
+        super(scene, x, y, type);
         if(isPlayer){
             scene.bulletGroup.add(this);
-            this.speed = 400; // Velocidad de la bala
+            this.speed = 200; // Velocidad de la bala
+            this.setScale(0.7);
         };
         if(!isPlayer){
             scene.enemyBulletGroup.add(this);
             this.speed = 200; // Velocidad de la bala
+            this.play(type, true);
+            if(dirX<0){
+                this.flipY = true;
+                this.flipX = true;
+            }
         };
         // Ajustar la velocidad según la dirección
-        if(dirX==1&&velocityX!=0){
+        if((dirX==1||dirX==-1)&&velocityX!=0){
             velocityX=0;
         }
-        if(dirY==1&&velocityY!=0){
+        if((dirY==1||dirY==-1)&&velocityY!=0){
             velocityY=0;
         }
         this.body.setVelocity(
@@ -29,7 +33,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
         this.scene.physics.add.collider(this, scene.platformGroup, this.explode, null, this);
         this.body.setCollideWorldBounds(true);
         this.body.onWorldBounds = true;
-        const angle = Math.atan2(dirY, dirX); // Obtener el ángulo hacia el que apunta la flecha
+        const angle = Math.atan2(dirY, dirX); // Obtener el ángulo hacia el que apunta la bala
         this.setRotation(angle); // Establecer la rotación de la bala
         this.scene.physics.world.on('worldbounds', (body) => {
             if (body.gameObject === this) { // Verificar si es esta bala

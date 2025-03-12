@@ -1,10 +1,11 @@
-import Phaser from "phaser";
-
 import Item from "../gameObjects/items/item.js";
-import Player from "../player.js";
+import Player from "../gameObjects/characters/player.js";
+import Phaser from "phaser";
 import Enemy from "../gameObjects/enemies/enemy.js";
 import RangedEnemy from "../gameObjects/enemies/rangedEnemy.js";
-
+import SalaBase from "../scenes/salaBase.js";
+import WakeEnemy from "../gameObjects/enemies/wakeEnemy.js";
+import AssaultEnemy from "../gameObjects/enemies/assaultEnemy.js";
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas
@@ -14,34 +15,38 @@ import RangedEnemy from "../gameObjects/enemies/rangedEnemy.js";
  * El juego termina cuando el jugador ha recogido 10 estrellas.
  * @extends Phaser.Scene
  */
-export default class Level extends Phaser.Scene {
+export default class Level extends SalaBase {
   /**
    * Constructor de la escena
    */
   constructor() {
     super({ key: "level" });
+    this.data = {};
+    this.bound1 = 1024;
+    this.bound2 = 640;
   }
 
   /**
    * Creación de los elementos de la escena principal de juego
    */
   create() {
+    super.create(this.data);
 
     var map = this.make.tilemap({ key: 'map' }); // Cargamos el mapa
 
-    var tileset1 = map.addTilesetImage('patronGrass', 'Grass');
-    var tileset2 = map.addTilesetImage('patronPlantas', 'Plantas');
-    var tileset3 = map.addTilesetImage('patronProps', 'Props');
-    var tileset4 = map.addTilesetImage('patronSombras', 'Sombras');
-    var tileset5 = map.addTilesetImage('patronSombrasPlantas', 'SombrasPlantas');
+    const tileset1 = map.addTilesetImage('patronGrass', 'Grass');
+    const tileset2 = map.addTilesetImage('patronPlantas', 'Plantas');
+    const tileset3 = map.addTilesetImage('patronProps', 'Props');
+    const tileset4 = map.addTilesetImage('patronSombras', 'Sombras');
+    const tileset5 = map.addTilesetImage('patronSombrasPlantas', 'SombrasPlantas');
 
-    var layer1 = map.createLayer('suelo', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    var layer2 = map.createLayer('cesped', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    var layer3 = map.createLayer('propsSinColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    var layer4 = map.createLayer('sombrasPropsConColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    var layer5 = map.createLayer('propsConColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    var layer6 = map.createLayer('arboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    var layer7 = map.createLayer('sombrasArboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    const layer1 = map.createLayer('suelo', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    const layer2 = map.createLayer('cesped', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    const layer3 = map.createLayer('propsSinColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    const layer4 = map.createLayer('sombrasPropsConColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    const layer5 = map.createLayer('propsConColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    const layer6 = map.createLayer('arboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    const layer7 = map.createLayer('sombrasArboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
 
     layer6.setDepth(10);
     layer5.setCollisionByExclusion([-1], true);
@@ -71,11 +76,6 @@ export default class Level extends Phaser.Scene {
     
 
     
-    // Crear un grupo de físicas para los objetos
-    //this.obstaculos = this.physics.add.staticGroup();
-    //this.obstaculos.addMultiple(arbustos);
-    //this.obstaculos.addMultiple(piedras);
-    //this.add.image(2048 / 2, 1024 / 2, "background").setOrigin(0.5).setScale(2); // Escalado al doble
     this.physics.world.setBounds(0, 0, 1024, 640);
     this.stars = 10;
     this.bases = this.add.group();
@@ -83,23 +83,32 @@ export default class Level extends Phaser.Scene {
     this.bulletGroup = this.physics.add.group();
     this.enemyGroup = this.physics.add.group();
     this.enemyBulletGroup = this.physics.add.group();
-    //this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 350));
-    //this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 350));
-    //this.platformGroup.add(new Platform(this, this.player, this.bases, 500, 200));
-    //this.platformGroup.add(new Platform(this, this.player, this.bases, 150, 100));
-    //this.platformGroup.add(new Platform(this, this.player, this.bases, 850, 100));
     this.player = new Player(this, 500, 250);
-    this.enemyGroup.add(new Enemy(this, 1000, 250));
-    this.enemyGroup.add(new Enemy(this, 2000, 250));
-    this.enemyGroup.add(new RangedEnemy(this, 1000, 500));
+    this.enemyGroup.add(new Enemy(this, 1000, 250, "cucaracha"));
+    this.enemyGroup.add(new Enemy(this, 2000, 250, "cucaracha"));
+    this.enemyGroup.add(new RangedEnemy(this, 1000, 500, "nerd"));
+    this.enemyGroup.add(new WakeEnemy(this, 500, 200, "cat"));
+    this.enemyGroup.add(new AssaultEnemy(this, 500, 500, "embestidaPlaceHolder"));
     this.cameras.main.setBounds(0, 0, 1024, 640);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
     this.cameras.main.setZoom(1.8);
     this.physics.add.collider(this.player, layer5);
     // Añadir colisión con el jugador
-    this.physics.add.collider(this.player, this.obstaculos);
     this.physics.add.collider(this.player, this.troncos);
-    new Item(this, 100, 100);
+    this.physics.add.collider(this.enemyGroup, layer5);
+    this.physics.add.collider(this.bulletGroup, this.troncos, this.onBulletCollision);
+    this.physics.add.collider(this.enemyBulletGroup, this.troncos, this.onBulletCollision);
+    this.physics.add.collider(this.bulletGroup, layer5, this.onBulletCollision);
+    this.physics.add.collider(this.enemyBulletGroup, layer5, this.onBulletCollision);
+    new Item(this, 200, 200,"hamburguesa",false);
+    new Item(this, 600, 250, "moneda", false);
+    new Item(this, 250, 200, "miniTinto", false);
+    new Item(this, 700, 300,"bumbo",true);
+  }
+  /*
+
+  onBulletCollision(bullet, tile) {
+        bullet.explode();
   }
 
   /**
