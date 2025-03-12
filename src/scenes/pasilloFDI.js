@@ -27,6 +27,7 @@ export default class PasilloFDI extends SalaBase {
         const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
         const layer3 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
         const layer4 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
+        const layer5 = map.createLayer('sin colision', [tileset1, tileset2], 0, 0);
         
         layer2.setCollisionByExclusion([-1], true);
         layer3.setCollisionByExclusion([-1], true);
