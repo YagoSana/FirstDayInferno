@@ -6,8 +6,6 @@ import BibliotecaFDI from './scenes/bibliotecaFdi.js';
 import PasilloFDI from './scenes/pasilloFDI';
 import Phaser from 'phaser';
 
-
-
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
