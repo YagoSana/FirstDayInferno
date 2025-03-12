@@ -8,8 +8,8 @@ export default class CafeFDI extends SalaBase {
 
     constructor(key) {
         super({ key: 'cafeFDI' });
-        this.bound1 = 550;
-        this.bound2 = 320;
+        this.bound1 = 548;
+        this.bound2 = 280;
     }
 
     create(data){
@@ -23,15 +23,16 @@ export default class CafeFDI extends SalaBase {
         //Configurar capas
         const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
         const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
+        
+        const layer5 = map.createLayer('sin colision', [tileset1, tileset2], 0, 0);
         const layer3 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
         const layer4 = map.createLayer('objetos2', [tileset1, tileset2], 0, 0);
-        const layer5 = map.createLayer('sin colision', [tileset1, tileset2], 0, 0);
         const layer6 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
         
-        layer5.setDepth(10);
+        layer4.setDepth(10);
+
         layer2.setCollisionByExclusion([-1], true);
         layer3.setCollisionByExclusion([-1], true);
-        layer4.setCollisionByExclusion([-1], true); 
         layer6.setCollisionByExclusion([-1], true);
 
         this.bulletGroup = this.physics.add.group();
