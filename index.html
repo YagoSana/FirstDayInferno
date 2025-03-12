@@ -7,45 +7,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=2.0">
     <link rel="stylesheet" href="./css/game.css">
 
-    <title>Inicio</title>
+    <title>First Day Inferno</title>
 </head>
 
-<body class="h-100">
-    <header th:replace="~{fragments/nav.html :: nav}"></header>
+<body>
 
     <div id="homepage-main-container" class="container d-flex flex-column align-items-center justify-content-center text-center mt-5">
 
         <div class="container">
-
-   
-
             <!-- Título -->
             <div class="container mt-5">
                 <h1 id="title" class="display-1">First Day Inferno</h1>
-            </div>
-
-            <div id="keywords-container" class="container">
-             SOBREVIVE AL VERDADERO INFIERNO (ser universitario)
-           
+            </div>           
         </div>
        
         <!-- Botones -->
         <div class="container d-flex align-items-center justify-content-center mt-3 gap-3">
-            <button class="start" onclick="window.location.href='/FirstDayInferno/game.html'">JUGAR</button>
+            <!-- <button class="start" onclick="window.location.href='/FirstDayInferno/game.html'">JUGAR</button> -->
            <!-- <a href="/ranking"> <button type="button" class="btn-outline-primary">Ranking</button></a>-->
+
+           <!-- El juego irá dentro de este <div> por la propiedad `parent` que pasamos `new Phaser.Game` -->
+           <div id="juego"></div>
+           <p><center><a href="https://github.com/YagoSana/firstdayinferno">Repositorio de GitHub</a></center></p>
+
             <div id="homepage-character-container">
-                <img id="homepage-character" src="/FirstDayInferno/assets/sprites/base.png">
             </div>
-            <button class="control_button" onclick="window.location.href='/FirstDayInferno/controls.html'"> CONTROLES </button>
-            <button class="cautores_button" onclick="window.location.href='/FirstDayInferno/autores.html'"> AUTORES </button>
+            <div class="buttons"> 
+                <button class="control_button" onclick="window.location.href='./controls.html'"> CONTROLES </button>
+                <button class="cautores_button" onclick="window.location.href='./autores.html'"> AUTORES </button>
+            </div>
+           
         </div>
 
-
+    </div>
     <!-- Degradado en la parte inferior -->
     <div class="degradado"></div>
-    <th:block th:replace="~{frEstrateagments/footer.html :: footer}" />
+    <script src="./src/game.js" type="module"></script>
 
-    <script type="module" src="./js/animation.js"></script>
+    <!-- <script type="module" src="./js/animation.js"></script> -->
 </body>
 
 </html>
