@@ -3,8 +3,9 @@ import End from './scenes/end.js';
 import Level from './scenes/level.js';
 import CafeFDI from './scenes/cafeFDI.js';
 import BibliotecaFDI from './scenes/bibliotecaFDI.js';
-import PasilloFDI from './scenes/pasilloFDI';
+import PasilloFDI from './scenes/pasilloFDI.js';
 import Phaser from 'phaser';
+
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
