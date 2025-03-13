@@ -55,6 +55,10 @@ export default class informaticaManager extends Phaser.Scene {
     super({ key: "informaticaManager" });
   }
 
+  init(data){
+    this.playerStats = data.playerStats;
+  }
+
   /**
    * Carga de los assets del juego
    */
@@ -148,11 +152,6 @@ export default class informaticaManager extends Phaser.Scene {
 
   }
 
-  init(data){
-    this.playerStats = data.playerStats;
-  }
-
-
   /**
    * Creación de la escena. En este caso, solo cambiamos a la escena que representa el
    * nivel del juego
@@ -238,11 +237,13 @@ export default class informaticaManager extends Phaser.Scene {
       repeat: 0,
     });
 
-    this.cambiarSala("cafeFDI");
+    this.scene.start("cafeFDI", {x: 500, y: 100, playerStats: this.playerStats, managerKey: "informaticaManager"});
   }
 
-  cambiarSala(sala){
-    this.scene.start(sala, this.playerStats);
+  cambiarSala(zone){
+    this.scene.sleep(zone.prev);
+    console.log(zone.spawnRoom);
+    this.scene.launch(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "informaticaManager"});
   }
 
   guardarPlayerStats(stats){

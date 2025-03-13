@@ -12,10 +12,6 @@ export default class BibliotecaFDI extends SalaBase {
         super('bibliotecaFDI');
     }
 
-    init(data){
-        this.playerData = data.playerData;
-    }
-
     create(){
         super.create('bibliotecaFDI');
 
@@ -46,7 +42,7 @@ export default class BibliotecaFDI extends SalaBase {
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
-        this.player = new Player(this, this.playerData);//865, 195
+        this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerData);//865, 195
         this.enemyGroup.add(new WakeEnemy(this, 100, 240, "cat"));
         this.enemyGroup.add(new RangedEnemy(this, 300, 200, "zombie"));
 
@@ -86,8 +82,19 @@ export default class BibliotecaFDI extends SalaBase {
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
+            zone.prev = "bibliotecaFDI";
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+    }
+
+    cambiarSala(player, zone) {
+        if(!zone.spawnRoom || !this.player.canChangeRoom) return;
+        this.player.canChangeRoom = false;
+        this.manager.guardarPlayerStats(this.player.getStats());
+        this.time.delayedCall(1000, () => {
+            this.player.canChangeRoom = true;
+        });
+        this.manager.cambiarSala(zone);
     }
 }

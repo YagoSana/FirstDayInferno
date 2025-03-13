@@ -11,22 +11,28 @@ export default class SalaBase extends Phaser.Scene{
     }
     init(data) {
         // Esto se ejecuta antes del create, puedes usarlo para pasar datos generales
+        console.log('Datos recibidos en init:', data);
         this.managerKey = data.managerKey; // Para saber de qué manager estamos hablando
         this.playerData = data.playerData; // Para pasar datos del jugador
+        this.xSpawn = data.x;
+        this.ySpawn = data.y;
     }
 
     create() {
         this.manager = this.scene.get(this.managerKey);
-        // Crear el player
-        this.player = new Player(this, 100, 100, this.playerData);
     }
 
     onBulletCollision(bullet, tile) {
         bullet.explode();
     }
-    
-    cambiarSala(nivel) {
+
+    cambiarSala(player, zone) {
+        if(!zone.spawnRoom || !this.player.canChangeRoom) return;
+        this.player.canChangeRoom = false;
         this.manager.guardarPlayerStats(this.player.getStats());
-        this.manager.cambiarSala(nivel);
+        this.time.delayedCall(1000, () => {
+            this.player.canChangeRoom = true;
+        });
+        this.manager.cambiarSala(zone);
     }
 }
