@@ -1,4 +1,4 @@
-import Phaser, { GameObjects } from 'phaser';
+import Phaser from 'phaser';
 import Bullet from '../projectiles/bullet.js';
 import SpriteBase from '../spriteBase.js';
 
