@@ -7,13 +7,15 @@ import Item from "../gameObjects/items/item.js";
 export default class CafeFDI extends SalaBase {
 
     constructor(key) {
-        super({ key: 'cafeFDI' });
-        this.bound1 = 548;
-        this.bound2 = 280;
+        super('cafeFDI');
     }
 
-    create(data){
-        super.create(data);
+    init(data){
+        this.playerData = data.playerData;
+    }
+
+    create(){
+        super.create('cafeFDI');
 
         const map = this.make.tilemap({ key: 'cafefdi' }); // Cargamos el mapa
         //Cargar tilesets
@@ -38,7 +40,7 @@ export default class CafeFDI extends SalaBase {
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
-        this.player = new Player(this, data.x, data.y, data.playerData);//831, 240
+        this.player = new Player(this, 100, 100, this.playerData);
         new Item(this, 200, 200,"hamburguesa",false);
 
         //Colisiones
@@ -79,8 +81,6 @@ export default class CafeFDI extends SalaBase {
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
         });
         this.transitionZones.setVisible(false);
-        this.physics.add.overlap(this.player, this.transitionZones, this.changeRoom, null, this);
-        //this.transitionZones = this.physics.add.group();
-        //this.addTransitions(map, this.player, this.transitionZones);
+        this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
     }
 }

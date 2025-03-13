@@ -9,13 +9,15 @@ import RangedEnemy from "../gameObjects/enemies/rangedEnemy.js";
 export default class BibliotecaFDI extends SalaBase {
 
     constructor(key) {
-        super({ key: 'bibliotecaFDI' });
-        this.bound1 = 480;
-        this.bound2 = 480;
+        super('bibliotecaFDI');
     }
 
-    create(data){
-        super.create(data);
+    init(data){
+        this.playerData = data.playerData;
+    }
+
+    create(){
+        super.create('bibliotecaFDI');
 
         const map = this.make.tilemap({ key: 'bibliotecafdi' });
 
@@ -44,7 +46,7 @@ export default class BibliotecaFDI extends SalaBase {
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
-        this.player = new Player(this, data.x, data.y, data.playerData);//865, 195
+        this.player = new Player(this, this.playerData);//865, 195
         this.enemyGroup.add(new WakeEnemy(this, 100, 240, "cat"));
         this.enemyGroup.add(new RangedEnemy(this, 300, 200, "zombie"));
 
@@ -86,6 +88,6 @@ export default class BibliotecaFDI extends SalaBase {
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
         });
         this.transitionZones.setVisible(false);
-        this.physics.add.overlap(this.player, this.transitionZones, this.changeRoom, null, this);
+        this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
     }
 }

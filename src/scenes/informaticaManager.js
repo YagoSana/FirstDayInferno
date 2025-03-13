@@ -52,14 +52,13 @@ export default class informaticaManager extends Phaser.Scene {
    * Constructor de la escena
    */
   constructor() {
-    super({ key: "boot" });
+    super({ key: "informaticaManager" });
   }
 
   /**
    * Carga de los assets del juego
    */
   preload() {
-    this.load.image("paperbullet", paperbullet);
     this.load.image("zombiebullet", zombiebullet);
     this.load.image("arrow", arrow);
     this.load.image("embestidaPlaceHolder", embestidaPlaceHolder);
@@ -149,6 +148,10 @@ export default class informaticaManager extends Phaser.Scene {
 
   }
 
+  init(data){
+    this.playerStats = data.playerStats;
+  }
+
 
   /**
    * Creación de la escena. En este caso, solo cambiamos a la escena que representa el
@@ -235,6 +238,14 @@ export default class informaticaManager extends Phaser.Scene {
       repeat: 0,
     });
 
-    this.scene.start("cafeFDI", {x: 408, y: 78});
+    this.cambiarSala("cafeFDI");
+  }
+
+  cambiarSala(sala){
+    this.scene.start(sala, this.playerStats);
+  }
+
+  guardarPlayerStats(stats){
+    this.playerStats = stats;
   }
 }

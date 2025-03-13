@@ -22,7 +22,7 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [SelectorNivel, InformaticaManager, Level, CafeFDI, PasilloFDI, BibliotecaFDI, End],
+    scene: [SelectorNivel, InformaticaManager, CafeFDI, PasilloFDI, BibliotecaFDI, End],
     physics: {
         default: 'arcade',
         arcade: {
