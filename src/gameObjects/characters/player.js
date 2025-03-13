@@ -51,7 +51,7 @@ export default class Player extends SpriteBase {
         });
 
         this.lastShot = 0; // Tiempo del último disparo
-        this.shootCooldown = 500; // En milisegundos
+        this.shootCooldown = playerData.shootCooldown; // En milisegundos
         this.damageCooldown = 200; // En milisegundos
         this.lastHurtTime = 0;  // Tiempo del último daño
         this.play("idle-front", true);
@@ -62,14 +62,6 @@ export default class Player extends SpriteBase {
 
     }
 
-    /**
-     * El jugador ha recogido una estrella por lo que este método añade un punto y
-     * actualiza la UI con la puntuación actual.
-     */
-
-    /**
-     * Actualiza la UI con la puntuación actual
-     */
     updateHealth() {
         this.label.text = 'Health: ' + this.health;
         this.label.setDepth(10);
@@ -292,6 +284,17 @@ export default class Player extends SpriteBase {
 
     slowDown(){
         this.speed -= 50;
+    }
+
+    getStats(){
+        return {
+            health: this.health,
+            coins: this.coins,
+            equippedItem: this.equippedItem,
+            itemSprite: this.itemSprite,
+            speed: this.speed,
+            shootCooldown: this.shootCooldown
+        };
     }
 
 }
