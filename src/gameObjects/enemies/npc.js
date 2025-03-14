@@ -15,7 +15,6 @@ export default class Npc extends SpriteBase {
         this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
         this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
         this.scene.physics.add.collider(this, scene.enemyGroup);
-        console.log("Npc creado");
     }
 
     hitPlayer(enemy, player) {
@@ -40,6 +39,5 @@ export default class Npc extends SpriteBase {
 
       preUpdate(t, dt) {
         super.preUpdate(t, dt);
-        console.log("preUpdate de Npc ejecutándose");
     }
 }

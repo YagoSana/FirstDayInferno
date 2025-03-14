@@ -26,7 +26,7 @@ export default class End extends Phaser.Scene {
     // ir moviendo al jugador). Se puede mejorar añadiendo un temporizador que 
     // añada este listener pasado un segundo
     this.input.keyboard.on('keydown', function (_event) { 
-      this.scene.start('level');
+      this.scene.start('selectorNivel');
     }, this);
   }
 

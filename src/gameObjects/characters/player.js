@@ -14,15 +14,19 @@ export default class Player extends SpriteBase {
      * @param {number} x Coordenada X
      * @param {number} y Coordenada Y
      */
-    constructor(scene, x, y, playerData={}) {
-        console.log(playerData);
+    constructor(scene, x, y, playerData = {}) {
+        console.log("jugador", playerData);
         super(scene, x, y, 'player');	
         this.body.setAllowGravity(false);
         this.health = playerData.health;
         this.coins = playerData.coins
-        this.equippedItem = playerData.equippedItem; // item que cambia apariencia
         this.itemSprite = playerData.itemSprite; //Sprite del item visual
+        this.equippedItem = playerData.equippedItem; // item que cambia apariencia
+        if (this.equippedItem) {
+            this.itemAppearance(this.equippedItem);
+        }
         this.depth = 5; // Asegura que el jugador este en la capa correcta
+        this.setDepth(this.depth);
         this.speed = playerData.speed;
         this.body.setSize(12, 32);
         this.canChangeRoom = true;
@@ -186,7 +190,11 @@ export default class Player extends SpriteBase {
         }
          // Crea el nuevo sprite del ítem sobre el jugador
         this.itemSprite = this.scene.add.sprite(this.x, this.y, spriteKey);
-        this.itemSprite.setDepth(this.depth + 1); // Asegura que esté sobre el jugador
+        this.depth = 5; // Asegura que el jugador este en la capa correcta
+        this.itemSprite.depth = this.depth + 1; // Asegura que esté sobre el jugador
+        this.itemSprite.setDepth(this.itemSprite.depth); // Asegura que esté sobre el jugador
+        console.log("item", this.itemSprite.depth);
+        console.log("jugador", this.depth);
 
         this.equippedItem = itemKey; // Guarda el ítem equipado
         console.log(`Item ${this.equippedItem}: equipado`);

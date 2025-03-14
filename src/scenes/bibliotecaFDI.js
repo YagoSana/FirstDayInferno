@@ -42,7 +42,7 @@ export default class BibliotecaFDI extends SalaBase {
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
-        this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerData);//865, 195
+        this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);//865, 195
         this.enemyGroup.add(new WakeEnemy(this, 100, 240, "cat"));
         this.enemyGroup.add(new RangedEnemy(this, 300, 200, "zombie"));
 
@@ -86,15 +86,5 @@ export default class BibliotecaFDI extends SalaBase {
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
-    }
-
-    cambiarSala(player, zone) {
-        if(!zone.spawnRoom || !this.player.canChangeRoom) return;
-        this.player.canChangeRoom = false;
-        this.manager.guardarPlayerStats(this.player.getStats());
-        this.time.delayedCall(1000, () => {
-            this.player.canChangeRoom = true;
-        });
-        this.manager.cambiarSala(zone);
     }
 }

@@ -201,7 +201,7 @@ export default class SelectorNivel extends Phaser.Scene {
     this.add.image(0, 0, 'selectorNivel').setOrigin(0, 0);
     this.physics.world.setBounds(0, 0, 1280, 640);
     this.bulletGroup = this.physics.add.group();
-    this.player = new Player(this, 1170, 460, this.playerStats);
+    this.player = new Player(this, 200, 500, this.playerStats);//1170, 460,
     this.cameras.main.setBounds(0, 0, 1280, 640);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
     this.cameras.main.setZoom(1);
@@ -223,6 +223,14 @@ export default class SelectorNivel extends Phaser.Scene {
 
   startWorld(worldName) {
     console.log(`Comienza el mundo: ${worldName}`);
-    this.scene.start(worldName, { playerStats: this.playerStats });
+    this.scene.sleep('selectorNivel');
+    this.scene.launch(worldName, { playerStats: this.playerStats, prev: 'selectorNivel' });
+  }
+
+  updatePlayerStats(newStats) {
+    this.playerStats = newStats;
+    if (this.player) {
+      this.player.updateStats(newStats);
+    }
   }
 }
