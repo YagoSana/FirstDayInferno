@@ -43,11 +43,23 @@ export default class SelectorNivel extends Phaser.Scene {
     // Crear la colisión invisible
     this.invisibleZone = this.add.zone(100, 580, 200, 200).setOrigin(0, 0).setName("informaticaManager");
     this.invisibleZone.setInteractive(); // Hacerla interactiva para detectar overlaping
+
+    this.invisibleZoneMedicina = this.add.zone(500, 580, 200, 200).setOrigin(0, 0).setName("medicineManager");
+    this.invisibleZoneMedicina.setInteractive(); // Hacerla interactiva para detectar overlaping
+
     this.physics.add.existing(this.invisibleZone); // Necesario para que funcione el overlap
+    this.physics.add.existing(this.invisibleZoneMedicina); // Necesario para que funcione el overlap
+
     this.invisibleZone.body.setAllowGravity(false);
     this.invisibleZone.body.setImmovable(true);
+
+    this.invisibleZoneMedicina.body.setAllowGravity(false);
+    this.invisibleZoneMedicina.body.setImmovable(true);
+
     // Detectar cuando el jugador entra en la colisión invisible
     this.physics.add.overlap(this.player, this.invisibleZone, this.onOverlap, null, this);
+    this.physics.add.overlap(this.player, this.invisibleZoneMedicina, this.onOverlap, null, this);
+
     // Escuchar la tecla ESC
     this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
   }
