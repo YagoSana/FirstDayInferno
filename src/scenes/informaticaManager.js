@@ -284,10 +284,12 @@ export default class informaticaManager extends Phaser.Scene {
     this.playerStats = stats;
   }
 
-  volverAlLobby(){
+  volverAlLobby(actualizarStats){
     this.scene.sleep('informaticaManager');
     this.scene.wake('selectorNivel');
     const selectorNivel = this.scene.get('selectorNivel');
-    selectorNivel.updatePlayerStats(this.playerStats);
+    if(actualizarStats){
+      selectorNivel.updatePlayerStats(this.playerStats);
+    }
   }
 }

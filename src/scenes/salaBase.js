@@ -24,6 +24,7 @@ export default class SalaBase extends Phaser.Scene{
         if(this.player){
             this.player.destroy();
         }
+        this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     }
 
     onBulletCollision(bullet, tile) {
@@ -42,4 +43,14 @@ export default class SalaBase extends Phaser.Scene{
             this.manager.cambiarSala(zone);
         });
     }
+
+    update() {
+        // Abrir el menú de pausa al presionar ESC
+        if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
+          console.log(`Escena anterior: ${this.scene.key}`);
+          this.scene.pause(); // Pausar la escena actual
+          this.scene.launch('PauseMenu', { previousScene: this.scene.key }); // Lanzar la escena de pausa
+          this.scene.bringToTop('PauseMenu'); // Asegurarse de que PauseMenu esté en la parte superior
+        }
+      }
 }

@@ -42,7 +42,7 @@ export default class PauseMenu extends Phaser.Scene {
             if (this.previousScene === 'TutorialScene' || this.previousScene === 'selectorNivel') {
                 this.scene.stop(this.previousScene); // Cerrar la escena actual
                 this.scene.start('MainMenu'); // Ir al menú principal
-            } else if (this.previousScene.startsWith('Level')) { // Si estás en un nivel
+            } else { // Si estás en un nivel
                 this.scene.stop(this.previousScene); // Cerrar la escena actual
                 this.scene.start('selectorNivel'); // Ir al selector de niveles
             }
