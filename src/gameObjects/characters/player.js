@@ -154,22 +154,23 @@ export default class Player extends SpriteBase {
             }
 
              // ACTUALIZAR EL SPRITE DEL ITEM SOLO SI HAY UN ITEM EQUIPADO
-            if (this.itemSprite) {
+             if (this.itemSprite) {
                 this.itemSprite.x = this.x;
                 this.itemSprite.y = this.y;
-
-                // Solo cambiamos el frame si NO está en animacion de disparo
-                if (!this.anims.currentAnim.key.startsWith("shoot")) {
-                    let frameIndex = 0; // índice base para el sprite del ítem
-                    const directionIndex = {
-                        "front": 0,
-                        "back": 1,
-                        "left": 2,
-                        "right": 3
-                    }[this.lastDirection] || 0;
-
-                    this.itemSprite.setFrame(frameIndex + directionIndex);
+            
+                let frameIndex = this.equippedItemRow * 8; // 🆕 Calculamos la fila
+                if (this.anims.currentAnim.key.startsWith("shoot")) {
+                    frameIndex += 4; // Los últimos 4 frames son de disparo
                 }
+                
+                const directionIndex = {
+                    "front": 0,
+                    "back": 1,
+                    "left": 2,
+                    "right": 3
+                }[this.lastDirection] || 0;
+            
+                this.itemSprite.setFrame(frameIndex + directionIndex);
             }
         }
         else{
@@ -182,8 +183,9 @@ export default class Player extends SpriteBase {
     }
 
       //Cambia la apariencia del jugador con un item
-    itemAppearance(itemKey){
-        const spriteKey = `player_item_${itemKey}`;
+    itemAppearance(itemKey, spriteRow){
+        const spriteKey = `player_items`;
+        this.equippedItemRow = spriteRow;
 
         if (this.itemSprite) {
             this.itemSprite.destroy(); // Elimina el sprite anterior si ya hay uno
@@ -193,7 +195,7 @@ export default class Player extends SpriteBase {
         this.depth = 5; // Asegura que el jugador este en la capa correcta
         this.itemSprite.depth = this.depth + 1; // Asegura que esté sobre el jugador
         this.itemSprite.setDepth(this.itemSprite.depth); // Asegura que esté sobre el jugador
-        console.log("item", this.itemSprite.depth);
+        console.log(`Item ${itemKey}: equipado en fila ${spriteRow}`);
         console.log("jugador", this.depth);
 
         this.equippedItem = itemKey; // Guarda el ítem equipado
@@ -234,7 +236,7 @@ export default class Player extends SpriteBase {
         this.play(shootAnimation);
 
         if (this.itemSprite) {
-            this.itemSprite.setFrame(4 + {
+            this.itemSprite.setFrame((this.equippedItemRow * 8) + 4 + {
                 "front": 0,
                 "back": 1,
                 "left": 2,

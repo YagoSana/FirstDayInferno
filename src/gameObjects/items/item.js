@@ -13,10 +13,12 @@ export default class Item extends SpriteBase {
    * @param {number} x Coordenada x
    * @param {number} y Coordenada y
    */
-  constructor(scene, x, y, type, manual){
+  constructor(scene, x, y, type, manual, spriteRow){
     super(scene, x, y, type);
     this.type = type; // el tipo de objeto
     this.manualPickup = manual || false;
+    this.spriteRow = spriteRow; // Guarda la fila en el spritesheet
+
 
     this.setScale(0.65)
     
@@ -29,7 +31,7 @@ export default class Item extends SpriteBase {
         player.slowDown();
       },
       //en funcion del objeto aplicar sus efectos
-      "bumbo":(player) => player.itemAppearance("isaac")// cabeza de Isaac
+      "bumbo":(player) => player.itemAppearance("isaac", this.spriteRow)// cabeza de Isaac
     };
 
     // Si el item es automatico, se recoge al tocarlo

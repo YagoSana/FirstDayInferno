@@ -36,7 +36,9 @@ export default class CafeFDI extends SalaBase {
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
         this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
-        new Item(this, 200, 200,"hamburguesa",false);
+        new Item(this, 200, 200,"hamburguesa",false,-1);
+        new Item(this, 200, 150,"bumbo",true, 1);
+        
 
         //Colisiones
         this.physics.add.collider(this.player, layer2);

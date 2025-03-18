@@ -1,7 +1,8 @@
 import Phaser from "phaser";
 
 //JUGADOR CON ITEMS ----------------------------------------------
-import player_item_isaac from "../../assets/sprites/player_item_isaac.png";
+import player_items from "../../assets/sprites/player_item.png";
+
 
 //BALAS --------------------------------------------------------
 import arrow from "../../assets/sprites/arrow.png";
@@ -179,7 +180,7 @@ export default class informaticaManager extends Phaser.Scene {
     this.load.tilemapTiledJSON("pasillofdi", pasillofdi);
 
     //items del player
-    this.load.spritesheet("player_item_isaac", player_item_isaac,{
+    this.load.spritesheet("player_items", player_items,{
       frameWidth:32,
       frameHeight:32,
     });
