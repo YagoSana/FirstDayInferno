@@ -37,6 +37,8 @@ export default class introMedicina extends SalaBase {
     const tileset4 = map.addTilesetImage('patronSombras', 'Sombras');
     const tileset5 = map.addTilesetImage('patronSombrasPlantas', 'SombrasPlantas');
 
+    console.log("Tileset cargados");
+
     const layer1 = map.createLayer('suelo', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     const layer2 = map.createLayer('cesped', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     const layer3 = map.createLayer('propsSinColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
@@ -44,6 +46,8 @@ export default class introMedicina extends SalaBase {
     const layer5 = map.createLayer('propsConColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     const layer6 = map.createLayer('arboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     const layer7 = map.createLayer('sombrasArboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+
+    console.log("Capas cargadas");
 
     layer6.setDepth(10);
     layer5.setCollisionByExclusion([-1], true);
@@ -80,8 +84,8 @@ export default class introMedicina extends SalaBase {
     this.bulletGroup = this.physics.add.group();
     this.enemyGroup = this.physics.add.group();
     this.enemyBulletGroup = this.physics.add.group();
-    this.player = new Player(this, 500, 250);
-    this.enemyGroup.add(new WakeEnemy(this, 500, 200, "cat"));
+    this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
+    
     this.cameras.main.setBounds(0, 0, 1024, 640);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
     this.cameras.main.setZoom(1.8);
@@ -93,10 +97,6 @@ export default class introMedicina extends SalaBase {
     this.physics.add.collider(this.enemyBulletGroup, this.troncos, this.onBulletCollision);
     this.physics.add.collider(this.bulletGroup, layer5, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, layer5, this.onBulletCollision);
-    new Item(this, 200, 200,"hamburguesa",false);
-    new Item(this, 600, 250, "moneda", false);
-    new Item(this, 250, 200, "miniTinto", false);
-    new Item(this, 700, 300,"bumbo",true);
   }
   /*
 
