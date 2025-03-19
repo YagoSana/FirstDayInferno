@@ -15,12 +15,12 @@ import AssaultEnemy from "../gameObjects/enemies/assaultEnemy.js";
  * El juego termina cuando el jugador ha recogido 10 estrellas.
  * @extends Phaser.Scene
  */
-export default class Level extends SalaBase {
+export default class introMedicina extends SalaBase {
   /**
    * Constructor de la escena
    */
   constructor() {
-    super({ key: "level" });
+    super({ key: "introMedicina" });
     this.data = {};
     this.bound1 = 1024;
     this.bound2 = 640;

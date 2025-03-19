@@ -44,7 +44,7 @@ export default class SelectorNivel extends Phaser.Scene {
     this.invisibleZone = this.add.zone(100, 580, 200, 200).setOrigin(0, 0).setName("informaticaManager");
     this.invisibleZone.setInteractive(); // Hacerla interactiva para detectar overlaping
 
-    this.invisibleZoneMedicina = this.add.zone(500, 580, 200, 200).setOrigin(0, 0).setName("medicineManager");
+    this.invisibleZoneMedicina = this.add.zone(500, 580, 200, 200).setOrigin(0, 0).setName("medicinaManager");
     this.invisibleZoneMedicina.setInteractive(); // Hacerla interactiva para detectar overlaping
 
     this.physics.add.existing(this.invisibleZone); // Necesario para que funcione el overlap

@@ -127,10 +127,7 @@ export default class medicinaManager extends Phaser.Scene {
     this.load.image("Interior", img_interior);
     this.load.image("Muebles", img_muebles);
 
-    this.load.tilemapTiledJSON("map", mapa); // Carga el mapa
-
     //TODO AÑADIR TILEDJSON (MAPA)
-    
     this.load.tilemapTiledJSON("introMedicina", introMedicina);
     
     //items del player
