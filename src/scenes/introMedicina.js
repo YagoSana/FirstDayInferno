@@ -20,10 +20,7 @@ export default class introMedicina extends SalaBase {
    * Constructor de la escena
    */
   constructor() {
-    super({ key: "introMedicina" });
-    this.data = {};
-    this.bound1 = 1024;
-    this.bound2 = 640;
+    super("introMedicina");
   }
 
   /**
@@ -32,7 +29,7 @@ export default class introMedicina extends SalaBase {
   create() {
     super.create(this.data);
 
-    var map = this.make.tilemap({ key: 'map' }); // Cargamos el mapa
+    var map = this.make.tilemap({ key: 'introMedicina' }); // Cargamos el mapa
 
     const tileset1 = map.addTilesetImage('patronGrass', 'Grass');
     const tileset2 = map.addTilesetImage('patronPlantas', 'Plantas');
@@ -84,11 +81,7 @@ export default class introMedicina extends SalaBase {
     this.enemyGroup = this.physics.add.group();
     this.enemyBulletGroup = this.physics.add.group();
     this.player = new Player(this, 500, 250);
-    this.enemyGroup.add(new Enemy(this, 1000, 250, "cucaracha"));
-    this.enemyGroup.add(new Enemy(this, 2000, 250, "cucaracha"));
-    this.enemyGroup.add(new RangedEnemy(this, 1000, 500, "nerd"));
     this.enemyGroup.add(new WakeEnemy(this, 500, 200, "cat"));
-    this.enemyGroup.add(new AssaultEnemy(this, 500, 500, "embestidaPlaceHolder"));
     this.cameras.main.setBounds(0, 0, 1024, 640);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
     this.cameras.main.setZoom(1.8);

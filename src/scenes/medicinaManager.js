@@ -18,6 +18,12 @@ import zombie_shoot from "../../assets/sprites/zombie_shoot.png";
 import introMedicina from "../../assets/map/introMedicina.json";
 import img_interior from "../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../assets/map/Room_Builder_free_16x16.png";
+import tileset_grass from "../../assets/map/TX Tileset Grass.png";
+import tileset_plantas from "../../assets/map/TX Plant.png";
+import tileset_props from "../../assets/map/TX Props.png";
+import tileset_sombras from "../../assets/map/TX Shadow.png";
+import tileset_sombra_plantas from "../../assets/map/TX Shadow Plant.png";
+
 
 //ITEMS ----------------------------------------------------------
 import hamburguesa from "../../assets/sprites/hamburguesa.png";
@@ -126,6 +132,11 @@ export default class medicinaManager extends Phaser.Scene {
     //TODO AÑADIR TILES?
     this.load.image("Interior", img_interior);
     this.load.image("Muebles", img_muebles);
+    this.load.image("Grass", tileset_grass);
+    this.load.image("Plantas", tileset_plantas);
+    this.load.image("Props", tileset_props);
+    this.load.image("Sombras", tileset_sombras);
+    this.load.image("SombrasPlantas", tileset_sombra_plantas);
 
     //TODO AÑADIR TILEDJSON (MAPA)
     this.load.tilemapTiledJSON("introMedicina", introMedicina);
