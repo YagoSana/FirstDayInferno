@@ -29,6 +29,7 @@ import img_sombras from "../../assets/map/TX Shadow.png";
 import img_sombra_plantas from "../../assets/map/TX Shadow Plant.png";
 import bibliofdi from "../../assets/map/biblioteca.json";
 import cafefdi from "../../assets/map/cafe.json";
+import laboratorioFDI from "../../assets/map/laboratorio.json";
 import pasillofdi from "../../assets/map/pasillo.json";
 import img_interior from "../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../assets/map/Room_Builder_free_16x16.png";
@@ -177,6 +178,7 @@ export default class informaticaManager extends Phaser.Scene {
     this.load.tilemapTiledJSON("bibliotecafdi", bibliofdi);
     this.load.tilemapTiledJSON("cafefdi", cafefdi);
     this.load.tilemapTiledJSON("pasillofdi", pasillofdi);
+    this.load.tilemapTiledJSON("laboratorioFDI", laboratorioFDI);
 
     //items del player
     this.load.spritesheet("player_item_isaac", player_item_isaac,{
@@ -271,7 +273,7 @@ export default class informaticaManager extends Phaser.Scene {
       repeat: 0,
     });
 
-    this.scene.start("cafeFDI", {x: 500, y: 100, playerStats: this.playerStats, managerKey: "informaticaManager"});
+    this.scene.start("laboratorioFDI", {x: 500, y: 100, playerStats: this.playerStats, managerKey: "informaticaManager"});
   }
 
   cambiarSala(zone){
