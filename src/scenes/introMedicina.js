@@ -88,7 +88,7 @@ export default class introMedicina extends SalaBase {
     
     this.cameras.main.setBounds(0, 0, 1024, 640);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
-    this.cameras.main.setZoom(1.8);
+    this.cameras.main.setZoom(1.5);
     this.physics.add.collider(this.player, layer5);
     // Añadir colisión con el jugador
     this.physics.add.collider(this.player, this.troncos);
