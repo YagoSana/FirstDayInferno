@@ -36,6 +36,7 @@ export default class PasilloFDI extends SalaBase {
         this.enemyBulletGroup = this.physics.add.group();
         this.player = new Player(this, this.xSpawn, this.ySpawn, data.playerStats);//831, 240
         this.enemyGroup.add(new RangedEnemy(this, 100, 80, "nerd"));
+        this.numEnemies++;
         new Item(this, 600, 80, "moneda", false);
         new Item(this, 80, 80,"bumbo",true);
 
@@ -72,5 +73,14 @@ export default class PasilloFDI extends SalaBase {
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+    }
+
+    update(){
+        if(this.numEnemiesBeaten == this.numEnemies){
+            this.completed = true;
+            this.transitionZones.getChildren().forEach(zone => {
+                zone.open = true;
+            });
+        }
     }
 }

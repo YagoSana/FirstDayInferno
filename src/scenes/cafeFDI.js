@@ -66,6 +66,7 @@ export default class CafeFDI extends SalaBase {
         this.cameras.main.setZoom(1.8);
 
         this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
+        this.numEnemies++;
         
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
@@ -75,8 +76,18 @@ export default class CafeFDI extends SalaBase {
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
             zone.prev = "cafeFDI";
+            zone.open = false;
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+    }
+
+    update(){
+        if(this.numEnemiesBeaten == this.numEnemies){
+            this.completed = true;
+            this.transitionZones.getChildren().forEach(zone => {
+                zone.open = true;
+            });
+        }
     }
 }

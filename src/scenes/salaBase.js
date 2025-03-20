@@ -25,6 +25,9 @@ export default class SalaBase extends Phaser.Scene{
             this.player.destroy();
         }
         this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        this.completed = false;
+        this.numEnemiesBeaten = 0;
+        this.numEnemies = 0;
     }
 
     onBulletCollision(bullet, tile) {
@@ -32,7 +35,7 @@ export default class SalaBase extends Phaser.Scene{
     }
 
     cambiarSala(player, zone) {
-        if(!zone.spawnRoom || !this.player.canChangeRoom) return;
+        if(!zone.spawnRoom || !this.player.canChangeRoom || !zone.open) return;
         this.player.canChangeRoom = false;
         this.manager.guardarPlayerStats(this.player.getStats());
         this.time.delayedCall(1000, () => {
