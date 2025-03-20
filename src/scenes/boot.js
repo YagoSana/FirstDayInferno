@@ -13,6 +13,11 @@ import player from "../../assets/sprites/player_spritesheet.png";
 import paperbullet from "../../assets/sprites/bullet.png";
 import puff from "../../assets/sprites/puff.png";
 
+//ITEMS ------------------------------------------------------
+import items from "../../assets/sprites/items_spritesheet.png";
+
+//JUGADOR CON ITEMS ----------------------------------------------
+import player_items from "../../assets/sprites/player_item.png";
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -61,6 +66,18 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
+
+    this.load.spritesheet('items', items, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    //items del player
+    this.load.spritesheet("player_items", player_items, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
   }
 
   /**
@@ -101,7 +118,7 @@ export default class Boot extends Phaser.Scene {
 
     this.anims.create({
       key: "idle-right",
-      frames: this.anims.generateFrameNames("player",{
+      frames: this.anims.generateFrameNames("player", {
         start: 15,
         end: 19,
       }),
@@ -207,6 +224,81 @@ export default class Boot extends Phaser.Scene {
       repeat: 0,
     });
 
+
+    this.anims.create({
+      key: "heart-idle",
+      frames: this.anims.generateFrameNames("items", { start: 0, end: 5 }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "coin-idle",
+      frames: this.anims.generateFrameNames("items", { start: 6, end: 11 }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "key-idle",
+      frames: this.anims.generateFrameNames("items", { start: 12, end: 17 }),
+      frameRate: 8,
+      repeat: -1,
+    });
+    // 🔹 Crear texturas individuales a partir del spritesheet (sin función)
+    this.textures.addSpriteSheet('bumbo', this.textures.get('items').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 18
+    });
+
+    this.textures.addSpriteSheet('pantallazo_azul', this.textures.get('items').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 19
+    });
+
+    this.textures.addSpriteSheet('mini_tinto', this.textures.get('items').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 20
+    });
+
+    this.textures.addSpriteSheet('hamburguesa', this.textures.get('items').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 21
+    });
+
+    this.textures.addSpriteSheet('collar_macarrones', this.textures.get('items').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 22
+    });
+
+    this.textures.addSpriteSheet('bono', this.textures.get('items').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 23
+    });
+
+    this.textures.addSpriteSheet('codigo', this.textures.get('items').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 24
+    });
+
+    this.textures.addSpriteSheet('maletin', this.textures.get('items').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 25
+    });
+
+    this.textures.addSpriteSheet('bolsa_sospechosa', this.textures.get('items').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 26
+    });
 
     this.scene.start('MainMenu');
   }

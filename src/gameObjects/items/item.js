@@ -25,7 +25,7 @@ export default class Item extends SpriteBase {
     this.actions = {
       "hamburguesa":(player) => player.healthUp(),
       "moneda":(player) => player.addCoin(1),
-      "miniTinto":(player)=>{
+      "mini_tinto":(player)=>{
         player.healthUp();
         player.healthUp();
         player.slowDown();

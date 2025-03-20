@@ -16,22 +16,24 @@ export default class Player extends SpriteBase {
      */
     constructor(scene, x, y, playerData = {}) {
         console.log("jugador", playerData);
-        super(scene, x, y, 'player');	
+        super(scene, x, y, 'player');
         this.body.setAllowGravity(false);
         this.health = playerData.health;
         this.coins = playerData.coins
         this.itemSprite = playerData.itemSprite; //Sprite del item visual
         this.equippedItem = playerData.equippedItem; // item que cambia apariencia
+        this.equippedItemRow = playerData.equippedItemRow;
         if (this.equippedItem) {
-            this.itemAppearance(this.equippedItem);
+            this.itemAppearance(this.equippedItem, this.equippedItemRow);
         }
+        this.isShooting = false;
         this.depth = 5; // Asegura que el jugador este en la capa correcta
         this.setDepth(this.depth);
         this.speed = playerData.speed;
         this.body.setSize(12, 32);
         this.canChangeRoom = true;
         // Esta label es la UI en la que pondremos la puntuación del jugador
-        this.label = this.scene.add.text(10, 10, "", {fontSize: 20});
+        this.label = this.scene.add.text(10, 10, "", { fontSize: 20 });
         this.label.setScrollFactor(0);
         this.label.setDepth(10);
         this.cursors = this.scene.input.keyboard.createCursorKeys();
@@ -80,18 +82,18 @@ export default class Player extends SpriteBase {
      */
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
-        if(this.anims.currentAnim.key != 'player-death'){
-                    // Manejo de disparo
-                if (t > this.lastShot + this.shootCooldown) {
-                    if (this.shootKeys.shootUp.isDown) 
-                        this.shoot(0, -1);
-                    else if (this.shootKeys.shootDown.isDown) 
-                        this.shoot(0, 1);
-                    else if (this.shootKeys.shootLeft.isDown) 
-                        this.shoot(-1, 0);
-                    else if (this.shootKeys.shootRight.isDown) 
-                        this.shoot(1, 0);
-                }
+        if (this.anims.currentAnim.key != 'player-death') {
+            // Manejo de disparo
+            if (t > this.lastShot + this.shootCooldown) {
+                if (this.shootKeys.shootUp.isDown)
+                    this.shoot(0, -1);
+                else if (this.shootKeys.shootDown.isDown)
+                    this.shoot(0, 1);
+                else if (this.shootKeys.shootLeft.isDown)
+                    this.shoot(-1, 0);
+                else if (this.shootKeys.shootRight.isDown)
+                    this.shoot(1, 0);
+            }
             let acceleration = 300; // Aceleración en px/s²
             let deceleration = 600; // Desaceleración en px/s²
             let maxSpeed = this.speed; // Velocidad máxima permitida
@@ -128,12 +130,10 @@ export default class Player extends SpriteBase {
                 if (Math.abs(velocityX) < 10) velocityX = 0;
             }
 
-            if (velocityX === 0 && velocityY === 0) {
-                if (!this.anims.currentAnim || !this.anims.currentAnim.key.startsWith('shoot')) {
+            if (!this.isShooting) {
+                if (velocityX === 0 && velocityY === 0) {
                     this.play(`idle-${this.lastDirection}`, true);
-                }
-            } else {
-                if (!this.anims.currentAnim || !this.anims.currentAnim.key.startsWith('shoot')) {
+                } else {
                     this.anims.play(newAnimation, true);
                 }
             }
@@ -142,38 +142,42 @@ export default class Player extends SpriteBase {
 
             if (this.scene.time.now > this.lastHurtTime + this.damageCooldown) {
                 this.setTint(0xffffff);
-                if(this.itemSprite){
+                if (this.itemSprite) {
                     this.itemSprite.setTint(0xffffff);
                 }
             }
 
             // Si el jugador esta cerca de un item y pulsa 'E' lo recoge
             if (this.nearItem && Phaser.Input.Keyboard.JustDown(this.pickupKey)) {
-                this.nearItem.pick(this,this);
+                this.nearItem.pick(this, this);
                 this.nearItem = null;
             }
 
-             // ACTUALIZAR EL SPRITE DEL ITEM SOLO SI HAY UN ITEM EQUIPADO
-             if (this.itemSprite) {
+            // ACTUALIZAR EL SPRITE DEL ITEM SOLO SI HAY UN ITEM EQUIPADO
+            if (this.itemSprite) {
                 this.itemSprite.x = this.x;
                 this.itemSprite.y = this.y;
-            
+
                 let frameIndex = this.equippedItemRow * 8; // 🆕 Calculamos la fila
-                if (this.anims.currentAnim.key.startsWith("shoot")) {
+                if (this.isShooting) {
                     frameIndex += 4; // Los últimos 4 frames son de disparo
                 }
-                
+
                 const directionIndex = {
                     "front": 0,
                     "back": 1,
                     "left": 2,
                     "right": 3
                 }[this.lastDirection] || 0;
-            
-                this.itemSprite.setFrame(frameIndex + directionIndex);
+
+                const newFrame = frameIndex + directionIndex;
+                if (this.itemSprite.frame.name !== newFrame && !this.isShooting) {
+                    // console.log(`newframe: ${newFrame}`);
+                    this.itemSprite.setFrame(newFrame);
+                }
             }
         }
-        else{
+        else {
             if (this.itemSprite) {
                 this.itemSprite.destroy(); // Elimina el sprite anterior si ya hay uno
             }
@@ -182,32 +186,34 @@ export default class Player extends SpriteBase {
         }
     }
 
-      //Cambia la apariencia del jugador con un item
-    itemAppearance(itemKey, spriteRow){
+    //Cambia la apariencia del jugador con un item
+    itemAppearance(itemKey, spriteRow) {
         const spriteKey = `player_items`;
         this.equippedItemRow = spriteRow;
 
         if (this.itemSprite) {
             this.itemSprite.destroy(); // Elimina el sprite anterior si ya hay uno
         }
-         // Crea el nuevo sprite del ítem sobre el jugador
+        // Crea el nuevo sprite del ítem sobre el jugador
         this.itemSprite = this.scene.add.sprite(this.x, this.y, spriteKey);
         this.depth = 5; // Asegura que el jugador este en la capa correcta
         this.itemSprite.depth = this.depth + 1; // Asegura que esté sobre el jugador
         this.itemSprite.setDepth(this.itemSprite.depth); // Asegura que esté sobre el jugador
-        console.log(`Item ${itemKey}: equipado en fila ${spriteRow}`);
-        console.log("jugador", this.depth);
+        console.log(`Item ${itemKey}: equipado en fila ${spriteRow + 1}`);
+        // console.log("jugador", this.depth);
 
         this.equippedItem = itemKey; // Guarda el ítem equipado
-        console.log(`Item ${this.equippedItem}: equipado`);
+        // console.log(`Item ${this.equippedItem}: equipado`);
     }
 
     shoot(dirX, dirY) {
-        console.log("Shooting");
-         // Verificar si ya está en cooldown
+        // Verificar si ya está en cooldown
         if (this.scene.time.now < this.lastShot + this.shootCooldown) return;
 
-         // Determinar la dirección del disparo
+        // Bloquea la animación de movimiento mientras dispara
+        this.isShooting = true;
+
+        // Determinar la dirección del disparo
         let shootAnimation = '';
         let newDirection = this.lastDirection; // Guardamos la dirección actual para restaurarla
 
@@ -225,7 +231,7 @@ export default class Player extends SpriteBase {
             newDirection = 'right';
         }
 
-        console.log(`disparando hacia: ${shootAnimation}`);
+        // console.log(`disparando hacia: ${shootAnimation}`);
 
         this.lastDirection = newDirection;
 
@@ -236,19 +242,23 @@ export default class Player extends SpriteBase {
         this.play(shootAnimation);
 
         if (this.itemSprite) {
-            this.itemSprite.setFrame((this.equippedItemRow * 8) + 4 + {
+            const shootFrame = (this.equippedItemRow * 8) + 4 + {
                 "front": 0,
                 "back": 1,
                 "left": 2,
                 "right": 3
-            }[this.lastDirection]);
+            }[this.lastDirection];
+
+            // console.log(`ShootFrame: ${shootFrame}`)
+            this.itemSprite.setFrame(shootFrame);
         }
-    
+
         new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
         this.lastShot = this.scene.time.now; // Registrar tiempo del disparo
 
-         // Volver a la animación anterior después de que termine la animación de disparo
+        // Volver a la animación anterior después de que termine la animación de disparo
         this.once('animationcomplete', () => {
+            this.isShooting = false;
             this.play(currentAnimation);
         });
     }
@@ -261,47 +271,48 @@ export default class Player extends SpriteBase {
         const currentTime = this.scene.time.now; // Obtiene el tiempo actual en milisegundos
         if (currentTime - this.lastHurtTime >= this.damageCooldown) {
             this.setTint(0xff0000);
-            if(this.itemSprite){
+            if (this.itemSprite) {
                 this.itemSprite.setTint(0xff0000);
             }
 
             this.health--; // Reducir vida
             this.lastHurtTime = currentTime; // Actualizar el último tiempo de daño
-    
-             if (this.health <= 0) {
+
+            if (this.health <= 0) {
                 this.play("player-death", true);
                 this.once('animationcomplete', () => {
-                this.scene.scene.start('end'); // Finalizar el juego si la vida llega a 0
-            });
-          }
-    
-          this.updateHealth();
+                    this.scene.scene.start('end'); // Finalizar el juego si la vida llega a 0
+                });
+            }
+
+            this.updateHealth();
         }
-        if(bullet){
+        if (bullet) {
             bullet.explode();
         }
-      }
-    
-    healthUp(){
+    }
+
+    healthUp() {
         this.health++;
         this.updateHealth();
     }
 
-    addCoin(amount){
+    addCoin(amount) {
         this.coins += amount;
         console.log(`Monedas: ${this.coins}€`);
 
     }
 
-    slowDown(){
-        this.speed -= 50;
+    slowDown() {
+        this.speed /= 2;
     }
 
-    getStats(){
+    getStats() {
         return {
             health: this.health,
             coins: this.coins,
             equippedItem: this.equippedItem,
+            equippedItemRow: this.equippedItemRow,
             itemSprite: this.itemSprite,
             speed: this.speed,
             shootCooldown: this.shootCooldown

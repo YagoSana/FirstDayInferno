@@ -37,7 +37,7 @@ export default class PasilloFDI extends SalaBase {
         this.player = new Player(this, this.xSpawn, this.ySpawn, data.playerStats);//831, 240
         this.enemyGroup.add(new RangedEnemy(this, 100, 80, "nerd"));
         new Item(this, 600, 80, "moneda", false, -1);
-        new Item(this, 80, 80,"bumbo",true, 1);
+        new Item(this, 80, 80,"bumbo",true, 0);
 
         //Colisiones
         this.physics.add.collider(this.player, layer2);

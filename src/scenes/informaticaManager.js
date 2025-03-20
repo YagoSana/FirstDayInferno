@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 
-//JUGADOR CON ITEMS ----------------------------------------------
-import player_items from "../../assets/sprites/player_item.png";
+
 
 
 //BALAS --------------------------------------------------------
@@ -34,11 +33,6 @@ import pasillofdi from "../../assets/map/pasillo.json";
 import img_interior from "../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../assets/map/Room_Builder_free_16x16.png";
 
-//ITEMS ----------------------------------------------------------
-import hamburguesa from "../../assets/sprites/hamburguesa.png";
-import moneda from "../../assets/sprites/coin_sheet.png";
-import miniTinto from "../../assets/sprites/miniTinto.png";
-import bumbo from "../../assets/sprites/uff_referencia.png";
 
 
 /**
@@ -101,14 +95,6 @@ export default class informaticaManager extends Phaser.Scene {
     this.load.image("zombiebullet", zombiebullet);
     this.load.image("arrow", arrow);
     this.load.image("embestidaPlaceHolder", embestidaPlaceHolder);
-    this.load.image("hamburguesa", hamburguesa);
-    this.load.image("miniTinto", miniTinto);
-    this.load.image("bumbo", bumbo);
-
-    this.load.spritesheet("moneda", moneda, {
-      frameWidth: 32, //cada frame tiene este ancho
-      frameHeight: 32, //todos son 32 px de alto
-    });
 
     this.load.spritesheet("cucaracha", cucaracha, {
       frameWidth: 32, //cada frame tiene este ancho
@@ -179,11 +165,6 @@ export default class informaticaManager extends Phaser.Scene {
     this.load.tilemapTiledJSON("cafefdi", cafefdi);
     this.load.tilemapTiledJSON("pasillofdi", pasillofdi);
 
-    //items del player
-    this.load.spritesheet("player_items", player_items,{
-      frameWidth:32,
-      frameHeight:32,
-    });
 
   }
 
@@ -192,13 +173,6 @@ export default class informaticaManager extends Phaser.Scene {
    * nivel del juego
    */
   create() {
-
-    this.anims.create({
-      key: "coin-idle",
-      frames: this.anims.generateFrameNames("moneda", { start: 0, end: 5 }),
-      frameRate: 8,
-      repeat: -1,
-    });
 
     this.anims.create({
       key: "cucaracha",
@@ -278,6 +252,7 @@ export default class informaticaManager extends Phaser.Scene {
   cambiarSala(zone){
     this.scene.sleep(zone.prev);
     console.log(zone.spawnRoom);
+    
     this.scene.launch(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "informaticaManager"});
   }
 

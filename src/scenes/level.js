@@ -102,7 +102,7 @@ export default class Level extends SalaBase {
     this.physics.add.collider(this.enemyBulletGroup, layer5, this.onBulletCollision);
     new Item(this, 200, 200,"hamburguesa",false, -1);
     new Item(this, 600, 250, "moneda", false, -1);
-    new Item(this, 250, 200, "miniTinto", false, -1);
+    new Item(this, 250, 200, "mini_tinto", false, -1);
     new Item(this, 700, 300,"bumbo",true, 0);
   }
   /*

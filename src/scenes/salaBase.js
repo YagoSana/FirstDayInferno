@@ -34,6 +34,7 @@ export default class SalaBase extends Phaser.Scene{
         if(!zone.spawnRoom || !this.player.canChangeRoom) return;
         this.player.canChangeRoom = false;
         this.manager.guardarPlayerStats(this.player.getStats());
+        console.log(`DATOS DEL JUGADOR: ${this.player.getStats()}`);
         this.time.delayedCall(1000, () => {
             this.player.canChangeRoom = true;
         });
