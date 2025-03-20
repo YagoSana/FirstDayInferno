@@ -270,14 +270,19 @@ export default class informaticaManager extends Phaser.Scene {
       frameRate: 12,
       repeat: 0,
     });
-
-    this.scene.start("cafeFDI", {x: 500, y: 100, playerStats: this.playerStats, managerKey: "informaticaManager"});
+    this.mapStatus = new Map();
+    this.mapStatus.set("cafeFDI", false);
+    this.scene.launch("cafeFDI", {x: 500, y: 100, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("cafeFDI")});
   }
 
   cambiarSala(zone){
     this.scene.sleep(zone.prev);
-    console.log(zone.spawnRoom);
-    this.scene.launch(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "informaticaManager"});
+    this.mapStatus.set(zone.prev, true);
+    console.log(this.mapStatus);
+    if(!this.mapStatus.get(zone.spawnRoom)){
+      this.mapStatus.set(zone.spawnRoom, false);
+    }
+    this.scene.launch(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get(zone.spawnRoom)});
   }
 
   guardarPlayerStats(stats){

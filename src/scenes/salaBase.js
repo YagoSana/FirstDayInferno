@@ -17,6 +17,7 @@ export default class SalaBase extends Phaser.Scene{
         this.playerStats = data.playerStats; // Para pasar datos del jugador
         this.xSpawn = data.x;
         this.ySpawn = data.y;
+        this.status = data.status;
     }
 
     create() {
