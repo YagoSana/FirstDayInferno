@@ -15,12 +15,12 @@ import AssaultEnemy from "../gameObjects/enemies/assaultEnemy.js";
  * El juego termina cuando el jugador ha recogido 10 estrellas.
  * @extends Phaser.Scene
  */
-export default class introMedicina extends SalaBase {
+export default class hallMedicina extends SalaBase {
   /**
    * Constructor de la escena
    */
   constructor() {
-    super("introMedicina");
+    super("hallMedicina");
   }
 
   /**
@@ -29,7 +29,7 @@ export default class introMedicina extends SalaBase {
   create() {
     super.create(this.data);
 
-    var map = this.make.tilemap({ key: 'introMedicina' }); // Cargamos el mapa
+    var map = this.make.tilemap({ key: 'hallMedicina' }); // Cargamos el mapa
 
     const tileset1 = map.addTilesetImage('TX Tileset Grass', 'Grass');
     const tileset2 = map.addTilesetImage('TX Plant', 'Plantas');
@@ -79,7 +79,7 @@ export default class introMedicina extends SalaBase {
       zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
       zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
       zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
-      zone.prev = "introMedicina";
+      zone.prev = "hallMedicina";
     });
     this.transitionZones.setVisible(false);
     this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);

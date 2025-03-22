@@ -10,6 +10,7 @@ import Phaser from 'phaser';
 import InformaticaManager from './scenes/informaticaManager.js';
 import MedicinaManager from './scenes/medicinaManager.js';
 import IntroMedicina from './scenes/introMedicina.js';
+import hallMedicina from './scenes/hallMedicina.js';
 
 
 /**
@@ -26,12 +27,12 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, MainMenu, PauseMenu, SelectorNivel, InformaticaManager, CafeFDI, PasilloFDI, BibliotecaFDI, MedicinaManager, IntroMedicina, End],
+    scene: [Boot, MainMenu, PauseMenu, SelectorNivel, InformaticaManager, CafeFDI, PasilloFDI, BibliotecaFDI, MedicinaManager, IntroMedicina, hallMedicina, End],
     physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 0 },
-            debug: true
+            debug: false
         }
     }
 };

@@ -204,7 +204,7 @@ export default class medicinaManager extends Phaser.Scene {
       repeat: 0,
     });
 
-    this.scene.start("introMedicina", {x: 512, y: 600, playerStats: this.playerStats, managerKey: "medicinaManager"});
+    this.scene.start("introMedicina", {x: 320, y: 260, playerStats: this.playerStats, managerKey: "medicinaManager"});
   }
 
   cambiarSala(zone){
