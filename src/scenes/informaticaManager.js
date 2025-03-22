@@ -277,7 +277,7 @@ export default class informaticaManager extends Phaser.Scene {
       repeat: 0,
     });
 
-    this.scene.start("FDI_2", {x: 500, y: 100, playerStats: this.playerStats, managerKey: "informaticaManager"});
+    this.scene.start("FDI_1", {x: 442, y: 375, playerStats: this.playerStats, managerKey: "informaticaManager"});
   }
 
   cambiarSala(zone){

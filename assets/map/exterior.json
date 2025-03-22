@@ -309,12 +309,12 @@
         }, 
         {
          "draworder":"topdown",
-         "id":6,
+         "id":7,
          "name":"transiciones",
          "objects":[
                 {
-                 "height":46.8921724264258,
-                 "id":1,
+                 "height":48,
+                 "id":3,
                  "name":"",
                  "properties":[
                         {
@@ -325,19 +325,19 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":0
+                         "value":22
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":0
+                         "value":104
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":3.90768103553548,
-                 "x":-0.976920258883869,
-                 "y":351.691293198193
+                 "width":13,
+                 "x":0,
+                 "y":352
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -345,8 +345,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":7,
- "nextobjectid":2,
+ "nextlayerid":8,
+ "nextobjectid":4,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

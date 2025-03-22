@@ -49,15 +49,11 @@ export default class FDI_2 extends SalaBase {
         this.physics.add.collider(this.bulletGroup, layer3, this.onBulletCollision);
         this.physics.add.collider(this.enemyBulletGroup, layer3, this.onBulletCollision);
 
-        this.physics.add.collider(this.player, layer4);
-        this.physics.add.collider(this.enemyGroup, layer4);
-        this.physics.add.collider(this.bulletGroup, layer4, this.onBulletCollision);
-        this.physics.add.collider(this.enemyBulletGroup, layer4, this.onBulletCollision);
 
-        this.physics.add.collider(this.player, layer6);
-        this.physics.add.collider(this.enemyGroup, layer6);
-        this.physics.add.collider(this.bulletGroup, layer6, this.onBulletCollision);
-        this.physics.add.collider(this.enemyBulletGroup, layer6, this.onBulletCollision);
+        this.physics.add.collider(this.player, layer5);
+        this.physics.add.collider(this.enemyGroup, layer5);
+        this.physics.add.collider(this.bulletGroup, layer5, this.onBulletCollision);
+        this.physics.add.collider(this.enemyBulletGroup, layer5, this.onBulletCollision);
 
         //Camaras
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -69,7 +65,7 @@ export default class FDI_2 extends SalaBase {
         
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
-        /*
+        
         transitionLayer.objects.forEach(obj => {
             const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
@@ -77,7 +73,7 @@ export default class FDI_2 extends SalaBase {
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
             zone.prev = "cafeFDI";
         });
-        */
+        
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
     }
