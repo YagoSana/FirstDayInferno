@@ -287,17 +287,17 @@
                         {
                          "name":"spawnRoom",
                          "type":"string",
-                         "value":"hallMedicina"
+                         "value":"medicina_2"
                         }, 
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":300
+                         "value":250
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":200
+                         "value":300
                         }],
                  "rotation":0,
                  "type":"",

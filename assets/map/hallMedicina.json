@@ -71,40 +71,105 @@
          "width":32,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":7,
+         "name":"transiciones",
+         "objects":[
+                {
+                 "height":27.3333333333333,
+                 "id":1,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"spawnRoom",
+                         "type":"string",
+                         "value":"medicina_1"
+                        }, 
+                        {
+                         "name":"spawnX",
+                         "type":"int",
+                         "value":320
+                        }, 
+                        {
+                         "name":"spawnY",
+                         "type":"int",
+                         "value":30
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":232,
+                 "y":305.333333333333
+                }, 
+                {
+                 "height":63.3333333333333,
+                 "id":3,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"spawnRoom",
+                         "type":"string",
+                         "value":"medicina_3"
+                        }, 
+                        {
+                         "name":"spawnX",
+                         "type":"int",
+                         "value":100
+                        }, 
+                        {
+                         "name":"spawnY",
+                         "type":"int",
+                         "value":100
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":37.3333333333333,
+                 "x":-9.33333333333333,
+                 "y":36.6666666666667
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":7,
- "nextobjectid":1,
+ "nextlayerid":8,
+ "nextobjectid":5,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
  "tileheight":16,
  "tilesets":[
-       {
-        "columns":17,
-        "firstgid":1,
-        "image":"Modern tiles_Free\/Interiors_free\/16x16\/Room_Builder_free_16x16.png",
-        "imageheight":368,
-        "imagewidth":272,
-        "margin":0,
-        "name":"Room_Builder_free_16x16",
-        "spacing":0,
-        "tilecount":391,
-        "tileheight":16,
-        "tilewidth":16
-       }, 
-       {
-        "columns":16,
-        "firstgid":392,
-        "image":"Modern tiles_Free\/Interiors_free\/16x16\/Interiors_free_16x16.png",
-        "imageheight":1424,
-        "imagewidth":256,
-        "margin":0,
-        "name":"Interiors_free_16x16",
-        "spacing":0,
-        "tilecount":1424,
-        "tileheight":16,
-        "tilewidth":16
-       }],
+        {
+         "columns":17,
+         "firstgid":1,
+         "image":"..\/..\/..\/FirstDayInferno2\/assets\/map\/Room_Builder_free_16x16.png",
+         "imageheight":368,
+         "imagewidth":272,
+         "margin":0,
+         "name":"ParedSuelo16",
+         "spacing":0,
+         "tilecount":391,
+         "tileheight":16,
+         "tilewidth":16
+        }, 
+        {
+         "columns":16,
+         "firstgid":392,
+         "image":"..\/..\/..\/FirstDayInferno2\/assets\/map\/Interiors_free_16x16.png",
+         "imageheight":1424,
+         "imagewidth":256,
+         "margin":0,
+         "name":"Interior16",
+         "spacing":0,
+         "tilecount":1424,
+         "tileheight":16,
+         "tilewidth":16
+        }],
  "tilewidth":16,
  "type":"map",
  "version":"1.10",
