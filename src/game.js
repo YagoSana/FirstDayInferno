@@ -6,6 +6,8 @@ import Level from './scenes/level.js';
 import CafeFDI from './scenes/cafeFDI.js';
 import BibliotecaFDI from './scenes/bibliotecaFDI.js';
 import PasilloFDI from './scenes/pasilloFDI.js';
+import FDI_1 from './scenes/FDI_1.js';
+import FDI_2 from './scenes/FDI_2.js';
 import laboratorioFDI from './scenes/laboratorioFDI.js';
 import SelectorNivel from './scenes/selectorNivel.js';
 
@@ -27,7 +29,7 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, MainMenu, PauseMenu, SelectorNivel, InformaticaManager, CafeFDI, PasilloFDI, BibliotecaFDI,laboratorioFDI, End],
+    scene: [Boot, MainMenu, PauseMenu, SelectorNivel, InformaticaManager, CafeFDI, PasilloFDI,FDI_1, FDI_2, BibliotecaFDI,laboratorioFDI, End],
     physics: {
         default: 'arcade',
         arcade: {

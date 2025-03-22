@@ -27,10 +27,12 @@ import img_plantas from "../../assets/map/TX Plant.png";
 import img_props from "../../assets/map/TX Props.png";
 import img_sombras from "../../assets/map/TX Shadow.png";
 import img_sombra_plantas from "../../assets/map/TX Shadow Plant.png";
-import bibliofdi from "../../assets/map/biblioteca.json";
+import bibliofdi from "../../assets/map/biblioteca.json";2
 import cafefdi from "../../assets/map/cafe.json";
 import laboratorioFDI from "../../assets/map/laboratorio.json";
 import pasillofdi from "../../assets/map/pasillo.json";
+import FDI_1_TL from "../../assets/map/exterior.json";
+import FDI_2_TL from "../../assets/map/pasillo_plantaBaja.json"
 import img_interior from "../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../assets/map/Room_Builder_free_16x16.png";
 
@@ -178,6 +180,8 @@ export default class informaticaManager extends Phaser.Scene {
     this.load.tilemapTiledJSON("bibliotecafdi", bibliofdi);
     this.load.tilemapTiledJSON("cafefdi", cafefdi);
     this.load.tilemapTiledJSON("pasillofdi", pasillofdi);
+    this.load.tilemapTiledJSON("FDI_2_TL", FDI_2_TL);
+    this.load.tilemapTiledJSON("FDI_1_TL", FDI_1_TL);
     this.load.tilemapTiledJSON("laboratorioFDI", laboratorioFDI);
 
     //items del player
@@ -273,7 +277,7 @@ export default class informaticaManager extends Phaser.Scene {
       repeat: 0,
     });
 
-    this.scene.start("laboratorioFDI", {x: 500, y: 100, playerStats: this.playerStats, managerKey: "informaticaManager"});
+    this.scene.start("FDI_2", {x: 500, y: 100, playerStats: this.playerStats, managerKey: "informaticaManager"});
   }
 
   cambiarSala(zone){
