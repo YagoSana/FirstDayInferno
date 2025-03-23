@@ -92,7 +92,7 @@ export default class BibliotecaFDI extends SalaBase {
         this.numEnemies++;
         this.enemyGroup.add(new RangedEnemy(this, 300, 200, "zombie"));
         this.numEnemies++;
-        new Item(this, 250, 200, "miniTinto");
+        new Item(this, 250, 200, "mini_tinto");
     }
 
     update(){
