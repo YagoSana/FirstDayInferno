@@ -10,6 +10,7 @@ import monogram from "../../fonts/monogram-extended.ttf";
 import player from "../../assets/sprites/player_spritesheet.png";
 
 //EXTRAS ------------------------------------------------------
+import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
 import paperbullet from "../../assets/sprites/bullet.png";
 import puff from "../../assets/sprites/puff.png";
 
@@ -76,6 +77,12 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("player_items", player_items, {
       frameWidth: 32,
       frameHeight: 32,
+    });
+
+    //sprites de teclas con animacion
+    this.load.spritesheet("keyboard_keys", keyboard_keys, {
+      frameWidth: 16,
+      frameHeight: 16,
     });
 
   }
@@ -224,6 +231,12 @@ export default class Boot extends Phaser.Scene {
       repeat: 0,
     });
 
+    this.anims.create({
+      key: "key_E_action",
+      frames: this.anims.generateFrameNames("keyboard_keys", { start: 16, end: 19 }),
+      frameRate: 8,
+      repeat: -1,
+    });
 
     this.anims.create({
       key: "heart-idle",
@@ -245,59 +258,75 @@ export default class Boot extends Phaser.Scene {
       frameRate: 8,
       repeat: -1,
     });
+
+    this.anims.create({
+      key: "vm-idle",
+      frames: this.anims.generateFrameNames("items", { start: 18, end: 23 }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "vm-using",
+      frames: this.anims.generateFrameNames("items", { start: 24, end: 29 }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    
     // 🔹 Crear texturas individuales a partir del spritesheet (sin función)
     this.textures.addSpriteSheet('bumbo', this.textures.get('items').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
-      startFrame: 18
+      startFrame: 30
     });
 
     this.textures.addSpriteSheet('pantallazo_azul', this.textures.get('items').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
-      startFrame: 19
+      startFrame: 31
     });
 
     this.textures.addSpriteSheet('mini_tinto', this.textures.get('items').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
-      startFrame: 20
+      startFrame: 32
     });
 
     this.textures.addSpriteSheet('hamburguesa', this.textures.get('items').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
-      startFrame: 21
+      startFrame: 33
     });
 
     this.textures.addSpriteSheet('collar_macarrones', this.textures.get('items').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
-      startFrame: 22
+      startFrame: 34
     });
 
     this.textures.addSpriteSheet('bono', this.textures.get('items').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
-      startFrame: 23
+      startFrame: 35
     });
 
     this.textures.addSpriteSheet('codigo', this.textures.get('items').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
-      startFrame: 24
+      startFrame: 36
     });
 
     this.textures.addSpriteSheet('maletin', this.textures.get('items').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
-      startFrame: 25
+      startFrame: 37
     });
 
     this.textures.addSpriteSheet('bolsa_sospechosa', this.textures.get('items').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
-      startFrame: 26
+      startFrame: 38
     });
 
     this.scene.start('MainMenu');

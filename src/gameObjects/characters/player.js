@@ -94,8 +94,8 @@ export default class Player extends SpriteBase {
                 else if (this.shootKeys.shootRight.isDown)
                     this.shoot(1, 0);
             }
-            let acceleration = 300; // Aceleración en px/s²
-            let deceleration = 600; // Desaceleración en px/s²
+            let acceleration = 400; // Aceleración en px/s²
+            let deceleration = 450; // Desaceleración en px/s²
             let maxSpeed = this.speed; // Velocidad máxima permitida
 
             let velocityX = this.body.velocity.x;
@@ -130,6 +130,15 @@ export default class Player extends SpriteBase {
                 if (Math.abs(velocityX) < 10) velocityX = 0;
             }
 
+            // 🔹 Normalizar velocidad en diagonal
+            let speedMagnitude = Math.sqrt(velocityX * velocityX + velocityY * velocityY);
+            if (speedMagnitude > maxSpeed) {
+                let scale = maxSpeed / speedMagnitude;
+                velocityX *= scale;
+                velocityY *= scale;
+            }
+
+
             if (!this.isShooting) {
                 if (velocityX === 0 && velocityY === 0) {
                     this.play(`idle-${this.lastDirection}`, true);
@@ -147,16 +156,26 @@ export default class Player extends SpriteBase {
                 }
             }
 
-            // Si el jugador esta cerca de un item y pulsa 'E' lo recoge
-            if (this.nearItem && Phaser.Input.Keyboard.JustDown(this.pickupKey)) {
-                this.nearItem.pick(this, this);
-                this.nearItem = null;
+            // Verificar si el jugador se alejó del objeto
+            if (this.nearItem) {
+                const distance = Phaser.Math.Distance.Between(this.x, this.y, this.nearItem.x, this.nearItem.y);
+                if (distance > 30) { // Ajusta este valor según el rango de interacción
+                    this.nearItem.hidePickupHint(); // Ocultar la información del objeto
+                    this.nearItem = null; // Limpiar nearItem
+                }
+                // Si el jugador esta cerca de un item y pulsa 'E' lo recoge
+                if (Phaser.Input.Keyboard.JustDown(this.pickupKey)) {
+                    this.nearItem.pick(this, this);
+                    this.nearItem = null;
+                }
             }
 
             // ACTUALIZAR EL SPRITE DEL ITEM SOLO SI HAY UN ITEM EQUIPADO
             if (this.itemSprite) {
-                this.itemSprite.x = this.x;
-                this.itemSprite.y = this.y;
+                let lerpFactor = 1; // Ajusta este valor para hacer el movimiento más suave
+                this.itemSprite.x = Phaser.Math.Linear(this.itemSprite.x, this.x, lerpFactor);
+                this.itemSprite.y = Phaser.Math.Linear(this.itemSprite.y, this.y, lerpFactor);
+
 
                 let frameIndex = this.equippedItemRow * 8; // 🆕 Calculamos la fila
                 if (this.isShooting) {
