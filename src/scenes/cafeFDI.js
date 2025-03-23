@@ -36,9 +36,6 @@ export default class CafeFDI extends SalaBase {
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
         this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
-        new Item(this, 200, 200,"hamburguesa");
-        new Item(this, 200, 100,"bumbo");
-        
 
         //Colisiones
         this.physics.add.collider(this.player, layer2);
@@ -66,9 +63,9 @@ export default class CafeFDI extends SalaBase {
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setZoom(1.8);
-
-        this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
-        
+        if(!this.status){
+            this.spawnProps();
+        }
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
         transitionLayer.objects.forEach(obj => {
@@ -77,8 +74,24 @@ export default class CafeFDI extends SalaBase {
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
             zone.prev = "cafeFDI";
+            zone.open = false;
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+    }
+
+    spawnProps(){
+        this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
+        this.numEnemies++;
+        new Item(this, 200, 200,"hamburguesa");
+    }
+
+    update(){
+        if(this.numEnemiesBeaten == this.numEnemies){
+            this.completed = true;
+            this.transitionZones.getChildren().forEach(zone => {
+                zone.open = true;
+            });
+        }
     }
 }

@@ -337,5 +337,4 @@ export default class Player extends SpriteBase {
             shootCooldown: this.shootCooldown
         };
     }
-
 }

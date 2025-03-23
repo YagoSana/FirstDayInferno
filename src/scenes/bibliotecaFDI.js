@@ -43,10 +43,9 @@ export default class BibliotecaFDI extends SalaBase {
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
         this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);//865, 195
-        this.enemyGroup.add(new WakeEnemy(this, 100, 240, "cat"));
-        this.enemyGroup.add(new RangedEnemy(this, 300, 200, "zombie"));
-
-        new Item(this, 250, 200, "mini_tinto");
+        if(!this.status){
+            this.spawnProps();
+        }
 
         //Colisiones
         this.physics.add.collider(this.player, layer2);
@@ -86,5 +85,22 @@ export default class BibliotecaFDI extends SalaBase {
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+    }
+
+    spawnProps(){
+        this.enemyGroup.add(new WakeEnemy(this, 100, 240, "cat"));
+        this.numEnemies++;
+        this.enemyGroup.add(new RangedEnemy(this, 300, 200, "zombie"));
+        this.numEnemies++;
+        new Item(this, 250, 200, "miniTinto");
+    }
+
+    update(){
+        if(this.numEnemiesBeaten == this.numEnemies){
+            this.completed = true;
+            this.transitionZones.getChildren().forEach(zone => {
+                zone.open = true;
+            });
+        }
     }
 }

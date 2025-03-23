@@ -17,6 +17,7 @@ export default class SalaBase extends Phaser.Scene{
         this.playerStats = data.playerStats; // Para pasar datos del jugador
         this.xSpawn = data.x;
         this.ySpawn = data.y;
+        this.status = data.status;
     }
 
     create() {
@@ -24,6 +25,10 @@ export default class SalaBase extends Phaser.Scene{
         if(this.player){
             this.player.destroy();
         }
+        this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        this.completed = false;
+        this.numEnemiesBeaten = 0;
+        this.numEnemies = 0;
     }
 
     onBulletCollision(bullet, tile) {
@@ -31,7 +36,7 @@ export default class SalaBase extends Phaser.Scene{
     }
 
     cambiarSala(player, zone) {
-        if(!zone.spawnRoom || !this.player.canChangeRoom) return;
+        if(!zone.spawnRoom || !this.player.canChangeRoom || !zone.open) return;
         this.player.canChangeRoom = false;
         this.manager.guardarPlayerStats(this.player.getStats());
         console.log(`DATOS DEL JUGADOR: ${this.player.getStats()}`);
@@ -43,4 +48,14 @@ export default class SalaBase extends Phaser.Scene{
             this.manager.cambiarSala(zone);
         });
     }
+
+    update() {
+        // Abrir el menú de pausa al presionar ESC
+        if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
+          console.log(`Escena anterior: ${this.scene.key}`);
+          this.scene.pause(); // Pausar la escena actual
+          this.scene.launch('PauseMenu', { previousScene: this.scene.key }); // Lanzar la escena de pausa
+          this.scene.bringToTop('PauseMenu'); // Asegurarse de que PauseMenu esté en la parte superior
+        }
+      }
 }

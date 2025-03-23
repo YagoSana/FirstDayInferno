@@ -63,6 +63,7 @@ export default class WakeEnemy extends Npc {
       this.health--;
       if(this.health <= 0){
         this.body.setVelocity(0,0);
+        this.scene.numEnemiesBeaten++;
         this.play("enemydeath", true);
         this.once('animationcomplete', () => {
           this.destroy();
