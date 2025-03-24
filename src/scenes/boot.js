@@ -270,7 +270,7 @@ export default class Boot extends Phaser.Scene {
       key: "vm-using",
       frames: this.anims.generateFrameNames("items", { start: 24, end: 29 }),
       frameRate: 8,
-      repeat: -1,
+      repeat: 1,
     });
 
     

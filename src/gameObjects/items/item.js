@@ -3,9 +3,9 @@ import SpriteBase from '../spriteBase';
 
 const DEFAULT_SIZE = 0.65;
 const HOVER_SIZE = 0.8;
-const ITEM_RANGE = 80;
+const ITEM_RANGE = 60;
 const LIFETIME = 100000;
-const COLOR_GLOW = 0x2ce8f5;
+const COLOR_GLOW = 0xb55088;
 const BG_COLOR = '#000000';
 const TEXT_COLOR = '#ffffff';
 
@@ -14,6 +14,7 @@ export default class Item extends SpriteBase {
 
     super(scene, x, y, type);
     this.type = type; // el tipo de objeto
+    this.name = this.getItemName(type);
     this.manualPickup = !(type === 'moneda' || type === 'corazon' || type === 'llave');
     // Tiempo de vida del objeto
     this.lifetime = LIFETIME; // 100 segundos
@@ -44,7 +45,7 @@ export default class Item extends SpriteBase {
       fontSize: '16px',
       fill: TEXT_COLOR,
       fontFamily: 'monogram',
-      backgroundColor:BG_COLOR,
+      backgroundColor: BG_COLOR,
       padding: { x: 5, y: 2 }
     }).setVisible(false).setDepth(100).setResolution(2); // Asegurar que esté por encima del jugador
 
@@ -59,7 +60,8 @@ export default class Item extends SpriteBase {
       fill: TEXT_COLOR,
       fontFamily: 'monogram',
       backgroundColor: BG_COLOR,
-      padding: { x: 10, y: 5 }
+      padding: { x: 10, y: 5 },
+      align: 'center'
     }).setVisible(false).setDepth(100).setScrollFactor(0).setResolution(2); // Fijo en la cámara
 
     // Si el item es automático, se recoge al tocarlo
@@ -82,14 +84,43 @@ export default class Item extends SpriteBase {
     this.glowEffect = null; // Referencia al efecto de glow
   }
 
-  getDescription() {
-    // Descripciones de los objetos
-    const descriptions = {
-      "hamburguesa": "Hamburguesa: Recupera 1 punto de salud.",
-      "mini_tinto": "Mini de Tinto: Recupera 2 puntos de salud, pero te ralentiza.",
-      "bumbo": "Bumbo: Me parece que ya lo has visto antes ..."
+  // Formatea el nombre del ítem para mostrarlo bonito
+  getItemName(type) {
+    const itemNames = {
+      "bumbo": "Bumbo",
+      "hamburguesa": "Hamburguesa",
+      "mini_tinto": "Mini de Tinto",
+
+
+      // Añade más mapeos según necesites
     };
-    return descriptions[this.type] || "???: Objeto desconocido.";
+
+    // Si existe en el mapeo, lo usamos, sino formateamos automáticamente
+    return itemNames[type] || '???';
+  }
+
+  getDescription() {
+    const descriptions = {
+      "hamburguesa": {
+        description: "Recupera 1 punto de salud.",
+        effect: "Salud +1"
+      },
+      "mini_tinto": {
+        description: "Un pequeño trago de energía, pero te ralentiza temporalmente.",
+        effect: "Salud +2, Velocidad -50%"
+      },
+      "bumbo": {
+        description: "Me parece que ya lo has visto antes...",
+        effect: "Cambia tu apariencia"
+      }
+    };
+
+    const itemInfo = descriptions[this.type] || {
+      description: "Un objeto misterioso.",
+      effect: "???"
+    };
+
+    return `${itemInfo.description}\n[Efecto: ${itemInfo.effect}]`;
   }
 
   levitate() {
@@ -112,10 +143,10 @@ export default class Item extends SpriteBase {
 
     this.setScale(HOVER_SIZE);
 
-    this.setGlow(COLOR_GLOW, 5);
+    this.setGlow(COLOR_GLOW, 3);
 
     // Mostrar el nombre del objeto encima del jugador
-    this.itemNameText.setText(this.type);
+    this.itemNameText.setText(this.name);
     this.itemNameText.setPosition(player.x - this.itemNameText.width / 2, player.y - 40);
     this.itemNameText.setVisible(true);
 
@@ -129,7 +160,7 @@ export default class Item extends SpriteBase {
 
     this.descriptionText.setPosition(
       this.scene.cameras.main.centerX - this.descriptionText.width / 2,
-      this.scene.cameras.main.height - 150
+      this.scene.cameras.main.height - 160
     );
     this.descriptionText.setVisible(true);
   }
@@ -148,6 +179,7 @@ export default class Item extends SpriteBase {
     // Restaurar la levitación y el tamaño original
     this.levitateTween.resume(); // Reanudar el tween de levitación
     this.setScale(DEFAULT_SIZE);
+    this.scene.player.nearItem = null;
 
   }
 
@@ -183,13 +215,37 @@ export default class Item extends SpriteBase {
   }
 
   warnBeforeDestroy() {
+    // 1. Ocultar los elementos UI inmediatamente
+    if (this.itemNameText && !this.itemNameText.destroyed) {
+      this.itemNameText.setVisible(false);
+    }
+
+    if (this.eKeyAnimation && !this.eKeyAnimation.destroyed) {
+      this.eKeyAnimation.setVisible(false);
+    }
+
+    if (this.descriptionText && !this.descriptionText.destroyed) {
+      this.descriptionText.setVisible(false);
+    }
+
+    // 2. Limpiar la referencia del jugador
+    if (this.scene && this.scene.player && this.scene.player.nearItem === this) {
+      this.scene.player.nearItem = null;
+    }
+
+    // 3. Desactivar el glow de forma segura
+    if (this.glowEffect && this.postFX) {
+      this.postFX.remove(this.glowEffect);
+      this.glowEffect = null;
+    }
+
     // Advertir antes de destruir el objeto (parpadeo)
     this.scene.tweens.add({
       targets: this,
-      alpha: 0,
       duration: 500,
       yoyo: true,
-      repeat: 3,
+      repeat: 5,
+      alpha: 0,
       onComplete: () => {
         this.destroy();
       }
@@ -200,7 +256,7 @@ export default class Item extends SpriteBase {
     if (this.actions[this.type]) {
       this.actions[this.type](player); // Aplicar el efecto del objeto
     }
-    if(this.manualPickup){
+    if (this.manualPickup) {
       this.hidePickupHint();
     }
     this.destroy();
