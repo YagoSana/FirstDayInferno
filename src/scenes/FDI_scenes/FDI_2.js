@@ -1,7 +1,7 @@
-import SalaBase from "../scenes/salaBase.js";
-import Player from "../gameObjects/characters/player.js";
-import Enemy from "../gameObjects/enemies/enemy.js";
-import Item from "../gameObjects/items/item.js";
+import SalaBase from "../../scenes/salaBase.js";
+import Player from "../../gameObjects/characters/player.js";
+import Enemy from "../../gameObjects/enemies/enemy.js";
+import Item from "../../gameObjects/items/item.js";
 
 
 export default class FDI_2 extends SalaBase {
@@ -66,19 +66,19 @@ export default class FDI_2 extends SalaBase {
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setZoom(1.8);
 
-        this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
+        //this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
         
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
-        /*
+        
         transitionLayer.objects.forEach(obj => {
             const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
-            zone.prev = "cafeFDI";
+            zone.prev = "FDI_2";
         });
-        */
+        
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
     }

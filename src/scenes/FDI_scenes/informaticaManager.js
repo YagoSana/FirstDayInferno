@@ -1,46 +1,48 @@
 import Phaser from "phaser";
 
 //JUGADOR CON ITEMS ----------------------------------------------
-import player_item_isaac from "../../assets/sprites/player_item_isaac.png";
+import player_item_isaac from "../../../assets/sprites/player_item_isaac.png";
 
 //BALAS --------------------------------------------------------
-import arrow from "../../assets/sprites/arrow.png";
-import nerdbullet from "../../assets/sprites/nerd-bullet.png";
-import zombiebullet from "../../assets/sprites/pastilla.png";
+import arrow from "../../../assets/sprites/arrow.png";
+import nerdbullet from "../../../assets/sprites/nerd-bullet.png";
+import zombiebullet from "../../../assets/sprites/pastilla.png";
 
 //ENEMIGOS -----------------------------------------------------
-import cucaracha from "../../assets/sprites/cucaracha.png";
-import nerdmove from "../../assets/sprites/nerd-move.png";
-import nerdshoot from "../../assets/sprites/nerd-shoot.png";
-import enemydeath from "../../assets/sprites/enemy_death.png";
-import cat_idle from "../../assets/sprites/cat_idle.png";
-import cat_void from "../../assets/sprites/cat_void.png";
-import cat_wake from "../../assets/sprites/cat_wake.png";
-import zombie_move from "../../assets/sprites/zombie_move.png";
-import zombie_shoot from "../../assets/sprites/zombie_shoot.png";
-import embestidaPlaceHolder from "../../assets/sprites/embestidaPlaceHolder.png";
+import cucaracha from "../../../assets/sprites/cucaracha.png";
+import nerdmove from "../../../assets/sprites/nerd-move.png";
+import nerdshoot from "../../../assets/sprites/nerd-shoot.png";
+import enemydeath from "../../../assets/sprites/enemy_death.png";
+import cat_idle from "../../../assets/sprites/cat_idle.png";
+import cat_void from "../../../assets/sprites/cat_void.png";
+import cat_wake from "../../../assets/sprites/cat_wake.png";
+import zombie_move from "../../../assets/sprites/zombie_move.png";
+import zombie_shoot from "../../../assets/sprites/zombie_shoot.png";
+import embestidaPlaceHolder from "../../../assets/sprites/embestidaPlaceHolder.png";
 
 //MAPAS Y TILES ------------------------------------------------------
-import mapa from "../../assets/map/introMedicina.json";
-import img_grass from "../../assets/map/TX Tileset Grass.png";
-import img_plantas from "../../assets/map/TX Plant.png";
-import img_props from "../../assets/map/TX Props.png";
-import img_sombras from "../../assets/map/TX Shadow.png";
-import img_sombra_plantas from "../../assets/map/TX Shadow Plant.png";
-import bibliofdi from "../../assets/map/biblioteca.json";2
-import cafefdi from "../../assets/map/cafe.json";
-import laboratorioFDI from "../../assets/map/laboratorio.json";
-import pasillofdi from "../../assets/map/pasillo.json";
-import FDI_1_TL from "../../assets/map/exterior.json";
-import FDI_2_TL from "../../assets/map/pasillo_plantaBaja.json"
-import img_interior from "../../assets/map/Interiors_free_16x16.png";
-import img_muebles from "../../assets/map/Room_Builder_free_16x16.png";
+import mapa from "../../../assets/map/introMedicina.json";
+import img_grass from "../../../assets/map/TX Tileset Grass.png";
+import img_plantas from "../../../assets/map/TX Plant.png";
+import img_props from "../../../assets/map/TX Props.png";
+import img_sombras from "../../../assets/map/TX Shadow.png";
+import img_sombra_plantas from "../../../assets/map/TX Shadow Plant.png";
+import bibliofdi from "../../../assets/map/biblioteca.json";2
+
+import laboratorioFDI from "../../../assets/map/laboratorio.json";
+import pasillofdi from "../../../assets/map/pasillo.json";
+import FDI_1_TL from "../../../assets/map/exterior.json";
+import FDI_2_TL from "../../../assets/map/pasillo_plantaBaja.json"
+import FDI_3_TL from "../../../assets/map/entrada.json";
+import FDI_4_TL from "../../../assets/map/cafe.json";
+import img_interior from "../../../assets/map/Interiors_free_16x16.png";
+import img_muebles from "../../../assets/map/Room_Builder_free_16x16.png";
 
 //ITEMS ----------------------------------------------------------
-import hamburguesa from "../../assets/sprites/hamburguesa.png";
-import moneda from "../../assets/sprites/coin_sheet.png";
-import miniTinto from "../../assets/sprites/miniTinto.png";
-import bumbo from "../../assets/sprites/uff_referencia.png";
+import hamburguesa from "../../../assets/sprites/hamburguesa.png";
+import moneda from "../../../assets/sprites/coin_sheet.png";
+import miniTinto from "../../../assets/sprites/miniTinto.png";
+import bumbo from "../../../assets/sprites/uff_referencia.png";
 
 
 /**
@@ -178,10 +180,11 @@ export default class informaticaManager extends Phaser.Scene {
 
     //TODO AÑADIR TILEDJSON (MAPA)
     this.load.tilemapTiledJSON("bibliotecafdi", bibliofdi);
-    this.load.tilemapTiledJSON("cafefdi", cafefdi);
     this.load.tilemapTiledJSON("pasillofdi", pasillofdi);
     this.load.tilemapTiledJSON("FDI_2_TL", FDI_2_TL);
     this.load.tilemapTiledJSON("FDI_1_TL", FDI_1_TL);
+    this.load.tilemapTiledJSON("FDI_3_TL", FDI_3_TL);
+    this.load.tilemapTiledJSON("FDI_4_TL", FDI_4_TL);
     this.load.tilemapTiledJSON("laboratorioFDI", laboratorioFDI);
 
     //items del player
@@ -280,10 +283,11 @@ export default class informaticaManager extends Phaser.Scene {
     this.scene.start("FDI_1", {x: 442, y: 375, playerStats: this.playerStats, managerKey: "informaticaManager"});
   }
 
-  cambiarSala(zone){
+    cambiarSala(zone){
     this.scene.sleep(zone.prev);
     console.log(zone.spawnRoom);
     this.scene.launch(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "informaticaManager"});
+    
   }
 
   guardarPlayerStats(stats){

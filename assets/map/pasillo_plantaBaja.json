@@ -127,9 +127,63 @@
          "width":50,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":8,
+         "name":"transiciones",
+         "objects":[
+                {
+                 "height":46.2370880472209,
+                 "id":7,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"spawnRoom",
+                         "type":"string",
+                         "value":"FDI_3"
+                        }, 
+                        {
+                         "name":"spawnX",
+                         "type":"int",
+                         "value":54
+                        }, 
+                        {
+                         "name":"spawnY",
+                         "type":"int",
+                         "value":94
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":14.756517461879,
+                 "x":785.046728971963,
+                 "y":79.6851942941466
+                }],
+         "opacity":1,
+         "properties":[
+                {
+                 "name":"spawnRoom",
+                 "type":"string",
+                 "value":"FDI_3"
+                }, 
+                {
+                 "name":"spawnX",
+                 "type":"int",
+                 "value":44
+                }, 
+                {
+                 "name":"spawnY",
+                 "type":"int",
+                 "value":86
+                }],
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":7,
- "nextobjectid":1,
+ "nextlayerid":9,
+ "nextobjectid":10,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
