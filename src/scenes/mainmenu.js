@@ -1,9 +1,14 @@
 import Phaser from 'phaser';
+import musicaMenu from '../../assets/music/mainMenu.ogg';
 export default class MainMenu extends Phaser.Scene {
     constructor() {
         super({ key: 'MainMenu' });
     }
 
+    preload() {
+        this.load.audio('musicaMenu', musicaMenu);
+    }
+    
     init(datos) {
         this.globals = datos.globals
         console.log("init");
@@ -11,6 +16,13 @@ export default class MainMenu extends Phaser.Scene {
     }
 
     create() {
+        //musica
+        this.musica = this.sound.add('musicaMenu', {
+            loop: true,   // Que se repita en bucle
+            volume: 0.5   // Volumen (0 a 1)
+        });
+        this.musica.play();
+        //musica
         let bg = this.add.image(0, 0, 'background');
         bg.displayHeight = this.sys.game.config.height;
         bg.scaleX = bg.scaleY;
