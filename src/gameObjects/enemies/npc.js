@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import SpriteBase from '../spriteBase.js';
+import Item from '../items/item.js';
 
 /**
  * Clase que representa la base sobre la que se sitúan las estrellas que aparecen en el juego
@@ -16,6 +17,7 @@ export default class Npc extends SpriteBase {
         this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
         this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
         this.scene.physics.add.collider(this, scene.enemyGroup);
+        this.sonidoDropMoneda = this.scene.sound.add('enemigoSueltaMoneda');
     }
 
     hitPlayer(enemy, player) {
@@ -29,6 +31,9 @@ export default class Npc extends SpriteBase {
         this.stunCounter = 30;
         this.health--;
         if(this.health <= 0){
+          if (Phaser.Math.Between(1, 100) <= 33) {
+            this.dropCoin();
+          }
           this.scene.numEnemiesBeaten++;
           this.body.setVelocity(0,0);
           this.play("enemydeath", true);
@@ -41,5 +46,10 @@ export default class Npc extends SpriteBase {
 
       preUpdate(t, dt) {
         super.preUpdate(t, dt);
-    }
+      }
+
+      dropCoin(){
+        this.sonidoDropMoneda.play();
+        const coin = new Item(this.scene, this.x, this.y, "moneda");
+      }
 }

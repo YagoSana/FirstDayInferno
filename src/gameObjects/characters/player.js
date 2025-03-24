@@ -68,6 +68,7 @@ export default class Player extends SpriteBase {
         this.pickupKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.sonidoDisparo = scene.sound.add('disparaJugador');
         this.sonidoAndar = scene.sound.add('andarJugador');
+        this.sonidoMoneda = scene.sound.add('cogerMoneda');
         this.stepTimer = 0;
         this.stepInterval = 500; // o el valor que te mole para los pasos
 
@@ -336,7 +337,7 @@ export default class Player extends SpriteBase {
     addCoin(amount) {
         this.coins += amount;
         console.log(`Monedas: ${this.coins}€`);
-
+        this.sonidoMoneda.play();
     }
 
     slowDown() {
