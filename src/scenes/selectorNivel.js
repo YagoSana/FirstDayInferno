@@ -27,6 +27,7 @@ export default class SelectorNivel extends Phaser.Scene {
   }
 
   create() {
+    this.sonidoEntrar = this.sound.add('entrarFacultad');
     /*
     const map = this.make.tilemap({ key: 'selectorNivel' });
     const tileset1 = map.addTilesetImage('patronesGeneralesGrass', 'Grass');
@@ -59,6 +60,7 @@ export default class SelectorNivel extends Phaser.Scene {
   }
 
   startWorld(worldName) {
+    this.sonidoEntrar.play();
     console.log(`Comienza el mundo: ${worldName}`);
     this.scene.sleep('selectorNivel');
     this.scene.launch(worldName, { playerStats: this.playerStats, prev: 'selectorNivel' });

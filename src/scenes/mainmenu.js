@@ -1,12 +1,8 @@
 import Phaser from 'phaser';
-import musicaMenu from '../../assets/music/mainMenu.ogg';
+
 export default class MainMenu extends Phaser.Scene {
     constructor() {
         super({ key: 'MainMenu' });
-    }
-
-    preload() {
-        this.load.audio('musicaMenu', musicaMenu);
     }
     
     init(datos) {
@@ -21,6 +17,8 @@ export default class MainMenu extends Phaser.Scene {
             loop: true,   // Que se repita en bucle
             volume: 0.5   // Volumen (0 a 1)
         });
+        this.sonidoHover = this.sound.add('buttonHover');
+        this.sonidoEmpezar = this.sound.add('startgame');
         this.musica.play();
         //musica
         let bg = this.add.image(0, 0, 'background');
@@ -61,7 +59,7 @@ export default class MainMenu extends Phaser.Scene {
         // buttonPlay.on('pointerover', () => { buttonPlay.setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000); } );
         // buttonPlay.on('pointerdown',this.changeScene.bind(this, "selectorNivel"));
         // buttonPlay.on('pointerout',() => {buttonPlay.setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff);});
-        buttonPlay.on('pointerover', () => { buttonPlay.setTexture('button_hover'); });
+        buttonPlay.on('pointerover', () => { buttonPlay.setTexture('button_hover'); this.sonidoHover.play(); });
         buttonPlay.on('pointerdown', this.changeScene.bind(this, "selectorNivel"));
         buttonPlay.on('pointerout', () => { buttonPlay.setTexture('button'); });
 
@@ -73,12 +71,16 @@ export default class MainMenu extends Phaser.Scene {
         buttonTutorialText.setFontFamily('monogram');
 
         // Asignar eventos al botón "Tutorial"
-        buttonTutorial.on('pointerover', () => { buttonTutorial.setTexture('button_hover'); });
+        buttonTutorial.on('pointerover', () => { buttonTutorial.setTexture('button_hover'); this.sonidoHover.play();});
         buttonTutorial.on('pointerdown', this.changeScene.bind(this, "selectorNivel"));
         buttonTutorial.on('pointerout', () => { buttonTutorial.setTexture('button'); });
     }
 
     changeScene(newScene) {
+        this.sonidoEmpezar.play();
+        if (this.musica) {
+            this.musica.stop(); // o this.musica.pause();
+        }
         this.scene.start(newScene, { globals: this.globals });
     }
 }

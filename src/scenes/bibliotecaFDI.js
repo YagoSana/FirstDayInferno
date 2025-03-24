@@ -94,13 +94,4 @@ export default class BibliotecaFDI extends SalaBase {
         this.numEnemies++;
         new Item(this, 250, 200, "mini_tinto");
     }
-
-    update(){
-        if(this.numEnemiesBeaten == this.numEnemies){
-            this.completed = true;
-            this.transitionZones.getChildren().forEach(zone => {
-                zone.open = true;
-            });
-        }
-    }
 }

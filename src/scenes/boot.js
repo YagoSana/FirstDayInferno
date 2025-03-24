@@ -19,6 +19,17 @@ import items from "../../assets/sprites/items_spritesheet.png";
 
 //JUGADOR CON ITEMS ----------------------------------------------
 import player_items from "../../assets/sprites/player_item.png";
+//AUDIO ------------------------------------------------------
+import musicaMenu from '../../assets/music/mainMenu.ogg';
+import buttonHover from '../../assets/music/buttonHover.wav';
+import startgame from '../../assets/music/startGame.wav';
+import entrarFacultad from '../../assets/music/entrarFacultad.wav';
+import salirPausa from '../../assets/music/salirPausa.wav';
+import enemigoSueltaMoneda from '../../assets/music/enemigoSueltaMoneda.wav';
+import disparaJugador from '../../assets/music/disparaJugador.wav';
+import cogerMoneda from '../../assets/music/coin.wav';
+import andarJugador from '../../assets/music/andarJugador.wav';
+
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -48,6 +59,17 @@ export default class Boot extends Phaser.Scene {
    * Carga de los assets del juego
    */
   preload() {
+    //AUDIO
+    this.load.audio('musicaMenu', musicaMenu);
+    this.load.audio('buttonHover', buttonHover);
+    this.load.audio('startgame', startgame);
+    this.load.audio('entrarFacultad', entrarFacultad);
+    this.load.audio('salirPausa', salirPausa);
+    this.load.audio('enemigoSueltaMoneda', enemigoSueltaMoneda);
+    this.load.audio('disparaJugador', disparaJugador);
+    this.load.audio('cogerMoneda', cogerMoneda);
+    this.load.audio('andarJugador', andarJugador);
+    //AUDIO
     this.loadFont('monogram', monogram);
     this.load.image('background', Background);
     this.load.image('title', titulo);

@@ -85,13 +85,4 @@ export default class CafeFDI extends SalaBase {
         this.numEnemies++;
         new Item(this, 200, 200,"hamburguesa");
     }
-
-    update(){
-        if(this.numEnemiesBeaten == this.numEnemies){
-            this.completed = true;
-            this.transitionZones.getChildren().forEach(zone => {
-                zone.open = true;
-            });
-        }
-    }
 }
