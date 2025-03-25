@@ -9,6 +9,11 @@ import PasilloFDI from './scenes/pasilloFDI.js';
 import SelectorNivel from './scenes/selectorNivel.js';
 import Phaser from 'phaser';
 import InformaticaManager from './scenes/informaticaManager.js';
+import TutorialManager from './scenes/tutorialManager.js';
+import Tutorial_1 from './scenes/tutorial_1.js';
+import Tutorial_2 from './scenes/tutorial_2.js';
+import Tutorial_3 from './scenes/tutorial_3.js';
+import Tutorial_debug from './scenes/tutorial_debug.js';
 
 
 /**
@@ -25,7 +30,7 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, MainMenu, PauseMenu, SelectorNivel, InformaticaManager, CafeFDI, PasilloFDI, BibliotecaFDI, End],
+    scene: [Boot, MainMenu, PauseMenu, SelectorNivel, InformaticaManager, CafeFDI, PasilloFDI, BibliotecaFDI, TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, End],
     physics: {
         default: 'arcade',
         arcade: {
