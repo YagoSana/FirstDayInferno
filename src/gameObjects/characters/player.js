@@ -67,6 +67,11 @@ export default class Player extends SpriteBase {
         this.nearItem = null; // item cercano que puede recogerse
         this.nearVendingMachine = null;
         this.pickupKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        this.sonidoDisparo = scene.sound.add('disparaJugador');
+        this.sonidoAndar = scene.sound.add('andarJugador');
+        this.sonidoMoneda = scene.sound.add('cogerMoneda');
+        this.stepTimer = 0;
+        this.stepInterval = 500; // o el valor que te mole para los pasos
 
     }
 
@@ -129,6 +134,18 @@ export default class Player extends SpriteBase {
             } else {
                 velocityX = Phaser.Math.Clamp(velocityX - Math.sign(velocityX) * deceleration * (dt / 1000), -maxSpeed, maxSpeed);
                 if (Math.abs(velocityX) < 10) velocityX = 0;
+            }
+
+            // Control del sonido de pasos
+            if (velocityX !== 0 || velocityY !== 0) {
+                this.stepTimer -= dt;
+
+                if (this.stepTimer <= 0) {
+                    this.sonidoAndar.play();
+                    this.stepTimer = this.stepInterval;
+                }
+            } else {
+                this.stepTimer = 0;
             }
 
             // 🔹 Normalizar velocidad en diagonal
@@ -244,6 +261,7 @@ export default class Player extends SpriteBase {
     }
 
     shoot(dirX, dirY) {
+        this.sonidoDisparo.play();
         // Verificar si ya está en cooldown
         if (this.scene.time.now < this.lastShot + this.shootCooldown) return;
 
@@ -337,7 +355,7 @@ export default class Player extends SpriteBase {
     addCoin(amount) {
         this.coins += amount;
         console.log(`Monedas: ${this.coins}€`);
-
+        this.sonidoMoneda.play();
     }
 
     canAfford(price) {

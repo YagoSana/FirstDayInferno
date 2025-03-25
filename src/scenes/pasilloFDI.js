@@ -80,13 +80,4 @@ export default class PasilloFDI extends SalaBase {
         new Item(this, 600, 80, "moneda");
         new Item(this, 80, 80,"bumbo");
     }
-
-    update(){
-        if(this.numEnemiesBeaten == this.numEnemies){
-            this.completed = true;
-            this.transitionZones.getChildren().forEach(zone => {
-                zone.open = true;
-            });
-        }
-    }
 }

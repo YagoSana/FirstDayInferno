@@ -57,5 +57,11 @@ export default class SalaBase extends Phaser.Scene{
           this.scene.launch('PauseMenu', { previousScene: this.scene.key }); // Lanzar la escena de pausa
           this.scene.bringToTop('PauseMenu'); // Asegurarse de que PauseMenu esté en la parte superior
         }
+        if(this.numEnemiesBeaten == this.numEnemies){
+            this.completed = true;
+            this.transitionZones.getChildren().forEach(zone => {
+                zone.open = true;
+            });
+        }
       }
 }
