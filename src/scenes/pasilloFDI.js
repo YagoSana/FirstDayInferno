@@ -38,7 +38,9 @@ export default class PasilloFDI extends SalaBase {
         if(!this.status){
             this.spawnProps();
         }
-
+        else{
+            this.spawBlood();
+        }
         //Colisiones
         this.physics.add.collider(this.player, layer2);
         this.physics.add.collider(this.enemyGroup, layer2);
@@ -79,5 +81,9 @@ export default class PasilloFDI extends SalaBase {
         this.numEnemies++;
         new Item(this, 600, 80, "moneda");
         new Item(this, 80, 80,"bumbo");
+    }
+
+    spawBlood(){
+        this.add.sprite(100, 80, "blood").setVisible(true).setDepth(3).setFrame(12);
     }
 }

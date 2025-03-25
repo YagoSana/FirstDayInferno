@@ -46,7 +46,9 @@ export default class BibliotecaFDI extends SalaBase {
         if(!this.status){
             this.spawnProps();
         }
-
+        else{
+            this.spawBlood();
+        }
         //Colisiones
         this.physics.add.collider(this.player, layer2);
         this.physics.add.collider(this.enemyGroup, layer2);
@@ -93,5 +95,10 @@ export default class BibliotecaFDI extends SalaBase {
         this.enemyGroup.add(new RangedEnemy(this, 300, 200, "zombie"));
         this.numEnemies++;
         new Item(this, 250, 200, "mini_tinto");
+    }
+
+    spawBlood(){
+        this.add.sprite(100, 240, "blood").setVisible(true).setDepth(3).setFrame(12);
+        this.add.sprite(300, 200, "blood").setVisible(true).setDepth(3).setFrame(12);
     }
 }

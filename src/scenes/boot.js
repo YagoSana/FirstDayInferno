@@ -13,6 +13,7 @@ import player from "../../assets/sprites/player_spritesheet.png";
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
 import paperbullet from "../../assets/sprites/bullet.png";
 import puff from "../../assets/sprites/puff.png";
+import blood from "../../assets/sprites/blood.png";
 
 //ITEMS ------------------------------------------------------
 import items from "../../assets/sprites/items_spritesheet.png";
@@ -89,7 +90,6 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
-
     this.load.spritesheet('items', items, {
       frameWidth: 32,
       frameHeight: 32,
@@ -105,6 +105,11 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("keyboard_keys", keyboard_keys, {
       frameWidth: 16,
       frameHeight: 16,
+    });
+
+    this.load.spritesheet("blood", blood, {
+      frameWidth: 32,
+      frameHeight: 32,
     });
 
   }
@@ -293,6 +298,13 @@ export default class Boot extends Phaser.Scene {
       frames: this.anims.generateFrameNames("items", { start: 24, end: 29 }),
       frameRate: 8,
       repeat: -1,
+    });
+
+    this.anims.create({
+      key: "blood",
+      frames: this.anims.generateFrameNames("blood", { start: 0, end: 12 }),
+      frameRate: 20,
+      repeat: 0,
     });
 
     

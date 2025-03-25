@@ -66,6 +66,9 @@ export default class CafeFDI extends SalaBase {
         if(!this.status){
             this.spawnProps();
         }
+        else{
+            this.spawBlood();
+        }
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
         transitionLayer.objects.forEach(obj => {
@@ -84,5 +87,9 @@ export default class CafeFDI extends SalaBase {
         this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
         this.numEnemies++;
         new Item(this, 200, 200,"hamburguesa");
+    }
+
+    spawBlood(){
+        this.add.sprite(154, 210, "blood").setVisible(true).setDepth(3).setFrame(12);
     }
 }
