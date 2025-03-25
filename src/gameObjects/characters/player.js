@@ -176,7 +176,9 @@ export default class Player extends SpriteBase {
 
             if (this.nearVendingMachine) {
                 if (Phaser.Input.Keyboard.JustDown(this.pickupKey)) {// Interacción con tecla E
-                    this.nearVendingMachine.useMachine();
+                    if(!this.nearVendingMachine.isInUse){
+                        this.nearVendingMachine.useMachine();
+                    }
                 }
 
                 // Verificar si el jugador se alejó de la máquina

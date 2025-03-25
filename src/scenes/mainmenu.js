@@ -71,8 +71,8 @@ export default class MainMenu extends Phaser.Scene {
         buttonTutorialText.setFontFamily('monogram');
 
         // Asignar eventos al botón "Tutorial"
-        buttonTutorial.on('pointerover', () => { buttonTutorial.setTexture('button_hover'); });
-        buttonTutorial.on('pointerdown', this.changeScene.bind(this, "tutorial_1"));
+        buttonTutorial.on('pointerover', () => { buttonTutorial.setTexture('button_hover'); this.sonidoHover.play(); });
+        buttonTutorial.on('pointerdown', this.changeScene.bind(this, "tutorialManager"));
         buttonTutorial.on('pointerout', () => { buttonTutorial.setTexture('button'); });
     }
 

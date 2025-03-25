@@ -2,6 +2,8 @@ import Phaser from "phaser";
 
 //ENEMIGOS
 import cucaracha from "../../assets/sprites/cucaracha.png";
+import enemydeath from "../../assets/sprites/enemy_death.png";
+
 
 //MAPAS Y TILES
 import tutorial_1 from "../../assets/map/tutorial_1.json";
@@ -76,13 +78,6 @@ export default class tutorialManager extends Phaser.Scene{
     }
 
     create(){
-        this.anims.create({
-            key: "coin-idle",
-            frames: this.anims.generateFrameNames("moneda", { start: 0, end: 5 }),
-            frameRate: 8,
-            repeat: -1,
-          });
-
         this.anims.create({
             key: "cucaracha",
             frames: this.anims.generateFrameNames("cucaracha", {
