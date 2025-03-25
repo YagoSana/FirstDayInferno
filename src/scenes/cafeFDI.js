@@ -85,7 +85,7 @@ export default class CafeFDI extends SalaBase {
     spawnProps(){
         this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
         this.numEnemies++;
-        new VendingMachine(this,500,50);
+        new VendingMachine(this,500,45);
         new Item(this, 200, 200,"hamburguesa");
     }
 

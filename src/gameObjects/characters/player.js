@@ -19,7 +19,7 @@ export default class Player extends SpriteBase {
         super(scene, x, y, 'player');
         this.body.setAllowGravity(false);
         this.health = playerData.health;
-        this.coins = playerData.coins
+        this.coins = playerData.coins;
         this.itemSprite = playerData.itemSprite; //Sprite del item visual
         this.equippedItem = playerData.equippedItem; // item que cambia apariencia
         this.equippedItemRow = playerData.equippedItemRow;
@@ -163,7 +163,7 @@ export default class Player extends SpriteBase {
                 }
 
                 // Verificar si el jugador se alejó de la máquina
-                if (!this.nearVendingMachine.scene || !this.scene.physics.overlap(this, this.nearVendingMachine)) {
+                if (!this.nearVendingMachine.scene || !this.scene.physics.overlap(this, this.nearVendingMachine.interactionArea)) {
                     this.nearVendingMachine.hideInteractionUI();
                     this.nearVendingMachine = null;
                 }
@@ -180,7 +180,7 @@ export default class Player extends SpriteBase {
                 else if (Phaser.Input.Keyboard.JustDown(this.pickupKey)) { // Si el jugador esta cerca de un item y pulsa 'E' lo recoge
                     const itemToPick = this.nearItem;
                     this.nearItem = null;
-                    
+
                     if (itemToPick.pick) {
                         itemToPick.pick(this, this);
                     }
@@ -338,6 +338,20 @@ export default class Player extends SpriteBase {
         this.coins += amount;
         console.log(`Monedas: ${this.coins}€`);
 
+    }
+
+    canAfford(price) {
+        return this.coins >= price;
+    }
+
+    spendCoins(amount) {
+        let ok = false;
+        if (this.canAfford(amount)) {
+            ok = true;
+            this.coins -= amount;
+        }
+        console.log(`Monedas: ${this.coins}€`);
+        return ok;
     }
 
     slowDown() {

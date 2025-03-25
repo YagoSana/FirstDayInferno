@@ -14,6 +14,8 @@ export default class VendingMachine extends SpriteBase {
         this.body.setOffset(6, 0); // Ajustamos offset
         this.setScale(1.2);
         this.interactionRange = 60;
+        this.originalScaleX = 1.2; 
+        this.originalScaleY = 1.2;
 
         this.interactionArea = this.scene.add.circle(x, y, 20, 0x000000, 0);
         this.scene.physics.add.existing(this.interactionArea);
@@ -29,6 +31,7 @@ export default class VendingMachine extends SpriteBase {
         // Rango de interacción independiente de la hitbox
 
         // Propiedades de la máquina
+        this.price = 1;
         this.maxBulletHits = 5; // Disparos necesarios
         this.bulletHits = 0;    // Contador de disparos recibidos
         this.maxUses = 3;
@@ -49,7 +52,7 @@ export default class VendingMachine extends SpriteBase {
             padding: { x: 5, y: 4 }
         })
             .setVisible(false)
-            .setDepth(100).setResolution(2);
+            .setDepth(25).setResolution(2);
 
         this.eKeyIcon = this.scene.add.sprite(0, 0, 'key_E_action')
             .setVisible(false)
@@ -66,57 +69,84 @@ export default class VendingMachine extends SpriteBase {
         })
             .setVisible(false)
             .setDepth(20).setResolution(2);
+
+        this.noCoinsText = this.scene.add.text(this.x - 70, this.y - 40, '¡No tienes monedas!', {
+            fontSize: '16px',
+            fill: '#ff0000',
+            fontFamily: 'monogram',
+            backgroundColor: '#000000',
+            padding: { x: 5, y: 4 }
+        })
+            .setVisible(false)
+            .setDepth(30).setResolution(2);
     }
 
-    preupdate() {
-        // Verificar si el jugador se alejó
-        if (this.scene.player.nearVendingMachine !== this) {
-            this.hideInteractionUI();
-        }
 
-    }
 
     showInteractionUI(machine, player) {
         if (this.isOperational) {
             // Guardar referencia en el jugador
             player.nearVendingMachine = this;
-            // Mostrar UI
-            this.interactionText.setPosition(this.x - 100 / 2, this.y - 40);
-            this.interactionText.setVisible(true);
 
-            this.eKeyIcon.setPosition(this.x - 60, this.y - 30);
-            this.eKeyIcon.setVisible(true);
+            //si la no maquina esta en uso
+            if (this.scene.time.now - this.lastUseTime > this.useCooldown) {
+                // Mostrar UI
+                this.interactionText.setPosition(this.x - 100 / 2, this.y - 40);
+                this.interactionText.setVisible(true);
+
+                this.eKeyIcon.setPosition(this.x - 60, this.y - 30);
+                this.eKeyIcon.setVisible(true);
+
+                this.noCoinsText.setPosition(this.x - 70, this.y - 40);
+            }
+            else {
+                this.hideInteractionUI();
+            }
         }
     }
 
     hideInteractionUI() {
+        // console.log("ocultando texto");
         this.interactionText.setVisible(false);
         this.eKeyIcon.setVisible(false);
+        this.bulletText.setVisible(false);
+        this.noCoinsText.setVisible(false)
     }
 
     useMachine() {
-        if (!this.isOperational || this.isInUse ||
-            (this.scene.time.now - this.lastUseTime < this.useCooldown)) return;
+        if (this.isOperational || !this.isInUse || (this.scene.time.now - this.lastUseTime > this.useCooldown)) {
+            if (this.scene.player.canAfford(this.price)) {
 
-        this.isInUse = true;
-        this.lastUseTime = this.scene.time.now;
-        this.remainingUses--;
+                this.scene.player.spendCoins(this.price);
 
-        // Animación de uso
-        this.play('vm-using');
-        this.once('animationcomplete', () => {
-            this.isInUse = false;
+                this.isInUse = true;
+                this.lastUseTime = this.scene.time.now;
+                this.remainingUses--;
 
-            // Soltar objeto
-            this.dispenseItem();
+                this.stretchMachine();
 
-            // Verificar si se agotaron los usos
-            if (this.remainingUses <= 0) {
-                this.disableMachine();
-            } else {
-                this.play('vm-idle');
+                // Animación de uso
+                this.play('vm-using');
+                this.once('animationcomplete', () => {
+                    this.isInUse = false;
+
+                    // Soltar objeto
+                    this.dispenseItem();
+
+                    // Verificar si se agotaron los usos
+                    if (this.remainingUses <= 0) {
+                        this.disableMachine();
+                    } else {
+                        this.play('vm-idle');
+                        this.resetMachineScale();
+                    }
+                });
             }
-        });
+            else {
+                this.noCoinsText.setVisible(true);
+                this.shakeMachine(); // Efecto de rechazo
+            }
+        }
     }
 
     dispenseItem() {
@@ -168,7 +198,7 @@ export default class VendingMachine extends SpriteBase {
 
             // Flash blanco
             this.setTint(0x737373);
-            console.log('flash effect');
+            // console.log('flash effect');
             // Volver al color original después de 100ms
             this.scene.time.delayedCall(300, () => {
                 if (this.isOperational) { // Verificar si el objeto existe
@@ -176,6 +206,50 @@ export default class VendingMachine extends SpriteBase {
                 }
             });
         }
+    }
+
+    // Nuevos métodos para efectos visuales:
+    shakeMachine() {
+        this.scene.tweens.add({
+            targets: this,
+            x: this.x + 3,
+            duration: 80,
+            yoyo: true,
+            repeat: 3,
+            ease: 'Sine.easeInOut'
+        });
+    }
+
+
+    stretchMachine() {
+        // Efecto de "estirarse" al usarla
+        this.scene.tweens.add({
+            targets: this,
+            scaleX: this.originalScaleX * 0.9,
+            scaleY: this.originalScaleY * 1.1,
+            duration: 400,
+            yoyo: true,
+            ease: 'Back.easeOut'
+        });
+
+        // Pequeño shake vertical
+        this.scene.tweens.add({
+            targets: this,
+            y: this.y - 5,
+            duration: 200,
+            yoyo: true,
+            repeat: 2
+        });
+    }
+
+    resetMachineScale() {
+        this.scene.tweens.add({
+            targets: this,
+            scaleX: this.originalScaleX,
+            scaleY: this.originalScaleY,
+            duration: 300,
+            ease: 'Elastic.easeOut'
+        });
     }
 
     disableMachine() {
@@ -188,6 +262,14 @@ export default class VendingMachine extends SpriteBase {
             this.setTint(0x737373); // Usamos setTintFill para forzar el color
             this.hideInteractionUI();
             console.log('maquina deshabilitada')
+            this.scene.tweens.add({
+                targets: this,
+                scaleX: this.originalScaleX * 0.9,
+                scaleY: this.originalScaleY * 0.9,
+                angle: Phaser.Math.Between(-3, 3),
+                duration: 500,
+                ease: 'Bounce.easeOut'
+            });
 
         }
 
