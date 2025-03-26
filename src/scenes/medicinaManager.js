@@ -17,6 +17,10 @@ import zombie_shoot from "../../assets/sprites/zombie_shoot.png";
 //MAPAS Y TILES ------------------------------------------------------
 import introMedicina from "../../assets/map/introMedicina.json";
 import medicina_2 from "../../assets/map/hallMedicina.json";
+import medicina_3 from "../../assets/map/pasilloMedicina.json";
+import medicina_4 from "../../assets/map/aulaMedicina.json";
+import medicina_5 from "../../assets/map/pasillo2Medicina.json";
+import medicina_6 from "../../assets/map/aulaFinalMedicina.json";
 import img_interior from "../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../assets/map/Room_Builder_free_16x16.png";
 import tileset_grass from "../../assets/map/TX Tileset Grass.png";
@@ -142,6 +146,10 @@ export default class medicinaManager extends Phaser.Scene {
     //TODO AÑADIR TILEDJSON (MAPA)
     this.load.tilemapTiledJSON("introMedicina", introMedicina);
     this.load.tilemapTiledJSON("medicina_2", medicina_2);
+    this.load.tilemapTiledJSON("medicina_3", medicina_3);
+    this.load.tilemapTiledJSON("medicina_4", medicina_4);
+    this.load.tilemapTiledJSON("medicina_5", medicina_5);
+    this.load.tilemapTiledJSON("medicina_6", medicina_6);
     
     //items del player
     this.load.spritesheet("player_item_isaac", player_item_isaac,{

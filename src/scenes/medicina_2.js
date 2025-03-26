@@ -20,7 +20,7 @@ export default class medicina_2 extends SalaBase {
    * Constructor de la escena
    */
   constructor() {
-    super("medicina_2");
+    super('medicina_2');
   }
 
   /**
@@ -83,14 +83,26 @@ export default class medicina_2 extends SalaBase {
     this.physics.add.collider(this.player, layer2);
     this.physics.add.collider(this.player, layer3);
     this.physics.add.collider(this.player, layer4);
+
+    console.log("Colisiones añadidas");
+
     this.physics.add.collider(this.enemyGroup, layer2);
     this.physics.add.collider(this.enemyGroup, layer3);
     this.physics.add.collider(this.enemyGroup, layer4);
+
+    console.log("Colisiones enemigos añadidas");
+
     this.physics.add.collider(this.bulletGroup, layer2, this.onBulletCollision);
     this.physics.add.collider(this.bulletGroup, layer3, this.onBulletCollision);
     this.physics.add.collider(this.bulletGroup, layer4, this.onBulletCollision);
+
+    console.log("Colisiones balas añadidas");
+
     this.physics.add.collider(this.enemyBulletGroup, layer2, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, layer3, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, layer4, this.onBulletCollision);
+
+    console.log("Colisiones balas enemigos añadidas");
+
   }
 }
