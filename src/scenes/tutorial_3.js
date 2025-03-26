@@ -17,22 +17,23 @@ export default class Tutorial_3 extends SalaBase{
 
         //Configurar capas
         const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
-        const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
-        const layer3 = map.createLayer('sin colision arriba', [tileset1, tileset2], 0, 0);
-        const layer4 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
+        const layer2 = map.createLayer('pared sin colision', [tileset1, tileset2], 0, 0);
+        const layer3 = map.createLayer('pared con colision', [tileset1, tileset2], 0, 0);
+        const layer4 = map.createLayer('sin colision', [tileset1, tileset2], 0, 0);
+        const layer5 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
 
-        layer2.setCollisionByExclusion([-1], true);
-        layer4.setCollisionByExclusion([-1], true);
+        layer3.setCollisionByExclusion([-1], true);
+        layer5.setCollisionByExclusion([-1], true);
 
         this.bulletGroup = this.physics.add.group();
         this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
 
         //Colisiones
-        this.physics.add.collider(this.player, layer2);
-        this.physics.add.collider(this.bulletGroup, layer2, this.onBulletCollision);
+        this.physics.add.collider(this.player, layer3);
+        this.physics.add.collider(this.bulletGroup, layer3, this.onBulletCollision);
 
-        this.physics.add.collider(this.player, layer4);
-        this.physics.add.collider(this.bulletGroup, layer4, this.onBulletCollision);
+        this.physics.add.collider(this.player, layer5);
+        this.physics.add.collider(this.bulletGroup, layer5, this.onBulletCollision);
 
         //Camaras
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);

@@ -39,13 +39,16 @@ export default class Tutorial_2 extends SalaBase{
 
         //Colisiones
         this.physics.add.collider(this.player, layer2);
+        this.physics.add.collider(this.enemyGroup, layer2);
         this.physics.add.collider(this.bulletGroup, layer2, this.onBulletCollision);
 
-        this.physics.add.collider(this.player, layer5);
-        this.physics.add.collider(this.bulletGroup, layer5, this.onBulletCollision);
-
         this.physics.add.collider(this.player, layer6);
+        this.physics.add.collider(this.enemyGroup, layer6);
         this.physics.add.collider(this.bulletGroup, layer6, this.onBulletCollision);
+
+        this.physics.add.collider(this.player, layer7);
+        this.physics.add.collider(this.enemyGroup, layer7);
+        this.physics.add.collider(this.bulletGroup, layer7, this.onBulletCollision);
 
         //Camaras
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
