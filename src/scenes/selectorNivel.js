@@ -37,18 +37,30 @@ export default class SelectorNivel extends Phaser.Scene {
     this.add.image(0, 0, 'selectorNivel').setOrigin(0, 0);
     this.physics.world.setBounds(0, 0, 1280, 640);
     this.bulletGroup = this.physics.add.group();
-    this.player = new Player(this, 200, 500, this.playerStats);//1170, 460,
+    this.player = new Player(this, 1170, 450, this.playerStats);//1170, 460,
     this.cameras.main.setBounds(0, 0, 1280, 640);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
-    this.cameras.main.setZoom(1);
+    this.cameras.main.setZoom(1.1);
     // Crear la colisión invisible
     this.invisibleZone = this.add.zone(100, 580, 200, 200).setOrigin(0, 0).setName("informaticaManager");
     this.invisibleZone.setInteractive(); // Hacerla interactiva para detectar overlaping
+
+    this.invisibleZoneMedicina = this.add.zone(950, 0, 180, 80).setOrigin(0, 0).setName("medicinaManager");
+    this.invisibleZoneMedicina.setInteractive(); // Hacerla interactiva para detectar overlaping
+
     this.physics.add.existing(this.invisibleZone); // Necesario para que funcione el overlap
+    this.physics.add.existing(this.invisibleZoneMedicina); // Necesario para que funcione el overlap
+
     this.invisibleZone.body.setAllowGravity(false);
     this.invisibleZone.body.setImmovable(true);
+
+    this.invisibleZoneMedicina.body.setAllowGravity(false);
+    this.invisibleZoneMedicina.body.setImmovable(true);
+
     // Detectar cuando el jugador entra en la colisión invisible
     this.physics.add.overlap(this.player, this.invisibleZone, this.onOverlap, null, this);
+    this.physics.add.overlap(this.player, this.invisibleZoneMedicina, this.onOverlap, null, this);
+
     // Escuchar la tecla ESC
     this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
   }
