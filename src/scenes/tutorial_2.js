@@ -19,16 +19,17 @@ export default class Tutorial_2 extends SalaBase{
         //Configurar capas
         const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
         const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
-        const layer3 = map.createLayer('sin colision abajo', [tileset1, tileset2], 0, 0);
-        const layer4 = map.createLayer('sin colision arriba', [tileset1, tileset2], 0, 0);
-        const layer5 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
-        const layer6 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
+        const layer3 = map.createLayer('pared sin colision', [tileset1, tileset2], 0, 0);
+        const layer4 = map.createLayer('sin colision abajo', [tileset1, tileset2], 0, 0);
+        const layer5 = map.createLayer('sin colision arriba', [tileset1, tileset2], 0, 0);
+        const layer6 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
+        const layer7 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
         
         layer2.setCollisionByExclusion([-1], true);
-        layer5.setCollisionByExclusion([-1], true);
         layer6.setCollisionByExclusion([-1], true);
+        layer7.setCollisionByExclusion([-1], true);
 
-        layer3.setDepth(10);
+        layer4.setDepth(10);
 
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();

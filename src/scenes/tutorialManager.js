@@ -22,8 +22,13 @@ export default class tutorialManager extends Phaser.Scene{
     }
     
     init(data){
+        console.log('Datos recibidos en init:', data);
+        // Si los stats del jugador no están disponibles, asigna un valor predeterminado
+        if (data && data.playerStats) {
         this.playerStats = data.playerStats;
-        console.log(this.playerStats);
+        } else {
+        this.playerStats = { health: 3, coins: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500 }; // Valores predeterminados
+        }
     }
 
     preload(){
@@ -94,13 +99,19 @@ export default class tutorialManager extends Phaser.Scene{
             repeat: 0,
           });
 
-        this.scene.start("tutorial_1", {x: 238, y: 155, playerStats: this.playerStats, managerKey: "tutorialManager"});
+        this.mapStatus = new Map();
+        this.mapStatus.set("tutorial_1", false);
+        this.scene.start("tutorial_1", {x: 238, y: 155, playerStats: this.playerStats, managerKey: "tutorialManager", status: this.mapStatus.get("tutorial_1")});
     }
 
     cambiarSala(zone){
         this.scene.sleep(zone.prev);
-        console.log(zone.spawnRoom);
-        this.scene.launch(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "tutorialManager"});
+        this.mapStatus.set(zone.prev, true);
+        console.log(this.mapStatus);
+        if(!this.mapStatus.get(zone.spawnRoom)){
+        this.mapStatus.set(zone.spawnRoom, false);
+        }
+        this.scene.launch(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "tutorialManager", status: this.mapStatus.get(zone.spawnRoom)});
     }
 
     guardarPlayerStats(stats){
