@@ -27,14 +27,17 @@ import img_plantas from "../../../assets/map/TX Plant.png";
 import img_props from "../../../assets/map/TX Props.png";
 import img_sombras from "../../../assets/map/TX Shadow.png";
 import img_sombra_plantas from "../../../assets/map/TX Shadow Plant.png";
-import bibliofdi from "../../../assets/map/biblioteca.json";2
 
-import laboratorioFDI from "../../../assets/map/laboratorio.json";
+
+
 import pasillofdi from "../../../assets/map/pasillo.json";
 import FDI_1_TL from "../../../assets/map/exterior.json";
 import FDI_2_TL from "../../../assets/map/pasillo_plantaBaja.json"
 import FDI_3_TL from "../../../assets/map/entrada.json";
 import FDI_4_TL from "../../../assets/map/cafe.json";
+import FDI_5_TL from "../../../assets/map/salon_actos.json";
+import FDI_6_TL from "../../../assets/map/biblioteca.json";
+
 import img_interior from "../../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../../assets/map/Room_Builder_free_16x16.png";
 
@@ -179,13 +182,15 @@ export default class informaticaManager extends Phaser.Scene {
     this.load.tilemapTiledJSON("map", mapa); // Carga el mapa
 
     //TODO AÑADIR TILEDJSON (MAPA)
-    this.load.tilemapTiledJSON("bibliotecafdi", bibliofdi);
+
     this.load.tilemapTiledJSON("pasillofdi", pasillofdi);
     this.load.tilemapTiledJSON("FDI_2_TL", FDI_2_TL);
     this.load.tilemapTiledJSON("FDI_1_TL", FDI_1_TL);
     this.load.tilemapTiledJSON("FDI_3_TL", FDI_3_TL);
     this.load.tilemapTiledJSON("FDI_4_TL", FDI_4_TL);
-    this.load.tilemapTiledJSON("laboratorioFDI", laboratorioFDI);
+    this.load.tilemapTiledJSON("FDI_5_TL", FDI_5_TL);
+    this.load.tilemapTiledJSON("FDI_6_TL", FDI_6_TL);
+   
 
     //items del player
     this.load.spritesheet("player_item_isaac", player_item_isaac,{
@@ -280,7 +285,7 @@ export default class informaticaManager extends Phaser.Scene {
       repeat: 0,
     });
 
-    this.scene.start("FDI_1", {x: 442, y: 375, playerStats: this.playerStats, managerKey: "informaticaManager"});
+    this.scene.start("FDI_5", {x: 442, y: 375, playerStats: this.playerStats, managerKey: "informaticaManager"});
   }
 
     cambiarSala(zone){

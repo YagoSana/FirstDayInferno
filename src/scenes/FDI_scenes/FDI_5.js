@@ -1,22 +1,18 @@
-import SalaBase from "../salaBase.js";
+import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
-import Item from "../../gameObjects/items/item.js";
-import WakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
-import RangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
+import Item from "../../gameObjects/items/item.js";
 
 
-export default class BibliotecaFDI extends SalaBase {
+export default class FDI_5 extends SalaBase {
 
     constructor(key) {
-        super('bibliotecaFDI');
+        super('FDI_5');
     }
 
     create(){
-        super.create('bibliotecaFDI');
-
-        const map = this.make.tilemap({ key: 'bibliotecafdi' });
-
+        super.create('FDI_5');
+        const map = this.make.tilemap({ key: 'FDI_5_TL' }); // Cargamos el mapa
         //Cargar tilesets
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
@@ -24,29 +20,26 @@ export default class BibliotecaFDI extends SalaBase {
         //Configurar capas
         const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
         const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
+        const layer4 = map.createLayer('suelo2', [tileset1, tileset2], 0, 0);
         const layer3 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
-        const layer4 = map.createLayer('sin colision detras', [tileset1, tileset2], 0, 0);
         const layer5 = map.createLayer('sin colision', [tileset1, tileset2], 0, 0);
-        const layer6 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
         
+    
+        const layer6 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
+        const layer7 = map.createLayer('techo_disparable', [tileset1, tileset2],0,0);
+        
+        layer5.setDepth(10);
+
         layer2.setCollisionByExclusion([-1], true);
         layer3.setCollisionByExclusion([-1], true);
         layer6.setCollisionByExclusion([-1], true);
-
-        
-        layer3.setDepth(10);
-        layer5.setDepth(10);
-        layer6.setDepth(11);
-
+        layer7.setCollisionByExclusion([-1], true);
 
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
-        this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);//865, 195
-        this.enemyGroup.add(new WakeEnemy(this, 100, 240, "cat"));
-        this.enemyGroup.add(new RangedEnemy(this, 300, 200, "zombie"));
-
-        new Item(this, 250, 200, "miniTinto", false);
+        this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
+        new Item(this, 200, 200,"hamburguesa",false);
 
         //Colisiones
         this.physics.add.collider(this.player, layer2);
@@ -69,12 +62,17 @@ export default class BibliotecaFDI extends SalaBase {
         this.physics.add.collider(this.bulletGroup, layer6, this.onBulletCollision);
         this.physics.add.collider(this.enemyBulletGroup, layer6, this.onBulletCollision);
 
+        this.physics.add.collider(this.player, layer7);
+        this.physics.add.collider(this.enemyGroup, layer7);
+
         //Camaras
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setZoom(1.8);
 
+        this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
+        
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
         transitionLayer.objects.forEach(obj => {
@@ -82,7 +80,7 @@ export default class BibliotecaFDI extends SalaBase {
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
-            zone.prev = "bibliotecaFDI";
+            zone.prev = "FDI_5";
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
