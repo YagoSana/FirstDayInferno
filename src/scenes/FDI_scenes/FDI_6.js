@@ -84,6 +84,7 @@ export default class FDI_6 extends SalaBase {
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
             zone.prev = "FDI_6";
+            zone.open = false;
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);

@@ -36,7 +36,6 @@ export default class FDI_3 extends SalaBase {
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
         this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
-        new Item(this, 200, 200,"hamburguesa",false);
 
         //Colisiones
         this.physics.add.collider(this.player, layer2);
@@ -60,7 +59,12 @@ export default class FDI_3 extends SalaBase {
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setZoom(1.8);
 
-        //this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
+        if(!this.status){
+            this.spawnProps();
+        }
+        else{
+            this.spawBlood();
+        }
         
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
@@ -71,9 +75,20 @@ export default class FDI_3 extends SalaBase {
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
             zone.prev = "FDI_3";
+            zone.open = false;
         });
 
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+    }
+
+    spawnProps(){
+            this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
+            this.numEnemies++;
+            new Item(this, 200, 200,"hamburguesa");
+        }
+    
+    spawBlood(){
+        this.add.sprite(154, 210, "blood").setVisible(true).setDepth(3).setFrame(12);
     }
 }
