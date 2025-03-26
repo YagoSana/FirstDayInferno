@@ -35,7 +35,6 @@ export default class introMedicina extends SalaBase {
     const layer6 = map.createLayer('propsConColision', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     const layer7 = map.createLayer('arboles', [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
 
-    console.log("Capas cargadas");
     layer6.setCollisionByExclusion([-1], true);
     layer7.setDepth(10);
 
@@ -72,6 +71,7 @@ export default class introMedicina extends SalaBase {
     this.transitionZones.setVisible(false);
     this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
 
+    console.log("Capas cargadas");
 
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 

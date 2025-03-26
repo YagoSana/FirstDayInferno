@@ -183,10 +183,6 @@
          "tilecount":1424,
          "tileheight":16,
          "tilewidth":16
-        }, 
-        {
-         "firstgid":1816,
-         "source":"tilesets\/Room_Builder_free_16x16.tsx"
         }],
  "tilewidth":16,
  "type":"map",

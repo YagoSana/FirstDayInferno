@@ -12,7 +12,6 @@ export default class SelectorNivel extends Phaser.Scene {
 
   preload() {
     this.load.image('selectorNivel', mapa);
-    //this.load.image("Grass", img_grass);
     this.load.tilemapTiledJSON("selectorNivel", mapa); // Carga el mapa
   }
 
