@@ -2,7 +2,6 @@ import Boot from './scenes/boot.js';
 import MainMenu from './scenes/mainmenu.js';
 import PauseMenu from './scenes/pauseMenu.js';
 import End from './scenes/end.js';
-import Level from './scenes/level.js';
 
 import PasilloFDI from './scenes/FDI_scenes/pasilloFDI.js';
 import FDI_1 from './scenes/FDI_scenes/FDI_1.js';
@@ -16,7 +15,7 @@ import laboratorioFDI from './scenes/FDI_scenes/laboratorioFDI.js';
 import SelectorNivel from './scenes/selectorNivel.js';
 
 import Phaser from 'phaser';
-import InformaticaManager from './scenes/informaticaManager.js';
+import InformaticaManager from './scenes/FDI_scenes/informaticaManager.js';
 import MedicinaManager from './scenes/medicinaManager.js';
 import IntroMedicina from './scenes/introMedicina.js';
 import Medicina_2 from './scenes/medicina_2.js';
