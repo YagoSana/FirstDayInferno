@@ -1,21 +1,21 @@
-import SalaBase from "./salaBase.js";
-import Player from "../gameObjects/characters/player.js";
-import Item from "../gameObjects/items/item.js";
-import WakeEnemy from "../gameObjects/enemies/wakeEnemy.js";
-import Enemy from "../gameObjects/enemies/enemy.js";
-import RangedEnemy from "../gameObjects/enemies/rangedEnemy.js";
+import SalaBase from "../salaBase.js";
+import Player from "../../gameObjects/characters/player.js";
+import Item from "../../gameObjects/items/item.js";
+import WakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
+import Enemy from "../../gameObjects/enemies/enemy.js";
+import RangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 
 
-export default class BibliotecaFDI extends SalaBase {
+export default class FDI_6 extends SalaBase {
 
     constructor(key) {
-        super('bibliotecaFDI');
+        super('FDI_6');
     }
 
     create(){
-        super.create('bibliotecaFDI');
+        super.create('FDI_6');
 
-        const map = this.make.tilemap({ key: 'bibliotecafdi' });
+        const map = this.make.tilemap({ key: 'FDI_6_TL' });
 
         //Cargar tilesets
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
@@ -83,7 +83,7 @@ export default class BibliotecaFDI extends SalaBase {
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
-            zone.prev = "bibliotecaFDI";
+            zone.prev = "FDI_6";
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
