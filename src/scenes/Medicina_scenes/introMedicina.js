@@ -1,20 +1,8 @@
-import Item from "../gameObjects/items/item.js";
-import Player from "../gameObjects/characters/player.js";
-import Phaser from "phaser";
-import Enemy from "../gameObjects/enemies/enemy.js";
-import RangedEnemy from "../gameObjects/enemies/rangedEnemy.js";
-import SalaBase from "../scenes/salaBase.js";
-import WakeEnemy from "../gameObjects/enemies/wakeEnemy.js";
-import AssaultEnemy from "../gameObjects/enemies/assaultEnemy.js";
+import Player from "../../gameObjects/characters/player.js";
+import SalaBase from "../../scenes/salaBase.js";
+import Enemy from "../../gameObjects/enemies/enemy.js";
+import Item from "../../gameObjects/items/item.js";
 
-/**
- * Escena principal del juego. La escena se compone de una serie de plataformas
- * sobre las que se sitúan las bases en las podrán aparecer las estrellas.
- * El juego comienza generando aleatoriamente una base sobre la que generar una estrella.
- * @abstract Cada vez que el jugador recoge la estrella, aparece una nueva en otra base.
- * El juego termina cuando el jugador ha recogido 10 estrellas.
- * @extends Phaser.Scene
- */
 export default class introMedicina extends SalaBase {
   /**
    * Constructor de la escena
@@ -27,7 +15,7 @@ export default class introMedicina extends SalaBase {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    super.create(this.data);
+    super.create('introMedicina');
 
     var map = this.make.tilemap({ key: 'introMedicina' }); // Cargamos el mapa
 
@@ -51,9 +39,9 @@ export default class introMedicina extends SalaBase {
     layer6.setCollisionByExclusion([-1], true);
     layer7.setDepth(10);
 
-    this.troncos = this.physics.add.staticGroup();
     this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
 
+    this.troncos = this.physics.add.staticGroup();
     let troncosLayer = map.getObjectLayer('colisionesObj');
     troncosLayer.objects.forEach(obj => {
       // Crear un objeto invisible con colisión
@@ -85,19 +73,19 @@ export default class introMedicina extends SalaBase {
     this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
 
 
-    this.physics.world.setBounds(0, 0, 640, 320);
-    this.stars = 10;
-    this.bases = this.add.group();
+    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
     this.platformGroup = this.physics.add.staticGroup();
     this.bulletGroup = this.physics.add.group();
     this.enemyGroup = this.physics.add.group();
     this.enemyBulletGroup = this.physics.add.group();
 
-    this.cameras.main.setBounds(0, 0, 640, 320);
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
     this.cameras.main.setZoom(1.8);
-    this.physics.add.collider(this.player, layer5);
+
     // Añadir colisión con el jugador
+    this.physics.add.collider(this.player, layer5);
     this.physics.add.collider(this.player, this.troncos);
     this.physics.add.collider(this.player, layer6);
     this.physics.add.collider(this.enemyGroup, layer6);

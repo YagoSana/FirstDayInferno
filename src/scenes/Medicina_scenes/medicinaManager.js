@@ -1,40 +1,40 @@
 import Phaser from "phaser";
 
 //JUGADOR CON ITEMS ----------------------------------------------
-import player_item_isaac from "../../assets/sprites/player_item_isaac.png";
+import player_item_isaac from "../../../assets/sprites/player_item_isaac.png";
 
 //BALAS --------------------------------------------------------
-import zombiebullet from "../../assets/sprites/pastilla.png";
+import zombiebullet from "../../../assets/sprites/pastilla.png";
 
 //ENEMIGOS -----------------------------------------------------
-import enemydeath from "../../assets/sprites/enemy_death.png";
-import cat_idle from "../../assets/sprites/cat_idle.png";
-import cat_void from "../../assets/sprites/cat_void.png";
-import cat_wake from "../../assets/sprites/cat_wake.png";
-import zombie_move from "../../assets/sprites/zombie_move.png";
-import zombie_shoot from "../../assets/sprites/zombie_shoot.png";
+import enemydeath from "../../../assets/sprites/enemy_death.png";
+import cat_idle from "../../../assets/sprites/cat_idle.png";
+import cat_void from "../../../assets/sprites/cat_void.png";
+import cat_wake from "../../../assets/sprites/cat_wake.png";
+import zombie_move from "../../../assets/sprites/zombie_move.png";
+import zombie_shoot from "../../../assets/sprites/zombie_shoot.png";
 
 //MAPAS Y TILES ------------------------------------------------------
-import introMedicina from "../../assets/map/introMedicina.json";
-import medicina_2 from "../../assets/map/hallMedicina.json";
-import medicina_3 from "../../assets/map/pasilloMedicina.json";
-import medicina_4 from "../../assets/map/aulaMedicina.json";
-import medicina_5 from "../../assets/map/pasillo2Medicina.json";
-import medicina_6 from "../../assets/map/aulaFinalMedicina.json";
-import img_interior from "../../assets/map/Interiors_free_16x16.png";
-import img_muebles from "../../assets/map/Room_Builder_free_16x16.png";
-import tileset_grass from "../../assets/map/TX Tileset Grass.png";
-import tileset_plantas from "../../assets/map/TX Plant.png";
-import tileset_props from "../../assets/map/TX Props.png";
-import tileset_sombras from "../../assets/map/TX Shadow.png";
-import tileset_sombra_plantas from "../../assets/map/TX Shadow Plant.png";
+import introMedicina from "../../../assets/map/introMedicina.json";
+import medicina_2 from "../../../assets/map/hallMedicina.json";
+import medicina_3 from "../../../assets/map/pasilloMedicina.json";
+import medicina_4 from "../../../assets/map/aulaMedicina.json";
+import medicina_5 from "../../../assets/map/pasillo2Medicina.json";
+import medicina_6 from "../../../assets/map/aulaFinalMedicina.json";
+import img_interior from "../../../assets/map/Interiors_free_16x16.png";
+import img_muebles from "../../../assets/map/Room_Builder_free_16x16.png";
+import tileset_grass from "../../../assets/map/TX Tileset Grass.png";
+import tileset_plantas from "../../../assets/map/TX Plant.png";
+import tileset_props from "../../../assets/map/TX Props.png";
+import tileset_sombras from "../../../assets/map/TX Shadow.png";
+import tileset_sombra_plantas from "../../../assets/map/TX Shadow Plant.png";
 
 
 //ITEMS ----------------------------------------------------------
-import hamburguesa from "../../assets/sprites/hamburguesa.png";
-import moneda from "../../assets/sprites/coin_sheet.png";
-import miniTinto from "../../assets/sprites/miniTinto.png";
-import bumbo from "../../assets/sprites/uff_referencia.png";
+import hamburguesa from "../../../assets/sprites/hamburguesa.png";
+import moneda from "../../../assets/sprites/coin_sheet.png";
+import miniTinto from "../../../assets/sprites/miniTinto.png";
+import bumbo from "../../../assets/sprites/uff_referencia.png";
 
 
 /**
@@ -214,13 +214,19 @@ export default class medicinaManager extends Phaser.Scene {
       repeat: 0,
     });
 
-    this.scene.start("introMedicina", {x: 320, y: 260, playerStats: this.playerStats, managerKey: "medicinaManager"});
-  }
+    this.mapStatus = new Map();
+    this.mapStatus.set("introMedicina", false);
+    this.scene.start("introMedicina", {x: 442, y: 375, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get("introMedicina")});  }
+  
 
   cambiarSala(zone){
-    this.scene.sleep(zone.prev);
+    this.scene.stop(zone.prev);
+    this.mapStatus.set(zone.prev, true);
     console.log(zone.spawnRoom);
-    this.scene.launch(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "medicinaManager"});
+    if(!this.mapStatus.get(zone.spawnRoom)){
+      this.mapStatus.set(zone.spawnRoom, false);
+    }
+    this.scene.start(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get(zone.spawnRoom)});
   }
 
   guardarPlayerStats(stats){

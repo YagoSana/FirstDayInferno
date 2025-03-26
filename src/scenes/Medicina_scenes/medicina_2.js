@@ -1,11 +1,11 @@
-import Item from "../gameObjects/items/item.js";
-import Player from "../gameObjects/characters/player.js";
+import Item from "../../gameObjects/items/item.js";
+import Player from "../../gameObjects/characters/player.js";
 import Phaser from "phaser";
-import Enemy from "../gameObjects/enemies/enemy.js";
-import RangedEnemy from "../gameObjects/enemies/rangedEnemy.js";
-import SalaBase from "../scenes/salaBase.js";
-import WakeEnemy from "../gameObjects/enemies/wakeEnemy.js";
-import AssaultEnemy from "../gameObjects/enemies/assaultEnemy.js";
+import Enemy from "../../gameObjects/enemies/enemy.js";
+import RangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
+import SalaBase from "../../scenes/salaBase.js";
+import WakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
+import AssaultEnemy from "../../gameObjects/enemies/assaultEnemy.js";
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas

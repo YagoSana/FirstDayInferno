@@ -16,11 +16,15 @@ import SelectorNivel from './scenes/selectorNivel.js';
 
 import Phaser from 'phaser';
 import InformaticaManager from './scenes/FDI_scenes/informaticaManager.js';
-import MedicinaManager from './scenes/medicinaManager.js';
-import IntroMedicina from './scenes/introMedicina.js';
-import Medicina_2 from './scenes/medicina_2.js';
+import MedicinaManager from './scenes/Medicina_scenes/medicinaManager.js';
 
-
+import IntroMedicina from './scenes/Medicina_scenes/introMedicina.js'
+import Medicina_2 from './scenes/Medicina_scenes/medicina_2.js';
+/*
+import Medicina_3 from './scenes/Medicina_scenes/medicina_3.js';
+import Medicina_4 from './scenes/Medicina_scenes/medicina_4.js';
+import Medicina_5 from './scenes/Medicina_scenes/medicina_5.js';
+*/
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
@@ -35,12 +39,12 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, MainMenu, PauseMenu, SelectorNivel, InformaticaManager, PasilloFDI,FDI_1, FDI_2,FDI_3, FDI_4, FDI_5,FDI_6,laboratorioFDI, MedicinaManager, IntroMedicina, Medicina_2, End],
+    scene: [Boot, MainMenu, PauseMenu, SelectorNivel, InformaticaManager, PasilloFDI,FDI_1, FDI_2,FDI_3, FDI_4, FDI_5,FDI_6,laboratorioFDI, MedicinaManager, IntroMedicina, Medicina_2, /*Medicina_3, Medicina_4, Medicina_5,*/ End],
     physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 0 },
-            debug: false
+            debug: true
         }
     }
 };
