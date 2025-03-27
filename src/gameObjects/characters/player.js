@@ -19,6 +19,7 @@ export default class Player extends SpriteBase {
         super(scene, x, y, 'player');
         this.body.setAllowGravity(false);
         this.health = playerData.health;
+        this.maxHealth = playerData.maxHealth;
         this.coins = playerData.coins
         this.itemSprite = playerData.itemSprite; //Sprite del item visual
         this.equippedItem = playerData.equippedItem; // item que cambia apariencia
@@ -38,7 +39,7 @@ export default class Player extends SpriteBase {
         this.label.setDepth(10);
         this.cursors = this.scene.input.keyboard.createCursorKeys();
         this.scene.physics.add.collider(this, scene.enemyBulletGroup, this.hurt, null, this);
-        this.updateHealth();
+        //this.scene.updateHealth(this.maxHealth, this.health);
         // Asignar controles de movimiento
         this.cursors = scene.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -72,11 +73,6 @@ export default class Player extends SpriteBase {
         this.stepTimer = 0;
         this.stepInterval = 500; // o el valor que te mole para los pasos
 
-    }
-
-    updateHealth() {
-        this.label.text = 'Health: ' + this.health;
-        this.label.setDepth(10);
     }
 
     /**
@@ -322,7 +318,7 @@ export default class Player extends SpriteBase {
                 });
             }
 
-            this.updateHealth();
+            //this.scene.updateHealth(this.maxHealth, this.health);
         }
         if (bullet) {
             bullet.explode();
@@ -331,7 +327,12 @@ export default class Player extends SpriteBase {
 
     healthUp() {
         this.health++;
-        this.updateHealth();
+        //this.scene.updateHealth(this.maxHealth, this.health);
+    }
+
+    maxHealthUp() {
+        this.maxHealth++;
+        //this.scene.updateHealth(this.maxHealth, this.health);
     }
 
     addCoin(amount) {
@@ -347,6 +348,7 @@ export default class Player extends SpriteBase {
     getStats() {
         return {
             health: this.health,
+            maxHealth: this.maxHealth,
             coins: this.coins,
             equippedItem: this.equippedItem,
             equippedItemRow: this.equippedItemRow,

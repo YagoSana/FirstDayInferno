@@ -2,6 +2,7 @@ import Boot from './scenes/boot.js';
 import MainMenu from './scenes/mainmenu.js';
 import PauseMenu from './scenes/pauseMenu.js';
 import End from './scenes/end.js';
+import GUI from './scenes/gui.js';
 
 import PasilloFDI from './scenes/FDI_scenes/pasilloFDI.js';
 import FDI_1 from './scenes/FDI_scenes/FDI_1.js';
@@ -39,7 +40,7 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, MainMenu, PauseMenu, SelectorNivel, InformaticaManager, PasilloFDI,FDI_1, FDI_2,FDI_3, FDI_4, FDI_5,FDI_6,laboratorioFDI, MedicinaManager, IntroMedicina, Medicina_2, Medicina_3, /*Medicina_4, Medicina_5,*/ End],
+    scene: [Boot, MainMenu, PauseMenu, SelectorNivel, GUI, InformaticaManager, PasilloFDI,FDI_1, FDI_2,FDI_3, FDI_4, FDI_5,FDI_6,laboratorioFDI, MedicinaManager, IntroMedicina, Medicina_2, Medicina_3, /*Medicina_4, Medicina_5,*/ End],
     physics: {
         default: 'arcade',
         arcade: {

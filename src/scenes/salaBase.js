@@ -29,7 +29,9 @@ export default class SalaBase extends Phaser.Scene{
         this.completed = false;
         this.numEnemiesBeaten = 0;
         this.numEnemies = 0;
+        this.scene.stop('GUI');
     }
+
 
     onBulletCollision(bullet, tile) {
         bullet.explode();
@@ -50,6 +52,8 @@ export default class SalaBase extends Phaser.Scene{
     }
 
     update() {
+        this.scene.launch('GUI',this.player); // Lanzar la escena de la GUI
+        this.scene.bringToTop('GUI');
         // Abrir el menú de pausa al presionar ESC
         if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
           console.log(`Escena anterior: ${this.scene.key}`);

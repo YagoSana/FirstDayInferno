@@ -30,6 +30,8 @@ import enemigoSueltaMoneda from '../../assets/music/enemigoSueltaMoneda.wav';
 import disparaJugador from '../../assets/music/disparaJugador.wav';
 import cogerMoneda from '../../assets/music/coin.wav';
 import andarJugador from '../../assets/music/andarJugador.wav';
+//GUI ------------------------------------------------------
+import vidaJugador from "../../assets/sprites/vidaPlayer.png";
 
 
 /**
@@ -83,6 +85,11 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("player", player, {
       frameWidth: 32, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
+    });
+
+    this.load.spritesheet('vidaJugador', vidaJugador, {
+      frameWidth: 16,
+      frameHeight: 16
     });
 
     this.load.spritesheet('puff', puff, {

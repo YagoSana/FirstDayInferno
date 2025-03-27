@@ -12,6 +12,7 @@ export default class SpriteBase extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, spriteKey) {
         // console.log("Constructor de SpriteBase ejecutándose");
         super(scene, x, y, spriteKey);
+        this.scene = scene;
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.body.setCollideWorldBounds();

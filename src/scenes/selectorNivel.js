@@ -21,7 +21,7 @@ export default class SelectorNivel extends Phaser.Scene {
     if (data && data.playerStats) {
       this.playerStats = data.playerStats;
     } else {
-      this.playerStats = { health: 3, coins: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500 }; // Valores predeterminados
+      this.playerStats = { health: 6, maxHealth: 6, coins: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500 }; // Valores predeterminados
     }
   }
 
@@ -62,6 +62,7 @@ export default class SelectorNivel extends Phaser.Scene {
 
     // Escuchar la tecla ESC
     this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.scene.stop('GUI');
   }
 
   onOverlap(player, zone) {
@@ -75,6 +76,7 @@ export default class SelectorNivel extends Phaser.Scene {
     console.log(`Comienza el mundo: ${worldName}`);
     this.scene.sleep('selectorNivel');
     this.scene.launch(worldName, { playerStats: this.playerStats, prev: 'selectorNivel' });
+    this.scene.launch('GUI', { player: this.player }); // Lanzar la escena de la GUI
   }
 
   updatePlayerStats(newStats) {
@@ -85,6 +87,8 @@ export default class SelectorNivel extends Phaser.Scene {
   }
 
   update() {
+    this.scene.launch('GUI',this.player); // Lanzar la escena de la GUI
+    this.scene.bringToTop('GUI');
     // Abrir el menú de pausa al presionar ESC
     if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
       console.log(`Escena anterior: ${this.scene.key}`);
