@@ -21,6 +21,7 @@ import medicina_3 from "../../../assets/map/pasilloMedicina.json";
 import medicina_4 from "../../../assets/map/aulaMedicina.json";
 import medicina_5 from "../../../assets/map/pasillo2Medicina.json";
 import medicina_6 from "../../../assets/map/aulaFinalMedicina.json";
+
 import img_interior from "../../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../../assets/map/Room_Builder_free_16x16.png";
 import tileset_grass from "../../../assets/map/TX Tileset Grass.png";
