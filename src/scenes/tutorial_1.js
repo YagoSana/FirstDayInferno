@@ -1,15 +1,15 @@
 import SalaBase from "./salaBase.js";
 import Player from "../gameObjects/characters/player.js";
 
-export default class Tutorial_1 extends SalaBase{
-    constructor(key){
+export default class Tutorial_1 extends SalaBase {
+    constructor(key) {
         super('tutorial_1');
     }
 
-    create(){
+    create() {
         super.create('tutorial_1');
 
-        const map = this.make.tilemap({key: 'tutorial_1'});
+        const map = this.make.tilemap({ key: 'tutorial_1' });
 
         //Cargar tilesets
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
@@ -23,7 +23,7 @@ export default class Tutorial_1 extends SalaBase{
         const layer5 = map.createLayer('sin colision encima', [tileset1, tileset2], 0, 0);
         const layer6 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
         const layer7 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
-        
+
         layer4.setCollisionByExclusion([-1], true);
         layer6.setCollisionByExclusion([-1], true);
         layer7.setCollisionByExclusion([-1], true);
@@ -42,10 +42,20 @@ export default class Tutorial_1 extends SalaBase{
         this.physics.add.collider(this.bulletGroup, layer7, this.onBulletCollision);
 
         //Camaras
+        const screenWidth = this.sys.game.config.width; // Ancho de tu pantalla
+        const screenHeight = this.sys.game.config.height; // Alto de tu pantalla
+        const mapWidth = map.widthInPixels;
+        const mapHeight = map.heightInPixels;
+        const zoom = 1.8;
+        const boundX = -(screenWidth / zoom - mapWidth) / 2;
+        const boundY = -(screenHeight / zoom - mapHeight) / 2;
+
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+        this.cameras.main.setZoom(zoom);
+        this.cameras.main.setBounds(boundX, boundY, map.widthInPixels, map.heightInPixels);
+
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
-        this.cameras.main.setZoom(1.8);
 
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
