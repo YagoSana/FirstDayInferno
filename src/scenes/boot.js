@@ -14,8 +14,7 @@ import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
 import paperbullet from "../../assets/sprites/bullet.png";
 import puff from "../../assets/sprites/puff.png";
 import tutorial_screen from "../../assets/sprites/tutorial_screen_spritesheet.png";
-
-
+import blood from "../../assets/sprites/blood.png";
 
 //ITEMS ------------------------------------------------------
 import items from "../../assets/sprites/items_spritesheet.png";
@@ -92,7 +91,6 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
-
     this.load.spritesheet('items', items, {
       frameWidth: 32,
       frameHeight: 32,
@@ -113,6 +111,11 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("tutorial_screen", tutorial_screen, {
       frameWidth: 64,
       frameHeight: 64,
+    });
+
+    this.load.spritesheet("blood", blood, {
+      frameWidth: 32,
+      frameHeight: 32,
     });
 
   }
@@ -317,7 +320,14 @@ export default class Boot extends Phaser.Scene {
       repeat: -1,
     });
 
-    //ITEMS-------------------------------------------------------------------
+    this.anims.create({
+      key: "blood",
+      frames: this.anims.generateFrameNames("blood", { start: 0, end: 12 }),
+      frameRate: 20,
+      repeat: 0,
+    });
+
+
     // 🔹 Crear texturas individuales a partir del spritesheet (sin función)
     this.textures.addSpriteSheet('bumbo', this.textures.get('items').getSourceImage(), {
       frameWidth: 32,
