@@ -99,7 +99,7 @@
                         {
                          "name":"spawnRoom",
                          "type":"string",
-                         "value":"bibliotecaFDI"
+                         "value":"FDI_2_1"
                         }, 
                         {
                          "name":"spawnX",

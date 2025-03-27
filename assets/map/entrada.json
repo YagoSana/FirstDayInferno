@@ -279,7 +279,7 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":775
+                         "value":750
                         }, 
                         {
                          "name":"spawnY",
@@ -330,12 +330,12 @@
                 {
                  "name":"spawnX",
                  "type":"int",
-                 "value":0
+                 "value":500
                 }, 
                 {
                  "name":"spawnY",
                  "type":"int",
-                 "value":0
+                 "value":100
                 }],
          "type":"objectgroup",
          "visible":true,
