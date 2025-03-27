@@ -4,20 +4,19 @@ import Enemy from "../../gameObjects/enemies/enemy.js";
 import Item from "../../gameObjects/items/item.js";
 
 export default class medicina_3 extends SalaBase {
-  /**
-   * Constructor de la escena
-   */
+
   constructor() {
     super('medicina_3');
   }
 
-  /**
-   * Creación de los elementos de la escena principal de juego
-   */
   create() {
     super.create('medicina_3');
 
-    var map = this.make.tilemap({ key: 'medicina_3' }); // Cargamos el mapa
+    console.log("Sala 3 de medicina");
+
+    const map = this.make.tilemap({ key: 'medicina_3' }); // Cargamos el mapa
+
+    console.log("Mapa cargado");
 
     const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
     const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
@@ -31,11 +30,14 @@ export default class medicina_3 extends SalaBase {
     const layer5 = map.createLayer('sin colision2', [tileset1, tileset2], 0, 0);
     const layer6 = map.createLayer('bordes', [tileset1, tileset2], 0, 0);
 
+    console.log("Capas creadas");
+
     layer2.setCollisionByExclusion([-1], true);
     layer3.setCollisionByExclusion([-1], true);
     layer6.setCollisionByExclusion([-1], true);
 
-    
+    this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
+
     this.transitionZones = this.physics.add.group();
     let transitionLayer = map.getObjectLayer("transiciones");
     transitionLayer.objects.forEach(obj => {
@@ -50,9 +52,7 @@ export default class medicina_3 extends SalaBase {
 
     console.log("Capas cargadas");
 
-    this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
-
-    this.physics.world.setBounds(0, 0, 512, 320);
+    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.stars = 10;
     this.bases = this.add.group();
     this.platformGroup = this.physics.add.staticGroup();
@@ -62,9 +62,10 @@ export default class medicina_3 extends SalaBase {
 
     console.log("Grupos creados");
 
-    this.cameras.main.setBounds(0, 0, 512, 320);
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
     this.cameras.main.setZoom(1.8);
+    this.physics.add.collider(this.player, layer5);
 
     console.log("Camara configurada");
     // Añadir colisión con el jugador

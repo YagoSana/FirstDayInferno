@@ -17,16 +17,16 @@ export default class medicina_5 extends SalaBase {
   create() {
     super.create('medicina_5');
 
-    var map = this.make.tilemap({ key: 'medicina_5' }); // Cargamos el mapa
+    const map = this.make.tilemap({ key: 'medicina_5' }); // Cargamos el mapa
 
-    const tileset1 = map.addTilesetImage('Interior16', 'Interior');
-    const tileset2 = map.addTilesetImage('ParedSuelo16', 'Muebles');
+    const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
+    const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
 
     console.log("Tileset cargados");
 
     const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
     const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
-    const layer3 = map.createLayer('bordes', [tileset1, tileset2], 0, 0);
+    const layer3 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
     const layer4 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
     const layer5 = map.createLayer('sin colision', [tileset1, tileset2], 0, 0);
 
@@ -50,8 +50,7 @@ export default class medicina_5 extends SalaBase {
 
     console.log("Capas cargadas");
 
-
-    this.physics.world.setBounds(0, 0, 512, 320);
+    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.stars = 10;
     this.bases = this.add.group();
     this.platformGroup = this.physics.add.staticGroup();
@@ -61,7 +60,7 @@ export default class medicina_5 extends SalaBase {
 
     console.log("Grupos creados");
 
-    this.cameras.main.setBounds(0, 0, 512, 320);
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
     this.cameras.main.setZoom(1.8);
     this.physics.add.collider(this.player, layer5);
