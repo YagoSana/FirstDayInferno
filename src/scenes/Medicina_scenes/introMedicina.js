@@ -17,7 +17,7 @@ export default class introMedicina extends SalaBase {
   create() {
     super.create('introMedicina');
 
-    var map = this.make.tilemap({ key: 'introMedicina' }); // Cargamos el mapa
+    const map = this.make.tilemap({ key: 'introMedicina' }); // Cargamos el mapa
 
     const tileset1 = map.addTilesetImage('TX Tileset Grass', 'Grass');
     const tileset2 = map.addTilesetImage('TX Plant', 'Plantas');
@@ -86,9 +86,9 @@ export default class introMedicina extends SalaBase {
 
     // Añadir colisión con el jugador
     this.physics.add.collider(this.player, layer5);
-    this.physics.add.collider(this.player, this.troncos);
     this.physics.add.collider(this.player, layer6);
     this.physics.add.collider(this.enemyGroup, layer6);
+    this.physics.add.collider(this.player, this.troncos);
     this.physics.add.collider(this.bulletGroup, this.troncos, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, this.troncos, this.onBulletCollision);
     this.physics.add.collider(this.bulletGroup, layer6, this.onBulletCollision);

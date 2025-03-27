@@ -117,17 +117,17 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":100
+                         "value":260
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":100
+                         "value":400
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":37.3333333333333,
+                 "width":57.3333333333333,
                  "x":-9.33333333333333,
                  "y":36.6666666666667
                 }],
@@ -147,7 +147,7 @@
         {
          "columns":17,
          "firstgid":1,
-         "image":"..\/..\/..\/FirstDayInferno2\/assets\/map\/Room_Builder_free_16x16.png",
+         "image":"Room_Builder_free_16x16.png",
          "imageheight":368,
          "imagewidth":272,
          "margin":0,
@@ -160,7 +160,7 @@
         {
          "columns":16,
          "firstgid":392,
-         "image":"..\/..\/..\/FirstDayInferno2\/assets\/map\/Interiors_free_16x16.png",
+         "image":"Interiors_free_16x16.png",
          "imageheight":1424,
          "imagewidth":256,
          "margin":0,

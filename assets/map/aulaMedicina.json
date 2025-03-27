@@ -4,7 +4,7 @@
  "layers":[
         {
          "compression":"",
-         "data":"AAAAAG0GAABLBgAAKQYAAEsGAAApBgAAbQYAAEsGAABLBgAABwYAAEsGAAAHBgAABwYAACkGAABLBgAAbQYAAEsGAAAHBgAAbQYAACkGAAAHBgAASwYAACkGAAAHBgAASwYAAEsGAAApBgAASwYAAEsGAABABgAAAAAAACkGAABLBgAASwYAAAcGAABtBgAAbQYAACkGAAAHBgAASwYAAG0GAABLBgAAbQYAAEsGAAAHBgAABwYAACkGAAApBgAASwYAAEsGAAApBgAABwYAAG0GAABLBgAASwYAACkGAABLBgAAKQYAAEsGAABABgAAAAAAAEsGAABtBgAAbQYAACkGAAAHBgAASwYAAAcGAABLBgAAKQYAAEsGAAAHBgAAKQYAAG0GAAApBgAASwYAAG0GAABLBgAABwYAAEsGAAAHBgAABwYAACkGAABLBgAAbQYAAAcGAABLBgAASwYAAEsGAABABgAAAAAAAAcGAABLBgAAbQYAAAcGAABLBgAABwYAAAYGAAAoBgAAKAYAAAYGAAAoBgAABgYAAAYGAAAGBgAAKAYAACgGAAAoBgAABgYAAAYGAAAGBgAABgYAAAYGAABLBgAAbQYAACkGAAApBgAASwYAAEsGAAAAAAAAAAAAAAcGAABLBgAAKQYAACkGAAApBgAAbQYAAAYGAAAoBgAAKAYAAAYGAAAGBgAAKAYAACgGAAAoBgAAKAYAACgGAAAoBgAAKAYAACgGAAAoBgAABgYAACgGAABtBgAABwYAAAcGAAApBgAASwYAAEsGAAAAAAAAAAAAAAcGAABtBgAABwYAACkGAABtBgAAbQYAACgGAAAGBgAABgYAAAYGAAAoBgAAKAYAAAYGAAAGBgAABgYAAAYGAAAoBgAABgYAACgGAAAGBgAAKAYAAAYGAAAHBgAAKQYAAG0GAABLBgAAbQYAAEsGAAAAAAAAAAAAAG0GAABLBgAASwYAAAcGAAAHBgAASwYAACgGAAAGBgAAKAYAACgGAAAGBgAABgYAACgGAAAoBgAABgYAAAYGAAAGBgAABgYAAAYGAAAGBgAABgYAAAYGAABLBgAASwYAAG0GAABtBgAABwYAAG0GAAAAAAAAAAAAAAcGAAApBgAAbQYAAEsGAAApBgAAKQYAACgGAAAGBgAABgYAAAYGAAAoBgAAKAYAACgGAAAoBgAAKAYAAAYGAAAoBgAABgYAAAYGAAAoBgAABgYAAAYGAABtBgAAKQYAAEsGAAAHBgAAKQYAAG0GAAAAAAAAAAAAAAcGAABLBgAAbQYAAG0GAABLBgAASwYAAMIHAAA8BgAABgYAACgGAAA8BgAAPAYAADwGAAA8BgAAPAYAADwGAAA8BgAAPAYAADwGAAA8BgAAPAYAAMQHAABLBgAASwYAAEsGAABLBgAABwYAAG0GAAAAAAAAAAAAAAcGAABLBgAASwYAACkGAABtBgAASwYAACkGAAAHBgAAbQYAAEsGAAAHBgAASwYAAG0GAAAHBgAABwYAAAcGAABLBgAABwYAACkGAAApBgAASwYAAAcGAAApBgAAbQYAAAcGAAAHBgAAbQYAAAcGAAAAAAAAAAAAAEsGAAAHBgAABwYAAEsGAAApBgAABwYAAG0GAABtBgAABwYAAEsGAABtBgAASwYAAG0GAABLBgAASwYAACkGAABtBgAAbQYAAG0GAABLBgAABwYAAAcGAABtBgAABwYAAEsGAAAHBgAAbQYAACkGAABtBgAAAAAAAG0GAAApBgAAbQYAAAcGAABtBgAAKQYAACkGAAApBgAASwYAACkGAAAHBgAASwYAACkGAABLBgAASwYAACkGAABLBgAASwYAAG0GAAAHBgAAKQYAAAcGAAAHBgAAKQYAAAcGAAApBgAAbQYAAG0GAABtBgAAAAAAAEsGAABtBgAAbQYAACkGAAApBgAABwYAAG0GAABLBgAABwYAAG0GAABLBgAABwYAAG0GAABtBgAASwYAAAcGAAAHBgAAbQYAAAcGAABtBgAASwYAAAcGAAApBgAABwYAACkGAABtBgAAbQYAACkGAAAAAAAAAAAAAEsGAAApBgAAbQYAAG0GAAAHBgAABwYAAAcGAABLBgAAKQYAACkGAAAHBgAABwYAAEsGAAApBgAAKQYAAAcGAABtBgAAbQYAAAcGAABLBgAABwYAAEsGAAAHBgAAbQYAAG0GAABtBgAABwYAACkGAAAAAAAAAAAAAEsGAABtBgAASwYAACkGAABLBgAABwYAACkGAABtBgAAbQYAACkGAABtBgAAKQYAAEsGAABLBgAASwYAAG0GAAApBgAASwYAAG0GAABtBgAABwYAAAcGAAApBgAAKQYAACkGAABLBgAASwYAAG0GAAAAAAAAAAAAAG0GAABtBgAAKQYAAEsGAAApBgAAbQYAACkGAABtBgAAbQYAAAcGAAAHBgAAbQYAAG0GAABLBgAASwYAAAcGAAAHBgAAKQYAAAcGAABtBgAAKQYAAEsGAAApBgAABwYAAAcGAABtBgAAbQYAAAcGAAAAAAAAAAAAAAcGAABLBgAAbQYAAG0GAABLBgAASwYAAG0GAABLBgAASwYAAAcGAAApBgAABwYAAAcGAABtBgAAKQYAACkGAAApBgAASwYAACkGAAApBgAAKQYAAG0GAABLBgAAKQYAACkGAABtBgAAbQYAAAcGAAAAAAAAAAAAAG0GAABLBgAABwYAAAcGAAApBgAABwYAAEsGAAApBgAABwYAAG0GAAAHBgAASwYAACkGAAAHBgAAKQYAAEsGAABtBgAAbQYAACkGAABtBgAABwYAAEsGAABLBgAAbQYAACkGAAAHBgAAKQYAAG0GAAAAAAAAAAAAAAcGAAAHBgAAbQYAAEsGAAApBgAABwYAAEsGAAApBgAAKQYAACkGAABLBgAAKQYAAG0GAABLBgAABwYAAAcGAAAHBgAABwYAAEsGAABtBgAAKQYAAG0GAABLBgAABwYAAG0GAAAHBgAAKQYAAEsGAAAAAAAAAAAAAEsGAABtBgAASwYAAG0GAAAHBgAAKQYAAEsGAABtBgAAKQYAACkGAAAHBgAASwYAAAcGAAAHBgAAbQYAAG0GAABLBgAASwYAAG0GAABLBgAASwYAAG0GAAAHBgAABwYAACkGAABLBgAASwYAAG0GAAAAAAAAAAAAAEsGAAAHBgAAKQYAACkGAABtBgAABwYAAEsGAAAHBgAASwYAAEsGAABtBgAAbQYAAAcGAAAHBgAASwYAACkGAAAHBgAABwYAAAcGAABLBgAAKQYAAAcGAAApBgAASwYAACkGAAAHBgAABwYAAG0GAAAAAAAAAAAAACkGAABtBgAABwYAAAcGAAAHBgAAbQYAACkGAABLBgAASwYAAAcGAABLBgAAbQYAAG0GAAApBgAASwYAAAcGAABLBgAABwYAAG0GAABtBgAASwYAAG0GAABLBgAAKQYAAG0GAAAHBgAASwYAAAcGAAAAAAAAAAAAAG0GAAAHBgAABwYAAAcGAAApBgAAKQYAACkGAAAHBgAAbQYAAEsGAAAHBgAAKQYAAAcGAAAHBgAASwYAAG0GAAAHBgAAbQYAAAcGAAAHBgAAKQYAAEsGAABLBgAASwYAACkGAABtBgAAKQYAAG0GAAAAAAAAAAAAACkGAABLBgAAKQYAAG0GAABLBgAASwYAAG0GAAAHBgAABwYAAEsGAABtBgAAKQYAAG0GAABLBgAAKQYAAAcGAABtBgAAbQYAACkGAABLBgAASwYAAG0GAABLBgAAKQYAAEsGAABtBgAABwYAACkGAAAAAAAAAAAAAAcGAABtBgAAbQYAACkGAABtBgAAbQYAACkGAABLBgAAKQYAACkGAABtBgAAbQYAAG0GAABLBgAASwYAAAcGAAApBgAASwYAAEsGAABtBgAAbQYAAG0GAABtBgAAbQYAAG0GAABLBgAAKQYAAG0GAAAAAAAAAAAAAEsGAABtBgAAbQYAAAcGAABtBgAAKQYAAAcGAAAHBgAASwYAACkGAABtBgAAKQYAAG0GAAApBgAAbQYAAG0GAAApBgAABwYAAAcGAABtBgAAKQYAAG0GAABLBgAABwYAACkGAAAHBgAAbQYAAEsGAAAAAAAAAAAAAEsGAABLBgAABwYAACkGAABLBgAABwYAAG0GAABtBgAAbQYAAAcGAABLBgAABwYAAG0GAAApBgAABwYAAAcGAABtBgAAKQYAAG0GAAAHBgAAbQYAAG0GAAAHBgAASwYAAEsGAAAHBgAAKQYAAAcGAAAAAAAAAAAAACkGAABtBgAAbQYAAEsGAABtBgAAKQYAACkGAAApBgAASwYAAG0GAABtBgAABwYAACkGAAAHBgAASwYAAG0GAABtBgAABwYAAAcGAAApBgAAKQYAAAcGAABLBgAABwYAAAcGAAAHBgAABwYAACkGAAAAAAAAAAAAACkGAABtBgAASwYAAEsGAABLBgAABwYAACkGAAAHBgAASwYAAAcGAABLBgAASwYAAEsGAABLBgAABwYAAG0GAAApBgAABwYAACkGAABtBgAAKQYAACkGAAApBgAAbQYAAG0GAABtBgAABwYAAAcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBgAAbQYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+         "data":"AAAAAG0GAABLBgAAKQYAAEsGAAApBgAAbQYAAEsGAABLBgAABwYAAEsGAAAHBgAABwYAACkGAABLBgAAbQYAAEsGAAAHBgAAbQYAACkGAAAHBgAASwYAACkGAAAHBgAASwYAAEsGAAApBgAASwYAAEsGAABABgAAAAAAACkGAABLBgAASwYAAAcGAABtBgAAbQYAACkGAAAHBgAASwYAAG0GAABLBgAAbQYAAEsGAAAHBgAABwYAACkGAAApBgAASwYAAEsGAAApBgAABwYAAG0GAABLBgAASwYAACkGAABLBgAAKQYAAEsGAABABgAAAAAAAEsGAABtBgAAbQYAACkGAAAHBgAASwYAAAcGAABLBgAAKQYAAEsGAAAHBgAAKQYAAG0GAAApBgAASwYAAG0GAABLBgAABwYAAEsGAAAHBgAABwYAACkGAABLBgAAbQYAAAcGAABLBgAASwYAAEsGAABABgAAAAAAAAcGAABLBgAAbQYAAAcGAABLBgAABwYAAAYGAAAoBgAAKAYAAAYGAAAoBgAABgYAAAYGAAAGBgAAKAYAACgGAAAoBgAABgYAAAYGAAAGBgAABgYAAAYGAABLBgAAbQYAACkGAAApBgAASwYAAEsGAAAAAAAAAAAAAAcGAABLBgAAKQYAACkGAAApBgAAbQYAAAYGAAAoBgAAKAYAAAYGAAAGBgAAKAYAACgGAAAoBgAAKAYAACgGAAAoBgAAKAYAACgGAAAoBgAABgYAACgGAABtBgAABwYAAAcGAAApBgAASwYAAEsGAAAAAAAAAAAAAAcGAABtBgAABwYAACkGAABtBgAAbQYAACgGAAAGBgAABgYAAAYGAAAoBgAAKAYAAAYGAAAGBgAABgYAAAYGAAAoBgAABgYAACgGAAAGBgAAKAYAAAYGAAAHBgAAKQYAAG0GAABLBgAAbQYAAEsGAAAAAAAAAAAAAG0GAABLBgAASwYAAAcGAAAHBgAASwYAACgGAAAGBgAAKAYAACgGAAAGBgAABgYAACgGAAAoBgAABgYAAAYGAAAGBgAABgYAAAYGAAAGBgAABgYAAAYGAABLBgAASwYAAG0GAABtBgAABwYAAG0GAAAAAAAAAAAAAAcGAAApBgAAbQYAAEsGAAApBgAAKQYAACgGAAAGBgAABgYAAAYGAAAoBgAAKAYAACgGAAAoBgAAKAYAAAYGAAAoBgAABgYAAAYGAAAoBgAABgYAAAYGAABtBgAAKQYAAEsGAAAHBgAAKQYAAG0GAAAAAAAAAAAAAAcGAABLBgAAbQYAAG0GAABLBgAASwYAADsGAAA8BgAABgYAACgGAAA8BgAAPAYAADwGAAA8BgAAPAYAADwGAAA8BgAAPAYAADwGAAA8BgAAPAYAAD0GAABLBgAASwYAAEsGAABLBgAABwYAAG0GAAAAAAAAAAAAAAcGAABLBgAASwYAACkGAABtBgAASwYAACkGAAAHBgAAbQYAAEsGAAAHBgAASwYAAG0GAAAHBgAABwYAAAcGAABLBgAABwYAACkGAAApBgAASwYAAAcGAAApBgAAbQYAAAcGAAAHBgAAbQYAAAcGAAAAAAAAAAAAAEsGAAAHBgAABwYAAEsGAAApBgAABwYAAG0GAABtBgAABwYAAEsGAABtBgAASwYAAG0GAABLBgAASwYAACkGAABtBgAAbQYAAG0GAABLBgAABwYAAAcGAABtBgAABwYAAEsGAAAHBgAAbQYAACkGAABtBgAAAAAAAG0GAAApBgAAbQYAAAcGAABtBgAAKQYAACkGAAApBgAASwYAACkGAAAHBgAASwYAACkGAABLBgAASwYAACkGAABLBgAASwYAAG0GAAAHBgAAKQYAAAcGAAAHBgAAKQYAAAcGAAApBgAAbQYAAG0GAABtBgAAAAAAAEsGAABtBgAAbQYAACkGAAApBgAABwYAAG0GAABLBgAABwYAAG0GAABLBgAABwYAAG0GAABtBgAASwYAAAcGAAAHBgAAbQYAAAcGAABtBgAASwYAAAcGAAApBgAABwYAACkGAABtBgAAbQYAACkGAAAAAAAAAAAAAEsGAAApBgAAbQYAAG0GAAAHBgAABwYAAAcGAABLBgAAKQYAACkGAAAHBgAABwYAAEsGAAApBgAAKQYAAAcGAABtBgAAbQYAAAcGAABLBgAABwYAAEsGAAAHBgAAbQYAAG0GAABtBgAABwYAACkGAAAAAAAAAAAAAEsGAABtBgAASwYAACkGAABLBgAABwYAACkGAABtBgAAbQYAACkGAABtBgAAKQYAAEsGAABLBgAASwYAAG0GAAApBgAASwYAAG0GAABtBgAABwYAAAcGAAApBgAAKQYAACkGAABLBgAASwYAAG0GAAAAAAAAAAAAAG0GAABtBgAAKQYAAEsGAAApBgAAbQYAACkGAABtBgAAbQYAAAcGAAAHBgAAbQYAAG0GAABLBgAASwYAAAcGAAAHBgAAKQYAAAcGAABtBgAAKQYAAEsGAAApBgAABwYAAAcGAABtBgAAbQYAAAcGAAAAAAAAAAAAAAcGAABLBgAAbQYAAG0GAABLBgAASwYAAG0GAABLBgAASwYAAAcGAAApBgAABwYAAAcGAABtBgAAKQYAACkGAAApBgAASwYAACkGAAApBgAAKQYAAG0GAABLBgAAKQYAACkGAABtBgAAbQYAAAcGAAAAAAAAAAAAAG0GAABLBgAABwYAAAcGAAApBgAABwYAAEsGAAApBgAABwYAAG0GAAAHBgAASwYAACkGAAAHBgAAKQYAAEsGAABtBgAAbQYAACkGAABtBgAABwYAAEsGAABLBgAAbQYAACkGAAAHBgAAKQYAAG0GAAAAAAAAAAAAAAcGAAAHBgAAbQYAAEsGAAApBgAABwYAAEsGAAApBgAAKQYAACkGAABLBgAAKQYAAG0GAABLBgAABwYAAAcGAAAHBgAABwYAAEsGAABtBgAAKQYAAG0GAABLBgAABwYAAG0GAAAHBgAAKQYAAEsGAAAAAAAAAAAAAEsGAABtBgAASwYAAG0GAAAHBgAAKQYAAEsGAABtBgAAKQYAACkGAAAHBgAASwYAAAcGAAAHBgAAbQYAAG0GAABLBgAASwYAAG0GAABLBgAASwYAAG0GAAAHBgAABwYAACkGAABLBgAASwYAAG0GAAAAAAAAAAAAAEsGAAAHBgAAKQYAACkGAABtBgAABwYAAEsGAAAHBgAASwYAAEsGAABtBgAAbQYAAAcGAAAHBgAASwYAACkGAAAHBgAABwYAAAcGAABLBgAAKQYAAAcGAAApBgAASwYAACkGAAAHBgAABwYAAG0GAAAAAAAAAAAAACkGAABtBgAABwYAAAcGAAAHBgAAbQYAACkGAABLBgAASwYAAAcGAABLBgAAbQYAAG0GAAApBgAASwYAAAcGAABLBgAABwYAAG0GAABtBgAASwYAAG0GAABLBgAAKQYAAG0GAAAHBgAASwYAAAcGAAAAAAAAAAAAAG0GAAAHBgAABwYAAAcGAAApBgAAKQYAACkGAAAHBgAAbQYAAEsGAAAHBgAAKQYAAAcGAAAHBgAASwYAAG0GAAAHBgAAbQYAAAcGAAAHBgAAKQYAAEsGAABLBgAASwYAACkGAABtBgAAKQYAAG0GAAAAAAAAAAAAACkGAABLBgAAKQYAAG0GAABLBgAASwYAAG0GAAAHBgAABwYAAEsGAABtBgAAKQYAAG0GAABLBgAAKQYAAAcGAABtBgAAbQYAACkGAABLBgAASwYAAG0GAABLBgAAKQYAAEsGAABtBgAABwYAACkGAAAAAAAAAAAAAAcGAABtBgAAbQYAACkGAABtBgAAbQYAACkGAABLBgAAKQYAACkGAABtBgAAbQYAAG0GAABLBgAASwYAAAcGAAApBgAASwYAAEsGAABtBgAAbQYAAG0GAABtBgAAbQYAAG0GAABLBgAAKQYAAG0GAAAAAAAAAAAAAEsGAABtBgAAbQYAAAcGAABtBgAAKQYAAAcGAAAHBgAASwYAACkGAABtBgAAKQYAAG0GAAApBgAAbQYAAG0GAAApBgAABwYAAAcGAABtBgAAKQYAAG0GAABLBgAABwYAACkGAAAHBgAAbQYAAEsGAAAAAAAAAAAAAEsGAABLBgAABwYAACkGAABLBgAABwYAAG0GAABtBgAAbQYAAAcGAABLBgAABwYAAG0GAAApBgAABwYAAAcGAABtBgAAKQYAAG0GAAAHBgAAbQYAAG0GAAAHBgAASwYAAEsGAAAHBgAAKQYAAAcGAAAAAAAAAAAAACkGAABtBgAAbQYAAEsGAABtBgAAKQYAACkGAAApBgAASwYAAG0GAABtBgAABwYAACkGAAAHBgAASwYAAG0GAABtBgAABwYAAAcGAAApBgAAKQYAAAcGAABLBgAABwYAAAcGAAAHBgAABwYAACkGAAAAAAAAAAAAACkGAABtBgAASwYAAEsGAABLBgAABwYAACkGAAAHBgAASwYAAAcGAABLBgAASwYAAEsGAABLBgAABwYAAG0GAAApBgAABwYAACkGAABtBgAAKQYAACkGAAApBgAAbQYAAG0GAABtBgAABwYAAAcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBgAAbQYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
          "encoding":"base64",
          "height":30,
          "id":1,
@@ -75,7 +75,7 @@
         {
          "draworder":"topdown",
          "id":6,
-         "name":"transciciones",
+         "name":"transiciones",
          "objects":[
                 {
                  "height":70,
@@ -90,19 +90,19 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":0
+                         "value":70
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":0
+                         "value":160
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":40.6666666666667,
-                 "x":452.666666666667,
-                 "y":143.333333333333
+                 "x":474,
+                 "y":168
                 }, 
                 {
                  "height":46.6666666666667,
@@ -128,8 +128,239 @@
                  "type":"",
                  "visible":true,
                  "width":77.3333333333333,
-                 "x":202,
-                 "y":449.333333333333
+                 "x":249.333333333334,
+                 "y":496
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":8,
+         "name":"colisiones",
+         "objects":[
+                {
+                 "height":12.75,
+                 "id":3,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":26.5,
+                 "x":58.4318181818182,
+                 "y":385.727272727273
+                }, 
+                {
+                 "height":12.75,
+                 "id":4,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":26.5,
+                 "x":57.6818181818182,
+                 "y":305.268939393939
+                }, 
+                {
+                 "height":12.75,
+                 "id":5,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":26.5,
+                 "x":57.6818181818182,
+                 "y":226.102272727273
+                }, 
+                {
+                 "height":12.75,
+                 "id":6,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":26.5,
+                 "x":138.431818181818,
+                 "y":225.852272727273
+                }, 
+                {
+                 "height":12.75,
+                 "id":7,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":26.5,
+                 "x":138.431818181818,
+                 "y":305.602272727273
+                }, 
+                {
+                 "height":12.75,
+                 "id":8,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":26.5,
+                 "x":137.931818181818,
+                 "y":386.102272727273
+                }, 
+                {
+                 "height":12.75,
+                 "id":9,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":26.5,
+                 "x":314.431818181818,
+                 "y":306.602272727273
+                }, 
+                {
+                 "height":12.75,
+                 "id":10,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":26.5,
+                 "x":313.931818181818,
+                 "y":386.352272727273
+                }, 
+                {
+                 "height":12.75,
+                 "id":11,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":26.5,
+                 "x":394.681818181818,
+                 "y":385.852272727273
+                }, 
+                {
+                 "height":12.75,
+                 "id":12,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":26.5,
+                 "x":314.431818181818,
+                 "y":225.602272727273
+                }, 
+                {
+                 "height":12.75,
+                 "id":13,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":26.5,
+                 "x":394.181818181818,
+                 "y":305.852272727273
+                }, 
+                {
+                 "height":12.75,
+                 "id":14,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":26.5,
+                 "x":393.431818181818,
+                 "y":225.852272727273
+                }, 
+                {
+                 "height":12.75,
+                 "id":15,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":26.5,
+                 "x":313.295454545455,
+                 "y":36.9583333333333
+                }, 
+                {
+                 "height":22.5,
+                 "id":16,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":13.5,
+                 "x":65.25,
+                 "y":243.75
+                }, 
+                {
+                 "height":22.5,
+                 "id":17,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":13.5,
+                 "x":145.5,
+                 "y":244.25
+                }, 
+                {
+                 "height":22.5,
+                 "id":18,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":13.5,
+                 "x":65.25,
+                 "y":322.5
+                }, 
+                {
+                 "height":22.5,
+                 "id":19,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":13.5,
+                 "x":145.25,
+                 "y":403.25
+                }, 
+                {
+                 "height":22.5,
+                 "id":20,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":13.5,
+                 "x":401.25,
+                 "y":324.25
+                }, 
+                {
+                 "height":22.5,
+                 "id":21,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":13.5,
+                 "x":321.25,
+                 "y":325
+                }, 
+                {
+                 "height":22.5,
+                 "id":22,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":13.5,
+                 "x":321.25,
+                 "y":245.5
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -137,8 +368,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":8,
- "nextobjectid":3,
+ "nextlayerid":9,
+ "nextobjectid":23,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -169,10 +400,6 @@
          "tilecount":391,
          "tileheight":16,
          "tilewidth":16
-        }, 
-        {
-         "firstgid":1816,
-         "source":"tilesets\/Room_Builder_free_16x16.tsx"
         }],
  "tilewidth":16,
  "type":"map",
