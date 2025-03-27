@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import Player from "../gameObjects/characters/player";
 
 //ENEMIGOS
 import cucaracha from "../../assets/sprites/cucaracha.png";
@@ -112,6 +113,7 @@ export default class tutorialManager extends Phaser.Scene{
         this.mapStatus.set(zone.spawnRoom, false);
         }
         this.scene.launch(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "tutorialManager", status: this.mapStatus.get(zone.spawnRoom)});
+        this.scene.launch('GUI', { player: this.player }); // Lanzar la escena de la GUI
     }
 
     guardarPlayerStats(stats){
