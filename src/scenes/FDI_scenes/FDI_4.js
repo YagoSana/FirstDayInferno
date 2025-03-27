@@ -2,7 +2,7 @@ import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
 import Item from "../../gameObjects/items/item.js";
-
+import VendingMachine from "../../gameObjects/items/vendingMachine.js";
 
 export default class FDI_4 extends SalaBase {
 
@@ -86,6 +86,10 @@ export default class FDI_4 extends SalaBase {
     }
 
     spawnProps(){
+        this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
+        this.numEnemies++;
+        new VendingMachine(this,500,45);
+        new Item(this, 200, 200,"hamburguesa");
            
         }
     

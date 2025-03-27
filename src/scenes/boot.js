@@ -13,6 +13,7 @@ import player from "../../assets/sprites/player_spritesheet.png";
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
 import paperbullet from "../../assets/sprites/bullet.png";
 import puff from "../../assets/sprites/puff.png";
+import tutorial_screen from "../../assets/sprites/tutorial_screen_spritesheet.png";
 import blood from "../../assets/sprites/blood.png";
 
 //ITEMS ------------------------------------------------------
@@ -112,6 +113,11 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("keyboard_keys", keyboard_keys, {
       frameWidth: 16,
       frameHeight: 16,
+    });
+
+    this.load.spritesheet("tutorial_screen", tutorial_screen, {
+      frameWidth: 64,
+      frameHeight: 64,
     });
 
     this.load.spritesheet("blood", blood, {
@@ -304,6 +310,20 @@ export default class Boot extends Phaser.Scene {
       key: "vm-using",
       frames: this.anims.generateFrameNames("items", { start: 24, end: 29 }),
       frameRate: 8,
+      repeat: 1,
+    });
+
+    this.anims.create({
+      key: "tutorial_screen_1",
+      frames: this.anims.generateFrameNames("tutorial_screen", { start: 0, end: 47 }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "tutorial_screen_2",
+      frames: this.anims.generateFrameNames("tutorial_screen", { start: 48, end: 95 }),
+      frameRate: 8,
       repeat: -1,
     });
 
@@ -314,7 +334,7 @@ export default class Boot extends Phaser.Scene {
       repeat: 0,
     });
 
-    
+
     // 🔹 Crear texturas individuales a partir del spritesheet (sin función)
     this.textures.addSpriteSheet('bumbo', this.textures.get('items').getSourceImage(), {
       frameWidth: 32,

@@ -66,6 +66,7 @@ export default class Player extends SpriteBase {
 
         //item
         this.nearItem = null; // item cercano que puede recogerse
+        this.nearVendingMachine = null;
         this.pickupKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.sonidoDisparo = scene.sound.add('disparaJugador');
         this.sonidoAndar = scene.sound.add('andarJugador');
@@ -169,18 +170,37 @@ export default class Player extends SpriteBase {
                 }
             }
 
+            if (this.nearVendingMachine) {
+                if (Phaser.Input.Keyboard.JustDown(this.pickupKey)) {// Interacción con tecla E
+                    if(!this.nearVendingMachine.isInUse){
+                        this.nearVendingMachine.useMachine();
+                    }
+                }
+
+                // Verificar si el jugador se alejó de la máquina
+                if (!this.nearVendingMachine.scene || !this.scene.physics.overlap(this, this.nearVendingMachine.interactionArea)) {
+                    this.nearVendingMachine.hideInteractionUI();
+                    this.nearVendingMachine = null;
+                }
+
+            }
+
             // Verificar si el jugador se alejó del objeto
             if (this.nearItem) {
-                const distance = Phaser.Math.Distance.Between(this.x, this.y, this.nearItem.x, this.nearItem.y);
-                if (distance > 30) { // Ajusta este valor según el rango de interacción
+                // Verificar si el ítem todavía existe
+                if (!this.nearItem.scene || !this.scene.physics.overlap(this, this.nearItem)) {
                     this.nearItem.hidePickupHint(); // Ocultar la información del objeto
                     this.nearItem = null; // Limpiar nearItem
                 }
-                // Si el jugador esta cerca de un item y pulsa 'E' lo recoge
-                if (Phaser.Input.Keyboard.JustDown(this.pickupKey)) {
-                    this.nearItem.pick(this, this);
+                else if (Phaser.Input.Keyboard.JustDown(this.pickupKey)) { // Si el jugador esta cerca de un item y pulsa 'E' lo recoge
+                    const itemToPick = this.nearItem;
                     this.nearItem = null;
+
+                    if (itemToPick.pick) {
+                        itemToPick.pick(this, this);
+                    }
                 }
+
             }
 
             // ACTUALIZAR EL SPRITE DEL ITEM SOLO SI HAY UN ITEM EQUIPADO
@@ -339,6 +359,20 @@ export default class Player extends SpriteBase {
         this.coins += amount;
         console.log(`Monedas: ${this.coins}€`);
         this.sonidoMoneda.play();
+    }
+
+    canAfford(price) {
+        return this.coins >= price;
+    }
+
+    spendCoins(amount) {
+        let ok = false;
+        if (this.canAfford(amount)) {
+            ok = true;
+            this.coins -= amount;
+        }
+        console.log(`Monedas: ${this.coins}€`);
+        return ok;
     }
 
     slowDown() {

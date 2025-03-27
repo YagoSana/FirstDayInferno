@@ -17,6 +17,11 @@ import SelectorNivel from './scenes/selectorNivel.js';
 
 import Phaser from 'phaser';
 import InformaticaManager from './scenes/FDI_scenes/informaticaManager.js';
+import TutorialManager from './scenes/tutorialManager.js';
+import Tutorial_1 from './scenes/tutorial_1.js';
+import Tutorial_2 from './scenes/tutorial_2.js';
+import Tutorial_3 from './scenes/tutorial_3.js';
+import Tutorial_debug from './scenes/tutorial_debug.js';
 import MedicinaManager from './scenes/Medicina_scenes/medicinaManager.js';
 
 import IntroMedicina from './scenes/Medicina_scenes/introMedicina.js'
@@ -40,7 +45,7 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, MainMenu, PauseMenu, SelectorNivel, GUI, InformaticaManager, PasilloFDI,FDI_1, FDI_2,FDI_3, FDI_4, FDI_5,FDI_6,laboratorioFDI, MedicinaManager, IntroMedicina, Medicina_2, Medicina_3, /*Medicina_4, Medicina_5,*/ End],
+    scene: [Boot, MainMenu, PauseMenu, SelectorNivel,TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, GUI, InformaticaManager, PasilloFDI,FDI_1, FDI_2,FDI_3, FDI_4, FDI_5,FDI_6,laboratorioFDI, MedicinaManager, IntroMedicina, Medicina_2, Medicina_3, /*Medicina_4, Medicina_5,*/ End],
     physics: {
         default: 'arcade',
         arcade: {
