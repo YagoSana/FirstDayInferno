@@ -2,15 +2,15 @@ import SalaBase from "./salaBase.js";
 import Player from "../gameObjects/characters/player.js";
 import Enemy from "../gameObjects/enemies/enemy.js";
 
-export default class Tutorial_2 extends SalaBase{
-    constructor(key){
+export default class Tutorial_2 extends SalaBase {
+    constructor(key) {
         super('tutorial_2');
     }
-    
-    create(){
+
+    create() {
         super.create('tutorial_2');
 
-        const map = this.make.tilemap({key: 'tutorial_2'});
+        const map = this.make.tilemap({ key: 'tutorial_2' });
 
         //Cargar tilesets
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
@@ -24,7 +24,7 @@ export default class Tutorial_2 extends SalaBase{
         const layer5 = map.createLayer('sin colision arriba', [tileset1, tileset2], 0, 0);
         const layer6 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
         const layer7 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
-        
+
         layer2.setCollisionByExclusion([-1], true);
         layer6.setCollisionByExclusion([-1], true);
         layer7.setCollisionByExclusion([-1], true);
@@ -34,8 +34,6 @@ export default class Tutorial_2 extends SalaBase{
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
         this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
-
-        this.enemyGroup.add(new Enemy(this, 41, 84, "cucaracha"));
 
         //Colisiones
         this.physics.add.collider(this.player, layer2);
@@ -76,5 +74,19 @@ export default class Tutorial_2 extends SalaBase{
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+
+        let spritesLayer = map.getObjectLayer("sprites");
+        spritesLayer.objects.forEach(obj => {
+            let type = obj.properties.find(p => p.name === "tipo")?.value;
+            // console.log(`Tipo del objeto de tiled ${type}`);
+            if (type === "asset") {
+                let sprite = this.add.sprite(obj.x, obj.y, obj.name).setVisible(true).setDepth(3).play(obj.name);
+                sprite.setOrigin(0, 0); // Ajusta según tu necesidad
+            }
+            else if(type === "enemy"){
+                this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+                
+            }
+        });
     }
 }

@@ -248,9 +248,38 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":9,
+         "name":"sprites",
+         "objects":[
+                {
+                 "height":0,
+                 "id":13,
+                 "name":"tutorial_screen_1",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"asset"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":131,
+                 "y":0
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":9,
- "nextobjectid":8,
+ "nextlayerid":10,
+ "nextobjectid":14,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -259,7 +288,7 @@
         {
          "columns":16,
          "firstgid":1,
-         "image":"Modern tiles_Free\/Interiors_free\/16x16\/Interiors_free_16x16.png",
+         "image":"Interiors_free_16x16.png",
          "imageheight":1424,
          "imagewidth":256,
          "margin":0,
@@ -272,7 +301,7 @@
         {
          "columns":17,
          "firstgid":1425,
-         "image":"Modern tiles_Free\/Interiors_free\/16x16\/Room_Builder_free_16x16.png",
+         "image":"Room_Builder_free_16x16.png",
          "imageheight":368,
          "imagewidth":272,
          "margin":0,

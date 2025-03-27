@@ -31,6 +31,7 @@ export default class Tutorial_1 extends SalaBase {
         this.bulletGroup = this.physics.add.group();
         this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
 
+
         //Colisiones
         this.physics.add.collider(this.player, layer4);
         this.physics.add.collider(this.bulletGroup, layer4, this.onBulletCollision);
@@ -68,5 +69,12 @@ export default class Tutorial_1 extends SalaBase {
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+
+        let spritesLayer = map.getObjectLayer("sprites");
+        spritesLayer.objects.forEach(obj => {
+            let sprite = this.add.sprite(obj.x, obj.y, obj.name).setVisible(true).setDepth(3).play(obj.name);
+            // Ajustar el origen si es necesario (Tiled usa esquina superior izquierda por defecto)
+            sprite.setOrigin(0, 0); // Ajusta según tu necesidad
+        });
     }
 }

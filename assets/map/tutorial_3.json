@@ -206,9 +206,38 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":7,
+         "name":"sprites",
+         "objects":[
+                {
+                 "height":0,
+                 "id":7,
+                 "name":"vending_machine",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"tipo",
+                         "type":"string",
+                         "value":"item"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":120,
+                 "y":110
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":7,
- "nextobjectid":5,
+ "nextlayerid":8,
+ "nextobjectid":9,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -217,7 +246,7 @@
         {
          "columns":17,
          "firstgid":1,
-         "image":"Modern tiles_Free\/Interiors_free\/16x16\/Room_Builder_free_16x16.png",
+         "image":"Room_Builder_free_16x16.png",
          "imageheight":368,
          "imagewidth":272,
          "margin":0,
@@ -230,7 +259,7 @@
         {
          "columns":16,
          "firstgid":392,
-         "image":"Modern tiles_Free\/Interiors_free\/16x16\/Interiors_free_16x16.png",
+         "image":"Interiors_free_16x16.png",
          "imageheight":1424,
          "imagewidth":256,
          "margin":0,

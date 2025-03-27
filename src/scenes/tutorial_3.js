@@ -1,5 +1,6 @@
 import SalaBase from "./salaBase.js";
 import Player from "../gameObjects/characters/player.js";
+import VendingMachine from "../gameObjects/items/vendingMachine.js";
 
 export default class Tutorial_3 extends SalaBase {
     constructor(key) {
@@ -62,5 +63,14 @@ export default class Tutorial_3 extends SalaBase {
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+
+        let spritesLayer = map.getObjectLayer("sprites");
+        spritesLayer.objects.forEach(obj => {
+            let type = obj.properties.find(p => p.name === "tipo")?.value;
+            // console.log(`Tipo del objeto de tiled ${type}`);
+            if (type === "item") {
+                new VendingMachine(this, obj.x, obj.y);
+            }
+        });
     }
 }
