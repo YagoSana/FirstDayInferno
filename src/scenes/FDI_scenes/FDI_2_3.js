@@ -75,7 +75,7 @@ export default class FDI_2_3 extends SalaBase {
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
-            zone.prev = "FDI_3";
+            zone.prev = "FDI_2_3";
             zone.open = false;
         });
 
@@ -84,9 +84,7 @@ export default class FDI_2_3 extends SalaBase {
     }
 
     spawnProps(){
-            this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
-            this.numEnemies++;
-            new Item(this, 200, 200,"hamburguesa");
+        
         }
     
     spawBlood(){
