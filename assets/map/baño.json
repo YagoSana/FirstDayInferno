@@ -201,7 +201,17 @@
                         {
                          "name":"spawnRoom",
                          "type":"string",
-                         "value":"FDI_2.1"
+                         "value":"FDI_2_1"
+                        }, 
+                        {
+                         "name":"spawnX",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"spawnY",
+                         "type":"int",
+                         "value":64
                         }],
                  "rotation":0,
                  "type":"",
