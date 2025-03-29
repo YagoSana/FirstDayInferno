@@ -85,7 +85,7 @@
                         {
                          "name":"spawnRoom",
                          "type":"string",
-                         "value":"medicina_1"
+                         "value":"introMedicina"
                         }, 
                         {
                          "name":"spawnX",
@@ -95,14 +95,14 @@
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":30
+                         "value":80
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":64,
-                 "x":232,
-                 "y":305.333333333333
+                 "x":256,
+                 "y":328.583333333333
                 }, 
                 {
                  "height":63.3333333333333,

@@ -217,7 +217,7 @@ export default class medicinaManager extends Phaser.Scene {
 
     this.mapStatus = new Map();
     this.mapStatus.set("introMedicina", false);
-    this.scene.start("introMedicina", {x: 442, y: 375, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get("introMedicina")});  }
+    this.scene.start("introMedicina", {x: 320, y: 290, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get("introMedicina")});  }
   
 
   cambiarSala(zone){
@@ -228,6 +228,7 @@ export default class medicinaManager extends Phaser.Scene {
       this.mapStatus.set(zone.spawnRoom, false);
     }
     this.scene.start(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get(zone.spawnRoom)});
+    this.scene.launch('GUI', { player: this.player });
   }
 
   guardarPlayerStats(stats){

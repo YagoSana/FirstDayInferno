@@ -21,7 +21,6 @@ import zombie_shoot from "../../../assets/sprites/zombie_shoot.png";
 import embestidaPlaceHolder from "../../../assets/sprites/embestidaPlaceHolder.png";
 
 //MAPAS Y TILES ------------------------------------------------------
-import mapa from "../../../assets/map/introMedicina.json";
 import img_grass from "../../../assets/map/TX Tileset Grass.png";
 import img_plantas from "../../../assets/map/TX Plant.png";
 import img_props from "../../../assets/map/TX Props.png";
@@ -178,8 +177,6 @@ export default class informaticaManager extends Phaser.Scene {
     //TODO AÑADIR TILES?
     this.load.image("Interior", img_interior);
     this.load.image("Muebles", img_muebles);
-
-    this.load.tilemapTiledJSON("map", mapa); // Carga el mapa
 
     //TODO AÑADIR TILEDJSON (MAPA)
 
