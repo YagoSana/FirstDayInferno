@@ -80,7 +80,7 @@ export default class FDI_2_2 extends SalaBase {
         this.cameras.main.setZoom(1.8);
         
         this.transitionZones = this.physics.add.group();
-        let transitionLayer = map.getObjectLayer("Transiciones");
+        let transitionLayer = map.getObjectLayer("transiciones");
         transitionLayer.objects.forEach(obj => {
             const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;

@@ -68,7 +68,7 @@ export default class FDI_2_3 extends SalaBase {
         }
         
         this.transitionZones = this.physics.add.group();
-        let transitionLayer = map.getObjectLayer("transiciones");
+        let transitionLayer = map.getObjectLayer("Transiciones");
         
         transitionLayer.objects.forEach(obj => {
             const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
@@ -84,7 +84,7 @@ export default class FDI_2_3 extends SalaBase {
     }
 
     spawnProps(){
-        
+         //this.numEnemies=0
         }
     
     spawBlood(){

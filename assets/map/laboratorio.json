@@ -292,7 +292,7 @@
         {
          "draworder":"topdown",
          "id":6,
-         "name":"Transiciones",
+         "name":"transiciones",
          "objects":[],
          "opacity":1,
          "properties":[

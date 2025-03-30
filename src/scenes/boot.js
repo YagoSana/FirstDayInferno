@@ -21,6 +21,7 @@ import items from "../../assets/sprites/items_spritesheet.png";
 
 //JUGADOR CON ITEMS ----------------------------------------------
 import player_items from "../../assets/sprites/player_item.png";
+
 //AUDIO ------------------------------------------------------
 import musicaMenu from '../../assets/music/mainMenu.ogg';
 import buttonHover from '../../assets/music/buttonHover.wav';

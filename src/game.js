@@ -18,10 +18,10 @@ import SelectorNivel from './scenes/selectorNivel.js';
 
 import Phaser from 'phaser';
 import InformaticaManager from './scenes/FDI_scenes/informaticaManager.js';
-import TutorialManager from './scenes/tutorialManager.js';
-import Tutorial_1 from './scenes/tutorial_1.js';
-import Tutorial_2 from './scenes/tutorial_2.js';
-import Tutorial_3 from './scenes/tutorial_3.js';
+import TutorialManager from './scenes/Tutorial_scenes/tutorialManager.js';
+import Tutorial_1 from './scenes/Tutorial_scenes/tutorial_1.js';
+import Tutorial_2 from './scenes/Tutorial_scenes/tutorial_2.js';
+import Tutorial_3 from './scenes/Tutorial_scenes/tutorial_3.js';
 import Tutorial_debug from './scenes/tutorial_debug.js';
 import MedicinaManager from './scenes/Medicina_scenes/medicinaManager.js';
 
@@ -52,7 +52,7 @@ let config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 0 },
-            debug: false
+            debug: true
         }
     }
 };

@@ -1,18 +1,18 @@
 import Phaser from "phaser";
-import Player from "../gameObjects/characters/player";
+import Player from "../../gameObjects/characters/player";
 
 //ENEMIGOS
-import cucaracha from "../../assets/sprites/cucaracha.png";
-import enemydeath from "../../assets/sprites/enemy_death.png";
+import cucaracha from "../../../assets/sprites/cucaracha.png";
+import enemydeath from "../../../assets/sprites/enemy_death.png";
 
 
 //MAPAS Y TILES
-import tutorial_1 from "../../assets/map/tutorial_1.json";
-import tutorial_2 from "../../assets/map/tutorial_2.json";
-import tutorial_3 from "../../assets/map/tutorial_3.json";
-import tutorial_debug from "../../assets/map/tutorial_debug.json";
-import img_interior from "../../assets/map/Interiors_free_16x16.png";
-import img_muebles from "../../assets/map/Room_Builder_free_16x16.png";
+import tutorial_1 from "../../../assets/map/tutorial_1.json";
+import tutorial_2 from "../../../assets/map/tutorial_2.json";
+import tutorial_3 from "../../../assets/map/tutorial_3.json";
+import tutorial_debug from "../../../assets/map/tutorial_debug.json";
+import img_interior from "../../../assets/map/Interiors_free_16x16.png";
+import img_muebles from "../../../assets/map/Room_Builder_free_16x16.png";
 
 //ITEMS
 
