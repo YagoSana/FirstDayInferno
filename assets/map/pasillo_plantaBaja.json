@@ -146,12 +146,12 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":26
+                         "value":0
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":90
+                         "value":0
                         }],
                  "rotation":0,
                  "type":"",
@@ -159,6 +159,33 @@
                  "width":14.756517461879,
                  "x":785.046728971963,
                  "y":79.6851942941466
+                }, 
+                {
+                 "height":46,
+                 "id":10,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"spawnRoom",
+                         "type":"string",
+                         "value":"FDI_1"
+                        }, 
+                        {
+                         "name":"spawnX",
+                         "type":"int",
+                         "value":35
+                        }, 
+                        {
+                         "name":"spawnY",
+                         "type":"int",
+                         "value":380
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1.33333333333333,
+                 "y":81.3333333333333
                 }],
          "opacity":1,
          "properties":[
@@ -183,7 +210,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":10,
+ "nextobjectid":12,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
