@@ -43,9 +43,9 @@ export default class FDI_2_2 extends SalaBase {
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
         this.player = new Player(this, this.xSpawn, this.ySpawn, data.playerStats);//831, 240
-        this.enemyGroup.add(new RangedEnemy(this, 100, 80, "nerd"));
-        new Item(this, 10, 10, "moneda", false);
-        new Item(this, 10, 10,"bumbo",true);
+        //this.enemyGroup.add(new RangedEnemy(this, 100, 80, "nerd"));
+        //new Item(this, 10, 10, "moneda", false);
+        //new Item(this, 10, 10,"bumbo",true);
 
         //Colisiones
         this.physics.add.collider(this.player, layer2);
@@ -86,7 +86,7 @@ export default class FDI_2_2 extends SalaBase {
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
-            zone.prev = "FDI_2.2";
+            zone.prev = "FDI_2_2";
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
