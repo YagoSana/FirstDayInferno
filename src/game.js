@@ -46,7 +46,7 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, MainMenu, PauseMenu, SelectorNivel,TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, GUI, InformaticaManager, PasilloFDI,FDI_1, FDI_2,FDI_3, FDI_4, FDI_5,FDI_6,FDI_2_1, FDI_2_2, FDI_2_3, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, End],
+    scene: [Boot, MainMenu, PauseMenu, SelectorNivel,TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, GUI, InformaticaManager,FDI_1, FDI_2,FDI_3, FDI_4, FDI_5,FDI_6,FDI_2_1, FDI_2_2, FDI_2_3, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, End],
 
     physics: {
         default: 'arcade',
