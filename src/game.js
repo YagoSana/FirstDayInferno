@@ -4,15 +4,16 @@ import PauseMenu from './scenes/pauseMenu.js';
 import End from './scenes/end.js';
 import GUI from './scenes/gui.js';
 
-import PasilloFDI from './scenes/FDI_scenes/pasilloFDI.js';
 import FDI_1 from './scenes/FDI_scenes/FDI_1.js';
 import FDI_2 from './scenes/FDI_scenes/FDI_2.js';
 import FDI_3 from './scenes/FDI_scenes/FDI_3.js';
 import FDI_4 from './scenes/FDI_scenes/FDI_4.js';
 import FDI_5 from './scenes/FDI_scenes/FDI_5.js';
 import FDI_6 from './scenes/FDI_scenes/FDI_6.js';
+import FDI_2_1 from './scenes/FDI_scenes/FDI_2_1.js';
+import FDI_2_2 from './scenes/FDI_scenes/FDI_2_2.js';
+import FDI_2_3 from './scenes/FDI_scenes/FDI_2_3.js';
 
-import laboratorioFDI from './scenes/FDI_scenes/laboratorioFDI.js';
 import SelectorNivel from './scenes/selectorNivel.js';
 
 import Phaser from 'phaser';
@@ -45,7 +46,8 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, MainMenu, PauseMenu, SelectorNivel,TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, GUI, InformaticaManager, PasilloFDI,FDI_1, FDI_2,FDI_3, FDI_4, FDI_5,FDI_6,laboratorioFDI, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, End],
+    scene: [Boot, MainMenu, PauseMenu, SelectorNivel,TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, GUI, InformaticaManager, PasilloFDI,FDI_1, FDI_2,FDI_3, FDI_4, FDI_5,FDI_6,FDI_2_1, FDI_2_2, FDI_2_3, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, End],
+
     physics: {
         default: 'arcade',
         arcade: {

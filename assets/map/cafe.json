@@ -99,17 +99,17 @@
                         {
                          "name":"spawnRoom",
                          "type":"string",
-                         "value":"bibliotecaFDI"
+                         "value":"FDI_3"
                         }, 
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":237
+                         "value":47
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":448
+                         "value":432
                         }],
                  "rotation":0,
                  "type":"",

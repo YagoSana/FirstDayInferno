@@ -16,12 +16,13 @@ export default class FDI_5 extends SalaBase {
         //Cargar tilesets
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
+        const tileset3= map.addTilesetImage('tileset_nuevo','Decorado' );
 
         //Configurar capas
         const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
         const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
         const layer4 = map.createLayer('suelo2', [tileset1, tileset2], 0, 0);
-        const layer3 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
+        const layer3 = map.createLayer('objetos', [tileset1, tileset2, tileset3], 0, 0);
         const layer5 = map.createLayer('sin colision', [tileset1, tileset2], 0, 0);
         
     

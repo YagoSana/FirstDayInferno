@@ -4,24 +4,25 @@ import Enemy from "../../gameObjects/enemies/enemy.js";
 import Item from "../../gameObjects/items/item.js";
 
 
-export default class FDI_3 extends SalaBase {
+export default class FDI_2_3 extends SalaBase {
 
     constructor(key) {
-        super('FDI_3');
+        super('FDI_2_3');
     }
 
     create(){
-        super.create('FDI_3');
-        const map = this.make.tilemap({ key: 'FDI_3_TL' }); // Cargamos el mapa
+        super.create('FDI_2_3');
+        const map = this.make.tilemap({ key: 'FDI_2_3_TL' }); // Cargamos el mapa
         //Cargar tilesets
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
+        const tileset3= map.addTilesetImage('tileset_nuevo','Decorado' );
 
         //Configurar capas
-        const layer1 = map.createLayer('suelos', [tileset1, tileset2], 0, 0);
-        const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
-        const layer3 = map.createLayer('sin colision', [tileset1, tileset2], 0, 0);
-        const layer4 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
+        const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
+        const layer2 = map.createLayer('pared', [tileset1, tileset2, tileset3], 0, 0);
+        const layer3 = map.createLayer('sin colision', [tileset1, tileset2, tileset3], 0, 0);
+        const layer4 = map.createLayer('objetos', [tileset1, tileset2, tileset3], 0, 0);
         const layer6 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
         
        
@@ -74,7 +75,7 @@ export default class FDI_3 extends SalaBase {
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
-            zone.prev = "FDI_3";
+            zone.prev = "FDI_2_3";
             zone.open = false;
         });
 
@@ -83,9 +84,7 @@ export default class FDI_3 extends SalaBase {
     }
 
     spawnProps(){
-            //this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
-            //this.numEnemies++;
-            //new Item(this, 200, 200,"hamburguesa");
+        
         }
     
     spawBlood(){
