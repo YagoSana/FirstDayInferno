@@ -86,5 +86,14 @@ export default class introMedicina extends SalaBase {
     this.physics.add.collider(this.enemyBulletGroup, this.troncos, this.onBulletCollision);
     this.physics.add.collider(this.bulletGroup, layer6, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, layer6, this.onBulletCollision);
+  
+  let spritesLayer = map.getObjectLayer("sprites");
+          spritesLayer.objects.forEach(obj => {
+              let type = obj.properties.find(p => p.name === "tipo")?.value;
+              // console.log(`Tipo del objeto de tiled ${type}`);
+              if(type === "enemy"){
+                  this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+              }
+          });
   }
 }
