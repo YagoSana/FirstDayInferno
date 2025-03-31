@@ -17,22 +17,22 @@ import img_muebles from "../../assets/map/Room_Builder_free_16x16.png";
 //ITEMS
 
 
-export default class tutorialManager extends Phaser.Scene{
+export default class tutorialManager extends Phaser.Scene {
     constructor() {
         super({ key: "tutorialManager" });
     }
-    
-    init(data){
+
+    init(data) {
         console.log('Datos recibidos en init:', data);
         // Si los stats del jugador no están disponibles, asigna un valor predeterminado
         if (data && data.playerStats) {
-        this.playerStats = data.playerStats;
+            this.playerStats = data.playerStats;
         } else {
-        this.playerStats = { health: 3, coins: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500 }; // Valores predeterminados
+            this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys:0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500 }; // Valores predeterminados
         }
     }
 
-    preload(){
+    preload() {
         //BARRA DE CARGA
         const { width, height } = this.cameras.main;
 
@@ -42,26 +42,26 @@ export default class tutorialManager extends Phaser.Scene{
         progressBox.fillRect(width / 2 - 160, height / 2 - 25, 320, 50);
 
         const loadingText = this.make.text({
-        x: width / 2,
-        y: height / 2 - 50,
-        text: 'Cargando...',
-        style: {
-            font: '20px monospace',
-            fill: '#ffffff'
-        }
+            x: width / 2,
+            y: height / 2 - 50,
+            text: 'Cargando...',
+            style: {
+                font: '20px monospace',
+                fill: '#ffffff'
+            }
         });
         loadingText.setOrigin(0.5, 0.5);
 
         this.load.on('progress', (value) => {
-        progressBar.clear();
-        progressBar.fillStyle(0xffffff, 1);
-        progressBar.fillRect(width / 2 - 150, height / 2 - 15, 300 * value, 30);
+            progressBar.clear();
+            progressBar.fillStyle(0xffffff, 1);
+            progressBar.fillRect(width / 2 - 150, height / 2 - 15, 300 * value, 30);
         });
 
         this.load.on('complete', () => {
-        progressBar.destroy();
-        progressBox.destroy();
-        loadingText.destroy();
+            progressBar.destroy();
+            progressBox.destroy();
+            loadingText.destroy();
         });
 
         this.load.spritesheet("cucaracha", cucaracha, {
@@ -83,49 +83,49 @@ export default class tutorialManager extends Phaser.Scene{
         this.load.tilemapTiledJSON("tutorial_debug", tutorial_debug);
     }
 
-    create(){
+    create() {
         this.anims.create({
             key: "cucaracha",
             frames: this.anims.generateFrameNames("cucaracha", {
-              frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             }),
             frameRate: 20,
             repeat: -1,
-          });
+        });
 
         this.anims.create({
             key: "enemydeath",
             frames: this.anims.generateFrameNames("enemydeath", { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] }),
             frameRate: 24,
             repeat: 0,
-          });
+        });
 
         this.mapStatus = new Map();
         this.mapStatus.set("tutorial_1", false);
-        this.scene.start("tutorial_1", {x: 238, y: 155, playerStats: this.playerStats, managerKey: "tutorialManager", status: this.mapStatus.get("tutorial_1")});
+        this.scene.start("tutorial_1", { x: 238, y: 155, playerStats: this.playerStats, managerKey: "tutorialManager", status: this.mapStatus.get("tutorial_1") });
     }
 
-    cambiarSala(zone){
+    cambiarSala(zone) {
         this.scene.sleep(zone.prev);
         this.mapStatus.set(zone.prev, true);
         console.log(this.mapStatus);
-        if(!this.mapStatus.get(zone.spawnRoom)){
-        this.mapStatus.set(zone.spawnRoom, false);
+        if (!this.mapStatus.get(zone.spawnRoom)) {
+            this.mapStatus.set(zone.spawnRoom, false);
         }
-        this.scene.launch(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "tutorialManager", status: this.mapStatus.get(zone.spawnRoom)});
-        this.scene.launch('GUI', { player: this.player }); // Lanzar la escena de la GUI
+        this.scene.launch(zone.spawnRoom, { x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "tutorialManager", status: this.mapStatus.get(zone.spawnRoom) });
     }
+    
 
-    guardarPlayerStats(stats){
+    guardarPlayerStats(stats) {
         this.playerStats = stats;
     }
 
-    volverAlLobby(actualizarStats){
+    volverAlLobby(actualizarStats) {
         this.scene.sleep('tutorialManager');
         this.scene.wake('selectorNivel');
         const selectorNivel = this.scene.get('selectorNivel');
-        if(actualizarStats){
-        selectorNivel.updatePlayerStats(this.playerStats);
+        if (actualizarStats) {
+            selectorNivel.updatePlayerStats(this.playerStats);
         }
     }
 }

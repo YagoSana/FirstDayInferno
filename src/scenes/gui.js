@@ -1,61 +1,163 @@
 import Phaser from 'phaser';
-import Player from '../gameObjects/characters/player.js';
 
 export default class GUI extends Phaser.Scene {
     constructor() {
-        super({ key: 'GUI', active: true }); // La UI siempre está activa
+        super({ key: 'GUI' });
     }
 
-    create(player) {
-        // Obtener referencia al jugador desde la escena del juego
-        // Arreglo para los corazones
-        this.player = player;
+    create(playerStats) {
+        // Almacenar stats del jugador
+        this.playerStats = playerStats;
         this.hearts = [];
-        const heartSpacing = 40;
-        const totalHearts = Math.ceil(this.player.maxHealth / 2); // Cada corazón representa 2 de vida
-        const centerX = this.cameras.main.width / 2 - (totalHearts * heartSpacing) / 2;
-        const heartY = 20;
 
-        // Crear los corazones en pantalla
-        for (let i = 0; i < totalHearts; i++) {
-            let heart = this.add.image(centerX + i * heartSpacing, heartY, 'vidaJugador', 0)
-                .setScrollFactor(0).setScale(2) // No se mueve con la cámara
-                .setDepth(100); // Siempre encima del mapa
-            this.hearts.push(heart);
-        }
+        // Configuración de posición
+        this.depth = 200;
+        this.margin = 20;
+        this.gui_scale = 3;
 
-        // Crear el sprite de la moneda y el texto de contador
-        this.coinSprite = this.add.sprite(20, 80, 'coin-idle')  // Asume que tienes un sprite de la moneda
-            .setScrollFactor(0)
-            .setScale(1) // Ajusta el tamaño de la moneda según lo necesites  // Para asegurarse de que se vea sobre otras cosas
-            .play('coin-idle')  // Asume que tienes una animación de moneda
-            .setDepth(100);
-
-        // Crear un texto que muestre el número de monedas junto al sprite
-        this.coinText = this.add.text(50, 60, this.player.coins, { // Posiciona el texto cerca del sprite de la moneda
-            fontSize: '40px',
+        this.textConfig = {
+            fontSize: '36px',
             color: '#ffffff',
             fontFamily: 'monogram'
-        })
-        .setScrollFactor(0)
-        .setDepth(100);  // Asegúrate de que esté encima
+        };
 
-        // Actualizar corazones al iniciar para reflejar la vida actual
-        //this.update();
+        // Crear marco de estado (background primero)
+        this.statusBg = this.add.sprite(this.margin, this.margin, 'status_frame_background')
+            .setOrigin(0)
+            .setScrollFactor(0)
+            .setDepth(this.depth + 1)
+            .setTint(0x181425)
+            .setScale(this.gui_scale);
+
+        // Estado del player
+        this.playerFrame = this.add.sprite(this.margin + 10, this.margin + 10, 'gui_player_idle')
+            .setOrigin(0)
+            .setScrollFactor(0)
+            .setDepth(this.depth + 2)
+            .setScale(2.43);
+
+        // Marco de estado principal
+        this.statusFrame = this.add.sprite(this.margin, this.margin, 'status_frame')
+            .setOrigin(0)
+            .setScrollFactor(0)
+            .setDepth(this.depth + 3)
+            .setScale(this.gui_scale)
+            .setAlpha(1);
+
+        // Panel de stats del jugador (a la derecha del status frame)
+        this.statsPanel = this.add.sprite(this.statusFrame.width * this.gui_scale + this.margin, this.margin, 'player_stats_gui')
+            .setOrigin(0)
+            .setScrollFactor(0)
+            .setAlpha(1)
+            .setDepth(this.depth).setScale(this.gui_scale + 0.9, this.gui_scale)
+            .setAlpha(1);
+
+
+
+        // Texto de estadísticas (en el panel de stats)
+        this.createHearts(this.statsPanel);
+        this.createCoins(this.statsPanel);
+        this.createKeys(this.statsPanel);
+        this.setupEventListeners();
+
+        // Inicializar con valores actuales
+        this.updateHearts(this.playerStats.health, this.playerStats.maxHealth);
+        this.updateStats();
     }
 
-    update() {  
-        let health = this.player.health;
+    createHearts(statsPanel) {
+        const heart_margin = 24;
+        const heartSpacing = 22;
+        const heartStartX = this.statsPanel.x + heart_margin;
+        const heartStartY = this.statsPanel.y + heart_margin;
+
+        for (let i = 0; i < this.playerStats.maxHealth; i++) {
+            let heart = this.add.sprite(heartStartX + (i * heartSpacing), heartStartY,
+                'gui_heart' // Textura normal
+            )
+                .setScrollFactor(0)
+                .setDepth(this.depth + 1)
+                .setScale(0.65);
+
+            this.hearts.push(heart);
+        }
+    }
+
+    createCoins(statsPanel) {
+        const coin_margin = 30;
+        const coinSpacing = 22;
+        const coinStartX = this.statsPanel.x + coin_margin;
+        const coinStartY = this.statsPanel.y + coin_margin + 42;
+
+        let coin = this.add.sprite(coinStartX, coinStartY, 'coin-idle')
+            .setScrollFactor(0)
+            .setDepth(this.depth + 1)
+            .setScale(0.8)
+            .play('coin-idle')
+            .stop();
+
+        // Texto de monedas
+        this.coinText = this.add.text(coin.x + 20, coinStartY - 16, this.playerStats.coins.toString(), this.textConfig)
+            .setScrollFactor(0).setDepth(this.depth + 1).setResolution(2);
+    }
+
+    createKeys(statsPanel) {
+        const key_margin = 105;
+        const keySpacing = 22;
+        const keyStartX = this.statsPanel.x + key_margin;
+        const keyStartY = this.statsPanel.y + 72;
+
+        let key = this.add.sprite(keyStartX, keyStartY, 'key-idle')
+            .setScrollFactor(0)
+            .setDepth(this.depth + 1)
+            .setScale(0.8)
+            .play('key-idle')
+            .stop();
+
+        // Texto de monedas
+        this.keyText = this.add.text(key.x + 20, keyStartY - 16, this.playerStats.keys.toString(), this.textConfig)
+            .setScrollFactor(0).setDepth(this.depth + 1).setResolution(2);
+    }
+
+    setupEventListeners() {
+        this.game.events.on('healthChanged', ({ health, maxHealth }) => {
+            // Si maxHealth cambió, recrear los corazones
+            if (maxHealth && maxHealth !== this.playerStats.maxHealth) {
+                this.playerStats.maxHealth = maxHealth;
+                this.createHearts();
+            }
+            this.updateHearts(health, maxHealth || this.playerStats.maxHealth);
+        });
+
+        this.game.events.on('coinChanged', (coins) => {
+            this.coinText.setText(coins);
+        });
+    }
+
+
+    updateHearts(health, maxHealth) {
+        // Asegurarse de tener suficientes corazones
+        while (this.hearts.length < maxHealth) {
+            this.createHearts(); // Recargar corazones si no hay suficientes
+        }
+
+        // Actualizar cada corazón
         for (let i = 0; i < this.hearts.length; i++) {
-            if (health >= (i + 1) * 2) {
-                this.hearts[i].setFrame(0); // Corazón lleno
-            } else if (health === (i * 2) + 1) {
-                this.hearts[i].setFrame(1); // Medio corazón
+            if (i < maxHealth) {
+                this.hearts[i].setVisible(true);
+                this.hearts[i].setTexture(i < health ? 'gui_heart' : 'gui_heart_empty');
             } else {
-                this.hearts[i].setFrame(2); // Corazón vacío
+                this.hearts[i].setVisible(false);
             }
         }
-        // Actualizar el contador de monedas
-        this.coinText.setText(this.player.coins);
+    }
+
+    updateStats() {
+        // Actualizar cualquier otra estadística aquí
+    }
+
+    shutdown() {
+        this.game.events.off('healthChanged');
+        this.game.events.off('coinChanged');
     }
 }

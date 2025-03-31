@@ -33,6 +33,7 @@ import cogerMoneda from '../../assets/music/coin.wav';
 import andarJugador from '../../assets/music/andarJugador.wav';
 //GUI ------------------------------------------------------
 import vidaJugador from "../../assets/sprites/vidaPlayer.png";
+import player_gui from "../../assets/sprites/gui_spritesheet.png";
 
 
 /**
@@ -88,9 +89,14 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32, //todos son 32 px de alto
     });
 
-    this.load.spritesheet('vidaJugador', vidaJugador, {
-      frameWidth: 16,
-      frameHeight: 16
+    this.load.spritesheet("player_gui", player_gui, {
+      frameWidth: 32, //cada frame tiene este ancho
+      frameHeight: 32, //todos son 32 px de alto
+    });
+
+    this.load.spritesheet("player_gui_64", player_gui, {
+      frameWidth: 64, //cada frame tiene este ancho
+      frameHeight: 32, //todos son 32 px de alto
     });
 
     this.load.spritesheet('puff', puff, {
@@ -295,7 +301,7 @@ export default class Boot extends Phaser.Scene {
     this.anims.create({
       key: "key-idle",
       frames: this.anims.generateFrameNames("items", { start: 12, end: 17 }),
-      frameRate: 8,
+      frameRate: 6,
       repeat: -1,
     });
 
@@ -389,6 +395,80 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
       startFrame: 38
     });
+
+    //PLAYER GUI-----------------------------------------------------------
+    this.textures.addSpriteSheet('boton_sonido', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 0
+    });
+
+    this.textures.addSpriteSheet('boton_sonido_hover', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 1
+    });
+
+    this.textures.addSpriteSheet('boton_pausa', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 2
+    });
+
+    this.textures.addSpriteSheet('boton_pausa_hover', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 3
+    });
+
+    this.textures.addSpriteSheet('status_frame', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 4
+    });
+
+    this.textures.addSpriteSheet('status_frame_background', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 5
+    });
+
+    this.textures.addSpriteSheet('player_stats_gui', this.textures.get('player_gui_64').getSourceImage(), {
+      frameWidth: 64,
+      frameHeight: 32,
+      startFrame: 3
+        });
+
+    this.textures.addSpriteSheet('gui_heart', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 8
+    });
+
+    this.textures.addSpriteSheet('gui_heart_extra', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 9
+    });
+
+    this.textures.addSpriteSheet('gui_heart_empty', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 10
+    });
+
+    this.textures.addSpriteSheet('gui_heart_blank', this.textures.get('player_gui').getSourceImage(), {//para hacerle setTint
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 11
+    });
+
+    this.textures.addSpriteSheet('gui_player_idle', this.textures.get('player_gui').getSourceImage(), {//para hacerle setTint
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 12
+    });
+
 
     this.scene.start('MainMenu');
   }

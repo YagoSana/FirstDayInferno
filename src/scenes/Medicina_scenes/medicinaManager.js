@@ -228,7 +228,7 @@ export default class medicinaManager extends Phaser.Scene {
       this.mapStatus.set(zone.spawnRoom, false);
     }
     this.scene.start(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get(zone.spawnRoom)});
-    this.scene.launch('GUI', { player: this.player });
+    this.scene.launch('GUI', this.playerStats);
   }
 
   guardarPlayerStats(stats){
