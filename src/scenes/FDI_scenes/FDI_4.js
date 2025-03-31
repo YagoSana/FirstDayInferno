@@ -87,11 +87,12 @@ export default class FDI_4 extends SalaBase {
     }
 
     spawnProps(){
-        this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
-        this.numEnemies++;
+        //this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
+       // this.numEnemies++;
         new VendingMachine(this,500,45);
-        new merchant(this, 240, 47);
-        new Item(this, 200, 200,"hamburguesa");
+        new merchant(this, 280, 47);
+       // new Item(this, 200, 200,"hamburguesa");
+       new Item(this, 200, 200, "moneda");
            
         }
     

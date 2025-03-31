@@ -294,6 +294,13 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.anims.create({
+      key: "item-puff",
+      frames: this.anims.generateFrameNames("puff", { start: 0, end: 7 }),
+      frameRate: 10,
+      repeat: 3,
+    });
+    
+    this.anims.create({
       key: "key-idle",
       frames: this.anims.generateFrameNames("items", { start: 12, end: 17 }),
       frameRate: 8,
