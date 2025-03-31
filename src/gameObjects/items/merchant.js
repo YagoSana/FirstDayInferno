@@ -17,9 +17,9 @@ export default class merchant extends SpriteBase {
         this.originalScaleX = 1.2; 
         this.originalScaleY = 1.2;
 
-        this.interactionArea = this.scene.add.circle(x, y, 20, 0x000000, 0);
+        this.interactionArea = this.scene.add.circle(x, y, 40, 0x000000, 0);
         this.scene.physics.add.existing(this.interactionArea);
-        this.interactionArea.body.setCircle(20);
+        this.interactionArea.body.setCircle(40);
 
 
         this.scene.physics.add.overlap(this.interactionArea, scene.player, this.showInteractionUI, null, this);
@@ -31,10 +31,9 @@ export default class merchant extends SpriteBase {
         // Rango de interacción independiente de la hitbox
 
         // Propiedades de la máquina
-        this.price = 5; //Es mas caro al dropear mejores objetos
+        this.price = 0;
         this.maxBulletHits = 5; // Disparos necesarios
         this.bulletHits = 0;    // Contador de disparos recibidos
-        this.maxUses = 3;
         this.remainingUses = this.maxUses;
         this.isOperational = true;
         this.isInUse = false;
@@ -42,9 +41,10 @@ export default class merchant extends SpriteBase {
         this.lastUseTime = 0;
 
         // Estado inicial
-        this.play('merchant-idle');
+        this.play('idle-front');
         // Elementos UI
-        this.interactionText = this.scene.add.text(0, 0, 'Hola chaval, que te pongo?', {
+  
+        this.interactionText = this.scene.add.text(0, 0, 'Comprar (5$)', {
             fontSize: '16px',
             fill: '#ffffff',
             fontFamily: 'monogram',
@@ -60,7 +60,7 @@ export default class merchant extends SpriteBase {
             .play('key_E_action');
 
         // Texto para modo disparo
-        this.bulletText = this.scene.add.text(this.x - 30, this.y - 40, 'Tu eres tonto o que te pasa', {
+        this.bulletText = this.scene.add.text(this.x - 30, this.y - 40, 'Disparos: 0/5', {
             fontSize: '14px',
             fill: '#ffff00',
             fontFamily: 'monogram',
@@ -70,7 +70,7 @@ export default class merchant extends SpriteBase {
             .setVisible(false)
             .setDepth(20).setResolution(2);
 
-        this.noCoinsText = this.scene.add.text(this.x - 70, this.y - 40, 'Vas corto de pelas chava!', {
+        this.noCoinsText = this.scene.add.text(this.x - 70, this.y - 40, 'Estás un poco pelao chaval, vuelve cuando tengas suelto', {
             fontSize: '16px',
             fill: '#ff0000',
             fontFamily: 'monogram',
@@ -116,31 +116,14 @@ export default class merchant extends SpriteBase {
     useMachine() {
         if (this.isOperational || !this.isInUse || (this.scene.time.now - this.lastUseTime > this.useCooldown)) {
             if (this.scene.player.canAfford(this.price)) {
-
+    
                 this.scene.player.spendCoins(this.price);
-
+    
                 this.isInUse = true;
                 this.lastUseTime = this.scene.time.now;
-                this.remainingUses--;
-
+    
                 this.stretchMachine();
-
-                // Animación de uso
-                this.play('merchant-using');
-                this.once('animationcomplete', () => {
-                    this.isInUse = false;
-
-                    // Soltar objeto
-                    this.dispenseItem();
-
-                    // Verificar si se agotaron los usos
-                    if (this.remainingUses <= 0) {
-                        this.disableMachine();
-                    } else {
-                        this.play('vm-idle');
-                        this.resetMachineScale();
-                    }
-                });
+                this.dispenseItem();
             }
             else {
                 this.noCoinsText.setVisible(true);
@@ -148,46 +131,62 @@ export default class merchant extends SpriteBase {
             }
         }
     }
+    
+
 
     dispenseItem() {
-        // Crear un objeto aleatorio cerca de la máquina
         const items = ['hamburguesa', 'mini_tinto', 'bumbo'];
-        const randomItem = Phaser.Utils.Array.GetRandom(items);
+        const startY = this.y + 30; // Justo debajo de la máquina
+        this.compraRealizada = 1;
 
-        // Posición inicial (dentro de la máquina)
-        const startX = this.x;
-        const startY = this.y + 10; // Justo debajo del centro
+        this.dispensedItems = []; // Reiniciamos la lista de objetos
 
-        // Posición final (fuera de la máquina)
-        const offsetX = Phaser.Math.Between(-30, 30);
-        const offsetY = Phaser.Math.Between(30, 50);
-        const endX = this.x + offsetX;
-        const endY = this.y + offsetY;
+        items.forEach((itemName, index) => {
+            const startX = this.x - 40 + (index * 40);
+            const offsetY = Phaser.Math.Between(30, 50);
+            const endY = this.y + offsetY;
 
-        // Crear el ítem en posición inicial (invisible)
-        const item = new Item(this.scene, endX, endY, randomItem);
-        item.setVisible(false); // Comenzar invisible
-        item.setDepth(this.depth + 10); // Asegurar que esté sobre la máquina
+            const item = new Item(this.scene, startX, startY, itemName);
+            item.setVisible(false);
+            item.setDepth(this.depth + 10);
+            this.dispensedItems.push(item); // Guardamos el objeto en el array
 
-        // Animación de salida mejorada (sin sequence)
-        this.scene.tweens.add({
-            targets: item,
-            alpha: { from: 0, to: 1 },
-            y: startY - 20,
-            duration: 400,
-            ease: 'Power2',
-            onStart: () => item.setVisible(true),
-            onComplete: () => {
-                // Animación de caída con bounce
-                this.scene.tweens.add({
-                    targets: item,
-                    y: endY,
-                    duration: 1000,
-                    ease: 'Bounce.out'
-                });
-            }
+            this.scene.tweens.add({
+                targets: item,
+                alpha: { from: 0, to: 1 },
+                y: startY - 20,
+                duration: 400,
+                ease: 'Power2',
+                onStart: () => item.setVisible(true),
+                onComplete: () => {
+                    this.scene.tweens.add({
+                        targets: item,
+                        y: endY,
+                        duration: 1000,
+                        ease: 'Bounce.out'
+                    });
+
+                    // Añadir detección de selección del objeto
+                    this.scene.physics.add.overlap(item, this.scene.player, () => {
+                        this.collectItem(item);
+                    });
+                }
+            });
         });
     }
+
+    collectItem(selectedItem) {
+        // Ocultar todos los objetos
+        this.dispensedItems.forEach(item => {
+            if (item !== selectedItem) {
+                item.destroy(); // Elimina los demás objetos
+            }
+        });
+
+        this.dispensedItems = []; // Limpiar lista
+    }
+    
+    
 
     flashEffect() {
         if (this.isOperational) {
@@ -250,37 +249,6 @@ export default class merchant extends SpriteBase {
             duration: 300,
             ease: 'Elastic.easeOut'
         });
-    }
-
-    disableMachine() {
-        if (this.scene) {
-            this.isOperational = false;
-
-            this.stop(); // Detener animación
-            this.setFrame(18); // Frame inicial de idle
-            // Aplicar tintado oscuro permanente
-            this.setTint(0x737373); // Usamos setTintFill para forzar el color
-            this.hideInteractionUI();
-            console.log('maquina deshabilitada')
-            this.scene.tweens.add({
-                targets: this,
-                scaleX: this.originalScaleX * 0.9,
-                scaleY: this.originalScaleY * 0.9,
-                angle: Phaser.Math.Between(-3, 3),
-                duration: 500,
-                ease: 'Bounce.easeOut'
-            });
-
-        }
-
-    }
-
-    resetMachine() {
-        this.isOperational = true;
-        this.remainingUses = this.maxUses;
-        this.clearTint();
-        this.setAlpha(1); // Asegurar que esté totalmente visible
-        this.play('vm-idle');
     }
 
     hitPlayer(machine, player) {
