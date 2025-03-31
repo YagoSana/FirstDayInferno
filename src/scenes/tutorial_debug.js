@@ -59,5 +59,7 @@ export default class Tutorial_debug extends SalaBase {
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+
+        new Item(this, 200, 200,"codigo");
     }
 }

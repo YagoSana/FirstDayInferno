@@ -30,14 +30,18 @@ export default class Item extends SpriteBase {
 
     // Acciones de los objetos
     this.actions = {
-      "hamburguesa": (player) => player.healthUp(),
+      "hamburguesa": (player) => player.changeHealth(1),
       "moneda": (player) => player.addCoin(1),
       "mini_tinto": (player) => {
-        player.healthUp();
-        player.healthUp();
-        player.slowDown();
+        player.changeHealth(2);
+        player.changeSpeed(0.5);
       },
-      "bumbo": (player) => player.itemAppearance("isaac", 0) // cabeza de Isaac
+      "bumbo": (player) => player.itemAppearance("isaac", 0), // cabeza de Isaac
+      "bono": (player) => {
+        player.changeSpeed(1.3);
+        player.changeCooldown(-150);//TODO VER ESTO
+      },
+      "codigo": (player) => player.doDoubleshot()
     };
 
     // Texto del nombre del objeto encima del jugador
@@ -90,7 +94,8 @@ export default class Item extends SpriteBase {
       "bumbo": "Bumbo",
       "hamburguesa": "Hamburguesa",
       "mini_tinto": "Mini de Tinto",
-
+      "bono": "bono",
+      "codigo": "codigo",
 
       // Añade más mapeos según necesites
     };
@@ -112,6 +117,14 @@ export default class Item extends SpriteBase {
       "bumbo": {
         description: "Me parece que ya lo has visto antes...",
         effect: "Cambia tu apariencia"
+      },
+      "bono": {
+        description: "Bono joven de transporte de la comunidad de Madrid. ¡Gracias Pedrito!",
+        effect: "Cooldown -150ms, Velocidad +30%"
+      },
+      "codigo": {
+        description: "Código que a veces funciona mal, ha dado time limit en el juez.",
+        effect: "Tus disparos hacen el doble de daño, 20% de probabilidades de que la bala se desvie."
       }
     };
 

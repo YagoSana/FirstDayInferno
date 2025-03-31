@@ -74,6 +74,15 @@ export default class Player extends SpriteBase {
         this.stepTimer = 0;
         this.stepInterval = 500; // o el valor que te mole para los pasos
 
+        this.doubleshot = false;
+    }
+
+    /**
+     * Actualiza la UI con la puntuación actual
+     */
+    updateHealth() {
+        this.label.text = 'Health: ' + this.health;
+        this.label.setDepth(10);
     }
 
     /**
@@ -306,7 +315,13 @@ export default class Player extends SpriteBase {
             this.itemSprite.setFrame(shootFrame);
         }
 
-        new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
+        let fallo = Phaser.Math.Between(1, 100) <= 20;
+        let desvio = fallo ? 0.5 : 0;
+
+        for(let i = 0; i < (this.doubleshot ? 2 : 1); i++){
+            new Bullet(this.scene, this.x, this.y, (this.doubleshot? dirX + desvio : dirX), (this.doubleshot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
+        }
+        //new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
         this.lastShot = this.scene.time.now; // Registrar tiempo del disparo
 
         // Volver a la animación anterior después de que termine la animación de disparo
@@ -345,9 +360,21 @@ export default class Player extends SpriteBase {
         }
     }
 
-    healthUp() {
-        this.health++;
-        //this.scene.updateHealth(this.maxHealth, this.health);
+    changeHealth(p) {
+        this.health += p;
+        this.updateHealth();
+    }
+
+    changeSpeed(p) {
+        this.speed *= p;
+    }
+
+    changeCooldown(p){
+        this.shootCooldown += p; // En milisegundos
+    }
+
+    doDoubleshot(){
+        this.doubleshot = true;
     }
 
     maxHealthUp() {
@@ -373,10 +400,6 @@ export default class Player extends SpriteBase {
         }
         console.log(`Monedas: ${this.coins}€`);
         return ok;
-    }
-
-    slowDown() {
-        this.speed /= 2;
     }
 
     getStats() {
