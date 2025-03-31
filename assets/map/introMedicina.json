@@ -435,7 +435,7 @@
                 {
                  "height":0,
                  "id":28,
-                 "name":"",
+                 "name":"cucaracha",
                  "point":true,
                  "properties":[
                         {
@@ -447,13 +447,13 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":223.333333333333,
-                 "y":128
+                 "x":242.666666666666,
+                 "y":126
                 }, 
                 {
                  "height":0,
                  "id":30,
-                 "name":"",
+                 "name":"cucaracha",
                  "point":true,
                  "properties":[
                         {
@@ -465,8 +465,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":432.666666666667,
-                 "y":32.6666666666667
+                 "x":91.3333333333337,
+                 "y":41.3333333333334
                 }],
          "opacity":1,
          "type":"objectgroup",

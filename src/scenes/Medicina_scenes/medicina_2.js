@@ -82,5 +82,13 @@ export default class medicina_2 extends SalaBase {
     this.physics.add.collider(this.enemyBulletGroup, this.obstaculos, this.onBulletCollision);
 
     console.log("Colisiones añadidas correctamente");
+    let spritesLayer = map.getObjectLayer("sprites");
+    spritesLayer.objects.forEach(obj => {
+      let type = obj.properties.find(p => p.name === "tipo")?.value;
+      console.log(`Tipo del objeto de tiled ${type}`);
+      if (type === "enemy") {
+        this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+      }
+    });
   }
 }
