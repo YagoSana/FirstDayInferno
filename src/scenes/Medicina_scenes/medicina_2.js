@@ -1,6 +1,8 @@
 import Player from "../../gameObjects/characters/player.js";
 import SalaBase from "../../scenes/salaBase.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
+import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
+import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
 import Item from "../../gameObjects/items/item.js";
 
 export default class medicina_2 extends SalaBase {
@@ -87,7 +89,19 @@ export default class medicina_2 extends SalaBase {
       let type = obj.properties.find(p => p.name === "tipo")?.value;
       console.log(`Tipo del objeto de tiled ${type}`);
       if (type === "enemy") {
-        this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+        switch (obj.name) {
+          case "cucaracha":
+            this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+            break;
+          case "zombie":
+            this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
+            break;
+          case "cat":
+            this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name));
+            break;
+          default:
+            console.log("Tipo de enemigo no reconocido:", obj.name);
+        }
       }
     });
   }

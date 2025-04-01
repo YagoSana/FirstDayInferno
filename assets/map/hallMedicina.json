@@ -145,7 +145,7 @@
                 {
                  "height":0,
                  "id":6,
-                 "name":"cat_idle",
+                 "name":"cat",
                  "point":true,
                  "properties":[
                         {
@@ -163,7 +163,7 @@
                 {
                  "height":0,
                  "id":7,
-                 "name":"cat_idle",
+                 "name":"cat",
                  "point":true,
                  "properties":[
                         {
