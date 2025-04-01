@@ -256,6 +256,8 @@ export default class Player extends SpriteBase {
         // console.log("jugador", this.depth);
 
         this.equippedItem = itemKey; // Guarda el ítem equipado
+        this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'idle' });
+
         // console.log(`Item ${this.equippedItem}: equipado`);
     }
 
@@ -331,6 +333,8 @@ export default class Player extends SpriteBase {
 
             this.health--; // Reducir vida
             this.scene.game.events.emit('healthChanged', { health: this.health, maxHealth: this.maxHealth });
+            this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'hurt' });
+
             this.lastHurtTime = currentTime; // Actualizar el último tiempo de daño
 
             if (this.health <= 0) {
@@ -350,6 +354,8 @@ export default class Player extends SpriteBase {
     healthUp() {
         this.health++;
         this.scene.game.events.emit('healthChanged', { health: this.health, maxHealth: this.maxHealth });
+        this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'good' });
+
         //this.scene.updateHealth(this.maxHealth, this.health);
     }
 

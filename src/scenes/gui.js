@@ -9,6 +9,8 @@ export default class GUI extends Phaser.Scene {
         // Almacenar stats del jugador
         this.playerStats = playerStats;
         this.hearts = [];
+        this.isPlayerHurt = false;
+
 
         // Configuración de posición
         this.depth = 200;
@@ -132,8 +134,43 @@ export default class GUI extends Phaser.Scene {
         this.game.events.on('coinChanged', (coins) => {
             this.coinText.setText(coins);
         });
+
+        this.game.events.on('playerState', ({ item, state }) => {
+            this.updatePlayerState(item, state);
+        });
+
+
     }
 
+    updatePlayerState(item, state) {
+
+        if (this.isPlayerHurt) return; // Evitar superposición
+
+        if (state === 'hurt') {
+            this.isPlayerHurt = true;
+
+            this.playerFrame.play('gui_player_hurt');
+
+            // 2. Efecto de tint rojo en el fondo
+            this.tweens.add({
+                targets: this.statusBg,
+                tint: 0xff0000,
+                duration: 100,
+                yoyo: true,
+                repeat: 2, // Parpadeo 3 veces (inicial + 2 repeticiones)
+                onComplete: () => {
+                    this.statusBg.setTint(0x181425); // Restaurar color original
+                }
+            });
+
+            // 3. Volver a animación normal después de 600ms (3 repeticiones a 2 fps)
+            this.time.delayedCall(800, () => {
+                this.playerFrame.play('gui_player_idle');
+                this.isPlayerHurt = false;
+            });
+        }
+
+    }
 
     updateHearts(health, maxHealth) {
         // Asegurarse de tener suficientes corazones

@@ -466,14 +466,14 @@ export default class Boot extends Phaser.Scene {
     this.anims.create({
       key: "gui_player_idle",
       frames: this.anims.generateFrameNames("player_gui", { start: 12, end: 13 }),
-      frameRate: 1,
+      frameRate: 2,
       repeat: -1,
     });
 
     this.anims.create({
       key: "gui_player_hurt",
       frames: this.anims.generateFrameNames("player_gui", { start: 14, end: 15 }),
-      frameRate: 1,
+      frameRate: 2,
       repeat: -1,
     });
 
