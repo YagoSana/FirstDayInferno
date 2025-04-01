@@ -83,12 +83,21 @@ export default class medicina_6 extends SalaBase {
     }
 
     console.log("Capas y transiciones cargadas");
+    //Camaras
+    const screenWidth = this.sys.game.config.width; // Ancho de tu pantalla
+    const screenHeight = this.sys.game.config.height; // Alto de tu pantalla
+    const mapWidth = map.widthInPixels;
+    const mapHeight = map.heightInPixels;
+    const zoom = 1.8;
+    const boundX = -(screenWidth / zoom - mapWidth) / 2;
+    //const boundY = -(screenHeight / zoom - mapHeight) / 2;
+
+    this.cameras.main.setZoom(zoom);
+    this.cameras.main.setBounds(boundX, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
     // Ajustar límites del mundo y cámara
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
-    this.cameras.main.setZoom(1.8);
 
     console.log("Cámara configurada");
 
