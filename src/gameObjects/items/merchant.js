@@ -38,7 +38,7 @@ export default class merchant extends SpriteBase {
         this.itemsCleaned = false;
 
         // Estado inicial
-        this.play('idle-front');
+        this.play('idle-front-bartender');
         
         // Elementos UI
         this.interactionText = this.scene.add.text(0, 0, 'Comprar (5$)', {
@@ -176,7 +176,7 @@ export default class merchant extends SpriteBase {
                 item.setVisible(false);
                 item.setDepth(this.depth + 10);
                 this.dispensedItems.push(item);
-    
+                this.scene.sound.play('pop');
                 this.scene.tweens.add({
                     targets: item,
                     alpha: { from: 0, to: 1 },
@@ -188,7 +188,7 @@ export default class merchant extends SpriteBase {
                         this.scene.tweens.add({
                             targets: item,
                             y: endY,
-                            duration: 1000,
+                            duration: 0,
                         });
 
                         item.on('destroy', (destroyedItem) => {
@@ -210,7 +210,7 @@ export default class merchant extends SpriteBase {
                 const puff = this.scene.add.sprite(item.x, item.y, 'puff');
                 puff.setDepth(item.depth + 1); // Para que quede encima
                 puff.play('item-puff');
-    
+                this.scene.sound.play('explode');
                 // Destruir el item después de un pequeño delay (para ver la animación)
                 this.scene.time.delayedCall(200, () => {
                     item.destroy();
@@ -285,10 +285,6 @@ export default class merchant extends SpriteBase {
             duration: 300,
             ease: 'Elastic.easeOut'
         });
-    }
-
-    hitPlayer(machine, player) {
-        player.body.setVelocityX(player.body.velocity.x * -0.5);
     }
 
     hitBullet(machine, bullet) {

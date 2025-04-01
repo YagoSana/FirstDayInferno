@@ -8,7 +8,8 @@ import monogram from "../../fonts/monogram-extended.ttf";
 
 //JUGADOR ------------------------------------------------------
 import player from "../../assets/sprites/player_spritesheet.png";
-
+//CAMAERO
+import camarero from "../../assets/sprites/bartender_front_iddle.png";
 //EXTRAS ------------------------------------------------------
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
 import paperbullet from "../../assets/sprites/bullet.png";
@@ -32,6 +33,8 @@ import enemigoSueltaMoneda from '../../assets/music/enemigoSueltaMoneda.wav';
 import disparaJugador from '../../assets/music/disparaJugador.wav';
 import cogerMoneda from '../../assets/music/coin.wav';
 import andarJugador from '../../assets/music/andarJugador.wav';
+import explode from '../../assets/music/explode.wav';
+import pop from '../../assets/music/pop.wav'
 //GUI ------------------------------------------------------
 import vidaJugador from "../../assets/sprites/vidaPlayer.png";
 
@@ -74,6 +77,8 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('disparaJugador', disparaJugador);
     this.load.audio('cogerMoneda', cogerMoneda);
     this.load.audio('andarJugador', andarJugador);
+    this.load.audio('explode', explode);
+    this.load.audio('pop', pop);
     //AUDIO
     this.loadFont('monogram', monogram);
     this.load.image('background', Background);
@@ -87,6 +92,11 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("player", player, {
       frameWidth: 32, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
+    });
+
+    this.load.spritesheet("bartender", camarero, {
+      frameWidth: 32,
+      frameHeight: 32
     });
 
     this.load.spritesheet('vidaJugador', vidaJugador, {
@@ -131,8 +141,17 @@ export default class Boot extends Phaser.Scene {
   /**
    * Creación de la escena. En este caso, solo cambiamos a la escena que representa el
    * nivel del juego
-   */
+   */w
   create() {
+    this.anims.create({
+      key: "idle-front-bartender",
+      frames: this.anims.generateFrameNames("bartender", {
+        start: 0,
+        end: 2,
+      }),
+      frameRate: 5,
+      repeat: -1,
+    });
 
     this.anims.create({
       key: "idle-front",

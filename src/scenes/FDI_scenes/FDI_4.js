@@ -17,17 +17,17 @@ export default class FDI_4 extends SalaBase {
         //Cargar tilesets
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
-
+        const tileset3= map.addTilesetImage('tileset_nuevo','Decorado' );
         //Configurar capas
+
         const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
         const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
-        
         const layer5 = map.createLayer('sin colision', [tileset1, tileset2], 0, 0);
         const layer3 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
         const layer4 = map.createLayer('objetos2', [tileset1, tileset2], 0, 0);
         const layer6 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
-        
-        layer4.setDepth(10);
+        const layer7= map.createLayer('decoracion', [tileset1, tileset2, tileset3],0,0);
+     
 
         layer2.setCollisionByExclusion([-1], true);
         layer3.setCollisionByExclusion([-1], true);
@@ -89,8 +89,8 @@ export default class FDI_4 extends SalaBase {
     spawnProps(){
         //this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
        // this.numEnemies++;
-        new VendingMachine(this,500,45);
-        new merchant(this, 280, 47);
+        new VendingMachine(this,64,45);
+        new merchant(this, 255, 60);
        // new Item(this, 200, 200,"hamburguesa");
        new Item(this, 200, 200, "moneda");
            
