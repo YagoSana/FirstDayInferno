@@ -55,6 +55,9 @@ export default class SalaBase extends Phaser.Scene {
     }
 
     update() {
+        if(this.updateLight) {
+            this.updateLight();
+        }
         // Abrir el menú de pausa al presionar ESC
         if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
             this.pauseController.togglePause();

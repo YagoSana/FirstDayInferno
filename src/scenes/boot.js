@@ -32,6 +32,7 @@ import enemigoSueltaMoneda from '../../assets/music/enemigoSueltaMoneda.wav';
 import disparaJugador from '../../assets/music/disparaJugador.wav';
 import cogerMoneda from '../../assets/music/coin.wav';
 import andarJugador from '../../assets/music/andarJugador.wav';
+import facultadMedicinaOst from '../../assets/music/facultadMedicina.ogg';
 //GUI ------------------------------------------------------
 import vidaJugador from "../../assets/sprites/vidaPlayer.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
@@ -75,6 +76,7 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('disparaJugador', disparaJugador);
     this.load.audio('cogerMoneda', cogerMoneda);
     this.load.audio('andarJugador', andarJugador);
+    this.load.audio('facultadMedicinaOst', facultadMedicinaOst);
     //AUDIO
     this.loadFont('monogram', monogram);
     this.load.image('background', Background);

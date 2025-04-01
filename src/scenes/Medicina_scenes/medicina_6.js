@@ -95,5 +95,33 @@ export default class medicina_6 extends SalaBase {
     this.physics.add.collider(this.enemyBulletGroup, layer5, this.onBulletCollision);
 
     console.log("Colisiones de balas enemigas configuradas");
+    // Crear una capa negra semitransparente
+    this.darkOverlay = this.add.rectangle(
+      0, 0, 
+      this.cameras.main.width, 
+      this.cameras.main.height, 
+      0x000000, 
+      0.7 // Opacidad (0 a 1)
+    );
+    this.darkOverlay.setOrigin(0, 0);
+    this.darkOverlay.setScrollFactor(0); // Fijo en la cámara
+    this.darkOverlay.setDepth(999); // Asegurar que está encima de todo
+    // Crear un gráfico para la "luz"
+    this.light = this.make.graphics();
+    this.light.fillStyle(0xffffff, 1);
+    this.light.fillCircle(0, 0, 30); // Radio de la luz
+
+    // Crear una máscara con el círculo de luz
+    this.lightMask = this.light.createGeometryMask();
+    this.lightMask.setInvertAlpha(true); // Invertir la máscara para que solo esta zona sea visible
+
+    // Aplicar la máscara a la capa oscura
+    this.darkOverlay.setMask(this.lightMask);
+
+  }
+
+  updateLight(){
+    this.light.x = this.player.x;
+    this.light.y = this.player.y;
   }
 }

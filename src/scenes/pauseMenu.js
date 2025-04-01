@@ -7,6 +7,7 @@ export default class PauseMenu extends Phaser.Scene {
 
     create(data) {
         this.sonidoSalir = this.sound.add('salirPausa');
+        this.sound.pauseAll();
         //Configuracion del texto
         let textConfig = {
             fontSize: '40px',
@@ -35,11 +36,13 @@ export default class PauseMenu extends Phaser.Scene {
         // Eventos de los botones
         resumeButton.on('pointerdown', () => {
             this.sonidoSalir.play();
+            this.sound.resumeAll(); // Reanudar el sonido
             this.scene.resume(this.previousScene); // Reanudar la escena anterior
             this.scene.stop(); // Cerrar la escena de pausa
         });
 
         exitButton.on('pointerdown', () => {
+            this.sound.stopAll(); // Detener todos los sonidos
             this.sonidoSalir.play();
             if (this.previousScene === 'TutorialScene' || this.previousScene === 'selectorNivel') {
                 this.scene.stop(this.previousScene); // Cerrar la escena actual
@@ -60,6 +63,7 @@ export default class PauseMenu extends Phaser.Scene {
     update() {
         // Cerrar el menú de pausa al presionar ESC
         if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
+            this.sound.resumeAll(); // Reanudar el sonido
             this.scene.resume(this.previousScene); // Reanudar la escena anterior
             this.scene.stop(); // Cerrar la escena de pausa
         }
