@@ -104,5 +104,29 @@ export default class medicina_2 extends SalaBase {
         }
       }
     });
+    // Verificar si todos los enemigos están muertos para activar/desactivar zonas de transición
+    this.checkEnemies = () => {
+      if (this.enemyGroup.countActive(true) === 0) {
+      this.transitionZones.setVisible(true);
+      this.transitionZones.children.iterate((zone) => {
+        zone.body.enable = true;
+      });
+      console.log("Todos los enemigos han sido derrotados. Zonas de transición activadas.");
+      } else {
+      this.transitionZones.setVisible(false);
+      this.transitionZones.children.iterate((zone) => {
+        zone.body.enable = false;
+      });
+      console.log("Enemigos restantes. Zonas de transición desactivadas.");
+      }
+    };
+
+    // Llamar a la verificación cada vez que un enemigo muere
+    this.enemyGroup.children.iterate((enemy) => {
+      enemy.on("destroy", this.checkEnemies);
+    });
+
+    // Realizar una verificación inicial
+    this.checkEnemies();
   }
 }
