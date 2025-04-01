@@ -117,10 +117,10 @@ export default class medicina_4 extends SalaBase {
 
     console.log("Colisiones de balas enemigas configuradas");// Crear una capa negra semitransparente
     this.darkOverlay = this.add.rectangle(
-      0, 0, 
-      this.cameras.main.width, 
-      this.cameras.main.height, 
-      0x000000, 
+      0, 0,
+      this.cameras.main.width,
+      this.cameras.main.height,
+      0x000000,
       0.7 // Opacidad (0 a 1)
     );
     this.darkOverlay.setOrigin(0, 0);
@@ -139,11 +139,7 @@ export default class medicina_4 extends SalaBase {
     this.darkOverlay.setMask(this.lightMask);
 
 
-  }
 
-  updateLight(){
-    this.light.x = this.player.x;
-    this.light.y = this.player.y;
     let spritesLayer = map.getObjectLayer("sprites");
     spritesLayer.objects.forEach(obj => {
       let type = obj.properties.find(p => p.name === "tipo")?.value;
@@ -167,17 +163,17 @@ export default class medicina_4 extends SalaBase {
     // Verificar si todos los enemigos están muertos para activar/desactivar zonas de transición
     this.checkEnemies = () => {
       if (this.enemyGroup.countActive(true) === 0) {
-      this.transitionZones.setVisible(true);
-      this.transitionZones.children.iterate((zone) => {
-        zone.body.enable = true;
-      });
-      console.log("Todos los enemigos han sido derrotados. Zonas de transición activadas.");
+        //this.transitionZones.setVisible(true);
+        this.transitionZones.children.iterate((zone) => {
+          zone.body.enable = true;
+        });
+        console.log("Todos los enemigos han sido derrotados. Zonas de transición activadas.");
       } else {
-      this.transitionZones.setVisible(false);
-      this.transitionZones.children.iterate((zone) => {
-        zone.body.enable = false;
-      });
-      console.log("Enemigos restantes. Zonas de transición desactivadas.");
+        this.transitionZones.setVisible(false);
+        this.transitionZones.children.iterate((zone) => {
+          zone.body.enable = false;
+        });
+        console.log("Enemigos restantes. Zonas de transición desactivadas.");
       }
     };
 
@@ -188,5 +184,10 @@ export default class medicina_4 extends SalaBase {
 
     // Realizar una verificación inicial
     this.checkEnemies();
+  }
+
+  updateLight() {
+    this.light.x = this.player.x;
+    this.light.y = this.player.y;
   }
 }
