@@ -21,6 +21,7 @@ export default class Player extends SpriteBase {
         this.health = playerData.health;
         this.maxHealth = playerData.maxHealth;
         this.coins = playerData.coins
+        this.keys = playerData.keys;
         this.itemSprite = playerData.itemSprite; //Sprite del item visual
         this.equippedItem = playerData.equippedItem; // item que cambia apariencia
         this.equippedItemRow = playerData.equippedItemRow;
@@ -172,7 +173,7 @@ export default class Player extends SpriteBase {
 
             if (this.nearVendingMachine) {
                 if (Phaser.Input.Keyboard.JustDown(this.pickupKey)) {// Interacción con tecla E
-                    if(!this.nearVendingMachine.isInUse){
+                    if (!this.nearVendingMachine.isInUse) {
                         this.nearVendingMachine.useMachine();
                     }
                 }
@@ -255,6 +256,8 @@ export default class Player extends SpriteBase {
         // console.log("jugador", this.depth);
 
         this.equippedItem = itemKey; // Guarda el ítem equipado
+        this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'idle' });
+
         // console.log(`Item ${this.equippedItem}: equipado`);
     }
 
@@ -329,6 +332,9 @@ export default class Player extends SpriteBase {
             }
 
             this.health--; // Reducir vida
+            this.scene.game.events.emit('healthChanged', { health: this.health, maxHealth: this.maxHealth });
+            this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'hurt' });
+
             this.lastHurtTime = currentTime; // Actualizar el último tiempo de daño
 
             if (this.health <= 0) {
@@ -347,6 +353,9 @@ export default class Player extends SpriteBase {
 
     healthUp() {
         this.health++;
+        this.scene.game.events.emit('healthChanged', { health: this.health, maxHealth: this.maxHealth });
+        this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'good' });
+
         //this.scene.updateHealth(this.maxHealth, this.health);
     }
 
@@ -358,6 +367,7 @@ export default class Player extends SpriteBase {
     addCoin(amount) {
         this.coins += amount;
         console.log(`Monedas: ${this.coins}€`);
+        this.scene.game.events.emit('coinChanged', this.coins);
         this.sonidoMoneda.play();
     }
 
@@ -372,6 +382,7 @@ export default class Player extends SpriteBase {
             this.coins -= amount;
         }
         console.log(`Monedas: ${this.coins}€`);
+        this.scene.game.events.emit('coinChanged', this.coins);
         return ok;
     }
 
@@ -384,6 +395,7 @@ export default class Player extends SpriteBase {
             health: this.health,
             maxHealth: this.maxHealth,
             coins: this.coins,
+            keys: this.keys,
             equippedItem: this.equippedItem,
             equippedItemRow: this.equippedItemRow,
             itemSprite: this.itemSprite,
