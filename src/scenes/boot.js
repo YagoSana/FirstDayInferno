@@ -463,11 +463,20 @@ export default class Boot extends Phaser.Scene {
       startFrame: 11
     });
 
-    this.textures.addSpriteSheet('gui_player_idle', this.textures.get('player_gui').getSourceImage(), {//para hacerle setTint
-      frameWidth: 32,
-      frameHeight: 32,
-      startFrame: 12
+    this.anims.create({
+      key: "gui_player_idle",
+      frames: this.anims.generateFrameNames("player_gui", { start: 12, end: 13 }),
+      frameRate: 1,
+      repeat: -1,
     });
+
+    this.anims.create({
+      key: "gui_player_hurt",
+      frames: this.anims.generateFrameNames("player_gui", { start: 14, end: 15 }),
+      frameRate: 1,
+      repeat: -1,
+    });
+
 
 
     this.scene.start('MainMenu');

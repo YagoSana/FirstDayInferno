@@ -34,7 +34,8 @@ export default class GUI extends Phaser.Scene {
             .setOrigin(0)
             .setScrollFactor(0)
             .setDepth(this.depth + 2)
-            .setScale(2.43);
+            .setScale(2.43)
+            .play('gui_player_idle');
 
         // Marco de estado principal
         this.statusFrame = this.add.sprite(this.margin, this.margin, 'status_frame')
@@ -48,7 +49,6 @@ export default class GUI extends Phaser.Scene {
         this.statsPanel = this.add.sprite(this.statusFrame.width * this.gui_scale + this.margin, this.margin, 'player_stats_gui')
             .setOrigin(0)
             .setScrollFactor(0)
-            .setAlpha(1)
             .setDepth(this.depth).setScale(this.gui_scale + 0.9, this.gui_scale)
             .setAlpha(1);
 
