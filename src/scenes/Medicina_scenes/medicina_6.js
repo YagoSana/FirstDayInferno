@@ -1,6 +1,8 @@
 import Player from "../../gameObjects/characters/player.js";
 import SalaBase from "../../scenes/salaBase.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
+import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
+import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
 import Item from "../../gameObjects/items/item.js";
 
 export default class medicina_6 extends SalaBase {
@@ -17,7 +19,7 @@ export default class medicina_6 extends SalaBase {
     this.enemyGroup = this.physics.add.group();
     this.bulletGroup = this.physics.add.group();
     this.enemyBulletGroup = this.physics.add.group();
-    this.troncos = this.physics.add.staticGroup();
+    this.colisiones = this.physics.add.staticGroup();
 
     console.log("Grupos de física inicializados");
 
@@ -61,6 +63,25 @@ export default class medicina_6 extends SalaBase {
     this.transitionZones.setVisible(false);
     this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
 
+    // Crear colisiones personalizadas desde la capa de objetos
+    let colisionesLayer = map.getObjectLayer("colisionesObj");
+    if (colisionesLayer) {
+      colisionesLayer.objects.forEach((obj) => {
+        let colision = this.add.rectangle(
+          obj.x + obj.width / 2,
+          obj.y - obj.height / 2 + 20,
+          obj.width,
+          obj.height,
+          0x000000,
+          0 // Transparente
+        );
+
+        // Agregar físicas
+        this.physics.add.existing(colision, true);
+        this.colisiones.add(colision);
+      });
+    }
+
     console.log("Capas y transiciones cargadas");
 
     // Ajustar límites del mundo y cámara
@@ -94,6 +115,11 @@ export default class medicina_6 extends SalaBase {
     this.physics.add.collider(this.enemyBulletGroup, layer4, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, layer5, this.onBulletCollision);
 
+    this.physics.add.collider(this.enemyGroup, this.colisiones);
+    this.physics.add.collider(this.player, this.colisiones);
+    this.physics.add.collider(this.bulletGroup, this.colisiones, this.onBulletCollision);
+    this.physics.add.collider(this.enemyBulletGroup, this.colisiones, this.onBulletCollision);
+
     console.log("Colisiones de balas enemigas configuradas");
     // Crear una capa negra semitransparente
     this.darkOverlay = this.add.rectangle(
@@ -123,5 +149,50 @@ export default class medicina_6 extends SalaBase {
   updateLight(){
     this.light.x = this.player.x;
     this.light.y = this.player.y;
+
+    let spritesLayer = map.getObjectLayer("sprites");
+    spritesLayer.objects.forEach(obj => {
+      let type = obj.properties.find(p => p.name === "tipo")?.value;
+      console.log(`Tipo del objeto de tiled ${type}`);
+      if (type === "enemy") {
+        switch (obj.name) {
+          case "cucaracha":
+            this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+            break;
+          case "zombie":
+            this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
+            break;
+          case "cat":
+            this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name));
+            break;
+          default:
+            console.log("Tipo de enemigo no reconocido:", obj.name);
+        }
+      }
+    });
+    // Verificar si todos los enemigos están muertos para activar/desactivar zonas de transición
+    this.checkEnemies = () => {
+      if (this.enemyGroup.countActive(true) === 0) {
+      this.transitionZones.setVisible(true);
+      this.transitionZones.children.iterate((zone) => {
+        zone.body.enable = true;
+      });
+      console.log("Todos los enemigos han sido derrotados. Zonas de transición activadas.");
+      } else {
+      this.transitionZones.setVisible(false);
+      this.transitionZones.children.iterate((zone) => {
+        zone.body.enable = false;
+      });
+      console.log("Enemigos restantes. Zonas de transición desactivadas.");
+      }
+    };
+
+    // Llamar a la verificación cada vez que un enemigo muere
+    this.enemyGroup.children.iterate((enemy) => {
+      enemy.on("destroy", this.checkEnemies);
+    });
+
+    // Realizar una verificación inicial
+    this.checkEnemies();
   }
 }
