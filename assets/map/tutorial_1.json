@@ -271,6 +271,24 @@
                  "width":0,
                  "x":131,
                  "y":0
+                }, 
+                {
+                 "height":0,
+                 "id":14,
+                 "name":"puerta",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"door"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":240.015503110497,
+                 "y":0.947960896613015
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -279,7 +297,7 @@
          "y":0
         }],
  "nextlayerid":10,
- "nextobjectid":14,
+ "nextobjectid":16,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

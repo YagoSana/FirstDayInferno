@@ -72,9 +72,15 @@ export default class Tutorial_1 extends SalaBase {
 
         let spritesLayer = map.getObjectLayer("sprites");
         spritesLayer.objects.forEach(obj => {
-            let sprite = this.add.sprite(obj.x, obj.y, obj.name).setVisible(true).setDepth(0).play(obj.name);
-            // Ajustar el origen si es necesario (Tiled usa esquina superior izquierda por defecto)
-            sprite.setOrigin(0, 0); // Ajusta según tu necesidad
+            let type = obj.properties.find(p => p.name === "tipo")?.value;
+            if(type === "item"){
+                new FdiDoor(this, obj.x - 10000, obj.y);
+            }else{
+                let sprite = this.add.sprite(obj.x, obj.y, obj.name).setVisible(true).setDepth(0).play(obj.name);
+                // Ajustar el origen si es necesario (Tiled usa esquina superior izquierda por defecto)
+                sprite.setOrigin(0, 0); // Ajusta según tu necesidad
+            }
+            
         });
     }
 }

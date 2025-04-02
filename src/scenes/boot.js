@@ -19,6 +19,7 @@ import blood from "../../assets/sprites/blood.png";
 
 //ITEMS ------------------------------------------------------
 import items from "../../assets/sprites/items_spritesheet.png";
+import doors from "../../assets/sprites/doors_spritesheet.png";
 
 //JUGADOR CON ITEMS ----------------------------------------------
 import player_items from "../../assets/sprites/player_item.png";
@@ -124,6 +125,11 @@ export default class Boot extends Phaser.Scene {
 
     this.load.spritesheet('items', items, {
       frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet('doors', doors, {
+      frameWidth: 64,
       frameHeight: 32,
     });
 
@@ -354,9 +360,11 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "lock-idle",
-      frames: 
-    })
+      key: "fdiDoor-open",
+      frames: this.anims.generateFrameNames("items", { start: 0, end: 18 }),
+      frameRate: 13,
+      repeat: 1,
+    });
 
     this.anims.create({
       key: "tutorial_screen_1",

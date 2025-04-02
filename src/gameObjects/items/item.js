@@ -37,7 +37,7 @@ export default class Item extends SpriteBase {
         player.changeSpeed(0.5);
       },
       "bumbo": (player) => player.itemAppearance("isaac", 0), // cabeza de Isaac
-      "llave": (player) => player.pickKey(),
+      "llave": (player) => player.pickKey(1),
       "bono": (player) => {
         player.changeSpeed(1.3);
         player.changeCooldown(-150);//TODO VER ESTO

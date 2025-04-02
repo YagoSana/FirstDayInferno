@@ -68,8 +68,7 @@ export default class Player extends SpriteBase {
         //item
         this.nearItem = null; // item cercano que puede recogerse
         this.nearVendingMachine = null;
-        this.nearLock = null;
-        this.hasKey = false;
+        this.nearDoor = null;
         this.pickupKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.sonidoDisparo = scene.sound.add('disparaJugador');
         this.sonidoAndar = scene.sound.add('andarJugador');
@@ -185,6 +184,19 @@ export default class Player extends SpriteBase {
                 if (!this.nearVendingMachine.scene || !this.scene.physics.overlap(this, this.nearVendingMachine.interactionArea)) {
                     this.nearVendingMachine.hideInteractionUI();
                     this.nearVendingMachine = null;
+                }
+
+            }
+
+            if (this.nearDoor) {
+                if (Phaser.Input.Keyboard.JustDown(this.pickupKey)) {// Interacción con tecla E
+                    this.nearDoor.unlock();
+                }
+
+                // Verificar si el jugador se alejó de la máquina
+                if (!this.nearDoor.scene || !this.scene.physics.overlap(this, this.nearDoor.interactionArea)) {
+                    this.nearDoor.hideInteractionUI();
+                    this.nearDoor = null;
                 }
 
             }
@@ -372,7 +384,7 @@ export default class Player extends SpriteBase {
                 console.log(this.health);
             }
         }else{
-            this.health += (this.health + p > this.maxHealth) ? this.maxHealth: p;
+            this.health = (this.health + p > this.maxHealth) ? this.maxHealth : this.health + p;
         }
         this.scene.game.events.emit('healthChanged', { health: this.health, maxHealth: this.maxHealth });
         this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'good' });
@@ -395,8 +407,9 @@ export default class Player extends SpriteBase {
         //this.scene.updateHealth(this.maxHealth, this.health);
     }
 
-    pickKey(){
-        this.hasKey = true;
+    pickKey(p){
+        this.keys += p;
+        this.scene.game.events.emit('keyChanged', this.keys);//?
     }
 
     addCoin(amount) {
