@@ -74,6 +74,7 @@ export default class MainMenu extends Phaser.Scene {
         buttonTutorial.on('pointerover', () => { buttonTutorial.setTexture('button_hover'); this.sonidoHover.play(); });
         buttonTutorial.on('pointerdown', this.changeScene.bind(this, "tutorialManager"));
         buttonTutorial.on('pointerout', () => { buttonTutorial.setTexture('button'); });
+
     }
 
     changeScene(newScene) {

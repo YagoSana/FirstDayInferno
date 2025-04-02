@@ -5,27 +5,27 @@ import RangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import Item from "../../gameObjects/items/item.js";
 
 
-export default class PasilloFDI extends SalaBase {
+export default class FDI_2_1 extends SalaBase {
 
     constructor(key) {
-        super('pasilloFDI');
+        super('FDI_2_1');
     }
 
     create(data){
         super.create(data);
 
-        const map = this.make.tilemap({ key: 'pasillofdi' }); // Cargamos el mapa
+        const map = this.make.tilemap({ key: 'FDI_2_1_TL' }); // Cargamos el mapa
 
         //Cargar tilesets
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
-
+        const tileset3= map.addTilesetImage('tileset_nuevo','Decorado' );
         //Configurar capas
         const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
-        const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
-        const layer3 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
+        const layer2 = map.createLayer('pared', [tileset1, tileset2, tileset3], 0, 0);
+        const layer3 = map.createLayer('objetos', [tileset1, tileset2, tileset3], 0, 0);
         const layer4 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
-        const layer5 = map.createLayer('sin colision', [tileset1, tileset2], 0, 0);
+        const layer5 = map.createLayer('sin colisiones', [tileset1, tileset2], 0, 0);
         
         layer2.setCollisionByExclusion([-1], true);
         layer3.setCollisionByExclusion([-1], true);
@@ -70,15 +70,15 @@ export default class PasilloFDI extends SalaBase {
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
-            zone.prev = "pasilloFDI";
+            zone.prev = "FDI_2_1";
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
     }
 
     spawnProps(){
-        this.enemyGroup.add(new RangedEnemy(this, 100, 80, "nerd"));
-        this.numEnemies++;
+       // this.enemyGroup.add(new RangedEnemy(this, 100, 80, "nerd"));
+       // this.numEnemies++;
         new Item(this, 600, 80, "moneda");
         new Item(this, 80, 80,"bumbo");
     }

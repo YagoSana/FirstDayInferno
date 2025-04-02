@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import Player from "../gameObjects/characters/player.js";
+import PauseController from "../controller/pauseController.js";
 
 //MAPA LOBBY ------------------------------------------------------
 import mapa from "../../assets/map/lobby.png";
@@ -21,7 +22,7 @@ export default class SelectorNivel extends Phaser.Scene {
     if (data && data.playerStats) {
       this.playerStats = data.playerStats;
     } else {
-      this.playerStats = { health: 6, maxHealth: 6, coins: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500 }; // Valores predeterminados
+      this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys:0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500 }; // Valores predeterminados
     }
   }
 
@@ -59,10 +60,13 @@ export default class SelectorNivel extends Phaser.Scene {
     // Detectar cuando el jugador entra en la colisión invisible
     this.physics.add.overlap(this.player, this.invisibleZone, this.onOverlap, null, this);
     this.physics.add.overlap(this.player, this.invisibleZoneMedicina, this.onOverlap, null, this);
-
+    this.pauseController = new PauseController(this, { x: this.cameras.main.width - 80, y: 60, scale: 1.3 });
     // Escuchar la tecla ESC
     this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-    this.scene.stop('GUI');
+    this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
+    this.scene.bringToTop('GUI');
+
+
   }
 
   onOverlap(player, zone) {
@@ -76,7 +80,7 @@ export default class SelectorNivel extends Phaser.Scene {
     console.log(`Comienza el mundo: ${worldName}`);
     this.scene.sleep('selectorNivel');
     this.scene.launch(worldName, { playerStats: this.playerStats, prev: 'selectorNivel' });
-    this.scene.launch('GUI', { player: this.player }); // Lanzar la escena de la GUI
+    this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
   }
 
   updatePlayerStats(newStats) {
@@ -87,14 +91,15 @@ export default class SelectorNivel extends Phaser.Scene {
   }
 
   update() {
-    this.scene.launch('GUI',this.player); // Lanzar la escena de la GUI
-    this.scene.bringToTop('GUI');
     // Abrir el menú de pausa al presionar ESC
     if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
-      console.log(`Escena anterior: ${this.scene.key}`);
-      this.scene.pause(); // Pausar la escena actual
-      this.scene.launch('PauseMenu', { previousScene: this.scene.key }); // Lanzar la escena de pausa
-      this.scene.bringToTop('PauseMenu'); // Asegurarse de que PauseMenu esté en la parte superior
+      this.pauseController.togglePause();
+    }
+  }
+
+  shutdown() {
+    if (this.pauseController) {
+      this.pauseController.destroy();
     }
   }
 }

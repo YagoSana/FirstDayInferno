@@ -367,9 +367,56 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":9,
+         "name":"sprites",
+         "objects":[
+                {
+                 "height":0,
+                 "id":24,
+                 "name":"zombie",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"tipo",
+                         "type":"string",
+                         "value":"enemy"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":239.333333333333,
+                 "y":98.6666666666667
+                }, 
+                {
+                 "height":0,
+                 "id":25,
+                 "name":"cucaracha",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"tipo",
+                         "type":"string",
+                         "value":"enemy"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":443.333333333333,
+                 "y":129.333333333333
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":9,
- "nextobjectid":23,
+ "nextlayerid":10,
+ "nextobjectid":26,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
