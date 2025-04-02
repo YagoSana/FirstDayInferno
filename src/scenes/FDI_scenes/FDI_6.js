@@ -95,7 +95,6 @@ export default class FDI_6 extends SalaBase {
         this.numEnemies++;
         this.enemyGroup.add(new RangedEnemy(this, 300, 200, "zombie"));
         this.numEnemies++;
-        new Item(this, 250, 200, "mini_tinto");
     }
 
     spawBlood(){

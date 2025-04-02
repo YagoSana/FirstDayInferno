@@ -81,8 +81,7 @@ export default class FDI_2_1 extends SalaBase {
          this.enemyGrouo.add(new assaultEnemy(this, 100, 80, "cucaracaha"));
         this.numEnemies++;
         this.numEnemies++;
-        new Item(this, 600, 80, "moneda");
-        new Item(this, 80, 80,"bumbo");
+     
     }
 
     spawBlood(){
