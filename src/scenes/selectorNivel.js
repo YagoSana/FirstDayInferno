@@ -27,6 +27,9 @@ export default class SelectorNivel extends Phaser.Scene {
   }
 
   create() {
+
+    this.sound.stopAll();
+
     this.sonidoEntrar = this.sound.add('entrarFacultad');
     /*
     const map = this.make.tilemap({ key: 'selectorNivel' });
@@ -69,7 +72,7 @@ export default class SelectorNivel extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.invisibleZoneMedicina, this.onOverlap, null, this);
     this.physics.add.overlap(this.player, this.invisibleZoneMetro, this.onOverlap, null, this);
     
-    this.pauseController = new PauseController(this, { x: 790, y: 120, scale: 1.1 });
+    this.pauseController = new PauseController(this, { x: 790, y: 120, scale: 1 });
     // Escuchar la tecla ESC
     this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
