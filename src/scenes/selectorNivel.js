@@ -68,7 +68,8 @@ export default class SelectorNivel extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.invisibleZone, this.onOverlap, null, this);
     this.physics.add.overlap(this.player, this.invisibleZoneMedicina, this.onOverlap, null, this);
     this.physics.add.overlap(this.player, this.invisibleZoneMetro, this.onOverlap, null, this);
-    this.pauseController = new PauseController(this, { x: this.cameras.main.width - 80, y: 60, scale: 1.3 });
+    
+    this.pauseController = new PauseController(this, { x: 790, y: 120, scale: 1.1 });
     // Escuchar la tecla ESC
     this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
