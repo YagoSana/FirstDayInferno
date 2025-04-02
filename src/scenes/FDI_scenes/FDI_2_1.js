@@ -59,7 +59,7 @@ export default class FDI_2_1 extends SalaBase {
 
         //Camaras
         this.physics.world.setBounds(0, 0, this.bound1, this.bound2);
-        this.cameras.main.setBounds(0, 0, this.bound1, this.bound2);
+        this.cameras.main.setBounds(0, -150, this.bound1, this.bound2);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setZoom(1.8);
         
@@ -77,8 +77,10 @@ export default class FDI_2_1 extends SalaBase {
     }
 
     spawnProps(){
-       // this.enemyGroup.add(new RangedEnemy(this, 100, 80, "nerd"));
-       // this.numEnemies++;
+         this.enemyGroup.add(new RangedEnemy(this, 400, 80, "nerd"));
+         this.enemyGrouo.add(new assaultEnemy(this, 100, 80, "cucaracaha"));
+        this.numEnemies++;
+        this.numEnemies++;
         new Item(this, 600, 80, "moneda");
         new Item(this, 80, 80,"bumbo");
     }

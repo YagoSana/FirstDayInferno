@@ -41,6 +41,7 @@ import img_interior from "../../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../../assets/map/Room_Builder_free_16x16.png";
 import img_FDI from "../../../assets/map/tileset_nuevo.png";
 
+
 //ITEMS ----------------------------------------------------------
 import hamburguesa from "../../../assets/sprites/hamburguesa.png";
 import moneda from "../../../assets/sprites/coin_sheet.png";
@@ -287,8 +288,8 @@ export default class informaticaManager extends Phaser.Scene {
     });
 
     this.mapStatus = new Map();
-    this.mapStatus.set("FDI_2_1", false);
-    this.scene.start("FDI_2_1", {x: 100, y: 100, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("FDI_1")});  }
+    this.mapStatus.set("FDI_1", false);
+    this.scene.start("FDI_1", {x: 375, y: 375, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("FDI_1")});  }
 
   cambiarSala(zone){
     this.scene.stop(zone.prev);

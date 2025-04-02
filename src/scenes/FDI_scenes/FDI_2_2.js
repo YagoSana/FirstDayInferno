@@ -3,7 +3,7 @@ import Player from "../../gameObjects/characters/player.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
 import RangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import Item from "../../gameObjects/items/item.js";
-
+import NPC from "../../gameObjects/items/NPC.js";
 
 export default class FDI_2_2 extends SalaBase {
 
@@ -70,10 +70,10 @@ export default class FDI_2_2 extends SalaBase {
         this.physics.add.collider(this.enemyGroup, layer7);
         this.physics.add.collider(this.bulletGroup, layer7, this.onBulletCollision);
      
-
+        new NPC(this, 128, 85);
         //Camaras
         this.physics.world.setBounds(0, 0, this.bound1, this.bound2);
-        this.cameras.main.setBounds(0, 0, this.bound1, this.bound2);
+        this.cameras.main.setBounds(-100, 0, this.bound1, this.bound2);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setZoom(1.8);
         
