@@ -136,7 +136,7 @@ export default class medicina_6 extends SalaBase {
       this.cameras.main.width,
       this.cameras.main.height,
       0x000000,
-      0.6 // Opacidad (0 a 1)
+      0.4 // Opacidad (0 a 1)
     );
     this.darkOverlay.setOrigin(0, 0);
     this.darkOverlay.setScrollFactor(0); // Fijo en la cámara
@@ -144,7 +144,7 @@ export default class medicina_6 extends SalaBase {
     // Crear un gráfico para la "luz"
     this.light = this.make.graphics();
     this.light.fillStyle(0xffffff, 1);
-    this.light.fillCircle(0, 0, 30); // Radio de la luz
+    this.light.fillCircle(0, 0, 40); // Radio de la luz
 
     // Crear una máscara con el círculo de luz
     this.lightMask = this.light.createGeometryMask();
