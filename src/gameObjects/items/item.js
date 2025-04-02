@@ -30,10 +30,10 @@ export default class Item extends SpriteBase {
 
     // Acciones de los objetos
     this.actions = {
-      "hamburguesa": (player) => player.changeHealth(1),
+      "hamburguesa": (player) => player.changeHealth(2, false),
       "moneda": (player) => player.addCoin(1),
       "mini_tinto": (player) => {
-        player.changeHealth(2);
+        player.changeHealth(4, true);
         player.changeSpeed(0.5);
       },
       "bumbo": (player) => player.itemAppearance("isaac", 0), // cabeza de Isaac
@@ -41,7 +41,8 @@ export default class Item extends SpriteBase {
         player.changeSpeed(1.3);
         player.changeCooldown(-150);//TODO VER ESTO
       },
-      "codigo": (player) => player.doDoubleshot()
+      "codigo": (player) => player.doDoubleshot(),
+      "corazon": (player) => player.changeHealth(1, false)
     };
 
     // Texto del nombre del objeto encima del jugador
@@ -96,7 +97,11 @@ export default class Item extends SpriteBase {
       "mini_tinto": "Mini de Tinto",
       "bono": "bono",
       "codigo": "codigo",
-
+      "pantallazo_azul": "pantallazo_azul",
+      "collar_macarrones": "collar_macarrones",
+      "maletin": "maletin",
+      "bolsa_sospechosa": "bolsa sospechosa",
+      "corazon": "corazon",
       // Añade más mapeos según necesites
     };
 
@@ -125,7 +130,24 @@ export default class Item extends SpriteBase {
       "codigo": {
         description: "Código que a veces funciona mal, ha dado time limit en el juez.",
         effect: "Tus disparos hacen el doble de daño, 20% de probabilidades de que la bala se desvie."
-      }
+      },
+      "pantallazo_azul": {
+        description: "Actualizaste a Windows 11. Nadie sabe cómo funciona.",
+        effect: "Tu disparo puede bloquear a los enemigos durante 1.5 segundos."
+      },
+      "collar_macarrones":{
+        description: "Creado con esfuerzo y sudor por un estudiante de magisterio como proyecto de TFG.",
+        effect: "El personaje cambia su proyectil a un cacho de plastilina."
+      },
+      "maletin":{
+        description: "Maletín que contiene una placa en su interior. Nadie sabe cómo funciona.",
+        effect: "Te mueves más lento pero obtienes más escudo."
+      },
+      "bolsa_sospechosa":{
+        description: "Contiene unas hojas verdes secas. Su olor te evoca recuerdos del sur de Madrid.",
+        effect: "El personaje cambia su proyectil a bolas de humo."
+      },
+
     };
 
     const itemInfo = descriptions[this.type] || {

@@ -358,8 +358,20 @@ export default class Player extends SpriteBase {
         }
     }
 
-    changeHealth(p) {
-        this.health += p;
+    changeHealth(p, modifyMax) {
+        if(modifyMax){
+            while(p > 0 &&  this.maxHealth < 10){
+                if(this.health == this.maxHealth){
+                    this.maxHealth++;
+                }
+                this.health++;
+                p--;
+                console.log(this.maxHealth);
+                console.log(this.health);
+            }
+        }else{
+            this.health += (this.health + p > this.maxHealth) ? this.maxHealth: p;
+        }
         this.scene.game.events.emit('healthChanged', { health: this.health, maxHealth: this.maxHealth });
         this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'good' });
     }
