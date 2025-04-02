@@ -293,7 +293,34 @@
          "draworder":"topdown",
          "id":6,
          "name":"transiciones",
-         "objects":[],
+         "objects":[
+                {
+                 "height":14.5,
+                 "id":1,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"spawnRoom",
+                         "type":"string",
+                         "value":"FDI_2_1"
+                        }, 
+                        {
+                         "name":"spawnX",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"spawnY",
+                         "type":"int",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":32.5,
+                 "y":0.5
+                }],
          "opacity":1,
          "properties":[
                 {
@@ -304,12 +331,12 @@
                 {
                  "name":"spawnX",
                  "type":"int",
-                 "value":96
+                 "value":0
                 }, 
                 {
                  "name":"spawnY",
                  "type":"int",
-                 "value":64
+                 "value":0
                 }],
          "type":"objectgroup",
          "visible":true,
@@ -317,7 +344,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":1,
+ "nextobjectid":2,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -326,7 +353,7 @@
         {
          "columns":16,
          "firstgid":1,
-         "image":"UNIVERSIDAD\/Cuarto\/Segundo Cuatrimestre\/DV\/Sprites\/Tiled\/Modern tiles_Free\/Interiors_free\/16x16\/Interiors_free_16x16.png",
+         "image":"Cuarto\/Segundo Cuatrimestre\/DV\/Sprites\/Tiled\/Modern tiles_Free\/Interiors_free\/16x16\/Interiors_free_16x16.png",
          "imageheight":1424,
          "imagewidth":256,
          "margin":0,
@@ -339,7 +366,7 @@
         {
          "columns":17,
          "firstgid":1425,
-         "image":"UNIVERSIDAD\/Cuarto\/Segundo Cuatrimestre\/DV\/Sprites\/Tiled\/Modern tiles_Free\/Interiors_free\/16x16\/Room_Builder_free_16x16.png",
+         "image":"Cuarto\/Segundo Cuatrimestre\/DV\/Sprites\/Tiled\/Modern tiles_Free\/Interiors_free\/16x16\/Room_Builder_free_16x16.png",
          "imageheight":368,
          "imagewidth":272,
          "margin":0,

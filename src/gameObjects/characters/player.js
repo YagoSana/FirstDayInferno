@@ -21,6 +21,7 @@ export default class Player extends SpriteBase {
         this.health = playerData.health;
         this.maxHealth = playerData.maxHealth;
         this.coins = playerData.coins
+        this.keys = playerData.keys;
         this.itemSprite = playerData.itemSprite; //Sprite del item visual
         this.equippedItem = playerData.equippedItem; // item que cambia apariencia
         this.equippedItemRow = playerData.equippedItemRow;
@@ -75,6 +76,8 @@ export default class Player extends SpriteBase {
         this.sonidoMoneda = scene.sound.add('cogerMoneda');
         this.stepTimer = 0;
         this.stepInterval = 500; // o el valor que te mole para los pasos
+
+        this.doubleshot = false;
     }
 
     /**
@@ -173,7 +176,7 @@ export default class Player extends SpriteBase {
 
             if (this.nearVendingMachine) {
                 if (Phaser.Input.Keyboard.JustDown(this.pickupKey)) {// Interacción con tecla E
-                    if(!this.nearVendingMachine.isInUse){
+                    if (!this.nearVendingMachine.isInUse) {
                         this.nearVendingMachine.useMachine();
                     }
                 }
@@ -256,6 +259,8 @@ export default class Player extends SpriteBase {
         // console.log("jugador", this.depth);
 
         this.equippedItem = itemKey; // Guarda el ítem equipado
+        this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'idle' });
+
         // console.log(`Item ${this.equippedItem}: equipado`);
     }
 
@@ -307,7 +312,13 @@ export default class Player extends SpriteBase {
             this.itemSprite.setFrame(shootFrame);
         }
 
-        new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
+        let fallo = Phaser.Math.Between(1, 100) <= 20;
+        let desvio = fallo ? 0.5 : 0;
+
+        for(let i = 0; i < (this.doubleshot ? 2 : 1); i++){
+            new Bullet(this.scene, this.x, this.y, (this.doubleshot? dirX + desvio : dirX), (this.doubleshot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
+        }
+        //new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
         this.lastShot = this.scene.time.now; // Registrar tiempo del disparo
 
         // Volver a la animación anterior después de que termine la animación de disparo
@@ -330,6 +341,9 @@ export default class Player extends SpriteBase {
             }
 
             this.health--; // Reducir vida
+            this.scene.game.events.emit('healthChanged', { health: this.health, maxHealth: this.maxHealth });
+            this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'hurt' });
+
             this.lastHurtTime = currentTime; // Actualizar el último tiempo de daño
 
             if (this.health <= 0) {
@@ -346,9 +360,34 @@ export default class Player extends SpriteBase {
         }
     }
 
-    healthUp() {
-        this.health++;
-        //this.scene.updateHealth(this.maxHealth, this.health);
+    changeHealth(p, modifyMax) {
+        if(modifyMax){
+            while(p > 0 &&  this.maxHealth < 10){
+                if(this.health == this.maxHealth){
+                    this.maxHealth++;
+                }
+                this.health++;
+                p--;
+                console.log(this.maxHealth);
+                console.log(this.health);
+            }
+        }else{
+            this.health += (this.health + p > this.maxHealth) ? this.maxHealth: p;
+        }
+        this.scene.game.events.emit('healthChanged', { health: this.health, maxHealth: this.maxHealth });
+        this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'good' });
+    }
+
+    changeSpeed(p) {
+        this.speed *= p;
+    }
+
+    changeCooldown(p){
+        this.shootCooldown += p; // En milisegundos
+    }
+
+    doDoubleshot(){
+        this.doubleshot = true;
     }
 
     maxHealthUp() {
@@ -363,6 +402,7 @@ export default class Player extends SpriteBase {
     addCoin(amount) {
         this.coins += amount;
         console.log(`Monedas: ${this.coins}€`);
+        this.scene.game.events.emit('coinChanged', this.coins);
         this.sonidoMoneda.play();
     }
 
@@ -377,6 +417,7 @@ export default class Player extends SpriteBase {
             this.coins -= amount;
         }
         console.log(`Monedas: ${this.coins}€`);
+        this.scene.game.events.emit('coinChanged', this.coins);
         return ok;
     }
 
@@ -393,6 +434,7 @@ export default class Player extends SpriteBase {
             health: this.health,
             maxHealth: this.maxHealth,
             coins: this.coins,
+            keys: this.keys,
             equippedItem: this.equippedItem,
             equippedItemRow: this.equippedItemRow,
             itemSprite: this.itemSprite,

@@ -1,12 +1,11 @@
 import Phaser from "phaser";
 
-//JUGADOR CON ITEMS ----------------------------------------------
-import player_item_isaac from "../../../assets/sprites/player_item_isaac.png";
-
 //BALAS --------------------------------------------------------
 import zombiebullet from "../../../assets/sprites/pastilla.png";
 
 //ENEMIGOS -----------------------------------------------------
+import cucaracha from "../../../assets/sprites/cucaracha.png";
+
 import enemydeath from "../../../assets/sprites/enemy_death.png";
 import cat_idle from "../../../assets/sprites/cat_idle.png";
 import cat_void from "../../../assets/sprites/cat_void.png";
@@ -35,16 +34,7 @@ import tileset_sombra_plantas from "../../../assets/map/TX Shadow Plant.png";
 import hamburguesa from "../../../assets/sprites/hamburguesa.png";
 import moneda from "../../../assets/sprites/coin_sheet.png";
 import miniTinto from "../../../assets/sprites/miniTinto.png";
-import bumbo from "../../../assets/sprites/uff_referencia.png";
 
-
-/**
- * Escena para la precarga de los assets que se usarán en el juego.
- * Esta escena se puede mejorar añadiendo una imagen del juego y una
- * barra de progreso de carga de los assets
- * @see {@link https://gamedevacademy.org/creating-a-preloading-screen-in-phaser-3/} como ejemplo
- * sobre cómo hacer una barra de progreso.
- */
 export default class medicinaManager extends Phaser.Scene {
   /**
    * Constructor de la escena
@@ -53,9 +43,14 @@ export default class medicinaManager extends Phaser.Scene {
     super({ key: "medicinaManager" });
   }
 
-  init(data){
-    this.playerStats = data.playerStats;
-    console.log(this.playerStats);
+  init(data) {
+    console.log('Datos recibidos en init:', data);
+    // Si los stats del jugador no están disponibles, asigna un valor predeterminado
+    if (data && data.playerStats) {
+      this.playerStats = data.playerStats;
+    } else {
+      this.playerStats = { health: 3, coins: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500 }; // Valores predeterminados
+    }
   }
 
   /**
@@ -93,12 +88,15 @@ export default class medicinaManager extends Phaser.Scene {
       progressBox.destroy();
       loadingText.destroy();
     });
-    //BARRA DE CARGA
+
+    this.load.spritesheet("cucaracha", cucaracha, {
+      frameWidth: 32, //cada frame tiene este ancho
+      frameHeight: 32, //todos son 32 px de alto
+    });
 
     this.load.image("zombiebullet", zombiebullet);
     this.load.image("hamburguesa", hamburguesa);
     this.load.image("miniTinto", miniTinto);
-    this.load.image("bumbo", bumbo);
 
     this.load.spritesheet("moneda", moneda, {
       frameWidth: 32, //cada frame tiene este ancho
@@ -151,25 +149,18 @@ export default class medicinaManager extends Phaser.Scene {
     this.load.tilemapTiledJSON("medicina_4", medicina_4);
     this.load.tilemapTiledJSON("medicina_5", medicina_5);
     this.load.tilemapTiledJSON("medicina_6", medicina_6);
-    
-    //items del player
-    this.load.spritesheet("player_item_isaac", player_item_isaac,{
-      frameWidth:32,
-      frameHeight:32,
-    });
 
   }
 
-  /**
-   * Creación de la escena. En este caso, solo cambiamos a la escena que representa el
-   * nivel del juego
-   */
   create() {
-
+    this.music = this.sound.add("facultadMedicinaOst", { volume: 0.5, loop: true });
+    this.music.play();
     this.anims.create({
-      key: "coin-idle",
-      frames: this.anims.generateFrameNames("moneda", { start: 0, end: 5 }),
-      frameRate: 8,
+      key: "cucaracha",
+      frames: this.anims.generateFrameNames("cucaracha", {
+        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      }),
+      frameRate: 20,
       repeat: -1,
     });
 
@@ -217,30 +208,29 @@ export default class medicinaManager extends Phaser.Scene {
 
     this.mapStatus = new Map();
     this.mapStatus.set("introMedicina", false);
-    this.scene.start("introMedicina", {x: 320, y: 290, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get("introMedicina")});  }
-  
+    this.scene.start("introMedicina", { x: 320, y: 290, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get("introMedicina") });
+  }
 
-  cambiarSala(zone){
+
+  cambiarSala(zone) {
     this.scene.stop(zone.prev);
     this.mapStatus.set(zone.prev, true);
     console.log(zone.spawnRoom);
-    if(!this.mapStatus.get(zone.spawnRoom)){
+    if (!this.mapStatus.get(zone.spawnRoom)) {
       this.mapStatus.set(zone.spawnRoom, false);
     }
     this.scene.start(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get(zone.spawnRoom)});
-    this.scene.launch('GUI', { player: this.player });
+    this.scene.launch('GUI', this.playerStats);
   }
 
-  guardarPlayerStats(stats){
+  guardarPlayerStats(stats) {
     this.playerStats = stats;
   }
 
-  volverAlLobby(actualizarStats){
+  volverAlLobby(sala) {
+    this.mapStatus.set(sala, true);
+    this.scene.stop(sala);
     this.scene.sleep('medicinaManager');
-    this.scene.wake('selectorNivel');
-    const selectorNivel = this.scene.get('selectorNivel');
-    if(actualizarStats){
-      selectorNivel.updatePlayerStats(this.playerStats);
-    }
+    this.scene.start('selectorNivel', {playerStats: this.playerStats});
   }
 }

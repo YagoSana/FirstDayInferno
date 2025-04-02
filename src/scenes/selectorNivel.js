@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import Player from "../gameObjects/characters/player.js";
+import PauseController from "../controller/pauseController.js";
 
 //MAPA LOBBY ------------------------------------------------------
 import mapa from "../../assets/map/lobby.png";
@@ -21,7 +22,7 @@ export default class SelectorNivel extends Phaser.Scene {
     if (data && data.playerStats) {
       this.playerStats = data.playerStats;
     } else {
-      this.playerStats = { health: 6, maxHealth: 6, coins: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500 }; // Valores predeterminados
+      this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys:0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500 }; // Valores predeterminados
     }
   }
 
@@ -34,17 +35,17 @@ export default class SelectorNivel extends Phaser.Scene {
     const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
     */
     this.add.image(0, 0, 'selectorNivel').setOrigin(0, 0);
-    this.physics.world.setBounds(0, 0, 1280, 640);
+    this.physics.world.setBounds(0, 0, 640, 320);
     this.bulletGroup = this.physics.add.group();
-    this.player = new Player(this, 1170, 450, this.playerStats);//1170, 460,
-    this.cameras.main.setBounds(0, 0, 1280, 640);
+    this.player = new Player(this, 550, 180, this.playerStats);//1170, 460,
+    this.cameras.main.setBounds(0, 0, 640, 320);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
-    this.cameras.main.setZoom(1.1);
+    this.cameras.main.setZoom(1.562);
     // Crear la colisión invisible
-    this.invisibleZone = this.add.zone(100, 580, 200, 200).setOrigin(0, 0).setName("informaticaManager");
+    this.invisibleZone = this.add.zone(70, 230, 150, 100).setOrigin(0, 0).setName("informaticaManager");
     this.invisibleZone.setInteractive(); // Hacerla interactiva para detectar overlaping
 
-    this.invisibleZoneMedicina = this.add.zone(950, 0, 180, 80).setOrigin(0, 0).setName("medicinaManager");
+    this.invisibleZoneMedicina = this.add.zone(400, 0, 150, 90).setOrigin(0, 0).setName("medicinaManager");
     this.invisibleZoneMedicina.setInteractive(); // Hacerla interactiva para detectar overlaping
 
     this.physics.add.existing(this.invisibleZone); // Necesario para que funcione el overlap
@@ -59,10 +60,13 @@ export default class SelectorNivel extends Phaser.Scene {
     // Detectar cuando el jugador entra en la colisión invisible
     this.physics.add.overlap(this.player, this.invisibleZone, this.onOverlap, null, this);
     this.physics.add.overlap(this.player, this.invisibleZoneMedicina, this.onOverlap, null, this);
-
+    this.pauseController = new PauseController(this, { x: this.cameras.main.width - 80, y: 60, scale: 1.3 });
     // Escuchar la tecla ESC
     this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-    this.scene.stop('GUI');
+    this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
+    this.scene.bringToTop('GUI');
+
+
   }
 
   onOverlap(player, zone) {
@@ -76,7 +80,7 @@ export default class SelectorNivel extends Phaser.Scene {
     console.log(`Comienza el mundo: ${worldName}`);
     this.scene.sleep('selectorNivel');
     this.scene.launch(worldName, { playerStats: this.playerStats, prev: 'selectorNivel' });
-    this.scene.launch('GUI', { player: this.player }); // Lanzar la escena de la GUI
+    this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
   }
 
   updatePlayerStats(newStats) {
@@ -87,14 +91,15 @@ export default class SelectorNivel extends Phaser.Scene {
   }
 
   update() {
-    this.scene.launch('GUI',this.player); // Lanzar la escena de la GUI
-    this.scene.bringToTop('GUI');
     // Abrir el menú de pausa al presionar ESC
     if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
-      console.log(`Escena anterior: ${this.scene.key}`);
-      this.scene.pause(); // Pausar la escena actual
-      this.scene.launch('PauseMenu', { previousScene: this.scene.key }); // Lanzar la escena de pausa
-      this.scene.bringToTop('PauseMenu'); // Asegurarse de que PauseMenu esté en la parte superior
+      this.pauseController.togglePause();
+    }
+  }
+
+  shutdown() {
+    if (this.pauseController) {
+      this.pauseController.destroy();
     }
   }
 }

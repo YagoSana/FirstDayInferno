@@ -287,8 +287,8 @@ export default class informaticaManager extends Phaser.Scene {
     });
 
     this.mapStatus = new Map();
-    this.mapStatus.set("FDI_1", false);
-    this.scene.start("FDI_1", {x: 360, y: 380, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("FDI_1")});  }
+    this.mapStatus.set("FDI_2_1", false);
+    this.scene.start("FDI_2_1", {x: 100, y: 100, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("FDI_1")});  }
 
   cambiarSala(zone){
     this.scene.stop(zone.prev);
@@ -298,7 +298,7 @@ export default class informaticaManager extends Phaser.Scene {
       this.mapStatus.set(zone.spawnRoom, false);
     }
     this.scene.start(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get(zone.spawnRoom)});
-    this.scene.launch('GUI', { player: this.player }); // Lanzar la escena de la GUI
+    this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
   }
 
   guardarPlayerStats(stats){
