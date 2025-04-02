@@ -227,12 +227,10 @@ export default class medicinaManager extends Phaser.Scene {
     this.playerStats = stats;
   }
 
-  volverAlLobby(actualizarStats) {
+  volverAlLobby(sala) {
+    this.mapStatus.set(sala, true);
+    this.scene.stop(sala);
     this.scene.sleep('medicinaManager');
-    this.scene.wake('selectorNivel');
-    const selectorNivel = this.scene.get('selectorNivel');
-    if (actualizarStats) {
-      selectorNivel.updatePlayerStats(this.playerStats);
-    }
+    this.scene.start('selectorNivel', {playerStats: this.playerStats});
   }
 }

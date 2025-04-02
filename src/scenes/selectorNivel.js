@@ -37,10 +37,11 @@ export default class SelectorNivel extends Phaser.Scene {
     this.add.image(0, 0, 'selectorNivel').setOrigin(0, 0);
     this.physics.world.setBounds(0, 0, 1280, 640);
     this.bulletGroup = this.physics.add.group();
-    this.player = new Player(this, 100, 450, this.playerStats);//1170, 460,
+    this.player = new Player(this, 1170, 460, this.playerStats);//1170, 460,
     this.cameras.main.setBounds(0, 0, 1280, 640);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
     this.cameras.main.setZoom(1.1);
+    this.cameras.main.fadeIn(800, 0, 0, 0);
     // Crear la colisión invisible
     this.invisibleZone = this.add.zone(100, 580, 200, 200).setOrigin(0, 0).setName("informaticaManager");
     this.invisibleZone.setInteractive(); // Hacerla interactiva para detectar overlaping

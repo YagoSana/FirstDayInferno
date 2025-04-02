@@ -55,8 +55,13 @@ export default class SalaBase extends Phaser.Scene {
     }
 
     update() {
+        console.log("Numero de enemigos: ", this.numEnemies);
+        console.log("Numero de enemigos derrotados: ", this.numEnemiesBeaten);
         if(this.updateLight) {
             this.updateLight();
+        }
+        if(this.bossStatus){
+            this.bossStatus();
         }
         // Abrir el menú de pausa al presionar ESC
         if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
