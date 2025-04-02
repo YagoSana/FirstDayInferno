@@ -136,7 +136,7 @@ export default class medicina_6 extends SalaBase {
       this.cameras.main.width,
       this.cameras.main.height,
       0x000000,
-      0.7 // Opacidad (0 a 1)
+      0.6 // Opacidad (0 a 1)
     );
     this.darkOverlay.setOrigin(0, 0);
     this.darkOverlay.setScrollFactor(0); // Fijo en la cámara
@@ -186,6 +186,13 @@ export default class medicina_6 extends SalaBase {
           this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
         }
       });
+    }
+  }
+
+  bossStatus(){
+    if(this.numEnemiesBeaten == this.numEnemies) {
+      this.manager.guardarPlayerStats(this.player.getStats());
+      this.manager.volverAlLobby("medicina_6");
     }
   }
 

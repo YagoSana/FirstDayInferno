@@ -8,7 +8,8 @@ import monogram from "../../fonts/monogram-extended.ttf";
 
 //JUGADOR ------------------------------------------------------
 import player from "../../assets/sprites/player_spritesheet.png";
-
+//CAMAERO
+import camarero from "../../assets/sprites/bartender_front_iddle.png";
 //EXTRAS ------------------------------------------------------
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
 import paperbullet from "../../assets/sprites/bullet.png";
@@ -33,6 +34,8 @@ import disparaJugador from '../../assets/music/disparaJugador.wav';
 import cogerMoneda from '../../assets/music/coin.wav';
 import andarJugador from '../../assets/music/andarJugador.wav';
 import facultadMedicinaOst from '../../assets/music/facultadMedicina.ogg';
+import pop from '../../assets/music/pop.wav';
+import explode from '../../assets/music/explode.wav';
 //GUI ------------------------------------------------------
 import vidaJugador from "../../assets/sprites/vidaPlayer.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
@@ -77,6 +80,8 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('cogerMoneda', cogerMoneda);
     this.load.audio('andarJugador', andarJugador);
     this.load.audio('facultadMedicinaOst', facultadMedicinaOst);
+    this.load.audio('pop', pop);
+    this.load.audio('explode', explode);
     //AUDIO
     this.loadFont('monogram', monogram);
     this.load.image('background', Background);
@@ -100,6 +105,16 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("player_gui_64", player_gui, {
       frameWidth: 64, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
+    });
+
+    this.load.spritesheet("bartender", camarero, {
+      frameWidth: 32,
+      frameHeight: 32
+    });
+
+    this.load.spritesheet('vidaJugador', vidaJugador, {
+      frameWidth: 16,
+      frameHeight: 16
     });
 
     this.load.spritesheet('puff', puff, {
@@ -141,6 +156,15 @@ export default class Boot extends Phaser.Scene {
    * nivel del juego
    */
   create() {
+    this.anims.create({
+      key: "idle-front-bartender",
+      frames: this.anims.generateFrameNames("bartender", {
+        start: 0,
+        end: 2,
+      }),
+      frameRate: 5,
+      repeat: -1,
+    });
 
     this.anims.create({
       key: "idle-front",
@@ -301,6 +325,13 @@ export default class Boot extends Phaser.Scene {
       repeat: -1,
     });
 
+    this.anims.create({
+      key: "item-puff",
+      frames: this.anims.generateFrameNames("puff", { start: 0, end: 7 }),
+      frameRate: 10,
+      repeat: 3,
+    });
+    
     this.anims.create({
       key: "key-idle",
       frames: this.anims.generateFrameNames("items", { start: 12, end: 17 }),
