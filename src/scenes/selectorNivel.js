@@ -27,6 +27,9 @@ export default class SelectorNivel extends Phaser.Scene {
   }
 
   create() {
+
+    this.sound.stopAll();
+
     this.sonidoEntrar = this.sound.add('entrarFacultad');
     /*
     const map = this.make.tilemap({ key: 'selectorNivel' });
@@ -48,8 +51,12 @@ export default class SelectorNivel extends Phaser.Scene {
     this.invisibleZoneMedicina = this.add.zone(400, 0, 150, 90).setOrigin(0, 0).setName("medicinaManager");
     this.invisibleZoneMedicina.setInteractive(); // Hacerla interactiva para detectar overlaping
 
+    this.invisibleZoneMetro = this.add.zone(520, 220, 70, 50).setOrigin(0, 0).setName("tutorialManager");
+    this.invisibleZoneMetro.setInteractive(); // Hacerla interactiva para detectar overlaping
+
     this.physics.add.existing(this.invisibleZone); // Necesario para que funcione el overlap
-    this.physics.add.existing(this.invisibleZoneMedicina); // Necesario para que funcione el overlap
+    this.physics.add.existing(this.invisibleZoneMedicina);
+    this.physics.add.existing(this.invisibleZoneMetro);
 
     this.invisibleZone.body.setAllowGravity(false);
     this.invisibleZone.body.setImmovable(true);
@@ -57,10 +64,15 @@ export default class SelectorNivel extends Phaser.Scene {
     this.invisibleZoneMedicina.body.setAllowGravity(false);
     this.invisibleZoneMedicina.body.setImmovable(true);
 
+    this.invisibleZoneMetro.body.setAllowGravity(false);
+    this.invisibleZoneMetro.body.setImmovable(true);
+
     // Detectar cuando el jugador entra en la colisión invisible
     this.physics.add.overlap(this.player, this.invisibleZone, this.onOverlap, null, this);
     this.physics.add.overlap(this.player, this.invisibleZoneMedicina, this.onOverlap, null, this);
-    this.pauseController = new PauseController(this, { x: this.cameras.main.width - 80, y: 60, scale: 1.3 });
+    this.physics.add.overlap(this.player, this.invisibleZoneMetro, this.onOverlap, null, this);
+    
+    this.pauseController = new PauseController(this, { x: 790, y: 120, scale: 1 });
     // Escuchar la tecla ESC
     this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
