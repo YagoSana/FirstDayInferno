@@ -34,6 +34,8 @@ import disparaJugador from '../../assets/music/disparaJugador.wav';
 import cogerMoneda from '../../assets/music/coin.wav';
 import andarJugador from '../../assets/music/andarJugador.wav';
 import facultadMedicinaOst from '../../assets/music/facultadMedicina.ogg';
+import pop from '../../assets/music/pop.wav';
+import explode from '../../assets/music/explode.wav';
 //GUI ------------------------------------------------------
 import vidaJugador from "../../assets/sprites/vidaPlayer.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
@@ -78,6 +80,8 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('cogerMoneda', cogerMoneda);
     this.load.audio('andarJugador', andarJugador);
     this.load.audio('facultadMedicinaOst', facultadMedicinaOst);
+    this.load.audio('pop', pop);
+    this.load.audio('explode', explode);
     //AUDIO
     this.loadFont('monogram', monogram);
     this.load.image('background', Background);
@@ -102,7 +106,7 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 64, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
     });
-    
+
     this.load.spritesheet("bartender", camarero, {
       frameWidth: 32,
       frameHeight: 32

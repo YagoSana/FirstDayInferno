@@ -84,13 +84,14 @@ export default class FDI_4 extends SalaBase {
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+        new VendingMachine(this,64,45);
+        new merchant(this, 255, 60);
     }
 
     spawnProps(){
         //this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
        // this.numEnemies++;
-        new VendingMachine(this,64,45);
-        new merchant(this, 255, 60);
+       
        // new Item(this, 200, 200,"hamburguesa");
        new Item(this, 200, 200, "moneda");
            
