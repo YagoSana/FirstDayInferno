@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Player from "../gameObjects/characters/player";
 import Bullet from "../gameObjects/projectiles/bullet";
 import PauseController from "../controller/pauseController";
+import DoorFireManager from "./doorFireManager";
 
 export default class SalaBase extends Phaser.Scene {
 
@@ -34,6 +35,7 @@ export default class SalaBase extends Phaser.Scene {
         this.scene.stop('GUI');
         this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
         this.scene.bringToTop('GUI');
+        this.doorFireManager = new DoorFireManager(this);
     }
 
 
@@ -55,8 +57,8 @@ export default class SalaBase extends Phaser.Scene {
     }
 
     update() {
-        console.log("Numero de enemigos: ", this.numEnemies);
-        console.log("Numero de enemigos derrotados: ", this.numEnemiesBeaten);
+        // console.log("Numero de enemigos: ", this.numEnemies);
+        // console.log("Numero de enemigos derrotados: ", this.numEnemiesBeaten);
         if(this.updateLight) {
             this.updateLight();
         }
@@ -72,6 +74,7 @@ export default class SalaBase extends Phaser.Scene {
             this.transitionZones.getChildren().forEach(zone => {
                 zone.open = true;
             });
+            this.doorFireManager.endFireAnimation();
         }
     }
 
