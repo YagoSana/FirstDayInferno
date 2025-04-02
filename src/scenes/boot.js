@@ -315,6 +315,11 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.anims.create({
+      key: "lock-idle",
+      frames: 
+    })
+
+    this.anims.create({
       key: "tutorial_screen_1",
       frames: this.anims.generateFrameNames("tutorial_screen", { start: 0, end: 47 }),
       frameRate: 8,

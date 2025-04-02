@@ -37,7 +37,8 @@ export default class Item extends SpriteBase {
         player.healthUp();
         player.slowDown();
       },
-      "bumbo": (player) => player.itemAppearance("isaac", 0) // cabeza de Isaac
+      "bumbo": (player) => player.itemAppearance("isaac", 0), // cabeza de Isaac
+      "llave": (player) => player.pickKey()
     };
 
     // Texto del nombre del objeto encima del jugador

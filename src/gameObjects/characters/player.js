@@ -67,13 +67,14 @@ export default class Player extends SpriteBase {
         //item
         this.nearItem = null; // item cercano que puede recogerse
         this.nearVendingMachine = null;
+        this.nearLock = null;
+        this.hasKey = false;
         this.pickupKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.sonidoDisparo = scene.sound.add('disparaJugador');
         this.sonidoAndar = scene.sound.add('andarJugador');
         this.sonidoMoneda = scene.sound.add('cogerMoneda');
         this.stepTimer = 0;
         this.stepInterval = 500; // o el valor que te mole para los pasos
-
     }
 
     /**
@@ -355,6 +356,10 @@ export default class Player extends SpriteBase {
         //this.scene.updateHealth(this.maxHealth, this.health);
     }
 
+    pickKey(){
+        this.hasKey = true;
+    }
+
     addCoin(amount) {
         this.coins += amount;
         console.log(`Monedas: ${this.coins}€`);
@@ -373,6 +378,10 @@ export default class Player extends SpriteBase {
         }
         console.log(`Monedas: ${this.coins}€`);
         return ok;
+    }
+
+    spendKey(){
+        this.hasKey = false;
     }
 
     slowDown() {
