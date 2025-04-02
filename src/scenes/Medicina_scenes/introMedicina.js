@@ -67,6 +67,7 @@ export default class introMedicina extends SalaBase {
       zone.spawnX = obj.properties.find((p) => p.name === "spawnX")?.value;
       zone.spawnY = obj.properties.find((p) => p.name === "spawnY")?.value;
       zone.prev = "introMedicina";
+      zone.open = false; // Inicialmente cerrado
     });
 
     this.transitionZones.setVisible(false);
@@ -123,50 +124,37 @@ export default class introMedicina extends SalaBase {
 
     this.physics.add.collider(this.enemyGroup, this.troncos);
     let spritesLayer = map.getObjectLayer("sprites");
-    spritesLayer.objects.forEach(obj => {
-      let type = obj.properties.find(p => p.name === "tipo")?.value;
-      console.log(`Tipo del objeto de tiled ${type}`);
-      if (type === "enemy") {
-        switch (obj.name) {
-          case "cucaracha":
-            this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
-            break;
-          case "zombie":
-            this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
-            break;
-          case "cat":
-            this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name));
-            break;
-          default:
-            console.log("Tipo de enemigo no reconocido:", obj.name);
+    if (!this.status) {
+      spritesLayer.objects.forEach(obj => {
+        let type = obj.properties.find(p => p.name === "tipo")?.value;
+        console.log(`Tipo del objeto de tiled ${type}`);
+        if (type === "enemy") {
+          this.numEnemies++;
+          switch (obj.name) {
+            case "cucaracha":
+              this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+              break;
+            case "zombie":
+              this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
+              break;
+            case "cat":
+              this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name));
+              break;
+            default:
+              console.log("Tipo de enemigo no reconocido:", obj.name);
+          }
         }
-      }
-    });
-
-    // Verificar si todos los enemigos están muertos para activar/desactivar zonas de transición
-    this.checkEnemies = () => {
-      if (this.enemyGroup.countActive(true) === 0) {
-        //this.transitionZones.setVisible(true);
-        this.transitionZones.children.iterate((zone) => {
-          zone.body.enable = true;
-        });
-        console.log("Todos los enemigos han sido derrotados. Zonas de transición activadas.");
-      } else {
-        this.transitionZones.setVisible(false);
-        this.transitionZones.children.iterate((zone) => {
-          zone.body.enable = false;
-        });
-        console.log("Enemigos restantes. Zonas de transición desactivadas.");
-      }
-    };
-
-    // Llamar a la verificación cada vez que un enemigo muere
-    this.enemyGroup.children.iterate((enemy) => {
-      enemy.on("destroy", this.checkEnemies);
-    });
-
-    // Realizar una verificación inicial
-    this.checkEnemies();
+      });
+    }
+    else {
+      spritesLayer.objects.forEach(obj => {
+        let type = obj.properties.find(p => p.name === "tipo")?.value;
+        console.log(`Tipo del objeto de tiled ${type}`);
+        if (type === "enemy") {
+          this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
+        }
+      });
+    }
   }
 
   updateLight() {
