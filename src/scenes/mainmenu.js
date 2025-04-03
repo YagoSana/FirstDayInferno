@@ -50,25 +50,42 @@ export default class MainMenu extends Phaser.Scene {
         // title.setScrollFactor(0);
         // title.setFontFamily('monogram');
 
-        let buttonPlay = this.add.image(300, 330, 'button');
-        buttonPlay.setScale(0.8);
-        buttonPlay.setInteractive({ useHandCursor: true });
-        var buttonText = this.add.text(240, 300, "Jugar");
-        buttonText.setFontSize(64);
-        buttonText.setFontFamily('monogram')
+        // let buttonPlay = this.add.image(300, 330, 'button');
+        // buttonPlay.setScale(0.8);
+        // buttonPlay.setInteractive({ useHandCursor: true });
+        // var buttonText = this.add.text(240, 300, "Jugar");
+        // buttonText.setFontSize(64);
+        // buttonText.setFontFamily('monogram')
         // buttonPlay.on('pointerover', () => { buttonPlay.setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000); } );
         // buttonPlay.on('pointerdown',this.changeScene.bind(this, "selectorNivel"));
         // buttonPlay.on('pointerout',() => {buttonPlay.setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff);});
-        buttonPlay.on('pointerover', () => { buttonPlay.setTexture('button_hover'); this.sonidoHover.play(); });
-        buttonPlay.on('pointerdown', this.changeScene.bind(this, "selectorNivel"));
-        buttonPlay.on('pointerout', () => { buttonPlay.setTexture('button'); });
+        // buttonPlay.on('pointerover', () => { buttonPlay.setTexture('button_hover'); this.sonidoHover.play(); });
+        // buttonPlay.on('pointerdown', this.changeScene.bind(this, "selectorNivel"));
+        // buttonPlay.on('pointerout', () => { buttonPlay.setTexture('button'); });
 
-        let buttonTutorial = this.add.image(700, 330, 'button');
+        let buttonTutorial = this.add.image(500, 330, 'button');
         buttonTutorial.setScale(0.8);
         buttonTutorial.setInteractive({ useHandCursor: true });
-        var buttonTutorialText = this.add.text(610, 300, "Tutorial");
+        let buttonTutorialText = this.add.text(440, 300, "Jugar");
         buttonTutorialText.setFontSize(64);
-        buttonTutorialText.setFontFamily('monogram');
+        buttonTutorialText.setFontFamily('monogram').setResolution(2);
+
+        let demotext = this.add.text(440, 150, "DEMO");
+        demotext.setFontSize(80);
+        demotext.setFontFamily('monogram').setResolution(2);
+
+          // Animación de expansión/contracción para el texto DEMO
+          this.tweens.add({
+            targets: demotext,
+            scaleX: 1.3,  // Escala horizontal aumentada
+            scaleY: 1.3,  // Escala vertical aumentada
+            duration: 1500, // Duración de la animación en ms
+            yoyo: true,    // Hace que la animación revierta a los valores iniciales
+            repeat: -1,    // Repetir indefinidamente
+            ease: 'Sine.easeInOut' // Tipo de interpolación
+        });
+
+
 
         // Asignar eventos al botón "Tutorial"
         buttonTutorial.on('pointerover', () => { buttonTutorial.setTexture('button_hover'); this.sonidoHover.play(); });

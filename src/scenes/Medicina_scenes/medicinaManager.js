@@ -153,7 +153,7 @@ export default class medicinaManager extends Phaser.Scene {
   }
 
   create() {
-    this.music = this.sound.add("facultadMedicinaOst", { volume: 0.5, loop: true });
+    this.music = this.sound.add("facultadMedicinaOst", { volume: 0.8, loop: true });
     this.music.play();
     this.anims.create({
       key: "cucaracha",
