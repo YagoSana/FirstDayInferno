@@ -148,7 +148,7 @@
          "name":"transiciones",
          "objects":[
                 {
-                 "height":120,
+                 "height":48,
                  "id":1,
                  "name":"portal1",
                  "properties":[
@@ -170,12 +170,12 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":9.33333,
-                 "x":231,
-                 "y":140.667
+                 "width":16,
+                 "x":224,
+                 "y":176
                 }, 
                 {
-                 "height":21.3333,
+                 "height":16,
                  "id":3,
                  "name":"portal2",
                  "properties":[
@@ -197,9 +197,9 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":106.667,
-                 "x":65,
-                 "y":1.66667
+                 "width":48,
+                 "x":96,
+                 "y":0
                 }],
          "opacity":1,
          "type":"objectgroup",

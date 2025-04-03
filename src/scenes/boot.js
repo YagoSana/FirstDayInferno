@@ -18,6 +18,7 @@ import paperbullet from "../../assets/sprites/bullet.png";
 import puff from "../../assets/sprites/puff.png";
 import tutorial_screen from "../../assets/sprites/tutorial_screen_spritesheet.png";
 import blood from "../../assets/sprites/blood.png";
+import fire from "../../assets/sprites/fire.png";
 
 //ITEMS ------------------------------------------------------
 import items from "../../assets/sprites/items_spritesheet.png";
@@ -152,6 +153,11 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.load.spritesheet("blood", blood, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet("fire", fire, {
       frameWidth: 32,
       frameHeight: 32,
     });
@@ -530,7 +536,26 @@ export default class Boot extends Phaser.Scene {
       repeat: -1,
     });
 
+    this.anims.create({
+      key: "fire_start",
+      frames: this.anims.generateFrameNames("fire", { start: 0, end: 3 }),
+      frameRate: 8,
+      repeat: 0,
+    });
 
+    this.anims.create({
+      key: "fire_loop",
+      frames: this.anims.generateFrameNames("fire", { start: 4, end: 11 }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "fire_end",
+      frames: this.anims.generateFrameNames("fire", { start: 12, end: 16 }),
+      frameRate: 8,
+      repeat: 0,
+    });
 
     this.scene.start('MainMenu');
   }

@@ -347,6 +347,7 @@ export default class Player extends SpriteBase {
             if (this.health <= 0) {
                 this.play("player-death", true);
                 this.once('animationcomplete', () => {
+                    this.scene.scene.stop('GUI');
                     this.scene.scene.start('end'); // Finalizar el juego si la vida llega a 0
                 });
             }
