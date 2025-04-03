@@ -78,7 +78,7 @@ export default class FDI_2_1 extends SalaBase {
 
     spawnProps(){
          this.enemyGroup.add(new RangedEnemy(this, 400, 80, "nerd"));
-         this.enemyGrouo.add(new assaultEnemy(this, 100, 80, "cucaracaha"));
+         this.enemyGroup.add(new Enemy(this, 100, 80, "cucaracaha"));
         this.numEnemies++;
         this.numEnemies++;
      
