@@ -191,6 +191,10 @@ export default class medicina_6 extends SalaBase {
 
   bossStatus(){
     if(this.numEnemiesBeaten == this.numEnemies) {
+      this.cameras.main.fadeOut(1000, 0, 0, 0);
+        this.cameras.main.once('camerafadeoutcomplete', () => {
+            this.manager.cambiarSala(zone);
+      });
       this.manager.guardarPlayerStats(this.player.getStats());
       this.manager.volverAlLobby("medicina_6");
     }

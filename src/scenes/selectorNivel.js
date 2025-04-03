@@ -44,6 +44,10 @@ export default class SelectorNivel extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, 640, 320);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
     this.cameras.main.setZoom(1.562);
+    this.cameras.main.fadeIn(500, 0, 0, 0);
+        this.cameras.main.once('camerafadeoutcomplete', () => {
+            this.manager.cambiarSala(zone);
+        });
     // Crear la colisión invisible
     this.invisibleZone = this.add.zone(70, 230, 150, 100).setOrigin(0, 0).setName("informaticaManager");
     this.invisibleZone.setInteractive(); // Hacerla interactiva para detectar overlaping
@@ -77,8 +81,6 @@ export default class SelectorNivel extends Phaser.Scene {
     this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
     this.scene.bringToTop('GUI');
-
-
   }
 
   onOverlap(player, zone) {
