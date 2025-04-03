@@ -77,7 +77,8 @@ export default class Tutorial_2 extends SalaBase {
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
 
-        // this.doorFireManager.createFiresForZones(this.transitionZones);
+        this.doorFireManager.createFiresForZones(this.transitionZones);
+        this.doorFireManager.setupCollisions(this.player);
 
         let spritesLayer = map.getObjectLayer("sprites");
         if (!this.status) {
