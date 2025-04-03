@@ -18,9 +18,9 @@ export default class FdiDoor extends SpriteBase {
         this.scene.physics.add.overlap(this.interactionArea, scene.player, this.showInteractionGUI, null, this);
 
         //Colisiones -> when isLocked == false cambiar colisiones
-        this.collider = this.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
-        this.physics.add.collider(this, scene.enemyGroup);
-        this.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
+        this.collider = this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
+        this.scene.physics.add.collider(this, scene.enemyGroup);
+        this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
 
         this.isLocked = true;
         this.bulletHits = 0;
