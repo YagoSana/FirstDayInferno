@@ -18,7 +18,7 @@ export default class RangedEnemy extends Npc {
     this.attackRange = 200; // Distancia máxima de ataque
     this.attackSpeed = 2000; // Enfriamiento entre disparos en milisegundos
     this.health=4;
-    this.speed = 90;
+    this.speed = 70;
     this.stunCounter = 0;
   }
 
