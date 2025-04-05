@@ -67,17 +67,10 @@ export default class medicina_6 extends SalaBase {
     let colisionesLayer = map.getObjectLayer("colisionesObj");
     if (colisionesLayer) {
       colisionesLayer.objects.forEach((obj) => {
-        let colision = this.add.rectangle(
-          obj.x + obj.width / 2,
-          obj.y - obj.height / 2 + 20,
-          obj.width,
-          obj.height,
-          0x000000,
+        let colision = this.add.rectangle(obj.x, obj.y, obj.width, obj.height, 0x000000,
           0 // Transparente
-        );
+        ).setOrigin(0, 0);
         this.physics.add.existing(colision, true);
-        colision.setOrigin(0, 0);
-        colision.body.setOffset(0, 0);
         this.colisiones.add(colision);
       });
     }
@@ -191,11 +184,11 @@ export default class medicina_6 extends SalaBase {
     }
   }
 
-  bossStatus(){
-    if(this.numEnemiesBeaten == this.numEnemies) {
+  bossStatus() {
+    if (this.numEnemiesBeaten == this.numEnemies) {
       this.cameras.main.fadeOut(1000, 0, 0, 0);
-        this.cameras.main.once('camerafadeoutcomplete', () => {
-            this.manager.cambiarSala(zone);
+      this.cameras.main.once('camerafadeoutcomplete', () => {
+        this.manager.cambiarSala(zone);
       });
       this.manager.guardarPlayerStats(this.player.getStats());
       this.manager.volverAlLobby("medicina_6");

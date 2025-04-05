@@ -51,16 +51,15 @@ export default class medicina_4 extends SalaBase {
     if (colisionesLayer) {
       colisionesLayer.objects.forEach((obj) => {
         let colision = this.add.rectangle(
-          obj.x + obj.width / 2,
-          obj.y - obj.height / 2 + 20,
+          obj.x,
+          obj.y,
           obj.width,
           obj.height,
           0x000000,
           0 // Transparente
-        );
+        ).setOrigin(0,0);
         this.physics.add.existing(colision, true);
-        colision.setOrigin(0, 0);
-        colision.body.setOffset(0, 0);
+
         this.colisiones.add(colision);
       });
     }
