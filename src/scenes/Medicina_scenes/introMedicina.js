@@ -113,7 +113,6 @@ export default class introMedicina extends SalaBase {
     if (!this.status) {
       spritesLayer.objects.forEach(obj => {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
-        console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
           this.numEnemies++;
           switch (obj.name) {
@@ -135,7 +134,6 @@ export default class introMedicina extends SalaBase {
     else {
       spritesLayer.objects.forEach(obj => {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
-        console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
           this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
         }

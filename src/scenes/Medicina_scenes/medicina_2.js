@@ -120,15 +120,12 @@ export default class medicina_2 extends SalaBase {
     // Aplicar la máscara a la capa oscura
     this.darkOverlay.setMask(this.lightMask);
 
-    // Crear un array para almacenar los IDs de los enemigos
-    this.gatosVivos = [];
-
     let spritesLayer = map.getObjectLayer("sprites");
     if (!this.status) {
       spritesLayer.objects.forEach(obj => {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
-        console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
+          console.log("AAA enemigo ", obj.name, ", id ", obj.id);
           switch (obj.name) {
             case "cucaracha":
               this.numEnemies++;
@@ -139,9 +136,10 @@ export default class medicina_2 extends SalaBase {
               this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
               break;
             case "cat":
-              this.gatosVivos.push(obj.id);
-              console.log("Id del gato: ", obj.id);
-              console.log("Gatos vivos: ", this.gatosVivos);
+
+              console.log("GatosVivos: ", this.game.global.gatosVivos);  // Accede a gatosVivos
+              this.game.global.gatosVivos.push(obj.id); // Añadir el ID del gato a la lista
+
               this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
               break;
             default:
@@ -153,12 +151,8 @@ export default class medicina_2 extends SalaBase {
     else {
       spritesLayer.objects.forEach(obj => {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
-        console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
-          console.log("Enemigo encontrado: ", obj.name);
-          console.log("ID del enemigo: ", obj.id);
-          console.log("Gatos vivos: ", this.gatosVivos);
-          if (obj.name == "cat" && this.gatosVivos.includes(obj.id)) {
+          if (obj.name == "cat" && this.game.global.gatosVivos.includes(obj.id)) {
             this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
           }
           else this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);

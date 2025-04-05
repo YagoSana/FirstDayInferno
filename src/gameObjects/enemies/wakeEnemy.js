@@ -89,6 +89,7 @@ export default class WakeEnemy extends Npc {
           this.scene.add.sprite(this.x, this.y, "blood").setVisible(true).setDepth(3).setFrame(12);
           this.destroy();
         });
+        this.scene.game.global.gatosVivos = this.scene.game.global.gatosVivos.filter((id) => id !== this.id); // Eliminar el gato de la lista de gatos vivos
       }
     }
     else {
