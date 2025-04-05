@@ -10,9 +10,10 @@ export default class WakeEnemy extends Npc {
    * @param {number} y Coordenada y
    */
 
-  constructor(scene, x, y, type) {
+  constructor(scene, x, y, type, id) {
     super(scene, x, y, type); // Llamada al constructor de la clase base (Enemy)
     this.type = type;
+    this.id = id;
     this.health = 3;
     this.speed = 100;
     this.stunCounter = 0;

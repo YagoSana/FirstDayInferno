@@ -15,7 +15,7 @@ export default class RangedEnemy extends Npc {
     super(scene, x, y, type); // Llamada al constructor de la clase base (Enemy)
     this.type=type;
     this.attackCooldown = 0; // Enfriamiento para disparar
-    this.attackRange = 200; // Distancia máxima de ataque
+    this.attackRange = 180; // Distancia máxima de ataque
     this.attackSpeed = 2000; // Enfriamiento entre disparos en milisegundos
     this.health=4;
     this.speed = 70;

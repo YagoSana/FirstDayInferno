@@ -120,6 +120,9 @@ export default class medicina_2 extends SalaBase {
     // Aplicar la máscara a la capa oscura
     this.darkOverlay.setMask(this.lightMask);
 
+    // Crear un array para almacenar los IDs de los enemigos
+    this.gatosVivos = [];
+
     let spritesLayer = map.getObjectLayer("sprites");
     if (!this.status) {
       spritesLayer.objects.forEach(obj => {
@@ -136,7 +139,10 @@ export default class medicina_2 extends SalaBase {
               this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
               break;
             case "cat":
-              this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name));
+              this.gatosVivos.push(obj.id);
+              console.log("Id del gato: ", obj.id);
+              console.log("Gatos vivos: ", this.gatosVivos);
+              this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
               break;
             default:
               console.log("Tipo de enemigo no reconocido:", obj.name);
@@ -149,7 +155,13 @@ export default class medicina_2 extends SalaBase {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
         console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
-          this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
+          console.log("Enemigo encontrado: ", obj.name);
+          console.log("ID del enemigo: ", obj.id);
+          console.log("Gatos vivos: ", this.gatosVivos);
+          if (obj.name == "cat" && this.gatosVivos.includes(obj.id)) {
+            this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
+          }
+          else this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
         }
       });
     }
