@@ -57,8 +57,8 @@ export default class SalaBase extends Phaser.Scene {
     }
 
     update() {
-        // console.log("Numero de enemigos: ", this.numEnemies);
-        // console.log("Numero de enemigos derrotados: ", this.numEnemiesBeaten);
+        console.log("Numero de enemigos: ", this.numEnemies);
+        console.log("Numero de enemigos derrotados: ", this.numEnemiesBeaten);
         if(this.updateLight) {
             this.updateLight();
         }
@@ -75,6 +75,12 @@ export default class SalaBase extends Phaser.Scene {
                 zone.open = true;
             });
             this.doorFireManager.endFireAnimation();
+        }
+        if (this.numEnemiesBeaten < this.numEnemies) {
+            this.transitionZones.getChildren().forEach(zone => {
+                zone.open = false;
+            });
+            this.doorFireManager.createFiresForZones(this.transitionZones);
         }
     }
 
