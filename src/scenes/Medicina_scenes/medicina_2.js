@@ -124,8 +124,8 @@ export default class medicina_2 extends SalaBase {
     if (!this.status) {
       spritesLayer.objects.forEach(obj => {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
-        console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
+          console.log("AAA enemigo ", obj.name, ", id ", obj.id);
           switch (obj.name) {
             case "cucaracha":
               this.numEnemies++;
@@ -136,7 +136,11 @@ export default class medicina_2 extends SalaBase {
               this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
               break;
             case "cat":
-              this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name));
+
+              console.log("GatosVivos: ", this.game.global.gatosVivos);  // Accede a gatosVivos
+              this.game.global.gatosVivos.push(obj.id); // Añadir el ID del gato a la lista
+
+              this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
               break;
             default:
               console.log("Tipo de enemigo no reconocido:", obj.name);
@@ -147,9 +151,11 @@ export default class medicina_2 extends SalaBase {
     else {
       spritesLayer.objects.forEach(obj => {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
-        console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
-          this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
+          if (obj.name == "cat" && this.game.global.gatosVivos.includes(obj.id)) {
+            this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
+          }
+          else this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
         }
       });
     }

@@ -51,6 +51,8 @@ export default class medicinaManager extends Phaser.Scene {
     } else {
       this.playerStats = { health: 3, coins: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500 }; // Valores predeterminados
     }
+
+    this.game.global = {gatosVivos: []};
   }
 
   /**
@@ -225,6 +227,7 @@ export default class medicinaManager extends Phaser.Scene {
 
   guardarPlayerStats(stats) {
     this.playerStats = stats;
+    console.log("Player stats guardados:", this.playerStats);
   }
 
   volverAlLobby(sala) {
@@ -233,4 +236,5 @@ export default class medicinaManager extends Phaser.Scene {
     this.scene.sleep('medicinaManager');
     this.scene.start('selectorNivel', {playerStats: this.playerStats});
   }
+
 }
