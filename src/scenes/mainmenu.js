@@ -1,10 +1,11 @@
 import Phaser from 'phaser';
+import UIController from '../controller/UIController';
 
 export default class MainMenu extends Phaser.Scene {
     constructor() {
         super({ key: 'MainMenu' });
     }
-    
+
     init(datos) {
         this.globals = datos.globals
         console.log("init");
@@ -74,6 +75,15 @@ export default class MainMenu extends Phaser.Scene {
         buttonTutorial.on('pointerover', () => { buttonTutorial.setTexture('button_hover'); this.sonidoHover.play(); });
         buttonTutorial.on('pointerdown', this.changeScene.bind(this, "tutorialManager"));
         buttonTutorial.on('pointerout', () => { buttonTutorial.setTexture('button'); });
+
+        this.uiController = new UIController(this, {
+            position: {
+                pause: { x: this.sys.game.config.width + 210, y: this.sys.game.config.height - 450 }, // Posiciones personalizadas
+                mute: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 450 },
+                fullscreen: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 50 }
+            },
+            scale: 2
+        });
 
     }
 

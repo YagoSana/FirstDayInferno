@@ -39,6 +39,7 @@ export default class PauseMenu extends Phaser.Scene {
             this.sound.resumeAll(); // Reanudar el sonido
             this.scene.resume(this.previousScene); // Reanudar la escena anterior
             this.scene.stop(); // Cerrar la escena de pausa
+            this.scene.resume('GUI');
         });
 
         exitButton.on('pointerdown', () => {
@@ -65,6 +66,7 @@ export default class PauseMenu extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
             this.sound.resumeAll(); // Reanudar el sonido
             this.scene.resume(this.previousScene); // Reanudar la escena anterior
+            this.scene.resume('GUI'); // Reanudar la escena anterior
             this.scene.stop(); // Cerrar la escena de pausa
         }
     }

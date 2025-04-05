@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Player from "../gameObjects/characters/player";
 import Bullet from "../gameObjects/projectiles/bullet";
 import PauseController from "../controller/pauseController";
+import UIController from "../controller/UIController";
 import DoorFireManager from "./doorFireManager";
 
 export default class SalaBase extends Phaser.Scene {
@@ -30,7 +31,15 @@ export default class SalaBase extends Phaser.Scene {
         this.completed = false;
         this.numEnemiesBeaten = 0;
         this.numEnemies = 0;
-        this.pauseController = new PauseController(this, { x: this.cameras.main.width - 250, y: 135, scale: 0.8 });
+        // this.pauseController = new PauseController(this, { x: this.cameras.main.width - 250, y: 135, scale: 0.8 });
+        this.uiController = new UIController(this, {
+            position: {
+                pause: { x: this.cameras.main.width - 245, y: this.cameras.main.height - 368 }, // Posiciones personalizadas
+                mute: { x: this.cameras.main.width - 280, y: this.cameras.main.height - 368 },
+                fullscreen: { x: this.cameras.main.width - 245, y: this.cameras.main.height - 130 }
+            },
+            scale: 0.8
+        });
         this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         this.scene.stop('GUI');
         this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
@@ -68,7 +77,7 @@ export default class SalaBase extends Phaser.Scene {
         }
         // Abrir el menú de pausa al presionar ESC
         if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
-            this.pauseController.togglePause();
+            this.uiController.togglePause();
         }
         if (this.numEnemiesBeaten == this.numEnemies) {
             this.completed = true;
@@ -88,8 +97,8 @@ export default class SalaBase extends Phaser.Scene {
     }
 
     shutdown() {
-        if (this.pauseController) {
-            this.pauseController.destroy();
+        if (this.uiController) {
+            this.uiController.destroy();
         }
     }
 }

@@ -521,17 +521,41 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
       startFrame: 11
     });
+    
+    this.textures.addSpriteSheet('boton_fullscreen', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 12
+    });
+
+    this.textures.addSpriteSheet('boton_fullscreen_not', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 13
+    });
+
+    this.textures.addSpriteSheet('boton_mute', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 14
+    });
+
+    this.textures.addSpriteSheet('boton_mute_hover', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 15
+    });
 
     this.anims.create({
       key: "gui_player_idle",
-      frames: this.anims.generateFrameNames("player_gui", { start: 12, end: 13 }),
+      frames: this.anims.generateFrameNames("player_gui", { start: 16, end: 17 }),
       frameRate: 2,
       repeat: -1,
     });
 
     this.anims.create({
       key: "gui_player_hurt",
-      frames: this.anims.generateFrameNames("player_gui", { start: 14, end: 15 }),
+      frames: this.anims.generateFrameNames("player_gui", { start: 18, end: 19 }),
       frameRate: 2,
       repeat: -1,
     });
