@@ -29,6 +29,7 @@ export default class introMedicina extends SalaBase {
     const tileset4 = map.addTilesetImage("TX Shadow", "Sombras");
     const tileset5 = map.addTilesetImage("TX Shadow Plant", "SombrasPlantas");
 
+    const layer8 = map.createLayer("bordes", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     const layer1 = map.createLayer("cesped", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     const layer2 = map.createLayer("sombrasPropsConColision", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     const layer3 = map.createLayer("suelo", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
@@ -36,7 +37,8 @@ export default class introMedicina extends SalaBase {
     const layer5 = map.createLayer("propsSinColision", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     const layer6 = map.createLayer("propsConColision", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     const layer7 = map.createLayer("arboles", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-
+    
+    layer8.setCollisionByExclusion([-1], true);
     layer6.setCollisionByExclusion([-1], true);
     layer7.setDepth(10);
 
@@ -94,6 +96,7 @@ export default class introMedicina extends SalaBase {
     // Añadir colisiones
     this.physics.add.collider(this.player, layer6);
     this.physics.add.collider(this.enemyGroup, layer6);
+    this.physics.add.collider(this.enemyGroup, layer8);
     this.physics.add.collider(this.player, this.troncos);
     this.physics.add.collider(this.bulletGroup, this.troncos, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, this.troncos, this.onBulletCollision);
