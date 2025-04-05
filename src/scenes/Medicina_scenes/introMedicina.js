@@ -50,12 +50,12 @@ export default class introMedicina extends SalaBase {
     let troncosLayer = map.getObjectLayer("colisionesObj");
     troncosLayer.objects.forEach((obj) => {
       let tronco = this.add.rectangle(
-        obj.x + obj.width / 2,
-        obj.y - obj.height / 2 + 20,
-        obj.width,
-        obj.height,
-        0x000000,
-        0
+      obj.x + obj.width / 2,
+      obj.y - obj.height / 2 + 20,
+      obj.width,
+      obj.height,
+      0x000000,
+      0
       );
       this.physics.add.existing(tronco, true);
       this.troncos.add(tronco);

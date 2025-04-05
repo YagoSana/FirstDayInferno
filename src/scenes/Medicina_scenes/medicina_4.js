@@ -58,9 +58,9 @@ export default class medicina_4 extends SalaBase {
           0x000000,
           0 // Transparente
         );
-
-        // Agregar físicas
         this.physics.add.existing(colision, true);
+        colision.setOrigin(0, 0);
+        colision.body.setOffset(0, 0);
         this.colisiones.add(colision);
       });
     }
