@@ -41,7 +41,7 @@ export default class DoorFireManager {
 
                     this.createFire(
                         xPos + fireWidth / 2 - 8,
-                        zone.y + 8 + doorHeight / 2,
+                        zone.y + doorHeight / 2,
                         false
                     );
                 }
@@ -54,7 +54,7 @@ export default class DoorFireManager {
 
     createFire(x, y, isVertical) {
         const fire = this.scene.add.sprite(x, y, 'fire')
-            .setDepth(10);
+            .setDepth(2);
 
         if (isVertical) {//esto es para que el sprite cuadre con la hitbox en vertical
             fire.setOrigin(0.5, 1);

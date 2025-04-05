@@ -153,7 +153,8 @@ export default class medicina_6 extends SalaBase {
     // Aplicar la máscara a la capa oscura
     this.darkOverlay.setMask(this.lightMask);
 
-
+    this.doorFireManager.createFiresForZones(this.transitionZones);
+    this.doorFireManager.setupCollisions(this.player);
 
     let spritesLayer = map.getObjectLayer("sprites");
     if (!this.status) {

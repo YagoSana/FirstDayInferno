@@ -105,6 +105,10 @@ export default class introMedicina extends SalaBase {
     this.physics.add.collider(this.enemyBulletGroup, layer6, this.onBulletCollision);
 
     this.physics.add.collider(this.enemyGroup, this.troncos);
+
+    this.doorFireManager.createFiresForZones(this.transitionZones);
+    this.doorFireManager.setupCollisions(this.player);
+    
     let spritesLayer = map.getObjectLayer("sprites");
     if (!this.status) {
       spritesLayer.objects.forEach(obj => {

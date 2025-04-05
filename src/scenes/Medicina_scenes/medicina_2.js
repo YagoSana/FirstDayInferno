@@ -54,6 +54,9 @@ export default class medicina_2 extends SalaBase {
     this.transitionZones.setVisible(false);
     this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
 
+    this.doorFireManager.createFiresForZones(this.transitionZones);
+    this.doorFireManager.setupCollisions(this.player);
+
     console.log("Capas y transiciones cargadas");
 
     //Camaras
@@ -116,7 +119,6 @@ export default class medicina_2 extends SalaBase {
 
     // Aplicar la máscara a la capa oscura
     this.darkOverlay.setMask(this.lightMask);
-
 
     let spritesLayer = map.getObjectLayer("sprites");
     if (!this.status) {
