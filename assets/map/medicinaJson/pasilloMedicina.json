@@ -92,7 +92,7 @@
          "name":"transiciones",
          "objects":[
                 {
-                 "height":55.3333333333333,
+                 "height":48,
                  "id":1,
                  "name":"",
                  "properties":[
@@ -114,12 +114,12 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":52,
-                 "x":-12.6666666666667,
-                 "y":377.5
+                 "width":16,
+                 "x":0,
+                 "y":368
                 }, 
                 {
-                 "height":69.3333333333333,
+                 "height":16,
                  "id":2,
                  "name":"",
                  "properties":[
@@ -141,9 +141,9 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":67.3333333333333,
-                 "x":222.666666666667,
-                 "y":-7.83333333333333
+                 "width":32,
+                 "x":224,
+                 "y":0
                 }],
          "opacity":1,
          "type":"objectgroup",

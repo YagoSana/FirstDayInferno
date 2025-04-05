@@ -52,7 +52,7 @@ export default class medicina_6 extends SalaBase {
     let transitionLayer = map.getObjectLayer("transiciones");
     if (transitionLayer) {
       transitionLayer.objects.forEach((obj) => {
-        const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
+        const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height).setOrigin(0, 0).setOffset(0, 0);
         zone.spawnRoom = obj.properties.find((p) => p.name === "spawnRoom")?.value;
         zone.spawnX = obj.properties.find((p) => p.name === "spawnX")?.value;
         zone.spawnY = obj.properties.find((p) => p.name === "spawnY")?.value;
@@ -161,12 +161,13 @@ export default class medicina_6 extends SalaBase {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
         console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
-          this.numEnemies++;
           switch (obj.name) {
             case "cucaracha":
+              this.numEnemies++;
               this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
               break;
             case "zombie":
+              this.numEnemies++;
               this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
               break;
             case "cat":

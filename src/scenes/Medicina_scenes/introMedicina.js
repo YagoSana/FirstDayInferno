@@ -28,16 +28,17 @@ export default class introMedicina extends SalaBase {
     const tileset3 = map.addTilesetImage("TX Props", "Props");
     const tileset4 = map.addTilesetImage("TX Shadow", "Sombras");
     const tileset5 = map.addTilesetImage("TX Shadow Plant", "SombrasPlantas");
+    const tileset6 = map.addTilesetImage("Room_Builder_free_16x16", "Muebles");
 
-    const layer8 = map.createLayer("bordes", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer1 = map.createLayer("cesped", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer2 = map.createLayer("sombrasPropsConColision", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer3 = map.createLayer("suelo", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer4 = map.createLayer("sombrasArboles", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer5 = map.createLayer("propsSinColision", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer6 = map.createLayer("propsConColision", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer7 = map.createLayer("arboles", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    
+    const layer8 = map.createLayer("bordes", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
+    const layer1 = map.createLayer("cesped", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
+    const layer2 = map.createLayer("sombrasPropsConColision", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
+    const layer3 = map.createLayer("suelo", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
+    const layer4 = map.createLayer("sombrasArboles", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
+    const layer5 = map.createLayer("propsSinColision", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
+    const layer6 = map.createLayer("propsConColision", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
+    const layer7 = map.createLayer("arboles", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
+
     layer8.setCollisionByExclusion([-1], true);
     layer6.setCollisionByExclusion([-1], true);
     layer7.setDepth(10);
@@ -64,7 +65,7 @@ export default class introMedicina extends SalaBase {
     this.transitionZones = this.physics.add.group();
     let transitionLayer = map.getObjectLayer("transiciones");
     transitionLayer.objects.forEach((obj) => {
-      const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
+      const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height).setOrigin(0, 0).setOffset(0, 0);
       zone.spawnRoom = obj.properties.find((p) => p.name === "spawnRoom")?.value;
       zone.spawnX = obj.properties.find((p) => p.name === "spawnX")?.value;
       zone.spawnY = obj.properties.find((p) => p.name === "spawnY")?.value;

@@ -70,7 +70,7 @@ export default class medicina_4 extends SalaBase {
     let transitionLayer = map.getObjectLayer("transiciones");
     if (transitionLayer) {
       transitionLayer.objects.forEach((obj) => {
-        const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
+        const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height).setOrigin(0, 0).setOffset(0, 0);
         zone.spawnRoom = obj.properties.find((p) => p.name === "spawnRoom")?.value;
         zone.spawnX = obj.properties.find((p) => p.name === "spawnX")?.value;
         zone.spawnY = obj.properties.find((p) => p.name === "spawnY")?.value;
