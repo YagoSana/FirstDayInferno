@@ -6,6 +6,11 @@ export default class DoorFireManager {
             allowGravity: false
         });
         this.fireColliders = []; // Para almacenar las colisiones
+        this.fireCreated = false;
+    }
+
+    checkCreatedFire(transitionZones){
+        return this.fireCreated;
     }
 
     createFiresForZones(transitionZones) {
@@ -48,6 +53,7 @@ export default class DoorFireManager {
             }
 
         });
+        this.fireCreated = true;
 
         this.startFireAnimation();
     }
@@ -124,6 +130,7 @@ export default class DoorFireManager {
             }, this);
         });
 
+        this.fireCreated = false;
         this.doorFires.clear(true, true);
     }
 }

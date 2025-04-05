@@ -36,6 +36,7 @@ export default class SalaBase extends Phaser.Scene {
         this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
         this.scene.bringToTop('GUI');
         this.doorFireManager = new DoorFireManager(this);
+        this.isDoorLocked = false;
     }
 
 
@@ -57,8 +58,8 @@ export default class SalaBase extends Phaser.Scene {
     }
 
     update() {
-        console.log("Numero de enemigos: ", this.numEnemies);
-        console.log("Numero de enemigos derrotados: ", this.numEnemiesBeaten);
+        // console.log("Numero de enemigos: ", this.numEnemies);
+        // console.log("Numero de enemigos derrotados: ", this.numEnemiesBeaten);
         if(this.updateLight) {
             this.updateLight();
         }
@@ -80,7 +81,9 @@ export default class SalaBase extends Phaser.Scene {
             this.transitionZones.getChildren().forEach(zone => {
                 zone.open = false;
             });
-            this.doorFireManager.createFiresForZones(this.transitionZones);
+            if(!this.doorFireManager.checkCreatedFire()){
+                this.doorFireManager.createFiresForZones(this.transitionZones);
+            }
         }
     }
 
