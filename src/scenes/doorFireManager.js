@@ -40,8 +40,8 @@ export default class DoorFireManager {
                     let xPos = zone.x + (i * (fireWidth - fireOverlap));
 
                     this.createFire(
-                        xPos + fireWidth / 2,
-                        zone.y + 16 + doorHeight / 2,
+                        xPos + fireWidth / 2 - 8,
+                        zone.y + 8 + doorHeight / 2,
                         false
                     );
                 }
@@ -56,20 +56,18 @@ export default class DoorFireManager {
         const fire = this.scene.add.sprite(x, y, 'fire')
             .setDepth(10);
 
-        if (isVertical) {
+        if (isVertical) {//esto es para que el sprite cuadre con la hitbox en vertical
             fire.setOrigin(0.5, 1);
         }
-        else{
-            fire.setOrigin(1, 0.5);
-        }
-
 
         // Añadir cuerpo de física
         this.scene.physics.add.existing(fire);
-        fire.body.setSize(
-            isVertical ? 16 : 16,  // Ancho del cuerpo de colisión
-            isVertical ? 16 : 16   // Alto del cuerpo de colisión
-        );
+        let fireSize = 16;
+        fire.body.setSize(fireSize, fireSize);
+
+        if (!isVertical) { //esto es para que el sprite cuadre con la hitbox en horizontal
+            fire.body.setOffset(fireSize / 2, fireSize);
+        }
 
         this.doorFires.add(fire);
         return fire;
@@ -82,21 +80,13 @@ export default class DoorFireManager {
 
         // Crear colisión entre fuego y jugador
         this.fireColliders.push(
-            this.scene.physics.add.collider(
-                player,
-                this.doorFires,
-                this.handleFireCollision,
-                null,
-                this
-            )
+            this.scene.physics.add.collider(player, this.doorFires, this.handleFireCollision, null, this)
         );
     }
 
-    // handleFireCollision(player, fire) {
-    //     // Efecto cuando el jugador toca el fuego
-    //     player.takeDamage(1); // Ejemplo: quitar 1 de vida
-    //     // Puedes añadir efectos visuales/sonidos aquí
-    // }
+    handleFireCollision(player, fire) {
+        player.hurt();
+    }
 
     startFireAnimation() {
         this.doorFires.getChildren().forEach(fire => {

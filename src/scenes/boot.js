@@ -540,7 +540,7 @@ export default class Boot extends Phaser.Scene {
       key: "fire_start",
       frames: this.anims.generateFrameNames("fire", { start: 0, end: 3 }),
       frameRate: 8,
-      repeat: 0,
+      repeat: 1,
     });
 
     this.anims.create({
@@ -554,7 +554,7 @@ export default class Boot extends Phaser.Scene {
       key: "fire_end",
       frames: this.anims.generateFrameNames("fire", { start: 12, end: 16 }),
       frameRate: 8,
-      repeat: 0,
+      repeat: 1,
     });
 
     this.scene.start('MainMenu');

@@ -61,7 +61,7 @@ export default class Player extends SpriteBase {
 
         this.lastShot = 0; // Tiempo del último disparo
         this.shootCooldown = playerData.shootCooldown; // En milisegundos
-        this.damageCooldown = 200; // En milisegundos
+        this.damageCooldown = 1000; // En milisegundos
         this.lastHurtTime = 0;  // Tiempo del último daño
         this.play("idle-front", true);
 
@@ -313,8 +313,8 @@ export default class Player extends SpriteBase {
         let fallo = Phaser.Math.Between(1, 100) <= 20;
         let desvio = fallo ? 0.5 : 0;
 
-        for(let i = 0; i < (this.doubleshot ? 2 : 1); i++){
-            new Bullet(this.scene, this.x, this.y, (this.doubleshot? dirX + desvio : dirX), (this.doubleshot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
+        for (let i = 0; i < (this.doubleshot ? 2 : 1); i++) {
+            new Bullet(this.scene, this.x, this.y, (this.doubleshot ? dirX + desvio : dirX), (this.doubleshot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
         }
         //new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
         this.lastShot = this.scene.time.now; // Registrar tiempo del disparo
@@ -325,6 +325,8 @@ export default class Player extends SpriteBase {
             this.play(currentAnimation);
         });
     }
+
+
 
     /**
      * El jugador ha sido dañado por un enemigo
@@ -344,6 +346,30 @@ export default class Player extends SpriteBase {
 
             this.lastHurtTime = currentTime; // Actualizar el último tiempo de daño
 
+            // Efecto de parpadeo (sin usar this.blinkTimer)
+            const blinkDuration = 1000; // 1 segundo de parpadeo
+            const blinkInterval = 100; // Cada 100ms cambia la visibilidad
+            let blinkCount = Math.floor(blinkDuration / blinkInterval);
+            let isVisible = true;
+
+            const blinkEvent = this.scene.time.addEvent({
+                delay: blinkInterval,
+                callback: () => {
+                    isVisible = !isVisible;
+                    const alpha = isVisible ? 1 : 0.5;
+                    this.setAlpha(alpha);
+                    if (this.itemSprite) this.itemSprite.setAlpha(alpha);
+
+                    if (--blinkCount <= 0) {
+                        blinkEvent.destroy();
+                        this.setAlpha(1);
+                        if (this.itemSprite) this.itemSprite.setAlpha(1);
+                    }
+                },
+                callbackScope: this,
+                loop: true
+            });
+
             if (this.health <= 0) {
                 this.play("player-death", true);
                 this.once('animationcomplete', () => {
@@ -360,9 +386,9 @@ export default class Player extends SpriteBase {
     }
 
     changeHealth(p, modifyMax) {
-        if(modifyMax){
-            while(p > 0 &&  this.maxHealth < 10){
-                if(this.health == this.maxHealth){
+        if (modifyMax) {
+            while (p > 0 && this.maxHealth < 10) {
+                if (this.health == this.maxHealth) {
                     this.maxHealth++;
                 }
                 this.health++;
@@ -370,8 +396,8 @@ export default class Player extends SpriteBase {
                 console.log(this.maxHealth);
                 console.log(this.health);
             }
-        }else{
-            this.health += (this.health + p > this.maxHealth) ? this.maxHealth: p;
+        } else {
+            this.health += (this.health + p > this.maxHealth) ? this.maxHealth : p;
         }
         this.scene.game.events.emit('healthChanged', { health: this.health, maxHealth: this.maxHealth });
         this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'good' });
@@ -381,11 +407,11 @@ export default class Player extends SpriteBase {
         this.speed *= p;
     }
 
-    changeCooldown(p){
+    changeCooldown(p) {
         this.shootCooldown += p; // En milisegundos
     }
 
-    doDoubleshot(){
+    doDoubleshot() {
         this.doubleshot = true;
     }
 
