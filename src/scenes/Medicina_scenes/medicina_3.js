@@ -75,7 +75,7 @@ export default class medicina_3 extends SalaBase {
     //const boundY = -(screenHeight / zoom - mapHeight) / 2;
 
     this.cameras.main.setZoom(zoom);
-    this.cameras.main.setBounds(boundX, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.setBounds(boundX+80, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
     // Ajustar límites del mundo y cámara

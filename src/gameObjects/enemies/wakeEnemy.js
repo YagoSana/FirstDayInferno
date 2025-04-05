@@ -19,8 +19,20 @@ export default class WakeEnemy extends Npc {
     this.despierto=false;
     this.setScale(1.5);
     this.body.setSize(18, 16);
-    this.body.setOffset(0, 0);
+    this.body.setOffset(0, -6);
   }
+
+  //sobreescribimos la funcion hitPlayer para que el enemigo haga daño al jugador si esta dormido
+  hitPlayer(enemy, player) {
+    // Llamar a la función playerHurt del jugador cuando lo toca
+    if(this.despierto){
+      this.stunCounter=20;
+      player.hurt();
+    }
+    else{
+      //no hacer nada
+    }
+}
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
   preUpdate(t, dt) {

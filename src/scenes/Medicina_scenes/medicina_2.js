@@ -124,12 +124,13 @@ export default class medicina_2 extends SalaBase {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
         console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
-          this.numEnemies++;
           switch (obj.name) {
             case "cucaracha":
+              this.numEnemies++;
               this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
               break;
             case "zombie":
+              this.numEnemies++;
               this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
               break;
             case "cat":

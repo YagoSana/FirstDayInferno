@@ -14,12 +14,12 @@ import zombie_move from "../../../assets/sprites/zombie_move.png";
 import zombie_shoot from "../../../assets/sprites/zombie_shoot.png";
 
 //MAPAS Y TILES ------------------------------------------------------
-import introMedicina from "../../../assets/map/introMedicina.json";
-import medicina_2 from "../../../assets/map/hallMedicina.json";
-import medicina_3 from "../../../assets/map/pasilloMedicina.json";
-import medicina_4 from "../../../assets/map/aulaMedicina.json";
-import medicina_5 from "../../../assets/map/pasillo2Medicina.json";
-import medicina_6 from "../../../assets/map/aulaFinalMedicina.json";
+import introMedicina from "../../../assets/map/medicinaJson/introMedicina.json";
+import medicina_2 from "../../../assets/map/medicinaJson/hallMedicina.json";
+import medicina_3 from "../../../assets/map/medicinaJson/pasilloMedicina.json";
+import medicina_4 from "../../../assets/map/medicinaJson/aulaMedicina.json";
+import medicina_5 from "../../../assets/map/medicinaJson/pasillo2Medicina.json";
+import medicina_6 from "../../../assets/map/medicinaJson/aulaFinalMedicina.json";
 
 import img_interior from "../../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../../assets/map/Room_Builder_free_16x16.png";
