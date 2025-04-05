@@ -173,12 +173,12 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":270
+                         "value":0
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":750
+                         "value":0
                         }],
                  "rotation":0,
                  "type":"",
@@ -195,17 +195,17 @@
                         {
                          "name":"spawnRoom",
                          "type":"string",
-                         "value":"FDI_2_1"
+                         "value":"FDI_2_3"
                         }, 
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":0
+                         "value":704
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":0
+                         "value":67
                         }],
                  "rotation":0,
                  "type":"",
@@ -227,12 +227,12 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":0
+                         "value":384
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":0
+                         "value":67
                         }],
                  "rotation":0,
                  "type":"",

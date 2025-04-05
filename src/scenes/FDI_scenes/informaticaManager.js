@@ -289,7 +289,7 @@ export default class informaticaManager extends Phaser.Scene {
 
     this.mapStatus = new Map();
     this.mapStatus.set("FDI_1", false);
-    this.scene.start("FDI_1", {x: 375, y: 375, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("FDI_1")});  }
+    this.scene.start("FDI_1", {x: 358, y:170, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("FDI_1")});  } //358 170
 
   cambiarSala(zone){
     this.scene.stop(zone.prev);

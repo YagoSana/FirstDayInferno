@@ -12,6 +12,7 @@ export default class Bullet extends SpriteBase {
         if(!isPlayer){
             scene.enemyBulletGroup.add(this);
             this.speed = 200; // Velocidad de la bala
+            this.setScale(0.9);
             this.play(type, true);
             if(dirX<0){
                 this.flipY = true;
