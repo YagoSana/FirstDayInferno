@@ -13,7 +13,7 @@ export default class SelectorNivel extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('selectorNivel', mapa);
+    //this.load.image('selectorNivel', mapa);
   }
 
   init(data) {
@@ -31,18 +31,20 @@ export default class SelectorNivel extends Phaser.Scene {
     this.sound.stopAll();
 
     this.sonidoEntrar = this.sound.add('entrarFacultad');
-    /*
-    const map = this.make.tilemap({ key: 'selectorNivel' });
-    const tileset1 = map.addTilesetImage('patronesGeneralesGrass', 'Grass');
-    const tileset2 = map.addTilesetImage('StoneGround', 'Grass');
-    const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
-    */
+    
+    const map = this.make.tilemap({ key: 'lobby' });
+    const tileset1 = map.addTilesetImage("TX Tileset Grass", "Grass");
+
+    const layer1 = map.createLayer('suelo', [tileset1], 0, 0);
+    const layer2 = map.createLayer('cesped', [tileset1], 0, 0);
+    
+    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
     this.add.image(0, 0, 'selectorNivel').setOrigin(0, 0);
-    this.physics.world.setBounds(0, 0, 640, 320);
     this.bulletGroup = this.physics.add.group();
     this.player = new Player(this, 550, 180, this.playerStats);//1170, 460,
-    this.cameras.main.setBounds(0, 0, 640, 320);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setZoom(1.562);
     this.cameras.main.fadeIn(500, 0, 0, 0);
     this.cameras.main.once('camerafadeoutcomplete', () => {
