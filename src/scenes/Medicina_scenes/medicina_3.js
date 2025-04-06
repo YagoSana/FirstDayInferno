@@ -118,7 +118,7 @@ export default class medicina_3 extends SalaBase {
     );
     this.darkOverlay.setOrigin(0, 0);
     this.darkOverlay.setScrollFactor(0); // Fijo en la cámara
-    this.darkOverlay.setDepth(999); // Asegurar que está encima de todo
+    this.darkOverlay.setDepth(100); // Asegurar que está encima de todo
     // Crear un gráfico para la "luz"
     this.light = this.make.graphics();
     this.light.fillStyle(0xffffff, 1);

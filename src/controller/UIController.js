@@ -17,8 +17,17 @@ export default class UIController {
 
         console.log(this.config);
 
-        this.isMuted = false;
-        this.isFullscreen = false;
+        // Inicializar el registro si no existe
+        if (!this.scene.game.registry.has('isMuted')) {
+            this.scene.game.registry.set('isMuted', false);
+        }
+        if (!this.scene.game.registry.has('isFullscreen')) {
+            this.scene.game.registry.set('isFullscreen', false);
+        }
+
+        // Obtener estado actual
+        this.isMuted = this.scene.game.registry.get('isMuted');
+        this.isFullscreen = this.scene.game.registry.get('isFullscreen');
 
         this.createButtons();
     }
@@ -114,6 +123,7 @@ export default class UIController {
 
     toggleMute() {
         this.isMuted = !this.isMuted;
+        this.scene.game.registry.set('isMuted', this.isMuted);
         this.scene.sound.setMute(this.isMuted);
 
         // Cambiar la textura actual, los hover ya se controlan con el estado
@@ -124,6 +134,8 @@ export default class UIController {
 
     toggleFullscreen() {
         this.isFullscreen = !this.isFullscreen;
+        this.scene.game.registry.set('isFullscreen', this.isFullscreen);
+
 
         // Cambiar texturas del botón fullscreen
         this.buttons.fullscreen.setTexture(this.isFullscreen ? 'boton_fullscreen_not' : 'boton_fullscreen');

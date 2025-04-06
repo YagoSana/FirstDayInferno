@@ -79,12 +79,13 @@ export default class MainMenu extends Phaser.Scene {
         this.uiController = new UIController(this, {
             position: {
                 pause: { x: this.sys.game.config.width + 210, y: this.sys.game.config.height - 450 }, // Posiciones personalizadas
-                mute: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 450 },
+                mute: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 510 },
                 fullscreen: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 50 }
             },
             scale: 2
         });
 
+        this.uiController.toggleMute();
     }
 
     changeScene(newScene) {

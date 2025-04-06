@@ -79,9 +79,9 @@ export default class SelectorNivel extends Phaser.Scene {
     // this.pauseController = new PauseController(this, { x: 790, y: 120, scale: 1 });
     this.uiController = new UIController(this, {
       position: {
-        pause: { x: this.sys.game.config.width - 210, y: this.sys.game.config.height - 380 }, // Posiciones personalizadas
-        mute: { x: this.sys.game.config.width - 250, y: this.sys.game.config.height - 380 },
-        fullscreen: { x: this.sys.game.config.width - 200, y: this.sys.game.config.height - 110 }
+        pause: { x: this.sys.game.config.width - 210, y: this.sys.game.config.height - 435 }, // Posiciones personalizadas
+        mute: { x: this.sys.game.config.width - 250, y: this.sys.game.config.height - 435 },
+        fullscreen: { x: this.sys.game.config.width - 205, y: this.sys.game.config.height - 125 }
       },
       scale: 1
     });
@@ -115,13 +115,13 @@ export default class SelectorNivel extends Phaser.Scene {
   update() {
     // Abrir el menú de pausa al presionar ESC
     if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
-      this.pauseController.togglePause();
+      this.uiController.togglePause();
     }
   }
 
   shutdown() {
-    if (this.pauseController) {
-      this.pauseController.destroy();
+    if (this.uiController) {
+      this.uiController.destroy();
     }
   }
 }
