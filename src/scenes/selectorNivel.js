@@ -5,7 +5,12 @@ import UIController from "../controller/UIController.js";
 
 //MAPA LOBBY ------------------------------------------------------
 import mapa from "../../assets/map/lobby.png";
+import metro from "../../assets/imgs/lobbyMETRO.png";
+import fdi from "../../assets/imgs/lobbyFDI.png";
+import medicina from "../../assets/imgs/lobbyMEDICINA.png";
 
+import lobby from "../../assets/map/lobby.json";
+import tileset_grass from "../../assets/map/TX Tileset Grass.png";
 
 export default class SelectorNivel extends Phaser.Scene {
   constructor() {
@@ -13,7 +18,12 @@ export default class SelectorNivel extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('selectorNivel', mapa);
+    //this.load.image('selectorNivel', mapa);
+    this.load.image("Grass", tileset_grass);
+    this.load.tilemapTiledJSON("lobby", lobby);
+    this.load.image('metro', metro);
+    this.load.image('medicina', medicina);
+    this.load.image('fdi', fdi);
   }
 
   init(data) {
@@ -31,28 +41,58 @@ export default class SelectorNivel extends Phaser.Scene {
     this.sound.stopAll();
 
     this.sonidoEntrar = this.sound.add('entrarFacultad');
-    /*
-    const map = this.make.tilemap({ key: 'selectorNivel' });
-    const tileset1 = map.addTilesetImage('patronesGeneralesGrass', 'Grass');
-    const tileset2 = map.addTilesetImage('StoneGround', 'Grass');
-    const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
-    */
-    this.add.image(0, 0, 'selectorNivel').setOrigin(0, 0);
-    this.physics.world.setBounds(0, 0, 640, 320);
-    this.bulletGroup = this.physics.add.group();
+
+    const map = this.make.tilemap({ key: 'lobby' });
+    const tileset1 = map.addTilesetImage("TX Tileset Grass", "Grass");
+
+    
+    const layer2 = map.createLayer('cesped', [tileset1], 0, 0);
+    const layer1 = map.createLayer('suelo', [tileset1], 0, 0);
+
     this.player = new Player(this, 550, 180, this.playerStats);//1170, 460,
-    this.cameras.main.setBounds(0, 0, 640, 320);
-    this.cameras.main.startFollow(this.player, true, 0.1, 0.1); // Suavizado
-    this.cameras.main.setZoom(1.562);
+
+    let spritesLayer = map.getObjectLayer("objetos");
+    spritesLayer.objects.forEach(obj => {
+      if (obj.name == "metro") {
+        this.add.image(504, 210, 'metro').setOrigin(0, 0).setDisplaySize(100, 70);
+      }
+      else if (obj.name == "medicina") {
+        this.add.image(390, 0, 'medicina').setOrigin(0, 0).setDisplaySize(150, 79);        
+      }
+      else if (obj.name == "fdi") {
+        this.add.image(65, 238, 'fdi').setOrigin(0, 0).setDisplaySize(231, 98);
+      }
+    });
+
+    console.log("capas creadas");
+
+    //Camaras
+    const screenWidth = this.sys.game.config.width; // Ancho de tu pantalla
+    const screenHeight = this.sys.game.config.height; // Alto de tu pantalla
+    const mapWidth = map.widthInPixels;
+    const mapHeight = map.heightInPixels;
+    const zoom = 1.5;
+    const boundX = -(screenWidth / zoom - mapWidth) / 2;
+    const boundY = -(screenHeight / zoom - mapHeight) / 2;
+
+    this.cameras.main.setZoom(zoom);
+    this.cameras.main.setBounds(boundX, boundY, map.widthInPixels, map.heightInPixels);
+
     this.cameras.main.fadeIn(500, 0, 0, 0);
     this.cameras.main.once('camerafadeoutcomplete', () => {
       this.manager.cambiarSala(zone);
     });
+
+    this.bulletGroup = this.physics.add.group();
+
+    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+
     // Crear la colisión invisible
-    this.invisibleZone = this.add.zone(70, 230, 150, 100).setOrigin(0, 0).setName("informaticaManager");
+    this.invisibleZone = this.add.zone(70, 250, 150, 80).setOrigin(0, 0).setName("informaticaManager");
     this.invisibleZone.setInteractive(); // Hacerla interactiva para detectar overlaping
 
-    this.invisibleZoneMedicina = this.add.zone(400, 0, 150, 90).setOrigin(0, 0).setName("medicinaManager");
+    this.invisibleZoneMedicina = this.add.zone(400, 0, 130, 70).setOrigin(0, 0).setName("medicinaManager");
     this.invisibleZoneMedicina.setInteractive(); // Hacerla interactiva para detectar overlaping
 
     this.invisibleZoneMetro = this.add.zone(520, 220, 70, 50).setOrigin(0, 0).setName("tutorialManager");
