@@ -4,7 +4,6 @@ import PauseController from "../controller/pauseController.js";
 import UIController from "../controller/UIController.js";
 
 //MAPA LOBBY ------------------------------------------------------
-import mapa from "../../assets/map/lobby.png";
 import metro from "../../assets/imgs/lobbyMETRO.png";
 import fdi from "../../assets/imgs/lobbyFDI.png";
 import medicina from "../../assets/imgs/lobbyMEDICINA.png";

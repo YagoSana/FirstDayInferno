@@ -210,7 +210,7 @@ export default class medicinaManager extends Phaser.Scene {
 
     this.mapStatus = new Map();
     this.mapStatus.set("introMedicina", false);
-    this.scene.start("introMedicina", { x: 320, y: 290, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get("introMedicina") });
+    this.scene.start("introMedicina", { x: 320, y: 280, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get("introMedicina") });
   }
 
 
