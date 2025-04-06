@@ -42,6 +42,7 @@ import explode from '../../assets/music/explode.wav';
 //GUI ------------------------------------------------------
 import vidaJugador from "../../assets/sprites/vidaPlayer.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
+import game_over_screen from "../../assets/sprites/enemy_game_over.png";
 
 
 /**
@@ -161,6 +162,12 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
     });
+
+    this.load.spritesheet("game_over_screen", game_over_screen, {
+      frameWidth: 100,
+      frameHeight: 100,
+    });
+
 
   }
 
@@ -579,6 +586,48 @@ export default class Boot extends Phaser.Scene {
       frames: this.anims.generateFrameNames("fire", { start: 12, end: 16 }),
       frameRate: 8,
       repeat: 1,
+    });
+
+    this.textures.addSpriteSheet('default_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 0
+    });
+
+    this.textures.addSpriteSheet('cucaracha_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 1
+    });
+
+    this.textures.addSpriteSheet('cat_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 2
+    });
+
+    this.textures.addSpriteSheet('nerd_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 3
+    });
+
+    this.textures.addSpriteSheet('zombie_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 4
+    });
+
+    this.textures.addSpriteSheet('fire_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 5
+    });
+
+    this.textures.addSpriteSheet('uncanny_cat', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 8
     });
 
     this.scene.start('MainMenu');

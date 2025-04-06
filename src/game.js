@@ -3,6 +3,7 @@ import MainMenu from './scenes/mainmenu.js';
 import PauseMenu from './scenes/pauseMenu.js';
 import End from './scenes/end.js';
 import GUI from './scenes/gui.js';
+import GameOver from './scenes/gameOver.js';
 
 import FDI_1 from './scenes/FDI_scenes/FDI_1.js';
 import FDI_2 from './scenes/FDI_scenes/FDI_2.js';
@@ -48,7 +49,7 @@ let config = {
 
     },
     pixelArt: true,
-    scene: [Boot, MainMenu, PauseMenu, SelectorNivel, TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, GUI, InformaticaManager, FDI_1, FDI_2, FDI_3, FDI_4, FDI_5, FDI_6, FDI_2_1, FDI_2_2, FDI_2_3, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, End],
+    scene: [Boot, MainMenu, PauseMenu, SelectorNivel, GameOver, TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, GUI, InformaticaManager, FDI_1, FDI_2, FDI_3, FDI_4, FDI_5, FDI_6, FDI_2_1, FDI_2_2, FDI_2_3, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, End],
 
     physics: {
         default: 'arcade',

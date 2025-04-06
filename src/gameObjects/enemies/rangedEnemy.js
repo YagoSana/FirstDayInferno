@@ -91,6 +91,6 @@ export default class RangedEnemy extends Npc {
     }
     
     // Crear la bala usando la clase Bullet
-    new Bullet(this.scene, this.x, this.y, normalizedDirX, normalizedDirY, 0, 0, false, `${this.type}bullet`); // Pasar las direcciones y velocidades
+    new Bullet(this.scene, this.x, this.y, normalizedDirX, normalizedDirY, 0, 0, false, `${this.type}bullet`, this.type); // Pasar las direcciones y velocidades
   }
 }

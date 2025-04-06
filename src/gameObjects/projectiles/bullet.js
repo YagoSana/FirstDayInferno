@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import SpriteBase from '../spriteBase';
 
 export default class Bullet extends SpriteBase {
-    constructor(scene, x, y, dirX, dirY, velocityX, velocityY, isPlayer, type) {
+    constructor(scene, x, y, dirX, dirY, velocityX, velocityY, isPlayer, type, shooter) {
         super(scene, x, y, type);
         if(isPlayer){
             scene.bulletGroup.add(this);
@@ -10,6 +10,7 @@ export default class Bullet extends SpriteBase {
             this.setScale(0.7);
         };
         if(!isPlayer){
+            this.shooter = shooter;
             scene.enemyBulletGroup.add(this);
             this.speed = 200; // Velocidad de la bala
             this.setScale(0.9);

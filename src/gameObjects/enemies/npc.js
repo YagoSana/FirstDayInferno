@@ -14,6 +14,7 @@ export default class Npc extends SpriteBase {
     constructor(scene, x, y, spriteKey) {
         super(scene, x, y, spriteKey);
         this.scene = scene;
+        this.spriteKey = spriteKey;
         this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
         this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
         this.scene.physics.add.collider(this, scene.enemyGroup);
@@ -22,6 +23,8 @@ export default class Npc extends SpriteBase {
 
     hitPlayer(enemy, player) {
         // Llamar a la función playerHurt del jugador cuando lo toca
+        player.lastDamageSource = this.spriteKey;
+        player.lastDamageType = 'enemy';
         this.stunCounter=20;
         player.hurt();
     }

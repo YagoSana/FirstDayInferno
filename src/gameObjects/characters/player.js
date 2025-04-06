@@ -65,6 +65,10 @@ export default class Player extends SpriteBase {
         this.lastHurtTime = 0;  // Tiempo del último daño
         this.play("idle-front", true);
 
+        //que enemigo dio al jugador
+        this.lastDamageSource = null; // 'fire' o referencia al enemigo
+        this.lastDamageType = null;   // 'enemy' | 'fire' | etc.
+
         //item
         this.nearItem = null; // item cercano que puede recogerse
         this.nearVendingMachine = null;
@@ -340,6 +344,11 @@ export default class Player extends SpriteBase {
                 this.itemSprite.setTint(0xff0000);
             }
 
+            if (bullet && bullet.shooter) {
+                this.lastDamageSource = bullet.shooter; // Guardar referencia al enemigo
+                this.lastDamageType = 'enemy';
+            }
+
             this.health--; // Reducir vida
             this.scene.game.events.emit('healthChanged', { health: this.health, maxHealth: this.maxHealth });
             this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'hurt' });
@@ -373,16 +382,27 @@ export default class Player extends SpriteBase {
             if (this.health <= 0) {
                 this.play("player-death", true);
                 this.once('animationcomplete', () => {
-                    this.scene.scene.stop('GUI');
-                    this.scene.scene.start('end'); // Finalizar el juego si la vida llega a 0
+                  this.scene.scene.stop('GUI');
+                  this.scene.scene.start('gameOver', { 
+                    deathData: {
+                      type: this.lastDamageType,
+                      source: this.lastDamageSource
+                    }
+                  });
                 });
-            }
+              }
 
             //this.scene.updateHealth(this.maxHealth, this.health);
         }
         if (bullet) {
             bullet.explode();
         }
+    }
+
+    hurtByFire() {
+        this.lastDamageSource = 'fire';
+        this.lastDamageType = 'fire';
+        this.hurt(); // Llama a tu método de daño existente
     }
 
     changeHealth(p, modifyMax) {

@@ -29,13 +29,15 @@ export default class WakeEnemy extends Npc {
     // Llamar a la función playerHurt del jugador cuando lo toca
     if (this.despierto) {
       this.stunCounter = 20;
+      player.lastDamageSource = this.spriteKey;
+      player.lastDamageType = 'enemy';
       player.hurt();
     }
     else {
       if (!this.despertando) {
         setTimeout(() => {
           this.despierto = true;
-        this.scene.numEnemies++;
+          this.scene.numEnemies++;
         }, 800);
       }
       this.despertando = true;

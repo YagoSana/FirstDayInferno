@@ -91,7 +91,7 @@ export default class DoorFireManager {
     }
 
     handleFireCollision(player, fire) {
-        player.hurt();
+        player.hurtByFire();
     }
 
     startFireAnimation() {
