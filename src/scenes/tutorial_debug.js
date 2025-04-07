@@ -1,6 +1,7 @@
 import SalaBase from "./salaBase.js";
 import Player from "../gameObjects/characters/player.js";
 import Item from "../gameObjects/items/item.js";
+import VendingMachine from "../gameObjects/items/vendingMachine.js";
 
 export default class Tutorial_debug extends SalaBase {
     constructor(key) {
@@ -51,7 +52,8 @@ export default class Tutorial_debug extends SalaBase {
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
         transitionLayer.objects.forEach(obj => {
-            const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
+            const zone = this.transitionZones.create(obj.x, obj.y, null)
+                .setSize(obj.width, obj.height).setOrigin(0, 0).setOffset(0, 0);
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
@@ -60,6 +62,18 @@ export default class Tutorial_debug extends SalaBase {
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
 
-        new Item(this, 200, 200,"hamburguesa");
+        let spritesLayer = map.getObjectLayer("sprites");
+        spritesLayer.objects.forEach(obj => {
+            let type = obj.properties.find(p => p.name === "tipo")?.value;
+            // console.log(`Tipo del objeto de tiled ${type}`);
+            if (type === "util") {
+                let vm = new VendingMachine(this, obj.x, obj.y);
+            }
+            else if (type === "item") {
+                let it = new Item(this, obj.x, obj.y, obj.name);
+            }
+        });
+
+        // new Item(this, 200, 200, "hamburguesa");
     }
 }

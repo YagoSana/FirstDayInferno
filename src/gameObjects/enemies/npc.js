@@ -11,7 +11,7 @@ export default class Npc extends SpriteBase {
      * @param {number} x Coordenada x
      * @param {number} y Coordenada y 
      */
-    constructor(scene, x, y, spriteKey) {
+    constructor(scene, x, y, spriteKey, key = false) {
         super(scene, x, y, spriteKey);
         this.scene = scene;
         this.spriteKey = spriteKey;
@@ -19,6 +19,7 @@ export default class Npc extends SpriteBase {
         this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
         this.scene.physics.add.collider(this, scene.enemyGroup);
         this.sonidoDropMoneda = this.scene.sound.add('enemigoSueltaMoneda');
+        this.dropKey = key;
     }
 
     hitPlayer(enemy, player) {
@@ -34,8 +35,12 @@ export default class Npc extends SpriteBase {
         this.stunCounter = 30;
         this.health--;
         if(this.health <= 0){
-          if (Phaser.Math.Between(1, 100) <= 33) {
-            this.dropCoin();
+          if(this.dropKey){
+            const key = new Item(this.scene, this.x, this.y, "llave");
+          }else{
+            if (Phaser.Math.Between(1, 100) <= 33) {
+              this.dropCoin();
+            }
           }
           this.scene.numEnemiesBeaten++;
           this.body.setVelocity(0,0);

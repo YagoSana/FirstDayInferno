@@ -11,7 +11,7 @@ export default class RangedEnemy extends Npc {
    * @param {number} y Coordenada y
    */
 
-  constructor(scene, x, y, type) {
+  constructor(scene, x, y, type, key = false) {
     super(scene, x, y, type); // Llamada al constructor de la clase base (Enemy)
     this.type=type;
     this.attackCooldown = 0; // Enfriamiento para disparar
@@ -20,6 +20,7 @@ export default class RangedEnemy extends Npc {
     this.health=4;
     this.speed = 70;
     this.stunCounter = 0;
+    this.dropKey = key;
   }
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia

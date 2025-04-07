@@ -22,6 +22,7 @@ import fire from "../../assets/sprites/fire.png";
 
 //ITEMS ------------------------------------------------------
 import items from "../../assets/sprites/items_spritesheet.png";
+import doors from "../../assets/sprites/doors_spritesheet.png";
 
 //JUGADOR CON ITEMS ----------------------------------------------
 import player_items from "../../assets/sprites/player_item.png";
@@ -133,6 +134,11 @@ export default class Boot extends Phaser.Scene {
 
     this.load.spritesheet('items', items, {
       frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet('doors', doors, {
+      frameWidth: 64,
       frameHeight: 32,
     });
 
@@ -383,6 +389,20 @@ export default class Boot extends Phaser.Scene {
       frames: this.anims.generateFrameNames("items", { start: 24, end: 29 }),
       frameRate: 8,
       repeat: 1,
+    });
+
+    this.anims.create({
+      key: "fdiDoor-open",
+      frames: this.anims.generateFrameNames("doors", { start: 0, end: 18 }),
+      frameRate: 13,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "medDoor-open",
+      frames: this.anims.generateFrameNames("doors", { start: 20, end: 37 }),
+      frameRate: 12,
+      repeat: 0,
     });
 
     this.anims.create({

@@ -3,6 +3,7 @@ import SalaBase from "../../scenes/salaBase.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
 import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
+import Door from "../../gameObjects/items/door.js";
 import Item from "../../gameObjects/items/item.js";
 
 export default class medicina_5 extends SalaBase {
@@ -145,7 +146,7 @@ export default class medicina_5 extends SalaBase {
               break;
             case "zombie":
               this.numEnemies++;
-              this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
+              this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name, true));
               break;
             case "cat":
               console.log("GatosVivos: ", this.game.global.gatosVivos);  // Accede a gatosVivos
@@ -155,6 +156,8 @@ export default class medicina_5 extends SalaBase {
             default:
               console.log("Tipo de enemigo no reconocido:", obj.name);
           }
+        } else if (type === "door"){
+          new Door(this, obj.x, obj.y, 'medDoor');
         }
       });
     }

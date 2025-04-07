@@ -72,6 +72,7 @@ export default class Player extends SpriteBase {
         //item
         this.nearItem = null; // item cercano que puede recogerse
         this.nearVendingMachine = null;
+        this.nearDoor = null;
         this.pickupKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.sonidoDisparo = scene.sound.add('disparaJugador');
         this.sonidoAndar = scene.sound.add('andarJugador');
@@ -191,6 +192,19 @@ export default class Player extends SpriteBase {
 
             }
 
+            if (this.nearDoor) {
+                if (Phaser.Input.Keyboard.JustDown(this.pickupKey)) {// Interacción con tecla E
+                    this.nearDoor.unlock();
+                }
+
+                // Verificar si el jugador se alejó de la máquina
+                if (!this.nearDoor.scene || !this.scene.physics.overlap(this, this.nearDoor.interactionArea)) {
+                    this.nearDoor.hideInteractionUI();
+                    this.nearDoor = null;
+                }
+
+            }
+
             // Verificar si el jugador se alejó del objeto
             if (this.nearItem) {
                 // Verificar si el ítem todavía existe
@@ -263,7 +277,7 @@ export default class Player extends SpriteBase {
         this.equippedItem = itemKey; // Guarda el ítem equipado
         this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'idle' });
 
-        // console.log(`Item ${this.equippedItem}: equipado`);
+        console.log(`Item ${this.equippedItem}: equipado`);
     }
 
     shoot(dirX, dirY) {
@@ -356,8 +370,8 @@ export default class Player extends SpriteBase {
             this.lastHurtTime = currentTime; // Actualizar el último tiempo de daño
 
             // Efecto de parpadeo (sin usar this.blinkTimer)
-            const blinkDuration = 1000; // 1 segundo de parpadeo
-            const blinkInterval = 100; // Cada 100ms cambia la visibilidad
+            let blinkDuration = 1000; // 1 segundo de parpadeo
+            let blinkInterval = 100; // Cada 100ms cambia la visibilidad
             let blinkCount = Math.floor(blinkDuration / blinkInterval);
             let isVisible = true;
 
@@ -416,8 +430,8 @@ export default class Player extends SpriteBase {
                 console.log(this.maxHealth);
                 console.log(this.health);
             }
-        } else {
-            this.health += (this.health + p > this.maxHealth) ? this.maxHealth : p;
+        }else{
+            this.health = (this.health + p > this.maxHealth) ? this.maxHealth : this.health + p;
         }
         this.scene.game.events.emit('healthChanged', { health: this.health, maxHealth: this.maxHealth });
         this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'good' });
@@ -440,6 +454,11 @@ export default class Player extends SpriteBase {
         //this.scene.updateHealth(this.maxHealth, this.health);
     }
 
+    pickKey(p){
+        this.keys += p;
+        this.scene.game.events.emit('keyChanged', this.keys);//?
+    }
+
     addCoin(amount) {
         this.coins += amount;
         console.log(`Monedas: ${this.coins}€`);
@@ -460,6 +479,14 @@ export default class Player extends SpriteBase {
         console.log(`Monedas: ${this.coins}€`);
         this.scene.game.events.emit('coinChanged', this.coins);
         return ok;
+    }
+
+    spendKey(p){
+        this.keys -= p;
+    }
+
+    slowDown() {
+        this.speed /= 2;
     }
 
     getStats() {
