@@ -435,8 +435,8 @@ export default class Player extends SpriteBase {
         return ok;
     }
 
-    spendKey(){
-        this.hasKey = false;
+    spendKey(p){
+        this.keys -= p;
     }
 
     slowDown() {

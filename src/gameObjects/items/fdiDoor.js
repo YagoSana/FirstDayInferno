@@ -4,18 +4,20 @@ import Item from './item';
 
 export default class FdiDoor extends SpriteBase {
     constructor(scene, x, y){
-        super(scene, x, y, 'fdiDoor');//VER ESTO
+        super(scene, x, y, 'fdiDoor');
 
         this.body.setImmovable(true);
         this.body.allowGravity = false;
 
         //Hitbox
+        this.body.setSize(32, 32);
+        this.body.setOffset(16, 0); 
 
         //Area interaccion -> cambiar?
         this.interactionArea = this.scene.add.circle(x, y, 30, 0x000000, 0);
         this.scene.physics.add.existing(this.interactionArea);
         this.interactionArea.body.setCircle(30);
-        this.scene.physics.add.overlap(this.interactionArea, scene.player, this.showInteractionGUI, null, this);
+        this.scene.physics.add.overlap(this.interactionArea, scene.player, this.showInteractionUI, null, this);
 
         //Colisiones -> when isLocked == false cambiar colisiones
         this.collider = this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
@@ -25,6 +27,8 @@ export default class FdiDoor extends SpriteBase {
         this.isLocked = true;
         this.bulletHits = 0;
 
+        this.play('fdiDoor-open');
+        this.stop();
         this.setFrame(0);//Primer frame (puerta cerrada)
 
         this.interactionText = this.scene.add.text(0, 0, 'Abrir puerta', {
@@ -52,7 +56,7 @@ export default class FdiDoor extends SpriteBase {
             .setDepth(30).setResolution(2);
     }
 
-    showInteractionGUI(door, player){
+    showInteractionUI(door, player){
         if(this.isLocked){
             player.nearDoor = this;
             this.interactionText.setPosition(this.x - 100 / 2, this.y - 40);
@@ -63,20 +67,20 @@ export default class FdiDoor extends SpriteBase {
 
             this.noKeyText.setPosition(this.x - 70, this.y - 40);
         }else{
-            this.hideInteractionGUI();
+            this.hideInteractionUI();
         }
     }
 
-    hideInteractionGUI() {
+    hideInteractionUI() {
         this.interactionText.setVisible(false);
         this.eKeyIcon.setVisible(false);
         this.noKeyText.setVisible(false)
     }
 
-    unlock(){//donde le llamo?
+    unlock(){
         if(this.isLocked){
-            if(this.scene.player.hasKey){
-                this.scene.player.spendKey();
+            if(this.scene.player.keys > 0){
+                this.scene.player.spendKey(1);
 
                 this.play('fdiDoor-open');
                 this.once('animationcomplete', () => {
@@ -98,24 +102,43 @@ export default class FdiDoor extends SpriteBase {
         this.hideInteractionUI();
     }
 
-    hitBullet(){
+    hitBullet(door, bullet){
         bullet.explode();
-        if(this.isLocked){
+        if(this.isLocked && this.bulletHits < 3){
             this.bulletHits++;
             if(this.bulletHits === 3){
                 const startX = this.x;
-                const startY = this.y + 10; // Justo debajo del centro
-        
-                // Posición final (fuera de la máquina)
-                const offsetX = Phaser.Math.Between(-30, 30);
-                const offsetY = Phaser.Math.Between(30, 50);
-                const endX = this.x + offsetX;
-                const endY = this.y + offsetY;
-        
-                // Crear el ítem en posición inicial (invisible)
-                const item = new Item(this.scene, endX, endY, 'corazon');
-                item.setVisible(false); // Comenzar invisible
-                item.setDepth(this.depth + 10); // Asegurar que esté sobre la máquina
+                        const startY = this.y + 10; // Justo debajo del centro
+                
+                        // Posición final (fuera de la máquina)
+                        const offsetX = Phaser.Math.Between(-30, 30);
+                        const offsetY = Phaser.Math.Between(30, 50);
+                        const endX = this.x + offsetX;
+                        const endY = this.y + offsetY;
+                
+                        // Crear el ítem en posición inicial (invisible)
+                        const item = new Item(this.scene, endX, endY, 'corazon');
+                        item.setVisible(false); // Comenzar invisible
+                        item.setDepth(this.depth + 10); // Asegurar que esté sobre la máquina
+                
+                        // Animación de salida mejorada (sin sequence)
+                        this.scene.tweens.add({
+                            targets: item,
+                            alpha: { from: 0, to: 1 },
+                            y: startY - 20,
+                            duration: 400,
+                            ease: 'Power2',
+                            onStart: () => item.setVisible(true),
+                            onComplete: () => {
+                                // Animación de caída con bounce
+                                this.scene.tweens.add({
+                                    targets: item,
+                                    y: endY,
+                                    duration: 1000,
+                                    ease: 'Bounce.out'
+                                });
+                            }
+                        });
             }
         }
     }

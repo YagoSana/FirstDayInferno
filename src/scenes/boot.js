@@ -388,7 +388,14 @@ export default class Boot extends Phaser.Scene {
       key: "fdiDoor-open",
       frames: this.anims.generateFrameNames("doors", { start: 0, end: 18 }),
       frameRate: 13,
-      repeat: 1,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "medDoor-open",
+      frames: this.anims.generateFrameNames("doors", { start: 19, end: 36 }),
+      frameRate: 12,
+      repeat: 0,
     });
 
     this.anims.create({

@@ -77,7 +77,7 @@ export default class Tutorial_1 extends SalaBase {
         spritesLayer.objects.forEach(obj => {
             let type = obj.properties.find(p => p.name === "type")?.value;
             if(type === "door"){
-                new FdiDoor(this, obj.x - 10000, obj.y);
+                new FdiDoor(this, obj.x, obj.y);
             }else{
                 let sprite = this.add.sprite(obj.x, obj.y, obj.name).setVisible(true).setDepth(0).play(obj.name);
                 // Ajustar el origen si es necesario (Tiled usa esquina superior izquierda por defecto)
