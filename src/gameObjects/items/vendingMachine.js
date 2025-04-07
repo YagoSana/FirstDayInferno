@@ -14,7 +14,7 @@ export default class VendingMachine extends SpriteBase {
         this.body.setOffset(6, 0); // Ajustamos offset
         this.setScale(1.2);
         this.interactionRange = 60;
-        this.originalScaleX = 1.2; 
+        this.originalScaleX = 1.2;
         this.originalScaleY = 1.2;
 
         this.interactionArea = this.scene.add.circle(x, y, 20, 0x000000, 0);
@@ -32,7 +32,7 @@ export default class VendingMachine extends SpriteBase {
 
         // Propiedades de la máquina
         this.price = 1;
-        this.maxBulletHits = 5; // Disparos necesarios
+        this.maxBulletHits = 3; // Disparos necesarios
         this.bulletHits = 0;    // Contador de disparos recibidos
         this.maxUses = 3;
         this.remainingUses = this.maxUses;
@@ -150,26 +150,46 @@ export default class VendingMachine extends SpriteBase {
     }
 
     dispenseItem() {
-        // Crear un objeto aleatorio cerca de la máquina
-        const items = ['hamburguesa', 'mini_tinto', 'bumbo'];
-        const randomItem = Phaser.Utils.Array.GetRandom(items);
+        // Sistema de rarezas (probabilidades base)
+        let itemPools = [
+            { pool: ['moneda', 'corazon'], weight: 60 },      // Comunes (60%)
+            { pool: [ 'llave','hamburguesa', 'mini_tinto', 'bono'], weight: 35 }, // Normales (35%)
+            { pool: ['bumbo', 'pantallazo_azul', 'maletin', 'collar_macarrones', 'codigo'], weight: 5 } // Raros (5%)
+        ];
 
-        // Posición inicial (dentro de la máquina)
-        const startX = this.x;
-        const startY = this.y + 10; // Justo debajo del centro
+        // Aumentar probabilidad de items raros en última tirada
+        let isLastUse = (this.remainingUses === 1);
+        let adjustedWeights = itemPools.map(pool =>
+            pool.weight * (isLastUse && pool.pool === itemPools[2].pool ? 3 : 1)
+        );
 
-        // Posición final (fuera de la máquina)
-        const offsetX = Phaser.Math.Between(-30, 30);
-        const offsetY = Phaser.Math.Between(30, 50);
-        const endX = this.x + offsetX;
-        const endY = this.y + offsetY;
+        // Selección ponderada
+        let totalWeight = adjustedWeights.reduce((sum, w) => sum + w, 0);
+        let random = Phaser.Math.Between(1, totalWeight);
+        let selectedPool;
 
-        // Crear el ítem en posición inicial (invisible)
-        const item = new Item(this.scene, endX, endY, randomItem);
-        item.setVisible(false); // Comenzar invisible
-        item.setDepth(this.depth + 10); // Asegurar que esté sobre la máquina
+        for (let i = 0; i < itemPools.length; i++) {
+            if (random <= adjustedWeights[i]) {
+                selectedPool = itemPools[i].pool;
+                break;
+            }
+            random -= adjustedWeights[i];
+        }
 
-        // Animación de salida mejorada (sin sequence)
+        const randomItem = Phaser.Utils.Array.GetRandom(selectedPool);
+
+        // Posición y animación (manteniendo tu código original)
+        let startX = this.x;
+        let startY = this.y + 10;
+        let offsetX = Phaser.Math.Between(-30, 30);
+        let offsetY = Phaser.Math.Between(30, 50);
+        let endX = this.x + offsetX;
+        let endY = this.y + offsetY;
+
+        let item = new Item(this.scene, endX, endY, randomItem);
+        item.setVisible(false);
+        item.setDepth(this.depth + 10);
+
         this.scene.tweens.add({
             targets: item,
             alpha: { from: 0, to: 1 },
@@ -178,7 +198,6 @@ export default class VendingMachine extends SpriteBase {
             ease: 'Power2',
             onStart: () => item.setVisible(true),
             onComplete: () => {
-                // Animación de caída con bounce
                 this.scene.tweens.add({
                     targets: item,
                     y: endY,

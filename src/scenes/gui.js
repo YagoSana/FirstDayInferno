@@ -10,6 +10,7 @@ export default class GUI extends Phaser.Scene {
         this.playerStats = playerStats;
         this.hearts = [];
         this.isPlayerHurt = false;
+        this.itemKey = playerStats.equippedItem;
 
 
         // Configuración de posición
@@ -36,8 +37,15 @@ export default class GUI extends Phaser.Scene {
             .setOrigin(0)
             .setScrollFactor(0)
             .setDepth(this.depth + 2)
-            .setScale(2.43)
-            .play('gui_player_idle');
+            .setScale(2.43);
+
+            if(this,this.itemKey){
+                this.playerFrame.play(`gui_${this.itemKey}_idle`);
+            }else{
+                this.playerFrame.play('gui_player_idle');
+            }
+
+            
 
         // Marco de estado principal
         this.statusFrame = this.add.sprite(this.margin, this.margin, 'status_frame')
@@ -153,8 +161,11 @@ export default class GUI extends Phaser.Scene {
 
         if (state === 'hurt') {
             this.isPlayerHurt = true;
-
-            this.playerFrame.play('gui_player_hurt');
+            if (item) {
+                this.playerFrame.play(`gui_${item}_hurt`);
+            } else {
+                this.playerFrame.play('gui_player_hurt');
+            }
 
             // 2. Efecto de tint rojo en el fondo
             this.tweens.add({
@@ -170,9 +181,22 @@ export default class GUI extends Phaser.Scene {
 
             // 3. Volver a animación normal después de 600ms (3 repeticiones a 2 fps)
             this.time.delayedCall(800, () => {
-                this.playerFrame.play('gui_player_idle');
+
+                if (item) {
+                    this.playerFrame.play(`gui_${item}_idle`);
+                } else {
+                    this.playerFrame.play('gui_player_idle');
+                }
                 this.isPlayerHurt = false;
             });
+        }else if(state === 'idle'){
+            console.log(item);
+
+            if (item) {
+                this.playerFrame.play(`gui_${item}_idle`);
+            } else {
+                this.playerFrame.play('gui_player_idle');
+            }
         }
 
     }
