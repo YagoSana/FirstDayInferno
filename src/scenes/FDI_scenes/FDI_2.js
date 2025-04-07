@@ -4,6 +4,7 @@ import Enemy from "../../gameObjects/enemies/enemy.js";
 import Item from "../../gameObjects/items/item.js";
 import RangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import AssaultEnemy from "../../gameObjects/enemies/assaultEnemy.js";
+import turretEnemy from "../../gameObjects/enemies/turretEnemy.js";
 export default class FDI_2 extends SalaBase {
 
     constructor(key) {
@@ -88,10 +89,19 @@ export default class FDI_2 extends SalaBase {
     }
 
     spawnProps(){
-        this.enemyGroup.add(new RangedEnemy(this, 700, 80, "nerd"));
-        this.enemyGroup.add(new Enemy(this, 200, 80, "cucaracha"));
-       this.numEnemies++;
-       this.numEnemies++;
+       // this.enemyGroup.add(new RangedEnemy(this, 700, 80, "nerd"));
+       // this.enemyGroup.add(new Enemy(this, 200, 80, "cucaracha"));
+      ///this.numEnemies++;
+      this.enemyGroup.add(new turretEnemy(this, 750, 60, "nerd"));
+      this.enemyGroup.add(new turretEnemy(this, 750, 100, "nerd"));
+      this.enemyGroup.add(new turretEnemy(this, 750, 135, "nerd"));
+   
+    
+      // Ahora aplicamos el retraso en el disparo para cada enemigo
+      this.enemyGroup.getChildren().forEach((enemy, index) => {
+        // Aquí le damos a cada enemigo un retraso escalonado para empezar a disparar
+        enemy.attackCooldown = index * 1100; // 1000 ms de diferencia entre cada uno (ajustable)
+      });
         }
     
     spawBlood(){

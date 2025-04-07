@@ -27,8 +27,10 @@ export default class tutorialManager extends Phaser.Scene {
         // Si los stats del jugador no están disponibles, asigna un valor predeterminado
         if (data && data.playerStats) {
             this.playerStats = data.playerStats;
+            this.isTutorial = false;
         } else {
-            this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys:0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500 }; // Valores predeterminados
+            this.playerStats = { health: 1, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500 }; // Valores predeterminados
+            this.isTutorial = true;
         }
     }
 
@@ -102,7 +104,14 @@ export default class tutorialManager extends Phaser.Scene {
 
         this.mapStatus = new Map();
         this.mapStatus.set("tutorial_1", false);
-        this.scene.start("tutorial_1", { x: 238, y: 155, playerStats: this.playerStats, managerKey: "tutorialManager", status: this.mapStatus.get("tutorial_1") });
+        this.mapStatus.set("tutorial_3", false);
+        if (this.isTutorial) {
+            this.scene.start("tutorial_1", { x: 238, y: 155, playerStats: this.playerStats, managerKey: "tutorialManager", status: this.mapStatus.get("tutorial_1") });
+        }
+        else {
+            this.scene.start("tutorial_3", { x: 120, y: 50, playerStats: this.playerStats, managerKey: "tutorialManager", status: this.mapStatus.get("tutorial_3") });
+        }
+
     }
 
     cambiarSala(zone) {
@@ -114,7 +123,7 @@ export default class tutorialManager extends Phaser.Scene {
         }
         this.scene.launch(zone.spawnRoom, { x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "tutorialManager", status: this.mapStatus.get(zone.spawnRoom) });
     }
-    
+
 
     guardarPlayerStats(stats) {
         this.playerStats = stats;

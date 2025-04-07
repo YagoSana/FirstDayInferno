@@ -43,6 +43,7 @@ import explode from '../../assets/music/explode.wav';
 //GUI ------------------------------------------------------
 import vidaJugador from "../../assets/sprites/vidaPlayer.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
+import game_over_screen from "../../assets/sprites/enemy_game_over.png";
 
 
 /**
@@ -167,6 +168,12 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
     });
+
+    this.load.spritesheet("game_over_screen", game_over_screen, {
+      frameWidth: 100,
+      frameHeight: 100,
+    });
+
 
   }
 
@@ -541,17 +548,41 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
       startFrame: 11
     });
+    
+    this.textures.addSpriteSheet('boton_fullscreen', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 12
+    });
+
+    this.textures.addSpriteSheet('boton_fullscreen_not', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 13
+    });
+
+    this.textures.addSpriteSheet('boton_mute', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 14
+    });
+
+    this.textures.addSpriteSheet('boton_mute_hover', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 15
+    });
 
     this.anims.create({
       key: "gui_player_idle",
-      frames: this.anims.generateFrameNames("player_gui", { start: 12, end: 13 }),
+      frames: this.anims.generateFrameNames("player_gui", { start: 16, end: 17 }),
       frameRate: 2,
       repeat: -1,
     });
 
     this.anims.create({
       key: "gui_player_hurt",
-      frames: this.anims.generateFrameNames("player_gui", { start: 14, end: 15 }),
+      frames: this.anims.generateFrameNames("player_gui", { start: 18, end: 19 }),
       frameRate: 2,
       repeat: -1,
     });
@@ -560,7 +591,7 @@ export default class Boot extends Phaser.Scene {
       key: "fire_start",
       frames: this.anims.generateFrameNames("fire", { start: 0, end: 3 }),
       frameRate: 8,
-      repeat: 0,
+      repeat: 1,
     });
 
     this.anims.create({
@@ -574,7 +605,49 @@ export default class Boot extends Phaser.Scene {
       key: "fire_end",
       frames: this.anims.generateFrameNames("fire", { start: 12, end: 16 }),
       frameRate: 8,
-      repeat: 0,
+      repeat: 1,
+    });
+
+    this.textures.addSpriteSheet('default_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 0
+    });
+
+    this.textures.addSpriteSheet('cucaracha_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 1
+    });
+
+    this.textures.addSpriteSheet('cat_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 2
+    });
+
+    this.textures.addSpriteSheet('nerd_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 3
+    });
+
+    this.textures.addSpriteSheet('zombie_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 4
+    });
+
+    this.textures.addSpriteSheet('fire_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 5
+    });
+
+    this.textures.addSpriteSheet('uncanny_cat', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 8
     });
 
     this.scene.start('MainMenu');

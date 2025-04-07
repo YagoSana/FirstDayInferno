@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import SpriteBase from '../spriteBase';
 import Item from './item';
+import DialogueBox from '../../scenes/conversation';
 
 export default class merchant extends SpriteBase {
     constructor(scene, x, y) {
@@ -58,12 +59,15 @@ export default class merchant extends SpriteBase {
 
         this.cursors = this.scene.input.keyboard.createCursorKeys();
         this.scene.input.keyboard.on('keydown-E', () => {
-            if (this.modoHabla) {
-                this.hablar();
-            } else {
-                this.useMachine(); // Aquí cambiamos onInteract por useMachine
+            if (this.isPlayerInRange()) {  // Verificamos si el jugador está en el rango
+                if (this.modoHabla) {
+                    this.hablar();
+                } else {
+                    this.useMachine(); // Aquí cambiamos onInteract por useMachine
+                }
             }
         }, this);
+        
 
         // Texto para modo disparo
         this.bulletText = this.scene.add.text(this.x - 30, this.y - 40, 'Disparos: 0/5', {
@@ -134,28 +138,35 @@ export default class merchant extends SpriteBase {
         this.noCoinsText.setVisible(false);
         this.dialogoText.setVisible(false);  // Ocultar también el diálogo
     }
+ // Método que verifica si el jugador está dentro del rango de interacción
+// Método que verifica si el jugador está dentro del rango de interacción
+isPlayerInRange() {
+    const distance = Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y);
+    return distance <= this.interactionRange;  // Devuelve true si está dentro del rango
+}
 
-    useMachine() {
-        if (this.isOperational || !this.isInUse || (this.scene.time.now - this.lastUseTime > this.useCooldown)) {
-            if (this.scene.player.canAfford(this.price)) {
-                this.scene.player.spendCoins(this.price);
 
-                this.isInUse = true;
-                this.lastUseTime = this.scene.time.now;
+useMachine() {
+    if (this.isOperational || !this.isInUse || (this.scene.time.now - this.lastUseTime > this.useCooldown)) {
+        if (this.scene.player.canAfford(this.price)) {
+            this.scene.player.spendCoins(this.price);
 
-                this.stretchMachine();
-                this.dispenseItem();
+            this.isInUse = true;
+            this.lastUseTime = this.scene.time.now;
 
-                // Cambiar a modo hablar después de comprar
-                this.modoHabla = true;
-                this.interactionText.setText('Hablar'); // Cambiar texto en UI
-            } else {
-                this.noCoinsText.setVisible(true);
-                this.shakeMachine(); // Efecto de rechazo
-            }
+            this.stretchMachine();
+            this.dispenseItem();
+
+            // Cambiar a modo hablar después de comprar
+            this.modoHabla = true;
+            this.interactionText.setText('Hablar'); // Cambiar texto en UI
+        } else {
+            this.noCoinsText.setVisible(true);
+            this.shakeMachine(); // Efecto de rechazo
         }
     }
-
+}
+   
     dispenseItem() {
         const items = ['hamburguesa', 'mini_tinto', 'bumbo'];
         const startY = this.y + 60; // Justo debajo de la máquina

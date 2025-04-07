@@ -28,15 +28,18 @@ export default class introMedicina extends SalaBase {
     const tileset3 = map.addTilesetImage("TX Props", "Props");
     const tileset4 = map.addTilesetImage("TX Shadow", "Sombras");
     const tileset5 = map.addTilesetImage("TX Shadow Plant", "SombrasPlantas");
+    const tileset6 = map.addTilesetImage("Room_Builder_free_16x16", "Muebles");
 
-    const layer1 = map.createLayer("cesped", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer2 = map.createLayer("sombrasPropsConColision", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer3 = map.createLayer("suelo", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer4 = map.createLayer("sombrasArboles", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer5 = map.createLayer("propsSinColision", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer6 = map.createLayer("propsConColision", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
-    const layer7 = map.createLayer("arboles", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    const layer8 = map.createLayer("bordes", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
+    const layer1 = map.createLayer("cesped", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
+    const layer2 = map.createLayer("sombrasPropsConColision", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
+    const layer3 = map.createLayer("suelo", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
+    const layer4 = map.createLayer("sombrasArboles", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
+    const layer5 = map.createLayer("propsSinColision", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
+    const layer6 = map.createLayer("propsConColision", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
+    const layer7 = map.createLayer("arboles", [tileset1, tileset2, tileset3, tileset4, tileset5, tileset6], 0, 0);
 
+    layer8.setCollisionByExclusion([-1], true);
     layer6.setCollisionByExclusion([-1], true);
     layer7.setDepth(10);
 
@@ -47,12 +50,12 @@ export default class introMedicina extends SalaBase {
     let troncosLayer = map.getObjectLayer("colisionesObj");
     troncosLayer.objects.forEach((obj) => {
       let tronco = this.add.rectangle(
-        obj.x + obj.width / 2,
-        obj.y - obj.height / 2 + 20,
-        obj.width,
-        obj.height,
-        0x000000,
-        0
+      obj.x + obj.width / 2,
+      obj.y - obj.height / 2 + 20,
+      obj.width,
+      obj.height,
+      0x000000,
+      0
       );
       this.physics.add.existing(tronco, true);
       this.troncos.add(tronco);
@@ -62,7 +65,7 @@ export default class introMedicina extends SalaBase {
     this.transitionZones = this.physics.add.group();
     let transitionLayer = map.getObjectLayer("transiciones");
     transitionLayer.objects.forEach((obj) => {
-      const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
+      const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height).setOrigin(0, 0).setOffset(0, 0);
       zone.spawnRoom = obj.properties.find((p) => p.name === "spawnRoom")?.value;
       zone.spawnX = obj.properties.find((p) => p.name === "spawnX")?.value;
       zone.spawnY = obj.properties.find((p) => p.name === "spawnY")?.value;
@@ -94,6 +97,7 @@ export default class introMedicina extends SalaBase {
     // Añadir colisiones
     this.physics.add.collider(this.player, layer6);
     this.physics.add.collider(this.enemyGroup, layer6);
+    this.physics.add.collider(this.enemyGroup, layer8);
     this.physics.add.collider(this.player, this.troncos);
     this.physics.add.collider(this.bulletGroup, this.troncos, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, this.troncos, this.onBulletCollision);
@@ -101,11 +105,14 @@ export default class introMedicina extends SalaBase {
     this.physics.add.collider(this.enemyBulletGroup, layer6, this.onBulletCollision);
 
     this.physics.add.collider(this.enemyGroup, this.troncos);
+
+    this.doorFireManager.createFiresForZones(this.transitionZones);
+    this.doorFireManager.setupCollisions(this.player);
+    
     let spritesLayer = map.getObjectLayer("sprites");
     if (!this.status) {
       spritesLayer.objects.forEach(obj => {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
-        console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
           this.numEnemies++;
           switch (obj.name) {
@@ -127,7 +134,6 @@ export default class introMedicina extends SalaBase {
     else {
       spritesLayer.objects.forEach(obj => {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
-        console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
           this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
         }

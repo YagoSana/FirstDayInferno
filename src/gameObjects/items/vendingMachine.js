@@ -304,6 +304,7 @@ export default class VendingMachine extends SpriteBase {
                 this.bulletHits = 0;
                 this.dispenseItem();
                 this.disableMachine();
+                this.scene.numEnemiesBeaten++;
             }
 
         }

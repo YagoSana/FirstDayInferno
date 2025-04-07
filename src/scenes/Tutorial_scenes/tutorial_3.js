@@ -65,12 +65,21 @@ export default class Tutorial_3 extends SalaBase {
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
 
+        this.doorFireManager.createFiresForZones(this.transitionZones);
+        this.doorFireManager.setupCollisions(this.player);
+
         let spritesLayer = map.getObjectLayer("sprites");
         spritesLayer.objects.forEach(obj => {
             let type = obj.properties.find(p => p.name === "tipo")?.value;
             // console.log(`Tipo del objeto de tiled ${type}`);
             if (type === "item") {
-                new VendingMachine(this, obj.x, obj.y);
+                if (!this.status) { //sala sin objetios
+                    this.numEnemies++
+                }
+                let vm = new VendingMachine(this, obj.x, obj.y);
+                if (this.status) { //sala completada y la maquina ya esta usada
+                    vm.disableMachine();
+                }
             }
         });
     }

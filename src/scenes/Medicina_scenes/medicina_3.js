@@ -53,7 +53,7 @@ export default class medicina_3 extends SalaBase {
     let transitionLayer = map.getObjectLayer("transiciones");
     if (transitionLayer) {
       transitionLayer.objects.forEach((obj) => {
-        const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
+        const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height).setOrigin(0, 0).setOffset(0, 0);
         zone.spawnRoom = obj.properties.find((p) => p.name === "spawnRoom")?.value;
         zone.spawnX = obj.properties.find((p) => p.name === "spawnX")?.value;
         zone.spawnY = obj.properties.find((p) => p.name === "spawnY")?.value;
@@ -75,7 +75,7 @@ export default class medicina_3 extends SalaBase {
     //const boundY = -(screenHeight / zoom - mapHeight) / 2;
 
     this.cameras.main.setZoom(zoom);
-    this.cameras.main.setBounds(boundX, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.setBounds(boundX+80, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
     // Ajustar límites del mundo y cámara
@@ -118,7 +118,7 @@ export default class medicina_3 extends SalaBase {
     );
     this.darkOverlay.setOrigin(0, 0);
     this.darkOverlay.setScrollFactor(0); // Fijo en la cámara
-    this.darkOverlay.setDepth(999); // Asegurar que está encima de todo
+    this.darkOverlay.setDepth(100); // Asegurar que está encima de todo
     // Crear un gráfico para la "luz"
     this.light = this.make.graphics();
     this.light.fillStyle(0xffffff, 1);
@@ -131,6 +131,8 @@ export default class medicina_3 extends SalaBase {
     // Aplicar la máscara a la capa oscura
     this.darkOverlay.setMask(this.lightMask);
 
+    this.doorFireManager.createFiresForZones(this.transitionZones);
+    this.doorFireManager.setupCollisions(this.player);
 
     console.log("Colisiones añadidas correctamente");
     let spritesLayer = map.getObjectLayer("sprites");

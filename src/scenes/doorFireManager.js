@@ -6,6 +6,11 @@ export default class DoorFireManager {
             allowGravity: false
         });
         this.fireColliders = []; // Para almacenar las colisiones
+        this.fireCreated = false;
+    }
+
+    checkCreatedFire(transitionZones){
+        return this.fireCreated;
     }
 
     createFiresForZones(transitionZones) {
@@ -16,56 +21,60 @@ export default class DoorFireManager {
             const doorHeight = zone.body.height;
             const isVertical = doorHeight > doorWidth;
             // console.log("Dimensiones reales:", doorWidth, doorHeight, isVertical);
-
-            const fireHeight = 32; // Tamaño de tu sprite de fuego
-            const fireOverlap = 8; // Solapamiento entre fuegos (ajustable)
+            let fireHeight = 32; // Tamaño de tu sprite de fuego
+            let fireWidth = 32;
+            let fireOverlap = 20; // Solapamiento entre fuegos (ajustable)
             // console.log(doorHeight, doorWidth, isVertical);
 
             if (isVertical) {
-                // PUERTAS VERTICALES (ej. 16x48)
-                const segmentHeight = 32; // Altura por segmento de fuego
-                const overlap = 20; // Solapamiento entre segmentos
-                const segmentCount = Math.ceil(doorHeight / (segmentHeight - overlap));
-    
+                let segmentCount = Math.ceil(doorHeight / (fireHeight - fireOverlap));
+
                 for (let i = 0; i < segmentCount; i++) {
-                    const yPos = zone.y + (i * (segmentHeight - overlap));
+                    let yPos = zone.y + (i * (fireHeight - fireOverlap));
                     // console.log(yPos);
                     this.createFire(
-                        zone.x + doorWidth/2,
-                        yPos + segmentHeight/2,
+                        zone.x + doorWidth / 2,
+                        yPos + fireHeight / 2,
                         true
                     );
                 }
             } else {
-                // PUERTAS HORIZONTALES
-                const segmentWidth = 16;
-                for (let i = 0; i < Math.ceil(doorWidth / segmentWidth); i++) {
+                let segmentCount = Math.ceil(doorWidth / (fireWidth - fireOverlap));
+
+                for (let i = 0; i < segmentCount; i++) {
+                    let xPos = zone.x + (i * (fireWidth - fireOverlap));
+
                     this.createFire(
-                        zone.x + (i * segmentWidth),
-                        zone.y + doorHeight/2,
+                        xPos + fireWidth / 2 - 8,
+                        zone.y + doorHeight / 2,
                         false
                     );
                 }
             }
-    
-  
+
         });
+        this.fireCreated = true;
 
         this.startFireAnimation();
     }
 
     createFire(x, y, isVertical) {
         const fire = this.scene.add.sprite(x, y, 'fire')
-            .setDepth(10)
-            .setOrigin(0.5,1);
+            .setDepth(2);
 
-              // Añadir cuerpo de física
+        if (isVertical) {//esto es para que el sprite cuadre con la hitbox en vertical
+            fire.setOrigin(0.5, 1);
+        }
+
+        // Añadir cuerpo de física
         this.scene.physics.add.existing(fire);
-        fire.body.setSize(
-            isVertical ? 16 : 16,  // Ancho del cuerpo de colisión
-            isVertical ? 16 : 16   // Alto del cuerpo de colisión
-        );
-        
+        let fireSize = 16;
+        fire.body.setSize(fireSize, fireSize);
+
+        if (!isVertical) { //esto es para que el sprite cuadre con la hitbox en horizontal
+            fire.body.setOffset(fireSize / 2, fireSize);
+        }
+
         this.doorFires.add(fire);
         return fire;
     }
@@ -77,21 +86,13 @@ export default class DoorFireManager {
 
         // Crear colisión entre fuego y jugador
         this.fireColliders.push(
-            this.scene.physics.add.collider(
-                player,
-                this.doorFires,
-                this.handleFireCollision,
-                null,
-                this
-            )
+            this.scene.physics.add.collider(player, this.doorFires, this.handleFireCollision, null, this)
         );
     }
 
-    // handleFireCollision(player, fire) {
-    //     // Efecto cuando el jugador toca el fuego
-    //     player.takeDamage(1); // Ejemplo: quitar 1 de vida
-    //     // Puedes añadir efectos visuales/sonidos aquí
-    // }
+    handleFireCollision(player, fire) {
+        player.hurtByFire();
+    }
 
     startFireAnimation() {
         this.doorFires.getChildren().forEach(fire => {
@@ -129,6 +130,7 @@ export default class DoorFireManager {
             }, this);
         });
 
+        this.fireCreated = false;
         this.doorFires.clear(true, true);
     }
 }

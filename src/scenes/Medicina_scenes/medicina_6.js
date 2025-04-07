@@ -13,8 +13,6 @@ export default class medicina_6 extends SalaBase {
   create() {
     super.create("medicina_6");
 
-    console.log("Sala 6 de medicina inicializada");
-
     // Inicialización de grupos
     this.enemyGroup = this.physics.add.group();
     this.bulletGroup = this.physics.add.group();
@@ -52,7 +50,7 @@ export default class medicina_6 extends SalaBase {
     let transitionLayer = map.getObjectLayer("transiciones");
     if (transitionLayer) {
       transitionLayer.objects.forEach((obj) => {
-        const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
+        const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height).setOrigin(0, 0).setOffset(0, 0);
         zone.spawnRoom = obj.properties.find((p) => p.name === "spawnRoom")?.value;
         zone.spawnX = obj.properties.find((p) => p.name === "spawnX")?.value;
         zone.spawnY = obj.properties.find((p) => p.name === "spawnY")?.value;
@@ -67,16 +65,9 @@ export default class medicina_6 extends SalaBase {
     let colisionesLayer = map.getObjectLayer("colisionesObj");
     if (colisionesLayer) {
       colisionesLayer.objects.forEach((obj) => {
-        let colision = this.add.rectangle(
-          obj.x + obj.width / 2,
-          obj.y - obj.height / 2 + 20,
-          obj.width,
-          obj.height,
-          0x000000,
+        let colision = this.add.rectangle(obj.x, obj.y, obj.width, obj.height, 0x000000,
           0 // Transparente
-        );
-
-        // Agregar físicas
+        ).setOrigin(0, 0);
         this.physics.add.existing(colision, true);
         this.colisiones.add(colision);
       });
@@ -140,7 +131,7 @@ export default class medicina_6 extends SalaBase {
     );
     this.darkOverlay.setOrigin(0, 0);
     this.darkOverlay.setScrollFactor(0); // Fijo en la cámara
-    this.darkOverlay.setDepth(999); // Asegurar que está encima de todo
+    this.darkOverlay.setDepth(100); // Asegurar que está encima de todo
     // Crear un gráfico para la "luz"
     this.light = this.make.graphics();
     this.light.fillStyle(0xffffff, 1);
@@ -153,7 +144,8 @@ export default class medicina_6 extends SalaBase {
     // Aplicar la máscara a la capa oscura
     this.darkOverlay.setMask(this.lightMask);
 
-
+    this.doorFireManager.createFiresForZones(this.transitionZones);
+    this.doorFireManager.setupCollisions(this.player);
 
     let spritesLayer = map.getObjectLayer("sprites");
     if (!this.status) {
@@ -161,16 +153,19 @@ export default class medicina_6 extends SalaBase {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
         console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
-          this.numEnemies++;
           switch (obj.name) {
             case "cucaracha":
+              this.numEnemies++;
               this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
               break;
             case "zombie":
+              this.numEnemies++;
               this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
               break;
             case "cat":
-              this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name));
+              console.log("GatosVivos: ", this.game.global.gatosVivos);  // Accede a gatosVivos
+              this.game.global.gatosVivos.push(obj.id); // Añadir el ID del gato a la lista
+              this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
               break;
             default:
               console.log("Tipo de enemigo no reconocido:", obj.name);
@@ -181,19 +176,21 @@ export default class medicina_6 extends SalaBase {
     else {
       spritesLayer.objects.forEach(obj => {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
-        console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
-          this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
+          if (obj.name == "cat" && this.game.global.gatosVivos.includes(obj.id)) {
+            this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
+          }
+          else this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
         }
       });
     }
   }
 
-  bossStatus(){
-    if(this.numEnemiesBeaten == this.numEnemies) {
+  bossStatus() {
+    if (this.numEnemiesBeaten == this.numEnemies) {
       this.cameras.main.fadeOut(1000, 0, 0, 0);
-        this.cameras.main.once('camerafadeoutcomplete', () => {
-            this.manager.cambiarSala(zone);
+      this.cameras.main.once('camerafadeoutcomplete', () => {
+        this.manager.cambiarSala(zone);
       });
       this.manager.guardarPlayerStats(this.player.getStats());
       this.manager.volverAlLobby("medicina_6");

@@ -3,6 +3,7 @@ import MainMenu from './scenes/mainmenu.js';
 import PauseMenu from './scenes/pauseMenu.js';
 import End from './scenes/end.js';
 import GUI from './scenes/gui.js';
+import GameOver from './scenes/gameOver.js';
 
 import FDI_1 from './scenes/FDI_scenes/FDI_1.js';
 import FDI_2 from './scenes/FDI_scenes/FDI_2.js';
@@ -38,15 +39,17 @@ import medicina_6 from './scenes/Medicina_scenes/medicina_6.js';
  */
 let config = {
     type: Phaser.AUTO,
-    width: 1000,
-    height: 500,
     parent: 'juego',
     scale: {
-        //mode: Phaser.Scale.FIT,  
-        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
+        mode: Phaser.Scale.FIT,
+        width: 1000,
+        height: 562,
+        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
+        fullscreenTarget: 'game-container'
+
     },
     pixelArt: true,
-    scene: [Boot, MainMenu, PauseMenu, SelectorNivel,TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, GUI, InformaticaManager,FDI_1, FDI_2,FDI_3, FDI_4, FDI_5,FDI_6,FDI_2_1, FDI_2_2, FDI_2_3, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, End],
+    scene: [Boot, MainMenu, PauseMenu, SelectorNivel, GameOver, TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, GUI, InformaticaManager, FDI_1, FDI_2, FDI_3, FDI_4, FDI_5, FDI_6, FDI_2_1, FDI_2_2, FDI_2_3, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, End],
 
     physics: {
         default: 'arcade',
