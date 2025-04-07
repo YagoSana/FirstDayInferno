@@ -173,12 +173,12 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":0
+                         "value":159
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":0
+                         "value":406
                         }],
                  "rotation":0,
                  "type":"",
@@ -200,12 +200,12 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":704
+                         "value":120
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":67
+                         "value":280
                         }],
                  "rotation":0,
                  "type":"",
@@ -227,12 +227,12 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":384
+                         "value":46
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":67
+                         "value":60
                         }],
                  "rotation":0,
                  "type":"",

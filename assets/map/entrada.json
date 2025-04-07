@@ -225,22 +225,22 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":46
+                         "value":445
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":422
+                         "value":127
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":15.3333333333333,
-                 "x":1.33333333333333,
-                 "y":424
+                 "x":-4.44089209850063e-15,
+                 "y":404
                 }, 
                 {
-                 "height":44.6666666666667,
+                 "height":46.6666666666667,
                  "id":8,
                  "name":"",
                  "properties":[
@@ -252,19 +252,19 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":238
+                         "value":242
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":432
+                         "value":600
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":13.3333333333333,
-                 "x":306,
-                 "y":70.6666666666666
+                 "x":304.666666666667,
+                 "y":49.9999999999999
                 }, 
                 {
                  "height":48.6666666666667,
@@ -290,8 +290,8 @@
                  "type":"",
                  "visible":true,
                  "width":12.6666666666667,
-                 "x":2,
-                 "y":86
+                 "x":0.666666666666666,
+                 "y":62
                 }, 
                 {
                  "height":47.7575757575758,
@@ -306,22 +306,22 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":238
+                         "value":242
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":432
+                         "value":433
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":16.6666666666666,
-                 "x":303.333333333333,
-                 "y":184.727272727273
+                 "x":304,
+                 "y":160.060606060606
                 }, 
                 {
-                 "height":28.6666666666666,
+                 "height":22.6666666666666,
                  "id":20,
                  "name":"",
                  "properties":[
@@ -345,7 +345,7 @@
                  "visible":true,
                  "width":49.3333333333334,
                  "x":135.333333333333,
-                 "y":452
+                 "y":441.333333333333
                 }],
          "opacity":1,
          "properties":[

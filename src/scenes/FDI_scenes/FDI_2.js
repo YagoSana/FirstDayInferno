@@ -69,7 +69,7 @@ export default class FDI_2 extends SalaBase {
             this.spawnProps();
         }
         else{
-            this.spawBlood();
+            this.spawnBlood();
         }
         
         this.transitionZones = this.physics.add.group();
@@ -91,7 +91,7 @@ export default class FDI_2 extends SalaBase {
     spawnProps(){
        // this.enemyGroup.add(new RangedEnemy(this, 700, 80, "nerd"));
        // this.enemyGroup.add(new Enemy(this, 200, 80, "cucaracha"));
-      ///this.numEnemies++;
+      this.numEnemies=3;
       this.enemyGroup.add(new turretEnemy(this, 750, 60, "nerd"));
       this.enemyGroup.add(new turretEnemy(this, 750, 100, "nerd"));
       this.enemyGroup.add(new turretEnemy(this, 750, 135, "nerd"));
@@ -104,7 +104,7 @@ export default class FDI_2 extends SalaBase {
       });
         }
     
-    spawBlood(){
+    spawnBlood(){
        
     }
 }

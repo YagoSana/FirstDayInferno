@@ -87,7 +87,7 @@ export default class FDI_3 extends SalaBase {
             //this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
             //this.numEnemies++;
             //new Item(this, 200, 200,"hamburguesa");
-                this.enemyGroup.add(new RangedAreaEnemy(this, 160, 240, "nerd"));
+       this.enemyGroup.add(new RangedAreaEnemy(this, 160, 240, "nerd"));
        this.numEnemies++;
         }
     
