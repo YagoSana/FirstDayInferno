@@ -136,6 +136,10 @@ export default class GUI extends Phaser.Scene {
             this.coinText.setText(coins);
         });
 
+        this.game.events.on('keyChanged', (keys) => {
+            this.keyText.setText(keys);
+        });
+
         this.game.events.on('playerState', ({ item, state }) => {
             this.updatePlayerState(item, state);
         });

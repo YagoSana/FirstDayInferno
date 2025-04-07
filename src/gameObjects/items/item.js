@@ -34,7 +34,7 @@ export default class Item extends SpriteBase {
       "moneda": (player) => player.addCoin(1),
       "mini_tinto": (player) => {
         player.changeHealth(4, true);
-        player.changeSpeed(0.5);
+        player.changeSpeed(0.25);
       },
       "llave": (player) => player.pickKey(1),
       "bumbo": (player) => player.itemAppearance("bumbo", 0), // cabeza de Isaac
@@ -115,12 +115,12 @@ export default class Item extends SpriteBase {
   getDescription() {
     const descriptions = {
       "hamburguesa": {
-        description: "Recupera 1 punto de salud.",
+        description: "Recuperas 2 puntos de salud.",
         effect: "Salud +1"
       },
       "mini_tinto": {
         description: "Un pequeño trago de energía, pero te ralentiza temporalmente.",
-        effect: "Salud +2, Velocidad -50%"
+        effect: "Salud +4, Velocidad -25%"
       },
       "bumbo": {
         description: "Me parece que ya lo has visto antes...",
