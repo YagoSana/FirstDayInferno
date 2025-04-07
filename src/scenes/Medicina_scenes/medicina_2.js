@@ -136,10 +136,8 @@ export default class medicina_2 extends SalaBase {
               this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
               break;
             case "cat":
-
               console.log("GatosVivos: ", this.game.global.gatosVivos);  // Accede a gatosVivos
               this.game.global.gatosVivos.push(obj.id); // Añadir el ID del gato a la lista
-
               this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
               break;
             default:
