@@ -117,7 +117,7 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":80
+                         "value":240
                         }, 
                         {
                          "name":"spawnY",
