@@ -61,5 +61,8 @@ export default class Tutorial_debug extends SalaBase {
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
 
         new Item(this, 200, 200,"llave");
+        new Item(this, 300, 200,"hamburguesa");
+        new Item(this, 250, 250, "hamburguesa");
+        new Item(this, 275, 275, "hamburguesa");
     }
 }

@@ -1,6 +1,6 @@
 import SalaBase from "../salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
-import FdiDoor from "../../gameObjects/items/fdiDoor.js";
+import FdiDoor from "../../gameObjects/items/door.js";
 
 export default class Tutorial_1 extends SalaBase {
     constructor(key) {
@@ -75,15 +75,9 @@ export default class Tutorial_1 extends SalaBase {
 
         let spritesLayer = map.getObjectLayer("sprites");
         spritesLayer.objects.forEach(obj => {
-            let type = obj.properties.find(p => p.name === "type")?.value;
-            if(type === "door"){
-                new FdiDoor(this, obj.x, obj.y);
-            }else{
-                let sprite = this.add.sprite(obj.x, obj.y, obj.name).setVisible(true).setDepth(0).play(obj.name);
-                // Ajustar el origen si es necesario (Tiled usa esquina superior izquierda por defecto)
-                sprite.setOrigin(0, 0); // Ajusta según tu necesidad
-            }
-            
+            let sprite = this.add.sprite(obj.x, obj.y, obj.name).setVisible(true).setDepth(0).play(obj.name);
+            // Ajustar el origen si es necesario (Tiled usa esquina superior izquierda por defecto)
+            sprite.setOrigin(0, 0); // Ajusta según tu necesidad
         });
     }
 }

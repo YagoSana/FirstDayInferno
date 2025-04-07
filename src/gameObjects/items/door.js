@@ -2,9 +2,15 @@ import Phaser from 'phaser';
 import SpriteBase from '../spriteBase';
 import Item from './item';
 
-export default class FdiDoor extends SpriteBase {
-    constructor(scene, x, y){
-        super(scene, x, y, 'fdiDoor');
+export default class Door extends SpriteBase {
+    constructor(scene, x, y, key) {
+        super(scene, x, y, key);
+
+        if(key === "medDoor"){
+            this.animation = 'medDoor-open';
+            this.ini = 20;
+            this.end = 37;
+        }
 
         this.body.setImmovable(true);
         this.body.allowGravity = false;
@@ -27,9 +33,9 @@ export default class FdiDoor extends SpriteBase {
         this.isLocked = true;
         this.bulletHits = 0;
 
-        this.play('fdiDoor-open');
+        this.play(this.animation);
         this.stop();
-        this.setFrame(0);//Primer frame (puerta cerrada)
+        this.setFrame(this.ini);//Primer frame (puerta cerrada)
 
         this.interactionText = this.scene.add.text(0, 0, 'Abrir puerta', {
             fontSize: '16px',
@@ -59,13 +65,13 @@ export default class FdiDoor extends SpriteBase {
     showInteractionUI(door, player){
         if(this.isLocked){
             player.nearDoor = this;
-            this.interactionText.setPosition(this.x - 100 / 2, this.y - 40);
+            this.interactionText.setPosition(this.x - 100 / 2, this.y - 33);
             this.interactionText.setVisible(true);
 
-            this.eKeyIcon.setPosition(this.x - 60, this.y - 30);
+            this.eKeyIcon.setPosition(this.x - 60, this.y - 23);
             this.eKeyIcon.setVisible(true);
 
-            this.noKeyText.setPosition(this.x - 70, this.y - 40);
+            this.noKeyText.setPosition(this.x - 70, this.y - 33);
         }else{
             this.hideInteractionUI();
         }
@@ -82,7 +88,7 @@ export default class FdiDoor extends SpriteBase {
             if(this.scene.player.keys > 0){
                 this.scene.player.spendKey(1);
 
-                this.play('fdiDoor-open');
+                this.play(this.animation);
                 this.once('animationcomplete', () => {
                     this.disableDoor();
                 });
@@ -97,7 +103,7 @@ export default class FdiDoor extends SpriteBase {
     disableDoor(){
         this.isLocked = false;
         this.stop();
-        this.setFrame(18);//Ultimo frame (puerta abierta)
+        this.setFrame(this.end);//Ultimo frame (puerta abierta)
         //Quitar colisiones con jugador
         this.hideInteractionUI();
     }
