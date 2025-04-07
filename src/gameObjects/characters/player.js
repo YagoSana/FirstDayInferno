@@ -277,7 +277,7 @@ export default class Player extends SpriteBase {
         this.equippedItem = itemKey; // Guarda el ítem equipado
         this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'idle' });
 
-        // console.log(`Item ${this.equippedItem}: equipado`);
+        console.log(`Item ${this.equippedItem}: equipado`);
     }
 
     shoot(dirX, dirY) {
@@ -370,8 +370,8 @@ export default class Player extends SpriteBase {
             this.lastHurtTime = currentTime; // Actualizar el último tiempo de daño
 
             // Efecto de parpadeo (sin usar this.blinkTimer)
-            const blinkDuration = 1000; // 1 segundo de parpadeo
-            const blinkInterval = 100; // Cada 100ms cambia la visibilidad
+            let blinkDuration = 1000; // 1 segundo de parpadeo
+            let blinkInterval = 100; // Cada 100ms cambia la visibilidad
             let blinkCount = Math.floor(blinkDuration / blinkInterval);
             let isVisible = true;
 

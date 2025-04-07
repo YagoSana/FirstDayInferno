@@ -4,7 +4,7 @@ import SpriteBase from '../spriteBase';
 const DEFAULT_SIZE = 0.65;
 const HOVER_SIZE = 0.8;
 const ITEM_RANGE = 60;
-const LIFETIME = 100000;
+const LIFETIME = 30000;
 const COLOR_GLOW = 0xb55088;
 const BG_COLOR = '#000000';
 const TEXT_COLOR = '#ffffff';
@@ -36,8 +36,10 @@ export default class Item extends SpriteBase {
         player.changeHealth(4, true);
         player.changeSpeed(0.5);
       },
-      "bumbo": (player) => player.itemAppearance("isaac", 0), // cabeza de Isaac
       "llave": (player) => player.pickKey(1),
+      "bumbo": (player) => player.itemAppearance("bumbo", 0), // cabeza de Isaac
+      "pantallazo_azul": (player) => player.itemAppearance("pantallazo_azul", 1), // cabeza de Isaac
+
       "bono": (player) => {
         player.changeSpeed(1.3);
         player.changeCooldown(-150);//TODO VER ESTO
@@ -96,13 +98,13 @@ export default class Item extends SpriteBase {
       "bumbo": "Bumbo",
       "hamburguesa": "Hamburguesa",
       "mini_tinto": "Mini de Tinto",
-      "bono": "bono",
-      "codigo": "codigo",
-      "pantallazo_azul": "pantallazo_azul",
-      "collar_macarrones": "collar_macarrones",
-      "maletin": "maletin",
-      "bolsa_sospechosa": "bolsa sospechosa",
-      "corazon": "corazon",
+      "bono": "Bono Transporte",
+      "codigo": "Codigo Compilado",
+      "pantallazo_azul": "Pantallazo Azul",
+      "collar_macarrones": "Collar de Macarrones",
+      "maletin": "Maletin del Lab",
+      "bolsa_sospechosa": "Bolsa Sospechosa",
+      "corazon": "Corazon",
       // Añade más mapeos según necesites
     };
 
@@ -136,15 +138,15 @@ export default class Item extends SpriteBase {
         description: "Actualizaste a Windows 11. Nadie sabe cómo funciona.",
         effect: "Tu disparo puede bloquear a los enemigos durante 1.5 segundos."
       },
-      "collar_macarrones":{
+      "collar_macarrones": {
         description: "Creado con esfuerzo y sudor por un estudiante de magisterio como proyecto de TFG.",
         effect: "El personaje cambia su proyectil a un cacho de plastilina."
       },
-      "maletin":{
+      "maletin": {
         description: "Maletín que contiene una placa en su interior. Nadie sabe cómo funciona.",
         effect: "Te mueves más lento pero obtienes más escudo."
       },
-      "bolsa_sospechosa":{
+      "bolsa_sospechosa": {
         description: "Contiene unas hojas verdes secas. Su olor te evoca recuerdos del sur de Madrid.",
         effect: "El personaje cambia su proyectil a bolas de humo."
       },
@@ -275,17 +277,28 @@ export default class Item extends SpriteBase {
       this.glowEffect = null;
     }
 
-    // Advertir antes de destruir el objeto (parpadeo)
-    this.scene.tweens.add({
-      targets: this,
-      duration: 500,
-      yoyo: true,
-      repeat: 5,
-      alpha: 0,
-      onComplete: () => {
-        this.destroy();
-      }
-    });
+    this.setAlpha(1);
+    let blinkCount = 0;
+    const maxBlinks = 6;
+    const sceneRef = this.scene; // Guardamos la referencia al scene
+
+    const blink = () => {
+        sceneRef.tweens.add({  // Usamos sceneRef en lugar de this.scene
+            targets: this,
+            alpha: this.alpha === 1 ? 0 : 1,
+            duration: 500,
+            onComplete: () => {
+                blinkCount++;
+                if (blinkCount < maxBlinks * 2) {
+                    blink();
+                } else {
+                    this.destroy();
+                }
+            }
+        });
+    };
+
+    blink();
   }
 
   pick(item, player) {
