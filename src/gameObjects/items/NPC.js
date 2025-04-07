@@ -159,15 +159,7 @@ export default class NPC extends SpriteBase {
             duration: 400,
             ease: 'Power2',
             onStart: () => item.setVisible(true),
-            onComplete: () => {
-                // Animación de caída con bounce
-                this.scene.tweens.add({
-                    targets: item,
-                    y: endY,
-                    duration: 1000,
-                    ease: 'Bounce.out'
-                });
-            }
+           
         });
     }
 
@@ -286,6 +278,8 @@ export default class NPC extends SpriteBase {
                 this.bulletHits = 0;
                 this.dispenseItem();
                 this.disableMachine();
+                this.emit('npcDeath', this.x, this.y);
+                this.destroy();
             }
 
         }

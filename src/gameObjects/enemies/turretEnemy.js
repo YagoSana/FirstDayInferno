@@ -15,6 +15,8 @@ export default class RangedEnemy extends Npc {
     this.stunCounter = 0;
     this.shootDelay = 200; // Retraso entre disparos en milisegundos
     this.inmortal=true;
+    this.guardiansLive=2;
+    this.invulnerable=false;
   }
 
   preUpdate(t, dt) {
@@ -67,7 +69,7 @@ export default class RangedEnemy extends Npc {
 // Sobrescribir hitBullet de la clase base
 hitBullet(enemy, bullet){
     //Enemigo muere
-    if(!this.inmortal){
+    if(!this.inmortal && !this.invulnerable){
     this.stunCounter = 30;
     this.health--;
     if(this.health <= 0){
