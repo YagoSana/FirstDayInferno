@@ -4,9 +4,9 @@ import PauseController from "../controller/pauseController.js";
 import UIController from "../controller/UIController.js";
 
 //MAPA LOBBY ------------------------------------------------------
-import metro from "../../assets/imgs/lobbyMETRO.png";
-import fdi from "../../assets/imgs/lobbyFDI.png";
-import medicina from "../../assets/imgs/lobbyMEDICINA.png";
+import metro from "../../assets/imgs/LobbyMETRO.png";
+import fdi from "../../assets/imgs/LobbyFDI.png";
+import medicina from "../../assets/imgs/LobbyMEDICINA.png";
 
 import lobby from "../../assets/map/lobby.json";
 import tileset_grass from "../../assets/map/TX Tileset Grass.png";
