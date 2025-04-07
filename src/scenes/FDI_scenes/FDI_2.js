@@ -2,8 +2,8 @@ import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
 import Item from "../../gameObjects/items/item.js";
-
-
+import RangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
+import AssaultEnemy from "../../gameObjects/enemies/assaultEnemy.js";
 export default class FDI_2 extends SalaBase {
 
     constructor(key) {
@@ -60,7 +60,7 @@ export default class FDI_2 extends SalaBase {
 
         //Camaras
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        this.cameras.main.setBounds(0, -100, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setZoom(1.8);
 
@@ -88,7 +88,10 @@ export default class FDI_2 extends SalaBase {
     }
 
     spawnProps(){
-            
+        this.enemyGroup.add(new RangedEnemy(this, 700, 80, "nerd"));
+        this.enemyGroup.add(new Enemy(this, 200, 80, "cucaracha"));
+       this.numEnemies++;
+       this.numEnemies++;
         }
     
     spawBlood(){

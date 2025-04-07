@@ -10,12 +10,15 @@ import monogram from "../../fonts/monogram-extended.ttf";
 import player from "../../assets/sprites/player_spritesheet.png";
 //CAMAERO
 import camarero from "../../assets/sprites/bartender_front_iddle.png";
+//PROFESOR
+import borja from "../../assets/sprites/borja.png"
 //EXTRAS ------------------------------------------------------
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
 import paperbullet from "../../assets/sprites/bullet.png";
 import puff from "../../assets/sprites/puff.png";
 import tutorial_screen from "../../assets/sprites/tutorial_screen_spritesheet.png";
 import blood from "../../assets/sprites/blood.png";
+import fire from "../../assets/sprites/fire.png";
 
 //ITEMS ------------------------------------------------------
 import items from "../../assets/sprites/items_spritesheet.png";
@@ -93,6 +96,11 @@ export default class Boot extends Phaser.Scene {
 
     this.load.image("paperbullet", paperbullet);
 
+    this.load.spritesheet("borja", borja, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
     this.load.spritesheet("player", player, {
       frameWidth: 32, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
@@ -155,13 +163,30 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
+    this.load.spritesheet("fire", fire, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
   }
 
   /**
    * Creación de la escena. En este caso, solo cambiamos a la escena que representa el
    * nivel del juego
    */
+
+
   create() {
+    this.anims.create({
+      key: "teacher-front",
+      frames: this.anims.generateFrameNames("borja", {
+        start: 0,
+        end: 0,
+      }),
+      frameRate: 5,
+      repeat: -1,
+    });
+
     this.anims.create({
       key: "idle-front-bartender",
       frames: this.anims.generateFrameNames("bartender", {
@@ -524,7 +549,26 @@ export default class Boot extends Phaser.Scene {
       repeat: -1,
     });
 
+    this.anims.create({
+      key: "fire_start",
+      frames: this.anims.generateFrameNames("fire", { start: 0, end: 3 }),
+      frameRate: 8,
+      repeat: 0,
+    });
 
+    this.anims.create({
+      key: "fire_loop",
+      frames: this.anims.generateFrameNames("fire", { start: 4, end: 11 }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "fire_end",
+      frames: this.anims.generateFrameNames("fire", { start: 12, end: 16 }),
+      frameRate: 8,
+      repeat: 0,
+    });
 
     this.scene.start('MainMenu');
   }

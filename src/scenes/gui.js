@@ -52,7 +52,8 @@ export default class GUI extends Phaser.Scene {
             .setOrigin(0)
             .setScrollFactor(0)
             .setDepth(this.depth).setScale(this.gui_scale + 0.9, this.gui_scale)
-            .setAlpha(1);
+            .setAlpha(1)
+            .setAlpha(0.7);
 
 
 

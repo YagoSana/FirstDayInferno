@@ -62,7 +62,9 @@ export default class Tutorial_1 extends SalaBase {
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
         transitionLayer.objects.forEach(obj => {
-            const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
+            const zone = this.transitionZones.create(obj.x, obj.y, null)
+            .setSize(obj.width, obj.height).setOrigin(0,0).setOffset(0, 0);
+
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;

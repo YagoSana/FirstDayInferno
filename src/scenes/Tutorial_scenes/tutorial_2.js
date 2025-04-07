@@ -66,27 +66,47 @@ export default class Tutorial_2 extends SalaBase {
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
         transitionLayer.objects.forEach(obj => {
-            const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
+            const zone = this.transitionZones.create(obj.x, obj.y, null)
+                .setSize(obj.width, obj.height).setOrigin(0, 0).setOffset(0, 0);
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
             zone.prev = "tutorial_2";
+            zone.open = false; // Inicialmente cerrado
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
 
+        this.doorFireManager.createFiresForZones(this.transitionZones);
+        this.doorFireManager.setupCollisions(this.player);
+
         let spritesLayer = map.getObjectLayer("sprites");
-        spritesLayer.objects.forEach(obj => {
-            let type = obj.properties.find(p => p.name === "tipo")?.value;
-            // console.log(`Tipo del objeto de tiled ${type}`);
-            if (type === "asset") {
-                let sprite = this.add.sprite(obj.x, obj.y, obj.name).setVisible(true).setDepth(3).play(obj.name);
-                sprite.setOrigin(0, 0); // Ajusta según tu necesidad
-            }
-            else if(type === "enemy"){
-                this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
-                
-            }
-        });
+        if (!this.status) {
+            spritesLayer.objects.forEach(obj => {
+                let type = obj.properties.find(p => p.name === "tipo")?.value;
+                // console.log(`Tipo del objeto de tiled ${type}`);
+                if (type === "asset") {
+                    let sprite = this.add.sprite(obj.x, obj.y, obj.name).setVisible(true).setDepth(3).play(obj.name);
+                    sprite.setOrigin(0, 0); // Ajusta según tu necesidad
+                }
+                else if (type === "enemy") {
+                    this.numEnemies++
+                    this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+                }
+            });
+        } else {
+            spritesLayer.objects.forEach(obj => {
+                let type = obj.properties.find(p => p.name === "tipo")?.value;
+                console.log(`Tipo del objeto de tiled ${type}`);
+
+                if (type === "asset") {
+                    let sprite = this.add.sprite(obj.x, obj.y, obj.name).setVisible(true).setDepth(3).play(obj.name);
+                    sprite.setOrigin(0, 0); // Ajusta según tu necesidad
+                }
+                else if (type === "enemy") {
+                    this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
+                }
+            });
+        }
     }
 }

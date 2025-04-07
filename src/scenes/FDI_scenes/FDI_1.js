@@ -4,7 +4,7 @@ import Enemy from "../../gameObjects/enemies/enemy.js";
 import Item from "../../gameObjects/items/item.js";
 
 
-export default class FDI_2 extends SalaBase {
+export default class FDI_1 extends SalaBase {
 
     constructor(key) {
         super('FDI_1');
@@ -12,14 +12,16 @@ export default class FDI_2 extends SalaBase {
 
     create(){
         super.create('FDI_1');
+
         const map = this.make.tilemap({ key: 'FDI_1_TL' }); // Cargamos el mapa
         //Cargar tilesets
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
         const tileset3= map.addTilesetImage('tileset_nuevo','Decorado' );
+        const tileset4 = map.addTilesetImage("TX Tileset Grass", "Grass");
 
         //Configurar capas
-        const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
+        const layer1 = map.createLayer('suelo', [tileset1, tileset2, tileset4], 0, 0);
         const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
         const layer3 = map.createLayer('objetos', [tileset1, tileset2, tileset3], 0, 0);
         const layer4 = map.createLayer('sin colision', [tileset1, tileset2], 0, 0);
@@ -61,7 +63,7 @@ export default class FDI_2 extends SalaBase {
             this.spawnProps();
         }
         else{
-            this.spawBlood();
+            this.spawnBlood();
         }
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
@@ -77,12 +79,15 @@ export default class FDI_2 extends SalaBase {
         
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+        
     }
 
-    spawnProps(){}
+    spawnProps(){
+        
+    }
       
 
-    spawBlood(){
+    spawnBlood(){
         this.add.sprite(154, 210, "blood").setVisible(true).setDepth(3).setFrame(12);
     }
 }

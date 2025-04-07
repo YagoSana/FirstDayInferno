@@ -61,7 +61,7 @@ export default class FDI_4 extends SalaBase {
 
         //Camaras
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        this.cameras.main.setBounds(0, -30, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setZoom(1.8);
 
@@ -92,8 +92,7 @@ export default class FDI_4 extends SalaBase {
         //this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
        // this.numEnemies++;
        
-       // new Item(this, 200, 200,"hamburguesa");
-       new Item(this, 200, 200, "moneda");
+       
            
         }
     
