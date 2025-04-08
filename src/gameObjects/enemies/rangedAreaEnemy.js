@@ -8,7 +8,7 @@ export default class RangedAreaEnemy extends Npc {
     this.type = type;
     this.attackCooldown = 0;
     this.attackRange = 200;
-    this.attackSpeed = 2000;
+    this.attackSpeed = 3000;
     this.health = 4;
     this.speed = 90;
     this.stunCounter = 0;

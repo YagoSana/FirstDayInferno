@@ -3,6 +3,7 @@ import Player from "../../gameObjects/characters/player.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
 import RangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import Item from "../../gameObjects/items/item.js";
+import turretEnemy from "../../gameObjects/enemies/turretEnemy.js"
 
 
 export default class FDI_2_1 extends SalaBase {
@@ -77,7 +78,10 @@ export default class FDI_2_1 extends SalaBase {
     }
 
     spawnProps(){
-  
+        this.numEnemies=2;
+        this.enemyGroup.add(new turretEnemy(this, 750, 65, "nerd"));
+        this.enemyGroup.add(new turretEnemy(this, 750, 95, "nerd"));
+   
      
     }
 
