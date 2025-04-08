@@ -5,7 +5,6 @@ import player_item_isaac from "../../../assets/sprites/player_item_isaac.png";
 
 //BALAS --------------------------------------------------------
 import arrow from "../../../assets/sprites/arrow.png";
-import nerdbullet from "../../../assets/sprites/nerd-bullet.png";
 import zombiebullet from "../../../assets/sprites/pastilla.png";
 
 //ENEMIGOS -----------------------------------------------------
@@ -145,11 +144,6 @@ export default class informaticaManager extends Phaser.Scene {
       frameHeight: 32,
     });
 
-    this.load.spritesheet("nerdbullet", nerdbullet, {
-      frameWidth: 32, //cada frame tiene este ancho
-      frameHeight: 24, //todos son 32 px de alto
-    });
-
     this.load.spritesheet("enemydeath", enemydeath, {
       frameWidth: 32, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
@@ -250,13 +244,6 @@ export default class informaticaManager extends Phaser.Scene {
       frames: this.anims.generateFrameNames("zombie_shoot", { frames: [0, 1, 2, 3, 4] }),
       frameRate: 12,
       repeat: 0,
-    });
-
-    this.anims.create({
-      key: "nerdbullet",
-      frames: this.anims.generateFrameNames("nerdbullet", { frames: [0, 1, 2, 3] }),
-      frameRate: 8,
-      repeat: -1,
     });
 
     this.anims.create({

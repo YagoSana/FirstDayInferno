@@ -35,7 +35,7 @@ export default class SelectorNivel extends Phaser.Scene {
     }
   }
 
-  create() {
+  create(data) {
 
     this.sound.stopAll();
 

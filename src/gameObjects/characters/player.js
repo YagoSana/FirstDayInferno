@@ -25,6 +25,8 @@ export default class Player extends SpriteBase {
         this.itemSprite = playerData.itemSprite; //Sprite del item visual
         this.equippedItem = playerData.equippedItem; // item que cambia apariencia
         this.equippedItemRow = playerData.equippedItemRow;
+        this.playerTint = 0xffffff;
+        this.bulletType = 'paperbullet';
         if (this.equippedItem) {
             this.itemAppearance(this.equippedItem, this.equippedItemRow);
         }
@@ -171,7 +173,7 @@ export default class Player extends SpriteBase {
             this.body.setVelocity(velocityX, velocityY);
 
             if (this.scene.time.now > this.lastHurtTime + this.damageCooldown) {
-                this.setTint(0xffffff);
+                this.setTint(this.playerTint);
                 if (this.itemSprite) {
                     this.itemSprite.setTint(0xffffff);
                 }
@@ -262,10 +264,38 @@ export default class Player extends SpriteBase {
     itemAppearance(itemKey, spriteRow) {
         const spriteKey = `player_items`;
         this.equippedItemRow = spriteRow;
+        if(this.glowEffect){
+            this.postFX.remove(this.glowEffect);
+        }
+
+        this.setTint(0xffffff);
 
         if (this.itemSprite) {
             this.itemSprite.destroy(); // Elimina el sprite anterior si ya hay uno
         }
+
+        let currentBullet = 'paperbullet';
+
+        switch (itemKey) {
+            case 'bumbo':
+                currentBullet = 'bumbo_bullet';
+                this.playerTint = 0xe6c5c7;
+                break;
+
+            case 'pantallazo_azul':
+                currentBullet = 'pantallazo_azul_bullet';
+                this.playerTint = 0x66ccff;
+                break;
+
+            default:
+                currentBullet = 'paperbullet';
+                this.playerTint = 0xffffff;
+        }
+
+        this.setTintFill(this.playerTint);
+
+        this.bulletType = currentBullet;
+
         // Crea el nuevo sprite del ítem sobre el jugador
         this.itemSprite = this.scene.add.sprite(this.x, this.y, spriteKey);
         this.depth = 5; // Asegura que el jugador este en la capa correcta
@@ -332,7 +362,7 @@ export default class Player extends SpriteBase {
         let desvio = fallo ? 0.5 : 0;
 
         for (let i = 0; i < (this.doubleshot ? 2 : 1); i++) {
-            new Bullet(this.scene, this.x, this.y, (this.doubleshot ? dirX + desvio : dirX), (this.doubleshot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
+            new Bullet(this.scene, this.x, this.y, (this.doubleshot ? dirX + desvio : dirX), (this.doubleshot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
         }
         //new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
         this.lastShot = this.scene.time.now; // Registrar tiempo del disparo
@@ -396,15 +426,15 @@ export default class Player extends SpriteBase {
             if (this.health <= 0) {
                 this.play("player-death", true);
                 this.once('animationcomplete', () => {
-                  this.scene.scene.stop('GUI');
-                  this.scene.scene.start('gameOver', { 
-                    deathData: {
-                      type: this.lastDamageType,
-                      source: this.lastDamageSource
-                    }
-                  });
+                    this.scene.scene.stop('GUI');
+                    this.scene.scene.start('gameOver', {
+                        deathData: {
+                            type: this.lastDamageType,
+                            source: this.lastDamageSource
+                        }
+                    });
                 });
-              }
+            }
 
             //this.scene.updateHealth(this.maxHealth, this.health);
         }
@@ -430,7 +460,7 @@ export default class Player extends SpriteBase {
                 console.log(this.maxHealth);
                 console.log(this.health);
             }
-        }else{
+        } else {
             this.health = (this.health + p > this.maxHealth) ? this.maxHealth : this.health + p;
         }
         this.scene.game.events.emit('healthChanged', { health: this.health, maxHealth: this.maxHealth });
@@ -454,7 +484,7 @@ export default class Player extends SpriteBase {
         //this.scene.updateHealth(this.maxHealth, this.health);
     }
 
-    pickKey(p){
+    pickKey(p) {
         this.keys += p;
         this.scene.game.events.emit('keyChanged', this.keys);//?
     }
@@ -481,7 +511,7 @@ export default class Player extends SpriteBase {
         return ok;
     }
 
-    spendKey(p){
+    spendKey(p) {
         this.keys -= p;
     }
 
@@ -499,7 +529,7 @@ export default class Player extends SpriteBase {
             equippedItemRow: this.equippedItemRow,
             itemSprite: this.itemSprite,
             speed: this.speed,
-            shootCooldown: this.shootCooldown
+            shootCooldown: this.shootCooldown,
         };
     }
 }
