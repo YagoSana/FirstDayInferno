@@ -30,7 +30,10 @@ export default class Item extends SpriteBase {
 
     // Acciones de los objetos
     this.actions = {
-      "hamburguesa": (player) => player.changeHealth(2, true),
+      "hamburguesa": (player) => {
+        player.changeHealth(2, true);
+        player.invertir(false);
+      },
       "moneda": (player) => player.addCoin(1),
       "mini_tinto": (player) => {
         player.changeHealth(4, true);
@@ -44,11 +47,15 @@ export default class Item extends SpriteBase {
         player.changeSpeed(1.3);
         player.changeCooldown(-150);//TODO VER ESTO
       },
-      "codigo": (player) => player.doDoubleshot(),
+      "codigo": (player) => player.doDoubleshoot(true),
       "corazon": (player) => player.changeHealth(1, false),
       "maletin": (player) => {
         player.changeSpeed(0.70);
         player.changeHealth(3, true);
+      },
+      "bolsa_sospechosa": (player) => {
+        player.invertir(true);
+        player.doDoubleshoot(true);
       }
     };
 
@@ -152,7 +159,7 @@ export default class Item extends SpriteBase {
       },
       "bolsa_sospechosa": {
         description: "Contiene unas hojas verdes secas. Su olor te evoca recuerdos del sur de Madrid.",
-        effect: "El personaje cambia su proyectil a bolas de humo."
+        effect: "Disparo invertidos y 20% de desvio pero los proyectiles hacen el doble de daño"
       },
 
     };
