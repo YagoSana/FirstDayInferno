@@ -39,7 +39,7 @@ Eres "Pepito", un estudiante de primer año en la Universidad Complutense de Mad
 	- [x] **Enemigo a corta distancia** : Tienen un patrón de movimientos simple, y de vez en cuando siguen al jugador (Cucaracha, NAND).
 	- [x] **Enemigo a larga distancia** : Siguen al jugador hasta ‘x’ punto, después dentro de un rango ‘y’ disparan al jugador a distancia (Nerd, Zombie).
  	- [x] **Enemigo despertable** : Está dormido y es inofensivo hasta que el jugador lo toca o lo ataca, que empezará a perseguirlo (Gato).
-        - [x] **Enemigo de embestida** : Tiene movimiento limitado pero si el jugador está a su alcance lo embiste con gran velocidad.
+  	- [x] **Enemigo de embestida** : Tiene movimiento limitado pero si el jugador está a su alcance lo embiste con gran velocidad.
 	- [x] **Enemigo torreta** : Enemigo estático que ataca a gran rango en una única dirección. Se coloca al final de los pasillos para jugar con mecánicas de esquive.
    	- [x] **Enemigo de disparo en área** : Dispara 8 balas en área y sigue al jugador hasta 'x'.
    	- [x] **MiniBoss informatica** : El enemigo permanece ináctivo y spawnea 2 guardianes (enemigos a larga distancia), en el momento en el que estos son derrotados se activa. Su movimiento es estático y varia entre ataques rápidos de una sola bala y otros mas lentos de varias.
