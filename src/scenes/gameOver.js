@@ -120,8 +120,8 @@ export default class GameOver extends Phaser.Scene {
         });
 
         buttonLevels.on('pointerdown', () => {
-            this.sonidoClick.play();
-            this.scene.start('selectorNivel');
+            this.sonidoClick.play();    
+            this.scene.start('selectorNivel',{game_over:true});
         });
 
         buttonLevels.on('pointerout', () => {

@@ -3,7 +3,7 @@ import SalaBase from "../../scenes/salaBase.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
 import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
-import Item from "../../gameObjects/items/item.js";
+import rangedAreaEnemy from "../../gameObjects/enemies/rangedAreaEnemy.js";
 
 export default class medicina_6 extends SalaBase {
   constructor() {
@@ -80,11 +80,11 @@ export default class medicina_6 extends SalaBase {
     const mapWidth = map.widthInPixels;
     const mapHeight = map.heightInPixels;
     const zoom = 1.8;
-    const boundX = -(screenWidth / zoom - mapWidth) / 2;
+    //const boundX = -(screenWidth / zoom - mapWidth) / 2;
     //const boundY = -(screenHeight / zoom - mapHeight) / 2;
 
     this.cameras.main.setZoom(zoom);
-    this.cameras.main.setBounds(boundX, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
     // Ajustar límites del mundo y cámara
@@ -160,13 +160,17 @@ export default class medicina_6 extends SalaBase {
               break;
             case "zombie":
               this.numEnemies++;
-              this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
+              this.enemyGroup.add(new rangedAreaEnemy(this, obj.x, obj.y, obj.name));
               break;
             case "cat":
               console.log("GatosVivos: ", this.game.global.gatosVivos);  // Accede a gatosVivos
               this.game.global.gatosVivos.push(obj.id); // Añadir el ID del gato a la lista
               this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
               break;
+            //case "boss":
+              //this.numEnemies++;
+              //this.enemyGroup.add(new bossEnemy(this, obj.x, obj.y, obj.name));
+              //break;
             default:
               console.log("Tipo de enemigo no reconocido:", obj.name);
           }
