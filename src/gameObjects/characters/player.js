@@ -25,16 +25,11 @@ export default class Player extends SpriteBase {
         this.itemSprite = playerData.itemSprite; //Sprite del item visual
         this.equippedItem = playerData.equippedItem; // item que cambia apariencia
         this.equippedItemRow = playerData.equippedItemRow;
+        this.playerTint = 0xffffff;
+        this.bulletType = 'paperbullet';
         if (this.equippedItem) {
             this.itemAppearance(this.equippedItem, this.equippedItemRow);
         }
-        this.playerTint = playerData.playerTint;
-        this.currentItemEffects = {
-            applyTint: () => { },
-            getBulletType: () => 'paperbullet',
-            cleanup: () => { }
-        };
-        this.bulletType = 'paperbullet';
         this.isShooting = false;
         this.depth = 5; // Asegura que el jugador este en la capa correcta
         this.setDepth(this.depth);
@@ -269,6 +264,9 @@ export default class Player extends SpriteBase {
     itemAppearance(itemKey, spriteRow) {
         const spriteKey = `player_items`;
         this.equippedItemRow = spriteRow;
+        if(this.glowEffect){
+            this.postFX.remove(this.glowEffect);
+        }
 
         this.setTint(0xffffff);
 
@@ -276,34 +274,27 @@ export default class Player extends SpriteBase {
             this.itemSprite.destroy(); // Elimina el sprite anterior si ya hay uno
         }
 
+        let currentBullet = 'paperbullet';
+
         switch (itemKey) {
             case 'bumbo':
-                this.currentItemEffects = {
-                    getTint: () => '0xff66cc' , // Rosa
-                    getBulletType: () => 'bumbo_bullet',
-                    cleanup: () => this.setTint(0xffffff)
-                };
+                currentBullet = 'bumbo_bullet';
+                this.playerTint = 0xe6c5c7;
                 break;
 
             case 'pantallazo_azul':
-                this.currentItemEffects = {
-                    getTint: () => '0x66ccff', // Azul claro
-                    getBulletType: () => 'pantallazo_azul_bullet',
-                    cleanup: () => this.setTint(0xffffff)
-                };
+                currentBullet = 'pantallazo_azul_bullet';
+                this.playerTint = 0x66ccff;
                 break;
 
             default:
-                this.currentItemEffects = {
-                    applyTint: () => '0xffffff',
-                    getBulletType: () => 'paperbullet',
-                    cleanup: () => { }
-                };
+                currentBullet = 'paperbullet';
+                this.playerTint = 0xffffff;
         }
 
-        this.playerTint =  this.currentItemEffects.getTint();
-        this.setTint(this.playerTint);
-        this.bulletType = this.currentItemEffects.getBulletType();
+        this.setTintFill(this.playerTint);
+
+        this.bulletType = currentBullet;
 
         // Crea el nuevo sprite del ítem sobre el jugador
         this.itemSprite = this.scene.add.sprite(this.x, this.y, spriteKey);
@@ -539,7 +530,6 @@ export default class Player extends SpriteBase {
             itemSprite: this.itemSprite,
             speed: this.speed,
             shootCooldown: this.shootCooldown,
-            playerTint:this.playerTint
         };
     }
 }

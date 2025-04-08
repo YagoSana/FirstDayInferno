@@ -706,7 +706,7 @@ export default class Boot extends Phaser.Scene {
 
     this.anims.create({
       key: "nerdbullet",
-      frames: this.anims.generateFrameNames("nerdbullet", { start: 4, end: 7 }),
+      frames: this.anims.generateFrameNames("bullets", { start: 4, end: 7 }),
       frameRate: 8,
       repeat: -1,
     });
