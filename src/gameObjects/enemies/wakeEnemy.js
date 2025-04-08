@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import Npc from './npc.js';
 
 export default class WakeEnemy extends Npc {
-  constructor(scene, x, y, type, id) {
+  constructor(scene, x, y, type, id, map, finder) {
     super(scene, x, y, type);
     this.type = type;
     this.id = id;
@@ -11,6 +11,8 @@ export default class WakeEnemy extends Npc {
     this.stunCounter = 0;
     this.despierto = false;
     this.despertando = false;
+    this.map = map;
+    this.finder = finder;
     this.path = null;
     this.nextTile = null;
     this.pathTimer = 0;
@@ -38,7 +40,7 @@ export default class WakeEnemy extends Npc {
 
   hitBullet(enemy, bullet) {
     if (this.despierto) {
-      this.stunCounter = 5;
+      this.stunCounter = 10;
       this.health--;
       if (this.health <= 0) {
         this.body.setVelocity(0, 0);
@@ -64,7 +66,7 @@ export default class WakeEnemy extends Npc {
 
   hasLineOfSight() {
     const ray = new Phaser.Geom.Line(this.x, this.y, this.scene.player.x, this.scene.player.y);
-    const tiles = this.scene.map.getTilesWithinShape(
+    const tiles = this.map.getTilesWithinShape(
       ray,
       { isColliding: true },
       'bordes' // Capa con colisión
@@ -73,7 +75,7 @@ export default class WakeEnemy extends Npc {
   }
 
   calculatePath() {
-    const tileSize = this.scene.map.tileWidth;
+    const tileSize = this.map.tileWidth;
     const startX = Math.floor(this.x / tileSize);
     const startY = Math.floor(this.y / tileSize);
     const endX = Math.floor(this.scene.player.x / tileSize);
@@ -82,10 +84,10 @@ export default class WakeEnemy extends Npc {
     const grid = [];
     const walkables = [];
 
-    for (let y = 0; y < this.scene.map.height; y++) {
+    for (let y = 0; y < this.map.height; y++) {
       const row = [];
-      for (let x = 0; x < this.scene.map.width; x++) {
-        const tile = this.scene.map.getTileAt(x, y, true, 'bordes');
+      for (let x = 0; x < this.map.width; x++) {
+        const tile = this.map.getTileAt(x, y, true, 'bordes');
         if (tile && tile.collides) {
           row.push(1);
         } else {
@@ -96,11 +98,11 @@ export default class WakeEnemy extends Npc {
       grid.push(row);
     }
 
-    this.scene.finder.setGrid(grid);
-    this.scene.finder.setAcceptableTiles(walkables);
-    this.scene.finder.enableDiagonals();
+    this.finder.setGrid(grid);
+    this.finder.setAcceptableTiles(walkables);
+    this.finder.enableDiagonals();
 
-    this.scene.finder.findPath(startX, startY, endX, endY, path => {
+    this.finder.findPath(startX, startY, endX, endY, path => {
       if (path && path.length > 1) {
         path.shift();
         this.path = path;
@@ -111,7 +113,7 @@ export default class WakeEnemy extends Npc {
       }
     });
 
-    this.scene.finder.calculate();
+    this.finder.calculate();
   }
 
   preUpdate(t, dt) {
@@ -147,7 +149,7 @@ export default class WakeEnemy extends Npc {
       }
 
       if (this.path && this.nextTile) {
-        const tileSize = this.scene.map.tileWidth;
+        const tileSize = this.map.tileWidth;
         const targetX = this.nextTile.x * tileSize + tileSize / 2;
         const targetY = this.nextTile.y * tileSize + tileSize / 2;
 
