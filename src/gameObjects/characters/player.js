@@ -79,7 +79,7 @@ export default class Player extends SpriteBase {
         this.sonidoMoneda = scene.sound.add('cogerMoneda');
         this.stepTimer = 0;
         this.stepInterval = 500; // o el valor que te mole para los pasos
-
+        this.pantallazo = false;
         this.doubleshot = false;
     }
 
@@ -332,7 +332,7 @@ export default class Player extends SpriteBase {
         let desvio = fallo ? 0.5 : 0;
 
         for (let i = 0; i < (this.doubleshot ? 2 : 1); i++) {
-            new Bullet(this.scene, this.x, this.y, (this.doubleshot ? dirX + desvio : dirX), (this.doubleshot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
+            new Bullet(this.scene, this.x, this.y, (this.doubleshot ? dirX + desvio : dirX), (this.doubleshot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, "paperbullet", this.pantallazo);
         }
         //new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
         this.lastShot = this.scene.time.now; // Registrar tiempo del disparo
@@ -449,6 +449,10 @@ export default class Player extends SpriteBase {
         this.doubleshot = true;
     }
 
+    doFreeze(){
+        this.pantallazo = true;
+    }
+
     maxHealthUp() {
         this.maxHealth++;
         //this.scene.updateHealth(this.maxHealth, this.health);
@@ -479,6 +483,10 @@ export default class Player extends SpriteBase {
         console.log(`Monedas: ${this.coins}€`);
         this.scene.game.events.emit('coinChanged', this.coins);
         return ok;
+    }
+
+    freeze(){
+        return this.pantallazo;
     }
 
     spendKey(p){

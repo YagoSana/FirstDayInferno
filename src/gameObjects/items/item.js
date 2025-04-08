@@ -38,8 +38,10 @@ export default class Item extends SpriteBase {
       },
       "llave": (player) => player.pickKey(1),
       "bumbo": (player) => player.itemAppearance("bumbo", 0), // cabeza de Isaac
-      "pantallazo_azul": (player) => player.itemAppearance("pantallazo_azul", 1), // cabeza de Isaac
-
+      "pantallazo_azul": (player) => {
+        player.itemAppearance("pantallazo_azul", 1); // cabeza de Isaac
+        player.doFreeze();
+      },
       "bono": (player) => {
         player.changeSpeed(1.3);
         player.changeCooldown(-150);//TODO VER ESTO
