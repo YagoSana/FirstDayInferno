@@ -30,11 +30,11 @@ export default class Item extends SpriteBase {
 
     // Acciones de los objetos
     this.actions = {
-      "hamburguesa": (player) => player.changeHealth(2, false),
+      "hamburguesa": (player) => player.changeHealth(2, true),
       "moneda": (player) => player.addCoin(1),
       "mini_tinto": (player) => {
         player.changeHealth(4, true);
-        player.changeSpeed(0.25);
+        player.changeSpeed(0.75);
       },
       "llave": (player) => player.pickKey(1),
       "bumbo": (player) => player.itemAppearance("bumbo", 0), // cabeza de Isaac
@@ -45,7 +45,11 @@ export default class Item extends SpriteBase {
         player.changeCooldown(-150);//TODO VER ESTO
       },
       "codigo": (player) => player.doDoubleshot(),
-      "corazon": (player) => player.changeHealth(1, false)
+      "corazon": (player) => player.changeHealth(1, false),
+      "maletin": (player) => {
+        player.changeSpeed(0.70);
+        player.changeHealth(3, true);
+      }
     };
 
     // Texto del nombre del objeto encima del jugador
@@ -116,7 +120,7 @@ export default class Item extends SpriteBase {
     const descriptions = {
       "hamburguesa": {
         description: "Recuperas 2 puntos de salud.",
-        effect: "Salud +1"
+        effect: "Salud +2"
       },
       "mini_tinto": {
         description: "Un pequeño trago de energía, pero te ralentiza temporalmente.",
@@ -136,7 +140,7 @@ export default class Item extends SpriteBase {
       },
       "pantallazo_azul": {
         description: "Actualizaste a Windows 11. Nadie sabe cómo funciona.",
-        effect: "Tu disparo puede bloquear a los enemigos durante 1.5 segundos."
+        effect: "Tu disparo puede bloquear a los enemigos durante 2 segundos."
       },
       "collar_macarrones": {
         description: "Creado con esfuerzo y sudor por un estudiante de magisterio como proyecto de TFG.",
@@ -144,7 +148,7 @@ export default class Item extends SpriteBase {
       },
       "maletin": {
         description: "Maletín que contiene una placa en su interior. Nadie sabe cómo funciona.",
-        effect: "Te mueves más lento pero obtienes más escudo."
+        effect: "+3 de salud, -30% de velocidad."
       },
       "bolsa_sospechosa": {
         description: "Contiene unas hojas verdes secas. Su olor te evoca recuerdos del sur de Madrid.",
