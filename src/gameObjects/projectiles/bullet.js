@@ -19,7 +19,7 @@ export default class Bullet extends SpriteBase {
 
             switch (type) {
                 case 'nerdbullet':
-                    this.scale = 0.9;
+                    this.scale = 0.8;
                     break;
                 case 'zombiebullet':
                     this.scale = 0.5;
