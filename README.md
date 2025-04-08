@@ -29,17 +29,25 @@ Eres "Pepito", un estudiante de primer año en la Universidad Complutense de Mad
 	 - [x] Podrá equiparse algunos ítems (ver más adelante).
 -   Habrá un **tutorial** que permitirá al jugador entender las mecánicas
 -   Habrá distintas facultades con varias salas, salas secretas y una sala bloqueada en la que estará el Boss de ese nivel. Los niveles serán:
-	 - [ ] **Facultad de Medicina** : ‘x’ salas normales, ‘y’ secretas y 1 boss  
-	 - [ ] **Facultad de Informática** : ‘x’ salas normales, ‘y’ secretas y 1 boss
+	 - [Depurando] **Facultad de Medicina** : 8 salas normales: de las cuales una es una tienda,  '1' con un mini boss (laboratorio) y   y 1 con un boss (a implementar aun)
+	 - [Depurando] **Facultad de Informática** : 5 salas normales y 1 una de boss
+    - [x] **Tutorial (metro)**: 3 salas a modo de tutorial
+
 -   Las salas se bloquearán hasta que derrotes a todos los enemigos con algún elemento visual como llamas. Cuando el jugador entre en contacto con ello recibirá daño.
 -   Los niveles contarán con los siguientes tipos de **enemigos**:
-	 - [x] **Enemigo a corta distancia** : Tienen un patrón de movimientos simple, y de vez en cuando siguen al jugador (Cucaracha, NAND).
-	 - [x] **Enemigo a larga distancia** : Siguen al jugador hasta ‘x’ punto, después dentro de un rango ‘y’ disparan al jugador a distancia (Nerd, Zombie).
-	 - [ ] **Enemigo X** : blablabla
+	- [x] **Enemigo a corta distancia** : Tienen un patrón de movimientos simple, y de vez en cuando siguen al jugador (Cucaracha, NAND).
+	- [x] **Enemigo a larga distancia** : Siguen al jugador hasta ‘x’ punto, después dentro de un rango ‘y’ disparan al jugador a distancia (Nerd, Zombie).
+	- [x] **Enemigo torreta** : Enemigo estático que ataca a gran rango en una única dirección. Se coloca al final de los pasillos para jugar con mecánicas de esquive.
+   - [x] **Enemigo de disparo en área** : Dispara 8 balas en área y sigue al jugador hasta 'x'.
+   - [x] **Enemigo torreta** : Enemigo estático que ataca a gran rango en una única dirección. Se coloca al final de los pasillos para jugar con mecánicas de esquive.
+   - [x] **MiniBoss informatica** : El enemigo permanece ináctivo y spawnea 2 guardianes (enemigos a larga distancia), en el momento en el que estos son derrotados se activa. Su movimiento es estático y varia entre ataques rápidos de una sola bala y otros mas lentos de varias.
+   - [En proceso] **Boss Informatica** : Boss de 2 fases, comienza siendo una profesora de la facultad (cualquier parecido con la realidad es pura coincidencia). Tras quitarle x vida se convierte en un ciborg. La primera base se basará en ataques a distancia variando entre ataques directos o rafagas en rango. La segunda fase invoca enemigos y ataca a melé.
+
     
 -   Se podrá conseguir items por diferentes medios como:
 	 - [x] Una **máquina expendedora**: tiene ‘x’ usos y dispensa un ítem aleatorio por uso con un coste ‘y’. En caso de no tener dinero se puede destruir y proporciona ‘x’ items al destruirse
-	 - [ ] Una **tienda en la cafetería**: …
+	 - [x] Una **tienda en la cafetería**: tiene 1 único uso. Permite comprar por 5 monedas, invoca 3 objetos de los cuales al elegir uno elimina los demas.
+    -[x] NPC del laboratorio. Te otorga el maletín tras 1 conversación. Al ser asesinado invoca al mini boss anteriormente mencionado.
     
 -   Aparecerán una variedad de **items** con distintas funcionalidades que pueden tener un efecto positivo o negativo al jugador. Algunos se recogen automáticamente al pasar por encima, y otros contarán con una descripción para que el jugador los pueda recoger con la tecla ‘E’.
     
@@ -48,18 +56,19 @@ Eres "Pepito", un estudiante de primer año en la Universidad Complutense de Mad
 		 - [x] Moneda: proporciona 1 moneda al jugador.
 		 - [x] Corazón: cura 1 de vida al jugador.
 		 - [x] Llave: proporciona 1 llave al jugador, desbloquea salas secretas.
+
 	-   Los **ítems manuales** se obtienen al recogerlos cuando el jugador pulse la tecla ‘E’ sobre ellos. Cuenta con una breve descripción  y cambian los stats del jugador.
     
 		 - [x] Hamburguesa:
 		 - [x] Mini de tinto:
-		 - [ ] Bono transporte:
+		 - [x] Bono transporte:
 		 - [ ] Código mal optimizado:
-		 - [ ] Maletín laboratorio:
+		 - [x] Maletín laboratorio:
 
 	-   Los **ítems equipables** son items manuales, pero estos cambian la apariencia del jugador (los que no implementen objetos superpuestos se les añadirá efectos de partículas o color).
 
 		- [x] Bumbo:
-		- [ ] Pantallazo azul:
+		- [x] Pantallazo azul:
 		- [ ] Collar de macarrones:
 		- [ ] Bolsa sospechosa:
 
