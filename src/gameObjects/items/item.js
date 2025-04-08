@@ -159,7 +159,7 @@ export default class Item extends SpriteBase {
       },
       "bolsa_sospechosa": {
         description: "Contiene unas hojas verdes secas. Su olor te evoca recuerdos del sur de Madrid.",
-        effect: "Disparo invertidos y 20% de desvio pero los proyectiles hacen el doble de daño"
+        effect: "Se invierten los controles de disparo pero hacen el doble de daño"
       },
 
     };

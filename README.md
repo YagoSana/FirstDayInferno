@@ -59,18 +59,19 @@ Eres "Pepito", un estudiante de primer año en la Universidad Complutense de Mad
 
 	-   Los **ítems manuales** se obtienen al recogerlos cuando el jugador pulse la tecla ‘E’ sobre ellos. Cuenta con una breve descripción  y cambian los stats del jugador.
     
-		 - [x] Hamburguesa:
-		 - [x] Mini de tinto:
-		 - [x] Bono transporte:
-		 - [ ] Código mal optimizado:
-		 - [x] Maletín laboratorio:
+		 - [x] Hamburguesa: sube 2 puntos de vida, si los controles están invertidos vuelven a la normalidad.
+		 - [x] Mini de tinto: sube 4 puntos de vida, el jugador va 25% más lento.
+		 - [x] Bono transporte: el jugador se mueve un 30% más rápido y el cooldown del disparo baja 150ms.
+		 - [x] Código mal optimizado: el proyectil del jugador hace el doble de daño pero tiene un 20% de probabilidad de que se desvie.
+		 - [x] Maletín laboratorio: sube 3 puntos de vida y el jugador va un 30% más lento.
+		 - [x] Bolsa sospechosa: invierte los controles del disparo, las balas hacen el doble de daño.
 
 	-   Los **ítems equipables** son items manuales, pero estos cambian la apariencia del jugador (los que no implementen objetos superpuestos se les añadirá efectos de partículas o color).
 
-		- [x] Bumbo:
-		- [x] Pantallazo azul:
-		- [ ] Collar de macarrones:
-		- [ ] Bolsa sospechosa:
+		- [x] Bumbo: cambia la apariencia del jugador y de las balas.
+		- [ ] Pantallazo azul: cambia la apariencia del jugador y de las balas, las balas tienen un 30% de dejar congelado durante 2 segundos
+            al enemigo (en desarrollo).
+		- [ ] Collar de macarrones: cambia la apariencia del jugador y de las balas, el cooldown del disparo disminuye (en desarrollo).
 
 -   La pantalla de GAME OVER será diferente en función de cómo ha perdido el jugador
     
@@ -171,28 +172,21 @@ El jugador puede desplazarse en **horizontal y vertical** por el mapa.
    - **📜 Descripción:**  Creado con esfuerzo y sudor por un estudiante de magisterio como proyecto de TFG.  
    - **✨ Efecto:**  El personaje cambia su proyectil a un cacho de plastilina.  
    - **✅ Beneficio:**  Aumenta la velocidad de disparo.  
-   - **❌ Desventaja:**  Reduce el daño causado.  
+   - **❌ Desventaja:**  Ninguna.  
 
 ### 📌 **Bolsa con contenido sospechoso**  
    - **🛠 Obtención:**  Obtenida tras vencer al boss de la Facultad de Filosofía.  
    - **📜 Descripción:**  Contiene unas hojas verdes secas. Su olor te evoca recuerdos del sur de Madrid.  
    - **✨ Efecto:**  El personaje cambia su proyectil a bolas de humo.  
    - **✅ Beneficio:**  Tu ataque aumenta al doble.  
-   - **❌ Desventaja:**  Se invierten los controles.  
+   - **❌ Desventaja:**  Se invierten los controles de disparo.  
 
 ### 📌 **Uff Referencia**  
    - **🛠 Obtención:**  Derrota a un enemigo especial.  
    - **📜 Descripción:**  Te recuerda a otro juego que ya has jugado…  
    - **✨ Efecto:**  El personaje ahora dispara lágrimas.  
-   - **✅ Beneficio:**  Más daño.  
+   - **✅ Beneficio:**  No tiene.  
    - **❌ Desventaja:** No tiene.  
-
-### 📌 **Algoritmo VA**  
-   - **🛠 Obtención:**  Llega a la Facultad de Informática.  
-   - **📜 Descripción:**  Algoritmo forjado en las profundidades de uno de los laboratorios de la facultad de informática. Contiene la esencia de un estudiante de informática con depresión.  
-   - **✨ Efecto:**  El personaje dispara en binario.  
-   - **✅ Beneficio:**  Las balas rebotan en la pared y hacen más daño.  
-   - **❌ Desventaja:**  El nombre evoca sentimientos traumáticos y te baja la velocidad.  
 
 ### 📌 **Bono Transporte**  
    - **🛠 Obtención:**  Aparece en las tiendas.  
@@ -201,25 +195,11 @@ El jugador puede desplazarse en **horizontal y vertical** por el mapa.
    - **✅ Beneficio:**  Más velocidad de disparo y más velocidad de movimiento.  
    - **❌ Desventaja:**  No tiene.  
 
-### 📌 **Bazinga**  
-   - **🛠 Obtención:**  Se consigue tras vencer al boss de la Facultad de Física.  
-   - **📜 Descripción:**  Jaja. Bazinga.  
-   - **✨ Efecto:**  El personaje obtiene una camiseta de Flash. Dispara protones.  
-   - **✅ Beneficio:**  Los proyectiles explotan.  
-   - **❌ Desventaja:**  Menos daño.  
-
-### 📌 **Mano en garra**  
-   - **🛠 Obtención:**  Se consigue tras vencer al boss de la Facultad de Medicina.  
-   - **📜 Descripción:**  Suena a ataque de videojuego pero es una condición médica.  
-   - **✨ Efecto:**  El personaje pierde un brazo.  
-   - **✅ Beneficio:**  Haces más daño.  
-   - **❌ Desventaja:**  Atacas a melé.  
-
 ### 📌 **Hamburguesa de pollo**  
    - **🛠 Obtención:**  Se compra en la tienda.  
    - **📜 Descripción:**  Fabricado por Sánchez y Andrés, puedes notar el sabor a parrilla (y a sus manos).  
    - **✨ Efecto:**  Nada físico.  
-   - **✅ Beneficio:**  Te otorga un corazón extra.  
+   - **✅ Beneficio:**  Te otorga dos corazón extra.  
    - **❌ Desventaja:**  Ninguna.  
 
 ### 📌 **Moneda**  
@@ -229,28 +209,28 @@ El jugador puede desplazarse en **horizontal y vertical** por el mapa.
    - **🛠 Obtención:**  Se compra en la tienda.  
    - **📜 Descripción:**  Brebaje místico realizado con los mejores vinos.  
    - **✨ Efecto:**  Te mueves más lento (bastante).  
-   - **✅ Beneficio:**  Te otorga dos corazones extra.  
-   - **❌ Desventaja:**  Ninguna.  
+   - **✅ Beneficio:**  Te otorga cuatro corazones extra.  
+   - **❌ Desventaja:**  Te mueves más lento.  
 
 ### 📌 **Maletín de laboratorio**  
    - **🛠 Obtención:**  Se compra en la tienda.  
    - **📜 Descripción:**  Maletín que contiene una placa en su interior. Nadie sabe cómo funciona.  
-   - **✨ Efecto:**  Te mueves más lento pero obtienes más escudo.  
-   - **✅ Beneficio:**  Los golpes de los enemigos te hacen menos daño.  
+   - **✨ Efecto:**  Te mueves más lento pero obtienes más vida.  
+   - **✅ Beneficio:**  Te otorga 3 corazones extra.  
    - **❌ Desventaja:**  Tu velocidad de movimiento baja.  
 
 ### 📌 **Código mal optimizado**  
    - **🛠 Obtención:**  Se compra en la tienda.  
    - **📜 Descripción:**  Código que a veces funciona mal, ha dado *time limit* en el juez.  
-   - **✨ Efecto:**  El código tiene un bug que hace que cada vez que disparas lances dos proyectiles.  
-   - **✅ Beneficio:**  Lanzas dos proyectiles cada vez que disparas.  
-   - **❌ Desventaja:**  Cada proyectil tiene un 10% de posibilidades de fallar.  
+   - **✨ Efecto:**  El código tiene un bug que hace que los proyectiles hagan el doble de daño.  
+   - **✅ Beneficio:**  Los proyectiles hacen el doble de daño.  
+   - **❌ Desventaja:**  Cada proyectil tiene un 20% de posibilidades de fallar.  
 
 ### 📌 **Pantallazo azul**  
    - **🛠 Obtención:**  Se compra en la tienda.  
    - **📜 Descripción:**  Actualizaste a Windows 11. Nadie sabe cómo funciona.  
-   - **✨ Efecto:**  Tu disparo puede bloquear a los enemigos durante 1.5 segundos.  
-   - **✅ Beneficio:**  Los disparos tienen un 30% de bloquear al enemigo durante 1.5 segundos.  
+   - **✨ Efecto:**  Tu disparo puede bloquear a los enemigos durante 2 segundos.  
+   - **✅ Beneficio:**  Los disparos tienen un 30% de bloquear al enemigo durante 2 segundos.  
    - **❌ Desventaja:**  Ninguna.  
 
 ---

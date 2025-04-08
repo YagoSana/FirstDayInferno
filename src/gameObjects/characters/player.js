@@ -370,7 +370,7 @@ export default class Player extends SpriteBase {
 
         for (let i = 0; i < (this.doubleshoot ? 2 : 1); i++) {
             console.log("disparo doble: ", this.doubleshoot);
-            new Bullet(this.scene, this.x, this.y, (this.doubleshoot ? dirX + desvio : dirX), (this.doubleshoot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
+            new Bullet(this.scene, this.x, this.y, ((this.doubleshoot && !this.invertirDisparo)? dirX + desvio : dirX), ((this.doubleshoot && !this.invertirDisparo) ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
         }
         //new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
         this.lastShot = this.scene.time.now; // Registrar tiempo del disparo
