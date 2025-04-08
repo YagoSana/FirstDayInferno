@@ -7,7 +7,7 @@ export default class Bullet extends SpriteBase {
         if(isPlayer){
             scene.bulletGroup.add(this);
             this.speed = 200; // Velocidad de la bala
-            this.setScale(0.7);
+            this.setScale(0.35);
         };
         if(!isPlayer){
             this.shooter = shooter;
@@ -50,7 +50,7 @@ export default class Bullet extends SpriteBase {
         this.body.enable = false;
         
         // Reproducir animación de explosión
-        this.play("bullet-puff");
+        this.play("bullet-puff").setScale(0.7);
         
         // Esperar el tiempo de duración de la animación antes de destruir la bala
         this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {

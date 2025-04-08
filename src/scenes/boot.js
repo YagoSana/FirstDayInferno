@@ -14,7 +14,6 @@ import camarero from "../../assets/sprites/bartender_front_iddle.png";
 import borja from "../../assets/sprites/borja.png"
 //EXTRAS ------------------------------------------------------
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
-import paperbullet from "../../assets/sprites/bullet.png";
 import puff from "../../assets/sprites/puff.png";
 import tutorial_screen from "../../assets/sprites/tutorial_screen_spritesheet.png";
 import blood from "../../assets/sprites/blood.png";
@@ -26,6 +25,7 @@ import doors from "../../assets/sprites/doors_spritesheet.png";
 
 //JUGADOR CON ITEMS ----------------------------------------------
 import player_items from "../../assets/sprites/player_item.png";
+import bullets from "../../assets/sprites/bullets_spritesheet.png";
 
 //AUDIO ------------------------------------------------------
 import musicaMenu from '../../assets/music/mainMenu.ogg';
@@ -93,9 +93,6 @@ export default class Boot extends Phaser.Scene {
     this.load.image('title', titulo);
     this.load.image('button', Button);
     this.load.image('button_hover', Button_hover)
-
-
-    this.load.image("paperbullet", paperbullet);
 
     this.load.spritesheet("borja", borja, {
       frameWidth: 32,
@@ -172,6 +169,11 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("game_over_screen", game_over_screen, {
       frameWidth: 100,
       frameHeight: 100,
+    });
+
+    this.load.spritesheet('bullets', bullets, {
+      frameWidth: 32,
+      frameHeight: 32,
     });
 
 
@@ -676,6 +678,37 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 100,
       frameHeight: 100,
       startFrame: 8
+    });
+
+    this.textures.addSpriteSheet('paperbullet', this.textures.get('bullets').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 0
+    });
+
+    this.textures.addSpriteSheet('zombiebullet', this.textures.get('bullets').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 1
+    });
+
+    this.textures.addSpriteSheet('bumbo_bullet', this.textures.get('bullets').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 2
+    });
+
+    this.textures.addSpriteSheet('pantallazo_azul_bullet', this.textures.get('bullets').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 3
+    });
+
+    this.anims.create({
+      key: "nerdbullet",
+      frames: this.anims.generateFrameNames("nerdbullet", { start: 4, end: 7 }),
+      frameRate: 8,
+      repeat: -1,
     });
 
     this.scene.start('MainMenu');

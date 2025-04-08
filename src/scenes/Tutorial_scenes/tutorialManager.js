@@ -29,7 +29,7 @@ export default class tutorialManager extends Phaser.Scene {
             this.playerStats = data.playerStats;
             this.isTutorial = false;
         } else {
-            this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500 }; // Valores predeterminados
+            this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500 ,playerTint:0xffffff}; // Valores predeterminados
             this.isTutorial = true;
         }
     }
