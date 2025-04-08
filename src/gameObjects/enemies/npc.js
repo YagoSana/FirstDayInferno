@@ -21,6 +21,7 @@ export default class Npc extends SpriteBase {
         this.scene.physics.add.collider(this, scene.enemyGroup);
         this.sonidoDropMoneda = this.scene.sound.add('enemigoSueltaMoneda');
         this.dropKey = key;
+        this.isFrozen = false;
     }
 
     hitPlayer(enemy, player) {
@@ -32,12 +33,11 @@ export default class Npc extends SpriteBase {
     }
     
     hitBullet(enemy, bullet){
+      if (bullet.freeze && !this.isFrozen && this.health > 1) {
+        this.freeze(2000); // 2 segundos
+      }
         //Enemigo muere
         this.stunCounter = 30;
-        const pantallazo = bullet.freeze;
-        if (pantallazo) {// && Phaser.Math.Between(1, 100) <= 30
-          this.freeze(); // Aplicamos congelación
-        }
         this.health--;
         if(this.health <= 0){
           if(this.dropKey){
@@ -60,6 +60,9 @@ export default class Npc extends SpriteBase {
       }
 
       preUpdate(t, dt) {
+        if (this.isFrozen) {
+          return; // No hacer nada si está congelado
+        }
         super.preUpdate(t, dt);
       }
 
@@ -68,19 +71,19 @@ export default class Npc extends SpriteBase {
         const coin = new Item(this.scene, this.x, this.y, "moneda");
       }
 
-      freeze(duration = 2000) {
-        // Detiene movimiento
-        this.body.setVelocity(0, 0);
-        this.body.moves = false;
+      freeze(duration) {
+        console.log("congelado! se mete en freeze");
+        this.isFrozen = true;
 
-        // Efecto visual
-        this.setTint(0x00ffff);
-        this.stop();
+        if (this.body) {
+            this.body.setVelocity(0, 0);
+        }
+
+        this.setTint(0x00ffff); // Azul celeste
 
         this.scene.time.delayedCall(duration, () => {
             this.clearTint();
-            this.anims.resume();
-            this.body.moves = true;
+            this.isFrozen = false;
         });
     }
 }

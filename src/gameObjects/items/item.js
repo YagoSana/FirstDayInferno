@@ -46,7 +46,7 @@ export default class Item extends SpriteBase {
         player.changeSpeed(1.3);
         player.changeCooldown(-150);//TODO VER ESTO
       },
-      "codigo": (player) => player.doDoubleshot(),
+      "codigo": (player) => player.doDoubleshoot(),
       "corazon": (player) => player.changeHealth(1, false)
     };
 
@@ -118,7 +118,7 @@ export default class Item extends SpriteBase {
     const descriptions = {
       "hamburguesa": {
         description: "Recuperas 2 puntos de salud.",
-        effect: "Salud +1"
+        effect: "Salud +2"
       },
       "mini_tinto": {
         description: "Un pequeño trago de energía, pero te ralentiza temporalmente.",

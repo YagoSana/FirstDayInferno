@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import SpriteBase from '../spriteBase';
 
 export default class Bullet extends SpriteBase {
-    constructor(scene, x, y, dirX, dirY, velocityX, velocityY, isPlayer, type, shooter, pantallazo) {
+    constructor(scene, x, y, dirX, dirY, velocityX, velocityY, isPlayer, type, shooter) {
         super(scene, x, y, type);
         if(isPlayer){
             scene.bulletGroup.add(this);
@@ -42,8 +42,6 @@ export default class Bullet extends SpriteBase {
                 this.explode();
             }
         });
-
-        this.freeze = pantallazo; // Guardar el jugador que disparó la bala
     }
 
     explode() {
