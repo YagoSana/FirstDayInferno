@@ -12,7 +12,7 @@ export default class Npc extends SpriteBase {
      * @param {number} x Coordenada x
      * @param {number} y Coordenada y 
      */
-    constructor(scene, x, y, spriteKey, key = false) {
+    constructor(scene, x, y, spriteKey, anim, key = false) {
         super(scene, x, y, spriteKey);
         this.scene = scene;
         this.spriteKey = spriteKey;
@@ -22,6 +22,8 @@ export default class Npc extends SpriteBase {
         this.sonidoDropMoneda = this.scene.sound.add('enemigoSueltaMoneda');
         this.dropKey = key;
         this.isFrozen = false;
+        this.anim = anim;
+        console.log("anim: ", anim);
     }
 
     hitPlayer(enemy, player) {
@@ -33,6 +35,7 @@ export default class Npc extends SpriteBase {
     }
     
     hitBullet(enemy, bullet){
+      console.log("vida: ", this.health);
       if (bullet.freeze && !this.isFrozen && this.health > 1) {
         this.freeze(2000); // 2 segundos
       }
@@ -61,6 +64,13 @@ export default class Npc extends SpriteBase {
 
       preUpdate(t, dt) {
         if (this.isFrozen) {
+          if(this.stunCounter>0){
+            this.stunCounter--;
+            if(this.stunCounter>20){
+              this.setTint(0x00ffff);
+            }      
+          }
+          
           return; // No hacer nada si está congelado
         }
         super.preUpdate(t, dt);
@@ -79,11 +89,9 @@ export default class Npc extends SpriteBase {
             this.body.setVelocity(0, 0);
         }
 
-        this.setTint(0x00ffff); // Azul celeste
-
         this.scene.time.delayedCall(duration, () => {
             this.clearTint();
             this.isFrozen = false;
         });
-    }
+      }
 }

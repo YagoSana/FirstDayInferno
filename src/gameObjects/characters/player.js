@@ -26,7 +26,6 @@ export default class Player extends SpriteBase {
         this.itemSprite = playerData.itemSprite; //Sprite del item visual
         this.equippedItem = playerData.equippedItem; // item que cambia apariencia
         this.equippedItemRow = playerData.equippedItemRow;
-        this.pantallazo = playerData.pantallazo;
         this.doubleshoot = playerData.doubleshoot;
         this.playerTint = 0xffffff;
         this.bulletType = 'paperbullet';
@@ -286,6 +285,7 @@ export default class Player extends SpriteBase {
             case 'pantallazo_azul':
                 currentBullet = 'pantallazo_azul_bullet';
                 this.playerTint = 0x66ccff;
+                this.pantallazo = true;
                 break;
 
             default:
@@ -363,10 +363,11 @@ export default class Player extends SpriteBase {
         let desvio = fallo ? 0.5 : 0;
 
         for (let i = 0; i < (this.doubleshoot ? 2 : 1); i++) {
+            console.log("disparando", this.doubleshoot);
             if(this.pantallazo){
                 new FreezeBullet(this.scene, this.x, this.y, (this.doubleshoot ? dirX + desvio : dirX), (this.doubleshoot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y);
             }else{
-                new Bullet(this.scene, this.x, this.y, (this.doubleshot ? dirX + desvio : dirX), (this.doubleshot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
+                new Bullet(this.scene, this.x, this.y, (this.doubleshoot ? dirX + desvio : dirX), (this.doubleshoot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
             }
         }
         //new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
@@ -520,10 +521,6 @@ export default class Player extends SpriteBase {
         return ok;
     }
 
-    freeze(){
-        return this.pantallazo;
-    }
-
     spendKey(p){
         this.keys -= p;
     }
@@ -543,7 +540,6 @@ export default class Player extends SpriteBase {
             itemSprite: this.itemSprite,
             speed: this.speed,
             shootCooldown: this.shootCooldown,
-            pantallazo: this.pantallazo,
             doubleshoot: this.doubleshoot
         };
     }

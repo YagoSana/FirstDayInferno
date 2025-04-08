@@ -71,7 +71,6 @@ export default class RangedEnemy extends Npc {
 
   // Función para disparar un proyectil
   shoot() {
-    console.log("shoot zombie, congelado: ", this.isFrozen);
     if(!this.isFrozen){
       this.play(`${this.type}_shoot`, true);
       this.once('animationcomplete', () => {

@@ -31,7 +31,7 @@ export default class SelectorNivel extends Phaser.Scene {
     if (data && data.playerStats) {
       this.playerStats = data.playerStats;
     } else {
-      this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500, pantallazo: false, doubleshoot: false  }; // Valores predeterminados
+      this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500, doubleshoot: false  }; // Valores predeterminados
     }
   }
 
