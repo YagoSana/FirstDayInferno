@@ -588,6 +588,34 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.anims.create({
+      key: "gui_bumbo_idle",
+      frames: this.anims.generateFrameNames("player_gui", { start: 20, end: 21 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "gui_bumbo_hurt",
+      frames: this.anims.generateFrameNames("player_gui", { start: 22, end: 23 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "gui_pantallazo_azul_idle",
+      frames: this.anims.generateFrameNames("player_gui", { start: 24, end: 25 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "gui_pantallazo_azul_hurt",
+      frames: this.anims.generateFrameNames("player_gui", { start: 26, end: 27 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
       key: "fire_start",
       frames: this.anims.generateFrameNames("fire", { start: 0, end: 3 }),
       frameRate: 8,
