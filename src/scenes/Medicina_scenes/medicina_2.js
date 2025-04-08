@@ -4,6 +4,7 @@ import Enemy from "../../gameObjects/enemies/enemy.js";
 import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
 import Item from "../../gameObjects/items/item.js";
+import EasyStar from "easystarjs";
 
 export default class medicina_2 extends SalaBase {
   constructor() {
@@ -12,7 +13,8 @@ export default class medicina_2 extends SalaBase {
 
   create() {
     super.create("medicina_2");
-
+    //Finder para el pathfinding
+    this.finder = new EasyStar.js();
     // Crear grupos correctamente
     this.enemyGroup = this.physics.add.group();
     this.bulletGroup = this.physics.add.group();
@@ -96,6 +98,28 @@ export default class medicina_2 extends SalaBase {
     this.physics.add.collider(this.enemyBulletGroup, layer4, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, this.obstaculos, this.onBulletCollision);
 
+    // Crear la matriz del mapa para EasyStar
+    const grid = [];
+    for (let y = 0; y < map.height; y++) {
+      const col = [];
+      for (let x = 0; x < map.width; x++) {
+        const tile2 = layer2.getTileAt(x, y);
+        const tile3 = layer3.getTileAt(x, y);
+        const tile4 = layer4.getTileAt(x, y);
+
+        // Si hay un tile en alguna de las capas de colisión, se marca como 1 (bloqueado), si no 0 (caminable)
+        if (tile2 || tile3 || tile4) {
+          col.push(1);
+        } else {
+          col.push(0);
+        }
+      }
+      grid.push(col);
+    }
+
+    this.finder.setGrid(grid);
+    this.finder.setAcceptableTiles([0]); // Solo los tiles 0 son caminables
+
     console.log("Colisiones añadidas correctamente");
     // Crear una capa negra semitransparente
     this.darkOverlay = this.add.rectangle(
@@ -138,7 +162,7 @@ export default class medicina_2 extends SalaBase {
             case "cat":
               console.log("GatosVivos: ", this.game.global.gatosVivos);  // Accede a gatosVivos
               this.game.global.gatosVivos.push(obj.id); // Añadir el ID del gato a la lista
-              this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
+              this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id, map, this.finder));
               break;
             default:
               console.log("Tipo de enemigo no reconocido:", obj.name);
