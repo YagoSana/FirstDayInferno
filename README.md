@@ -34,14 +34,16 @@ Eres "Pepito", un estudiante de primer año en la Universidad Complutense de Mad
     - [x] **Tutorial (metro)**: 3 salas a modo de tutorial
 
 -   Las salas se bloquearán hasta que derrotes a todos los enemigos con algún elemento visual como llamas. Cuando el jugador entre en contacto con ello recibirá daño.
+-   El jugador conservará las stats al cambiar de sala.
 -   Los niveles contarán con los siguientes tipos de **enemigos**:
 	- [x] **Enemigo a corta distancia** : Tienen un patrón de movimientos simple, y de vez en cuando siguen al jugador (Cucaracha, NAND).
 	- [x] **Enemigo a larga distancia** : Siguen al jugador hasta ‘x’ punto, después dentro de un rango ‘y’ disparan al jugador a distancia (Nerd, Zombie).
+ 	- [x] **Enemigo despertable** : Está dormido y es inofensivo hasta que el jugador lo toca o lo ataca, que empezará a perseguirlo (Gato).
+  	- [x] **Enemigo de embestida** : Tiene movimiento limitado pero si el jugador está a su alcance lo embiste con gran velocidad.
 	- [x] **Enemigo torreta** : Enemigo estático que ataca a gran rango en una única dirección. Se coloca al final de los pasillos para jugar con mecánicas de esquive.
-   - [x] **Enemigo de disparo en área** : Dispara 8 balas en área y sigue al jugador hasta 'x'.
-   - [x] **Enemigo torreta** : Enemigo estático que ataca a gran rango en una única dirección. Se coloca al final de los pasillos para jugar con mecánicas de esquive.
-   - [x] **MiniBoss informatica** : El enemigo permanece ináctivo y spawnea 2 guardianes (enemigos a larga distancia), en el momento en el que estos son derrotados se activa. Su movimiento es estático y varia entre ataques rápidos de una sola bala y otros mas lentos de varias.
-   - [En proceso] **Boss Informatica** : Boss de 2 fases, comienza siendo una profesora de la facultad (cualquier parecido con la realidad es pura coincidencia). Tras quitarle x vida se convierte en un ciborg. La primera base se basará en ataques a distancia variando entre ataques directos o rafagas en rango. La segunda fase invoca enemigos y ataca a melé.
+   	- [x] **Enemigo de disparo en área** : Dispara 8 balas en área y sigue al jugador hasta 'x'.
+   	- [x] **MiniBoss informatica** : El enemigo permanece ináctivo y spawnea 2 guardianes (enemigos a larga distancia), en el momento en el que estos son derrotados se activa. Su movimiento es estático y varia entre ataques rápidos de una sola bala y otros mas lentos de varias.
+   	- [En proceso] **Boss Informatica** : Boss de 2 fases, comienza siendo una profesora de la facultad (cualquier parecido con la realidad es pura coincidencia). Tras quitarle x vida se convierte en un ciborg. La primera base se basará en ataques a distancia variando entre ataques directos o rafagas en rango. La segunda fase invoca enemigos y ataca a melé.
 
     
 -   Se podrá conseguir items por diferentes medios como:
