@@ -25,6 +25,8 @@ export default class Player extends SpriteBase {
         this.itemSprite = playerData.itemSprite; //Sprite del item visual
         this.equippedItem = playerData.equippedItem; // item que cambia apariencia
         this.equippedItemRow = playerData.equippedItemRow;
+        this.doubleshoot = playerData.doubleshoot;
+        this.invertirDisparo = playerData.invertirDisparo;
         this.playerTint = 0xffffff;
         this.bulletType = 'paperbullet';
         if (this.equippedItem) {
@@ -81,8 +83,6 @@ export default class Player extends SpriteBase {
         this.sonidoMoneda = scene.sound.add('cogerMoneda');
         this.stepTimer = 0;
         this.stepInterval = 500; // o el valor que te mole para los pasos
-
-        this.doubleshot = false;
     }
 
     /**
@@ -96,14 +96,20 @@ export default class Player extends SpriteBase {
         if (this.anims.currentAnim.key != 'player-death') {
             // Manejo de disparo
             if (t > this.lastShot + this.shootCooldown) {
-                if (this.shootKeys.shootUp.isDown)
-                    this.shoot(0, -1);
-                else if (this.shootKeys.shootDown.isDown)
-                    this.shoot(0, 1);
-                else if (this.shootKeys.shootLeft.isDown)
-                    this.shoot(-1, 0);
-                else if (this.shootKeys.shootRight.isDown)
-                    this.shoot(1, 0);
+                let x = 0, y = 0;
+            
+                if (this.shootKeys.shootUp.isDown) y = -1;
+                else if (this.shootKeys.shootDown.isDown) y = 1;
+                else if (this.shootKeys.shootLeft.isDown) x = -1;
+                else if (this.shootKeys.shootRight.isDown) x = 1;
+            
+                if (x !== 0 || y !== 0) {
+                    if (this.invertirDisparo) {
+                        x = -x;
+                        y = -y;
+                    }
+                    this.shoot(x, y);
+                }
             }
             let acceleration = 400; // Aceleración en px/s²
             let deceleration = 450; // Desaceleración en px/s²
@@ -263,7 +269,8 @@ export default class Player extends SpriteBase {
     //Cambia la apariencia del jugador con un item
     itemAppearance(itemKey, spriteRow) {
         const spriteKey = `player_items`;
-        this.equippedItemRow = spriteRow;
+        if(spriteRow != -1)
+            this.equippedItemRow = spriteRow;
         if(this.glowEffect){
             this.postFX.remove(this.glowEffect);
         }
@@ -361,8 +368,9 @@ export default class Player extends SpriteBase {
         let fallo = Phaser.Math.Between(1, 100) <= 20;
         let desvio = fallo ? 0.5 : 0;
 
-        for (let i = 0; i < (this.doubleshot ? 2 : 1); i++) {
-            new Bullet(this.scene, this.x, this.y, (this.doubleshot ? dirX + desvio : dirX), (this.doubleshot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
+        for (let i = 0; i < (this.doubleshoot ? 2 : 1); i++) {
+            console.log("disparo doble: ", this.doubleshoot);
+            new Bullet(this.scene, this.x, this.y, (this.doubleshoot ? dirX + desvio : dirX), (this.doubleshoot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
         }
         //new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
         this.lastShot = this.scene.time.now; // Registrar tiempo del disparo
@@ -475,13 +483,17 @@ export default class Player extends SpriteBase {
         this.shootCooldown += p; // En milisegundos
     }
 
-    doDoubleshot() {
-        this.doubleshot = true;
+    doDoubleshoot(p) {
+        this.doubleshoot = p;
     }
 
     maxHealthUp() {
         this.maxHealth++;
         //this.scene.updateHealth(this.maxHealth, this.health);
+    }
+
+    invertir(p){
+        this.invertirDisparo = p;
     }
 
     pickKey(p) {
@@ -530,6 +542,8 @@ export default class Player extends SpriteBase {
             itemSprite: this.itemSprite,
             speed: this.speed,
             shootCooldown: this.shootCooldown,
+            doubleshoot: this.doubleshoot,
+            invertirDisparo: this.invertirDisparo,
         };
     }
 }
