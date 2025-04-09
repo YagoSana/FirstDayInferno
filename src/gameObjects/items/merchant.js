@@ -28,7 +28,7 @@ export default class merchant extends SpriteBase {
         this.scene.physics.add.collider(this, scene.enemyGroup);
 
         // Propiedades de la máquina
-        this.price = 0;
+        this.price = 3;
         this.maxBulletHits = 5; // Disparos necesarios
         this.bulletHits = 0;    // Contador de disparos recibidos
         this.remainingUses = this.maxUses;
@@ -42,7 +42,7 @@ export default class merchant extends SpriteBase {
         this.play('idle-front-bartender');
         
         // Elementos UI
-        this.interactionText = this.scene.add.text(0, 0, 'Comprar (5$)', {
+        this.interactionText = this.scene.add.text(0, 0, 'Comprar (3$)', {
             fontSize: '16px',
             fill: '#ffffff',
             fontFamily: 'monogram',
