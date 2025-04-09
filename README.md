@@ -49,7 +49,7 @@ Eres "Pepito", un estudiante de primer año en la Universidad Complutense de Mad
 -   Se podrá conseguir items por diferentes medios como:
 	 - [x] Una **máquina expendedora**: tiene ‘x’ usos y dispensa un ítem aleatorio por uso con un coste ‘y’. En caso de no tener dinero se puede destruir y proporciona ‘x’ items al destruirse
 	 - [x] Una **tienda en la cafetería**: tiene 1 único uso. Permite comprar por 5 monedas, invoca 3 objetos de los cuales al elegir uno elimina los demas.
-    -[x] NPC del laboratorio. Te otorga el maletín tras 1 conversación. Al ser asesinado invoca al mini boss anteriormente mencionado.
+    - [x] NPC del laboratorio. Te otorga el maletín tras 1 conversación. Al ser asesinado invoca al mini boss anteriormente mencionado.
     
 -   Aparecerán una variedad de **items** con distintas funcionalidades que pueden tener un efecto positivo o negativo al jugador. Algunos se recogen automáticamente al pasar por encima, y otros contarán con una descripción para que el jugador los pueda recoger con la tecla ‘E’.
     
@@ -142,7 +142,7 @@ El jugador puede desplazarse en **horizontal y vertical** por el mapa.
 ### 🏁 4.3 HUD
 - **Vida del jugador**.
 - **Inventario de objetos**.
-- **Mapa accesible con la tecla M**.
+- **Mapa accesible con la tecla M**. (WIP)
 
 ### 📜 4.4 Menús
 - **Menú de Pausa:** Permite reanudar o salir del nivel.
@@ -161,7 +161,7 @@ El jugador puede desplazarse en **horizontal y vertical** por el mapa.
 - **Jefes:** Poseen **múltiples fases** y dejan caer **trozos de llave** al ser derrotados.
 
 ### 🔥 5.2 Facultades y Enemigos
-- **Medicina:** Zombies con bata y esqueletos. **Jefe: Ayuso**.
+- **Medicina:** Zombies con bata y esqueletos. **Jefe: zombie especial**. Para hito 3 boss especial
 - **Magisterio:** Enemigos similares. **Jefe: ???**.
 - **Filosofía:** Enemigos por definir.
 - **Física:** Enemigos científicos. **Jefe: Bazinga**.
