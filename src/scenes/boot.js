@@ -618,6 +618,34 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.anims.create({
+      key: "gui_collar_macarrones_idle",
+      frames: this.anims.generateFrameNames("player_gui", { start: 28, end: 29 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "gui_collar_macarrones_hurt",
+      frames: this.anims.generateFrameNames("player_gui", { start: 30, end: 31 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "gui_bolsa_sospechosa_idle",
+      frames: this.anims.generateFrameNames("player_gui", { start: 32, end: 33 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "gui_bolsa_sospechosa_hurt",
+      frames: this.anims.generateFrameNames("player_gui", { start: 34, end: 35 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
       key: "fire_start",
       frames: this.anims.generateFrameNames("fire", { start: 0, end: 3 }),
       frameRate: 8,
@@ -702,6 +730,18 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
       startFrame: 3
+    });
+    
+    this.textures.addSpriteSheet('dough_bullet', this.textures.get('bullets').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 8
+    });
+
+    this.textures.addSpriteSheet('smoke_bullet', this.textures.get('bullets').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 9
     });
 
     this.anims.create({

@@ -38,6 +38,7 @@ export default class Item extends SpriteBase {
       "mini_tinto": (player) => {
         player.changeHealth(4, true);
         player.changeSpeed(0.75);
+        player.invertir(false);
       },
       "llave": (player) => player.pickKey(1),
       "bumbo": (player) => player.itemAppearance("bumbo", 0), // cabeza de Isaac
@@ -46,17 +47,20 @@ export default class Item extends SpriteBase {
       "bono": (player) => {
         player.changeSpeed(1.3);
         player.changeCooldown(-150);//TODO VER ESTO
+        player.invertir(false);
       },
-      "codigo": (player) => player.doDoubleshoot(true),
+      "codigo": (player) => {
+        player.doDoubleshoot(true);
+        player.invertir(false);;
+      },
       "corazon": (player) => player.changeHealth(1, false),
       "maletin": (player) => {
         player.changeSpeed(0.70);
         player.changeHealth(3, true);
+        player.invertir(false);
       },
-      "bolsa_sospechosa": (player) => {
-        player.invertir(true);
-        player.doDoubleshoot(true);
-      }
+      "bolsa_sospechosa": (player) => player.itemAppearance("bolsa_sospechosa", 3),
+      "collar_macarrones": (player) => player.itemAppearance("collar_macarrones", 2),
     };
 
     // Texto del nombre del objeto encima del jugador
