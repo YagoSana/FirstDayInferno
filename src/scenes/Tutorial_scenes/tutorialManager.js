@@ -86,6 +86,7 @@ export default class tutorialManager extends Phaser.Scene {
     }
 
     create() {
+        this.tutorialSonido = this.sound.add("tutorialSonido", { volume: 0.5, loop: true });
         this.anims.create({
             key: "cucaracha",
             frames: this.anims.generateFrameNames("cucaracha", {
@@ -111,7 +112,7 @@ export default class tutorialManager extends Phaser.Scene {
         else {
             this.scene.start("tutorial_3", { x: 120, y: 50, playerStats: this.playerStats, managerKey: "tutorialManager", status: this.mapStatus.get("tutorial_3") });
         }
-
+        this.tutorialSonido.play();
     }
 
     cambiarSala(zone) {

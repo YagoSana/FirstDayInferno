@@ -5,7 +5,8 @@ import Item from './item';
 export default class VendingMachine extends SpriteBase {
     constructor(scene, x, y) {
         super(scene, x, y, 'vending_machine');
-
+        this.popSound = this.scene.sound.add('pop', { volume: 0.5, loop: false });
+        this.sonidoUso = this.scene.sound.add('sonidoMaquina', { volume: 0.5, loop: false });
         this.body.setImmovable(true); // Esto evita que se mueva al colisionar
         this.body.allowGravity = false; // Por si acaso
 
@@ -127,6 +128,7 @@ export default class VendingMachine extends SpriteBase {
 
                 // Animación de uso
                 this.play('vm-using');
+                this.sonidoUso.play(); // Sonido de uso de la máquina
                 this.once('animationcomplete', () => {
                     this.isInUse = false;
 
@@ -206,6 +208,7 @@ export default class VendingMachine extends SpriteBase {
                 });
             }
         });
+        this.popSound.play(); // Sonido de dispensar objeto
     }
 
     flashEffect() {

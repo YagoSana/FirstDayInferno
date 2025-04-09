@@ -41,6 +41,8 @@ import facultadMedicinaOst from '../../assets/music/facultadMedicina.ogg';
 import pop from '../../assets/music/pop.wav';
 import explode from '../../assets/music/explode.wav';
 import musicaGameOver from '../../assets/music/musicaGameOver.ogg';
+import tutorialSonido from '../../assets/music/tutorialSonido.ogg';
+import sonidoMaquina from '../../assets/music/sonidoMaquina.wav';
 //GUI ------------------------------------------------------
 import vidaJugador from "../../assets/sprites/vidaPlayer.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
@@ -89,6 +91,8 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('pop', pop);
     this.load.audio('explode', explode);
     this.load.audio('musicaGameOver', musicaGameOver);
+    this.load.audio('tutorialSonido', tutorialSonido);
+    this.load.audio('sonidoMaquina', sonidoMaquina);
     //AUDIO
     this.loadFont('monogram', monogram);
     this.load.image('background', Background);
