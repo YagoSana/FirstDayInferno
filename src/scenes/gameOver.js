@@ -11,6 +11,8 @@ export default class GameOver extends Phaser.Scene {
     }
 
     create() {
+        this.sound.stopAll();
+        this.music = this.sound.add('musicaGameOver', { volume: 0.7, loop: false });
         // Fondo oscuro semi-transparente
         this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.8)
             .setOrigin(0, 0);
@@ -43,6 +45,7 @@ export default class GameOver extends Phaser.Scene {
             },
             scale: 2
         });
+        this.music.play();
     }
 
     showDeathCause() {
