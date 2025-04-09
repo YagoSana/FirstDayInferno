@@ -1,3 +1,4 @@
+import Phaser from "phaser";
 export default class DoorFireManager {
     constructor(scene) {
         this.scene = scene;
