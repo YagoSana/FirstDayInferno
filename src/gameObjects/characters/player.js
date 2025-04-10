@@ -433,7 +433,7 @@ export default class Player extends SpriteBase {
                 this.canParry = true;
             });
             // Efecto visual de parry
-            this.setTint(0x00ffff); // Un azul brillante tipo cian
+            this.setTint(0xFFFF00); // Un azul brillante tipo cian
             this.setAlpha(1);
 
             this.scene.tweens.add({
@@ -449,7 +449,7 @@ export default class Player extends SpriteBase {
             });
 
             if (this.itemSprite) {
-                this.itemSprite.setTint(0x00ffff);
+                this.itemSprite.setTint(0xFFFF00);
                 this.scene.tweens.add({
                     targets: this.itemSprite,
                     alpha: { from: 1, to: 0.5 },
@@ -462,7 +462,9 @@ export default class Player extends SpriteBase {
                     }
                 });
             }
-            if (bullet) bullet.explode();
+            if (bullet) {
+                bullet.explode()
+            }
             this.lastHurtTime = currentTime;
             return; // No se recibe daño
         }
