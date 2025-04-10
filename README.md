@@ -23,6 +23,7 @@ Eres "Pepito", un estudiante de primer año en la Universidad Complutense de Mad
 
 ### ⭐ 1.4 Features Principales
 -   El jugador contará con las siguientes funciones:
+    - [] Sistema de dialogos con interfaz y NPCS.
 	 - [x] Movimiento multidireccional (Topdown).
 	 - [x] Movimiento multidireccional (Topdown).
 	 - [x] Disparo en 4 direcciones con inercia.
