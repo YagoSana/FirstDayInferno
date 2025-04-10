@@ -282,6 +282,10 @@ export default class Player extends SpriteBase {
         }
 
         let currentBullet = 'paperbullet';
+        
+        this.doDoubleshoot(false);
+        this.invertir(false);
+        this.playerTint = 0xffffff;
 
         switch (itemKey) {
             case 'bumbo':
@@ -292,6 +296,16 @@ export default class Player extends SpriteBase {
             case 'pantallazo_azul':
                 currentBullet = 'pantallazo_azul_bullet';
                 this.playerTint = 0x66ccff;
+                break;
+
+            case 'collar_macarrones':
+                currentBullet = 'dough_bullet';
+                this.changeCooldown(100);
+                break;
+            case 'bolsa_sospechosa':
+                currentBullet = 'smoke_bullet';
+                this.invertir(true);
+                this.doDoubleshoot(true);
                 break;
 
             default:
