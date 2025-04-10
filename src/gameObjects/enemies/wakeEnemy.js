@@ -80,17 +80,8 @@ export default class WakeEnemy extends Npc {
   hitBullet(enemy, bullet) {
     //Enemigo muere
     if (this.despierto) {
-      this.stunCounter = 30;
-      this.health--;
+      super.hitBullet(enemy, bullet);
       if (this.health <= 0) {
-        this.body.setVelocity(0, 0);
-        this.scene.numEnemiesBeaten++;
-        this.body.enable = false;
-        this.play("blood", true);
-        this.once('animationcomplete', () => {
-          this.scene.add.sprite(this.x, this.y, "blood").setVisible(true).setDepth(3).setFrame(12);
-          this.destroy();
-        });
         this.scene.game.global.gatosVivos = this.scene.game.global.gatosVivos.filter((id) => id !== this.id); // Eliminar el gato de la lista de gatos vivos
       }
     }
@@ -102,6 +93,5 @@ export default class WakeEnemy extends Npc {
       });
       this.scene.numEnemies++;
     }
-    bullet.explode();
   }
 }
