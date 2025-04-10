@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 import SpriteBase from '../spriteBase.js';
 import Item from '../items/item.js';
+import Player from '../characters/player.js';
 
 /**
  * Clase que representa la base sobre la que se sitúan las estrellas que aparecen en el juego
@@ -11,7 +12,7 @@ export default class Npc extends SpriteBase {
      * @param {number} x Coordenada x
      * @param {number} y Coordenada y 
      */
-    constructor(scene, x, y, spriteKey, key = false) {
+    constructor(scene, x, y, spriteKey, anim, key = false) {
         super(scene, x, y, spriteKey);
         this.scene = scene;
         this.spriteKey = spriteKey;
@@ -20,6 +21,9 @@ export default class Npc extends SpriteBase {
         this.scene.physics.add.collider(this, scene.enemyGroup);
         this.sonidoDropMoneda = this.scene.sound.add('enemigoSueltaMoneda');
         this.dropKey = key;
+        this.isFrozen = false;
+        this.anim = anim;
+        console.log("anim: ", anim);
     }
 
     hitPlayer(enemy, player) {
@@ -31,6 +35,10 @@ export default class Npc extends SpriteBase {
     }
     
     hitBullet(enemy, bullet){
+      console.log("vida: ", this.health);
+      if (bullet.freeze && !this.isFrozen && this.health > 1) {
+        this.freeze(2000); // 2 segundos
+      }
         //Enemigo muere
         this.stunCounter = 30;
         this.health--;
@@ -55,11 +63,35 @@ export default class Npc extends SpriteBase {
       }
 
       preUpdate(t, dt) {
+        if (this.isFrozen) {
+          if(this.stunCounter>0){
+            this.stunCounter--;
+            if(this.stunCounter>20){
+              this.setTint(0x00ffff);
+            }      
+          }
+          
+          return; // No hacer nada si está congelado
+        }
         super.preUpdate(t, dt);
       }
 
       dropCoin(){
         this.sonidoDropMoneda.play();
         const coin = new Item(this.scene, this.x, this.y, "moneda");
+      }
+
+      freeze(duration) {
+        console.log("congelado! se mete en freeze");
+        this.isFrozen = true;
+
+        if (this.body) {
+            this.body.setVelocity(0, 0);
+        }
+
+        this.scene.time.delayedCall(duration, () => {
+            this.clearTint();
+            this.isFrozen = false;
+        });
       }
 }

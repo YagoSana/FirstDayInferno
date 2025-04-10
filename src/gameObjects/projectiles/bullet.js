@@ -4,6 +4,7 @@ import SpriteBase from '../spriteBase';
 export default class Bullet extends SpriteBase {
     constructor(scene, x, y, dirX, dirY, velocityX, velocityY, isPlayer, type, shooter) {
         super(scene, x, y, type);
+        this.type = type;
         if (isPlayer) {
             scene.bulletGroup.add(this);
             this.speed = 200; // Velocidad de la bala
@@ -69,5 +70,19 @@ export default class Bullet extends SpriteBase {
         this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
             this.destroy();
         });
+    }
+
+    parry(){
+         // Deshabilitar colisión y movimiento
+         this.body.setVelocity(0, 0);
+         this.body.enable = false;
+ 
+         // Reproducir animación de explosión
+         this.play("parrySmoke").setScale(0.7);
+ 
+         // Esperar el tiempo de duración de la animación antes de destruir la bala
+         this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+             this.destroy();
+         });
     }
 }

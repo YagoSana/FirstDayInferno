@@ -68,27 +68,11 @@ export default class RangedEnemy extends Npc {
   }
 // Sobrescribir hitBullet de la clase base
 hitBullet(enemy, bullet){
-    //Enemigo muere
-    if(!this.inmortal && !this.invulnerable){
-    this.stunCounter = 30;
-    this.health--;
-    if(this.health <= 0){
-      if (Phaser.Math.Between(1, 100) <= 33) {
-        this.dropCoin();
-      }
-      this.scene.numEnemiesBeaten++;
-      this.body.setVelocity(0,0);
-      this.body.enable = false;
-      this.play("blood", true);
-      this.once('animationcomplete', () => {
-        this.scene.add.sprite(this.x, this.y, "blood").setVisible(true).setDepth(3).setFrame(12);
-        this.destroy();
-      });
-    }
-    
-}
-bullet.explode();
+  //Enemigo muere
+  if(!this.inmortal && !this.invulnerable){
+    super.hitBullet(enemy, bullet);
   }
+}
   
   // Función para disparar 3 proyectiles en el eje X
   shoot() {

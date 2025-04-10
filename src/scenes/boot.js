@@ -18,6 +18,7 @@ import puff from "../../assets/sprites/puff.png";
 import tutorial_screen from "../../assets/sprites/tutorial_screen_spritesheet.png";
 import blood from "../../assets/sprites/blood.png";
 import fire from "../../assets/sprites/fire.png";
+import parrySmoke from "../../assets/sprites/parrySmoke.png";
 
 //ITEMS ------------------------------------------------------
 import items from "../../assets/sprites/items_spritesheet.png";
@@ -99,6 +100,11 @@ export default class Boot extends Phaser.Scene {
     this.load.image('title', titulo);
     this.load.image('button', Button);
     this.load.image('button_hover', Button_hover)
+
+    this.load.spritesheet("parrySmoke", parrySmoke, {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
 
     this.load.spritesheet("borja", borja, {
       frameWidth: 32,
@@ -624,6 +630,34 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.anims.create({
+      key: "gui_collar_macarrones_idle",
+      frames: this.anims.generateFrameNames("player_gui", { start: 28, end: 29 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "gui_collar_macarrones_hurt",
+      frames: this.anims.generateFrameNames("player_gui", { start: 30, end: 31 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "gui_bolsa_sospechosa_idle",
+      frames: this.anims.generateFrameNames("player_gui", { start: 32, end: 33 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "gui_bolsa_sospechosa_hurt",
+      frames: this.anims.generateFrameNames("player_gui", { start: 34, end: 35 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
       key: "fire_start",
       frames: this.anims.generateFrameNames("fire", { start: 0, end: 3 }),
       frameRate: 8,
@@ -709,12 +743,31 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
       startFrame: 3
     });
+    
+    this.textures.addSpriteSheet('dough_bullet', this.textures.get('bullets').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 8
+    });
+
+    this.textures.addSpriteSheet('smoke_bullet', this.textures.get('bullets').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 9
+    });
 
     this.anims.create({
       key: "nerdbullet",
       frames: this.anims.generateFrameNames("bullets", { start: 4, end: 7 }),
       frameRate: 8,
       repeat: -1,
+    });
+
+    this.anims.create({
+      key: "parrySmoke",
+      frames: this.anims.generateFrameNames("parrySmoke", { start: 0, end: 5 }),
+      frameRate: 8,
+      repeat: 0,
     });
 
     this.scene.start('MainMenu');
