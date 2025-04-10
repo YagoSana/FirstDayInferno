@@ -286,6 +286,7 @@ export default class Player extends SpriteBase {
         this.doDoubleshoot(false);
         this.invertir(false);
         this.playerTint = 0xffffff;
+        this.pantallazo = false;
 
         switch (itemKey) {
             case 'bumbo':
@@ -388,7 +389,7 @@ export default class Player extends SpriteBase {
             if(this.pantallazo){
                 new FreezeBullet(this.scene, this.x, this.y, (this.doubleshoot ? dirX + desvio : dirX), (this.doubleshoot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y);
             }else{
-                new Bullet(this.scene, this.x, this.y, (this.doubleshoot ? dirX + desvio : dirX), (this.doubleshoot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
+                new Bullet(this.scene, this.x, this.y, ((this.doubleshoot && !this.invertirDisparo) ? dirX + desvio : dirX), (this.doubleshoot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
             }
         }
         //new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
