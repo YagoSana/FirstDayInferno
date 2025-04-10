@@ -104,17 +104,17 @@ export default class Player extends SpriteBase {
      */
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
-        
+
         if (this.anims.currentAnim.key != 'player-death') {
             // Manejo de disparo
             if (t > this.lastShot + this.shootCooldown) {
                 let x = 0, y = 0;
-    
+
                 if (this.shootKeys.shootUp.isDown) y = -1;
                 else if (this.shootKeys.shootDown.isDown) y = 1;
                 else if (this.shootKeys.shootLeft.isDown) x = -1;
                 else if (this.shootKeys.shootRight.isDown) x = 1;
-    
+
                 if (x !== 0 || y !== 0) {
                     if (this.invertirDisparo) {
                         x = -x;
@@ -126,12 +126,12 @@ export default class Player extends SpriteBase {
             let acceleration = 400; // Aceleración en px/s²
             let deceleration = 450; // Desaceleración en px/s²
             let maxSpeed = this.speed; // Velocidad máxima permitida
-    
+
             let velocityX = this.body.velocity.x;
             let velocityY = this.body.velocity.y;
-    
+
             let newAnimation = `idle-${this.lastDirection}`; // Animación por defecto
-    
+
             if (this.cursors.up.isDown) {
                 velocityY = Phaser.Math.Clamp(velocityY - acceleration * (dt / 1000), -maxSpeed, maxSpeed);
                 this.lastDirection = 'back';
@@ -144,7 +144,7 @@ export default class Player extends SpriteBase {
                 velocityY = Phaser.Math.Clamp(velocityY - Math.sign(velocityY) * deceleration * (dt / 1000), -maxSpeed, maxSpeed);
                 if (Math.abs(velocityY) < 10) velocityY = 0;
             }
-    
+
             if (this.cursors.left.isDown) {
                 velocityX = Phaser.Math.Clamp(velocityX - acceleration * (dt / 1000), -maxSpeed, maxSpeed);
                 this.lastDirection = 'left';
@@ -157,11 +157,11 @@ export default class Player extends SpriteBase {
                 velocityX = Phaser.Math.Clamp(velocityX - Math.sign(velocityX) * deceleration * (dt / 1000), -maxSpeed, maxSpeed);
                 if (Math.abs(velocityX) < 10) velocityX = 0;
             }
-    
+
             // Control del sonido de pasos
             if (velocityX !== 0 || velocityY !== 0) {
                 this.stepTimer -= dt;
-    
+
                 if (this.stepTimer <= 0) {
                     this.sonidoAndar.play();
                     this.stepTimer = this.stepInterval;
@@ -169,7 +169,7 @@ export default class Player extends SpriteBase {
             } else {
                 this.stepTimer = 0;
             }
-    
+
             // Normalizar velocidad en diagonal
             let speedMagnitude = Math.sqrt(velocityX * velocityX + velocityY * velocityY);
             if (speedMagnitude > maxSpeed) {
@@ -177,7 +177,7 @@ export default class Player extends SpriteBase {
                 velocityX *= scale;
                 velocityY *= scale;
             }
-    
+
             if (!this.isShooting) {
                 if (velocityX === 0 && velocityY === 0) {
                     this.play(`idle-${this.lastDirection}`, true);
@@ -185,41 +185,41 @@ export default class Player extends SpriteBase {
                     this.anims.play(newAnimation, true);
                 }
             }
-    
+
             this.body.setVelocity(velocityX, velocityY);
-    
+
             if (this.scene.time.now > this.lastHurtTime + this.damageCooldown) {
                 this.setTint(this.playerTint);
                 if (this.itemSprite) {
                     this.itemSprite.setTint(0xffffff);
                 }
             }
-    
+
             if (this.nearVendingMachine) {
                 if (Phaser.Input.Keyboard.JustDown(this.pickupKey)) {
                     if (!this.nearVendingMachine.isInUse) {
                         this.nearVendingMachine.useMachine();
                     }
                 }
-    
+
                 if (!this.nearVendingMachine.scene || !this.scene.physics.overlap(this, this.nearVendingMachine.interactionArea)) {
                     this.nearVendingMachine.hideInteractionUI();
                     this.nearVendingMachine = null;
                 }
-    
+
             }
-    
+
             if (this.nearDoor) {
                 if (Phaser.Input.Keyboard.JustDown(this.pickupKey)) {
                     this.nearDoor.unlock();
                 }
-    
+
                 if (!this.nearDoor.scene || !this.scene.physics.overlap(this, this.nearDoor.interactionArea)) {
                     this.nearDoor.hideInteractionUI();
                     this.nearDoor = null;
                 }
             }
-    
+
             if (this.nearItem) {
                 if (!this.nearItem.scene || !this.scene.physics.overlap(this, this.nearItem)) {
                     this.nearItem.hidePickupHint();
@@ -228,47 +228,47 @@ export default class Player extends SpriteBase {
                 else if (Phaser.Input.Keyboard.JustDown(this.pickupKey)) {
                     const itemToPick = this.nearItem;
                     this.nearItem = null;
-    
+
                     if (itemToPick.pick) {
                         itemToPick.pick(this, this);
                     }
                 }
             }
-    
+
             // ACTUALIZAR EL SPRITE DEL ITEM SOLO SI HAY UN ITEM EQUIPADO
             if (this.itemSprite) {
                 let lerpFactor = 1; // Ajusta este valor para hacer el movimiento más suave
                 this.itemSprite.x = Phaser.Math.Linear(this.itemSprite.x, this.x, lerpFactor);
                 this.itemSprite.y = Phaser.Math.Linear(this.itemSprite.y, this.y, lerpFactor);
-    
+
                 let frameIndex = this.equippedItemRow * 8;
                 if (this.isShooting) {
                     frameIndex += 4;
                 }
-    
+
                 const directionIndex = {
                     "front": 0,
                     "back": 1,
                     "left": 2,
                     "right": 3
                 }[this.lastDirection] || 0;
-    
+
                 const newFrame = frameIndex + directionIndex;
                 if (this.itemSprite.frame.name !== newFrame && !this.isShooting) {
                     this.itemSprite.setFrame(newFrame);
                 }
             }
-    
+
             // Añadir el cooldown al parry
             if (Phaser.Input.Keyboard.JustDown(this.parryKey)) {
                 if (this.scene.time.now > this.lastParryTime + this.parryCooldown) {
                     this.isParrying = true;
                     this.lastParryTime = this.scene.time.now; // Actualiza el último tiempo del parry
                     this.setTint(0x00ffff); // Cambia el color del jugador al parry
-    
+
                     // Activar animación de parry (si existe)
                     // this.play('parry_anim');
-    
+
                     // Desactivar el parry después de unos frames
                     this.scene.time.delayedCall(200, () => {
                         this.isParrying = false;
@@ -276,7 +276,7 @@ export default class Player extends SpriteBase {
                     });
                 }
             }
-    
+
         } else {
             if (this.itemSprite) {
                 this.itemSprite.destroy();
@@ -285,7 +285,7 @@ export default class Player extends SpriteBase {
             this.setTint(0xffffff);
         }
     }
-    
+
 
     //Cambia la apariencia del jugador con un item
     itemAppearance(itemKey, spriteRow) {
@@ -463,7 +463,7 @@ export default class Player extends SpriteBase {
                 });
             }
             if (bullet) {
-                bullet.explode()
+               bullet.parry();
             }
             this.lastHurtTime = currentTime;
             return; // No se recibe daño
@@ -523,7 +523,9 @@ export default class Player extends SpriteBase {
             }
         }
 
-        if (bullet) bullet.explode();
+        if (bullet) {
+            bullet.explode();
+        }
     }
 
 
@@ -536,12 +538,6 @@ export default class Player extends SpriteBase {
             if (this.itemSprite) {
                 this.itemSprite.setTint(0xff0000);
             }
-
-            if (bullet && bullet.shooter) {
-                this.lastDamageSource = bullet.shooter; // Guardar referencia al enemigo
-                this.lastDamageType = 'enemy';
-            }
-
             this.health--; // Reducir vida
             this.scene.game.events.emit('healthChanged', { health: this.health, maxHealth: this.maxHealth });
             this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'hurt' });

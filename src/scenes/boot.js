@@ -18,6 +18,7 @@ import puff from "../../assets/sprites/puff.png";
 import tutorial_screen from "../../assets/sprites/tutorial_screen_spritesheet.png";
 import blood from "../../assets/sprites/blood.png";
 import fire from "../../assets/sprites/fire.png";
+import parrySmoke from "../../assets/sprites/parrySmoke.png";
 
 //ITEMS ------------------------------------------------------
 import items from "../../assets/sprites/items_spritesheet.png";
@@ -99,6 +100,11 @@ export default class Boot extends Phaser.Scene {
     this.load.image('title', titulo);
     this.load.image('button', Button);
     this.load.image('button_hover', Button_hover)
+
+    this.load.spritesheet("parrySmoke", parrySmoke, {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
 
     this.load.spritesheet("borja", borja, {
       frameWidth: 32,
@@ -715,6 +721,13 @@ export default class Boot extends Phaser.Scene {
       frames: this.anims.generateFrameNames("bullets", { start: 4, end: 7 }),
       frameRate: 8,
       repeat: -1,
+    });
+
+    this.anims.create({
+      key: "parrySmoke",
+      frames: this.anims.generateFrameNames("parrySmoke", { start: 0, end: 5 }),
+      frameRate: 8,
+      repeat: 0,
     });
 
     this.scene.start('MainMenu');
