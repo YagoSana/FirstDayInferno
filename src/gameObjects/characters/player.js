@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import Bullet from '../projectiles/bullet.js';
 import SpriteBase from '../spriteBase.js';
+import FreezeBullet from '../projectiles/freezeBullet.js';
 
 /**
  * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando los cursores.
@@ -26,7 +27,6 @@ export default class Player extends SpriteBase {
         this.equippedItem = playerData.equippedItem; // item que cambia apariencia
         this.equippedItemRow = playerData.equippedItemRow;
         this.doubleshoot = playerData.doubleshoot;
-        this.invertirDisparo = playerData.invertirDisparo;
         this.playerTint = 0xffffff;
         this.bulletType = 'paperbullet';
         if (this.equippedItem) {
@@ -296,6 +296,7 @@ export default class Player extends SpriteBase {
             case 'pantallazo_azul':
                 currentBullet = 'pantallazo_azul_bullet';
                 this.playerTint = 0x66ccff;
+                this.pantallazo = true;
                 break;
 
             case 'collar_macarrones':
@@ -383,8 +384,12 @@ export default class Player extends SpriteBase {
         let desvio = fallo ? 0.5 : 0;
 
         for (let i = 0; i < (this.doubleshoot ? 2 : 1); i++) {
-            console.log("disparo doble: ", this.doubleshoot);
-            new Bullet(this.scene, this.x, this.y, ((this.doubleshoot && !this.invertirDisparo)? dirX + desvio : dirX), ((this.doubleshoot && !this.invertirDisparo) ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
+            console.log("disparando", this.doubleshoot);
+            if(this.pantallazo){
+                new FreezeBullet(this.scene, this.x, this.y, (this.doubleshoot ? dirX + desvio : dirX), (this.doubleshoot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y);
+            }else{
+                new Bullet(this.scene, this.x, this.y, (this.doubleshoot ? dirX + desvio : dirX), (this.doubleshoot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
+            }
         }
         //new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
         this.lastShot = this.scene.time.now; // Registrar tiempo del disparo
@@ -501,6 +506,10 @@ export default class Player extends SpriteBase {
         this.doubleshoot = p;
     }
 
+    doFreeze(){
+        this.pantallazo = true;
+    }
+
     maxHealthUp() {
         this.maxHealth++;
         //this.scene.updateHealth(this.maxHealth, this.health);
@@ -537,7 +546,7 @@ export default class Player extends SpriteBase {
         return ok;
     }
 
-    spendKey(p) {
+    spendKey(p){
         this.keys -= p;
     }
 
@@ -556,8 +565,7 @@ export default class Player extends SpriteBase {
             itemSprite: this.itemSprite,
             speed: this.speed,
             shootCooldown: this.shootCooldown,
-            doubleshoot: this.doubleshoot,
-            invertirDisparo: this.invertirDisparo,
+            doubleshoot: this.doubleshoot
         };
     }
 }
