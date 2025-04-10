@@ -283,7 +283,9 @@ export default class Player extends SpriteBase {
 
         let currentBullet = 'paperbullet';
         
+        this.doDoubleshoot(false);
         this.invertir(false);
+        this.playerTint = 0xffffff;
 
         switch (itemKey) {
             case 'bumbo':

@@ -48,6 +48,7 @@ export default class Item extends SpriteBase {
         player.changeSpeed(1.3);
         player.changeCooldown(-150);//TODO VER ESTO
         player.invertir(false);
+        player.doDoubleshoot(false);
       },
       "codigo": (player) => {
         player.doDoubleshoot(true);
@@ -58,6 +59,7 @@ export default class Item extends SpriteBase {
         player.changeSpeed(0.70);
         player.changeHealth(3, true);
         player.invertir(false);
+        player.doDoubleshoot(false);
       },
       "bolsa_sospechosa": (player) => player.itemAppearance("bolsa_sospechosa", 3),
       "collar_macarrones": (player) => player.itemAppearance("collar_macarrones", 2),
