@@ -4,6 +4,7 @@ import PauseMenu from './scenes/pauseMenu.js';
 import End from './scenes/end.js';
 import GUI from './scenes/gui.js';
 import GameOver from './scenes/gameOver.js';
+import DialogueBox from './scenes/conversation.js';
 
 import FDI_1 from './scenes/FDI_scenes/FDI_1.js';
 import FDI_2 from './scenes/FDI_scenes/FDI_2.js';

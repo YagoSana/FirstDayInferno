@@ -4,6 +4,8 @@ import Enemy from "../../gameObjects/enemies/enemy.js";
 import Item from "../../gameObjects/items/item.js";
 import VendingMachine from "../../gameObjects/items/vendingMachine.js";
 import merchant from "../../gameObjects/items/merchant.js";
+import DialogueBox from "../conversation.js";
+import boot from "../boot.js";
 
 export default class FDI_4 extends SalaBase {
 
@@ -13,6 +15,8 @@ export default class FDI_4 extends SalaBase {
 
     create(){
         super.create('FDI_4');
+
+
         const map = this.make.tilemap({ key: 'FDI_4_TL' }); // Cargamos el mapa
         //Cargar tilesets
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');

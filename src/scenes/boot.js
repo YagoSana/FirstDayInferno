@@ -48,7 +48,7 @@ import sonidoMaquina from '../../assets/music/sonidoMaquina.wav';
 import vidaJugador from "../../assets/sprites/vidaPlayer.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
 import game_over_screen from "../../assets/sprites/enemy_game_over.png";
-
+import bartenderImg from "../../assets/sprites/camarero.png";
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -111,6 +111,11 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
+    this.load.spritesheet("bartenderImg", bartenderImg, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+  
     this.load.spritesheet("player", player, {
       frameWidth: 32, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
@@ -208,9 +213,20 @@ export default class Boot extends Phaser.Scene {
       repeat: -1,
     });
 
+
     this.anims.create({
       key: "idle-front-bartender",
       frames: this.anims.generateFrameNames("bartender", {
+        start: 0,
+        end: 2,
+      }),
+      frameRate: 5,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "bartender-face",
+      frames: this.anims.generateFrameNames("bartenderImg", {
         start: 0,
         end: 2,
       }),
