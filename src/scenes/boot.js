@@ -45,6 +45,7 @@ import musicaGameOver from '../../assets/music/musicaGameOver.ogg';
 import tutorialSonido from '../../assets/music/tutorialSonido.ogg';
 import sonidoMaquina from '../../assets/music/sonidoMaquina.wav';
 //GUI ------------------------------------------------------
+import mainMenu from "../../assets/sprites/mainmenu.png";
 import vidaJugador from "../../assets/sprites/vidaPlayer.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
 import game_over_screen from "../../assets/sprites/enemy_game_over.png";
@@ -193,6 +194,10 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
+    this.load.spritesheet("main_menu", mainMenu, {
+      frameWidth: 192,
+      frameHeight: 108,
+    });
 
   }
 
@@ -456,8 +461,15 @@ export default class Boot extends Phaser.Scene {
       repeat: 0,
     });
 
+    this.anims.create({
+      key: "Title_screen",
+      frames: this.anims.generateFrameNames("main_menu", { start: 0, end: 23}),
+      frameRate: 8,
+      repeat: -1,
+    });
 
-    // 🔹 Crear texturas individuales a partir del spritesheet (sin función)
+
+    //Crear texturas individuales a partir del spritesheet
     this.textures.addSpriteSheet('bumbo', this.textures.get('items').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
