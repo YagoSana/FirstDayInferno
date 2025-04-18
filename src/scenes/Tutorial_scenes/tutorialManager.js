@@ -11,6 +11,7 @@ import tutorial_1 from "../../../assets/map/tutorial_1.json";
 import tutorial_2 from "../../../assets/map/tutorial_2.json";
 import tutorial_3 from "../../../assets/map/tutorial_3.json";
 import tutorial_debug from "../../../assets/map/tutorial_debug.json";
+import tutorial_debug2 from "../../../assets/map/tutorial_debug2.json";
 import img_interior from "../../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../../assets/map/Room_Builder_free_16x16.png";
 
@@ -83,6 +84,7 @@ export default class tutorialManager extends Phaser.Scene {
         this.load.tilemapTiledJSON("tutorial_2", tutorial_2);
         this.load.tilemapTiledJSON("tutorial_3", tutorial_3);
         this.load.tilemapTiledJSON("tutorial_debug", tutorial_debug);
+        this.load.tilemapTiledJSON("tutorial_debug2", tutorial_debug2);
     }
 
     create() {
