@@ -9,10 +9,11 @@ import monogram from "../../fonts/monogram-extended.ttf";
 //JUGADOR ------------------------------------------------------
 import player from "../../assets/sprites/player_spritesheet.png";
 //CAMAERO
-import camarero from "../../assets/sprites/bartender_front_iddle.png";
+import camarero from "../../assets/sprites/bartender_front_iddle.png"
 //PROFESOR
 import borja from "../../assets/sprites/borja.png"
-import borja_frontal from "../../assets/sprites/borja_frontal_32x32.png";
+import borjaPortrait from "../../assets/sprites/borja_frontal_32x32.png";
+import borjaMalvado from "../../assets/sprites/borja_malvado.png"
 //EXTRAS ------------------------------------------------------
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
 import puff from "../../assets/sprites/puff.png";
@@ -109,6 +110,16 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.load.spritesheet("borja", borja, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet("borjaMalvado", borjaMalvado, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet("borjaPortrait", borjaPortrait, {
       frameWidth: 32,
       frameHeight: 32,
     });
@@ -212,6 +223,26 @@ export default class Boot extends Phaser.Scene {
     this.anims.create({
       key: "teacher-front",
       frames: this.anims.generateFrameNames("borja", {
+        start: 0,
+        end: 0,
+      }),
+      frameRate: 5,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "borja-malvado",
+      frames: this.anims.generateFrameNames("borjaMalvado", {
+        start: 0,
+        end: 0,
+      }),
+      frameRate: 5,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "borjaPortrait",
+      frames: this.anims.generateFrameNames("teacher_face", {
         start: 0,
         end: 0,
       }),

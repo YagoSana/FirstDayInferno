@@ -75,8 +75,7 @@ export default class FDI_2_2 extends SalaBase {
         const teacher = new NPC(this, 160, 50);
 
         teacher.on('npcDeath', (x, y) => {
-            // Invocar al jefe (turretEnemy), invulnerable al inicio
-            const boss = new miniBossLab(this, x, y, "nerd");
+            const boss = new miniBossLab(this, x, y, "borja-malvado");
             boss.invulnerable = true;
             boss.setTint(0x999999); // Tint visual para indicar invulnerabilidad
             this.enemyGroup.add(boss);

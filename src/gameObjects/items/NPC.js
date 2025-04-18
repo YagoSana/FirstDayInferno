@@ -9,132 +9,124 @@ export default class NPC extends SpriteBase {
 
         this.body.setImmovable(true);
         this.body.allowGravity = false;
-
         this.body.setSize(20, 10);
         this.body.setOffset(6, 0);
         this.setScale(1.2);
-        this.interactionRange = 20;
         this.originalScaleX = 1.2;
         this.originalScaleY = 1.2;
-        const cam = this.scene.cameras.main;
-        const boxWidth = 300;
-        const marginBottom = 20;
-        const dialogX = cam.centerX - boxWidth / 2;
-        const dialogY = cam.y + cam.height - 100 - marginBottom;
+        this.bulletHits = 0;
+        this.maxBulletHits = 3;
 
-        this.dialogueBox = new DialogueBox(this.scene, this.x + 100, this.y + 200, boxWidth, 'borja-frontal', 'Borja');
+        this.dialogueBox = new DialogueBox(this.scene, this.x + 100, this.y + 200, 300, 'borjaPortrait', 'Borja');
 
-        this.frases = [
+        this.hit_frases = [
             "¡Eh tronco, que tengo clase luego!",
-            "¡Oye, que esto duele más de lo que parece!",
+            "No me pagan lo suficiente...",
             "¡Así no se trata a un funcionario!",
             "¿Quién te crees que soy, Terminator?",
             "¡Como me rompas las gafas te suspendo!"
         ];
+
+        this.talk_frases = [
+            "¿Necesitas ayuda con la práctica?",
+            "Yo tampoco entiendo como funciona el maletín",
+            "Al menos no doy FAL"
+        ];
+
         this.dialogueActivo = false;
+        this.objectGiven = false;
+        this.modoHabla = true;
+        this.interactionRange = 60;
 
-        this.interactionArea = this.scene.add.circle(x, y, 20, 0x000000, 0);
-        this.scene.physics.add.existing(this.interactionArea);
-        this.interactionArea.body.setCircle(20);
+        // Cola de diálogo
+        this.dialogueQueue = [];
+        this.dialogueIndex = 0;
 
-        this.scene.physics.add.overlap(this.interactionArea, scene.player, this.showInteractionUI, null, this);
         this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
         this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
         this.scene.physics.add.collider(this, scene.enemyGroup);
 
-        this.objectGiven = false;
-        this.maxBulletHits = 3;
-        this.bulletHits = 0;
-        this.maxUses = 3;
-        this.remainingUses = this.maxUses;
-        this.isOperational = true;
-        this.isInUse = false;
-        this.useCooldown = 2000;
-        this.lastUseTime = 0;
-
         this.play('teacher-front');
 
-        this.interactionText = this.scene.add.text(0, 0, 'Hola chaval, esto es para ti!', {
-            fontSize: '16px',
-            fill: '#ffffff',
-            fontFamily: 'monogram',
-            backgroundColor: '#000000',
-            padding: { x: 5, y: 4 }
-        }).setVisible(false).setDepth(25).setResolution(2);
-
         this.eKeyIcon = this.scene.add.sprite(0, 0, 'key_E_action')
+            .setPosition(this.x, this.y - 30)
             .setVisible(false)
             .setDepth(20)
             .play('key_E_action');
 
-        this.bulletText = this.scene.add.text(this.x - 30, this.y - 40, 'Disparos: 0/5', {
-            fontSize: '14px',
-            fill: '#ffff00',
-            fontFamily: 'monogram',
-            backgroundColor: '#000000',
-            padding: { x: 5, y: 3 }
-        }).setVisible(false).setDepth(20).setResolution(2);
+        // Mostrar ícono si estás cerca
+        this.scene.physics.add.overlap(
+            this,
+            this.scene.player,
+            () => {
+                if (!this.dialogueActivo) {
+                    this.eKeyIcon.setPosition(this.x, this.y - 30);
+                    this.eKeyIcon.setVisible(true);
+                }
+            },
+            null,
+            this
+        );
+
+        // Ocultar ícono si te alejas
+        this.scene.events.on('update', () => {
+            if (!this.isPlayerInRange()) {
+                this.eKeyIcon.setVisible(false);
+            } else {
+                this.eKeyIcon.setVisible(true);
+            }
+        });
+
+        // Input para hablar / avanzar diálogo
+        this.scene.input.keyboard.on('keydown-E', () => {
+            if (!this.isPlayerInRange()) return;
+            this.hablar();
+        });
     }
 
-    showInteractionUI(machine, player) {
-        if (this.isOperational) {
-            player.nearVendingMachine = this;
+    isPlayerInRange() {
+        if (!this.scene || !this.scene.player || !this.scene.player.x || !this.x) return false;
+        return Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <= this.interactionRange;
+    }
 
-            if (this.scene.time.now - this.lastUseTime > this.useCooldown) {
-                this.interactionText.setPosition(this.x - 100 / 2, this.y - 40);
-                this.interactionText.setVisible(true);
-
-                this.eKeyIcon.setPosition(this.x - 60, this.y - 30);
-                this.eKeyIcon.setVisible(true);
+    hablar() {
+        if (!this.dialogueActivo) {
+            // Primera vez que se activa el diálogo
+            if (!this.objectGiven) {
+                this.dialogueQueue = ["Esto es para ti, cuidao con él."];
+                this.objectGiven = true;
+                this.dispenseItem(); // Puedes mover esto al final del diálogo si prefieres
             } else {
-                this.hideInteractionUI();
+                const frase = Phaser.Utils.Array.GetRandom(this.talk_frases);
+                this.dialogueQueue = [frase];
+            }
+
+            this.dialogueIndex = 0;
+            this.dialogueActivo = true;
+            this.dialogueBox.show(this.dialogueQueue[this.dialogueIndex]);
+        } else {
+            // Avanzar en el diálogo
+            this.dialogueIndex++;
+
+            if (this.dialogueIndex < this.dialogueQueue.length) {
+                this.dialogueBox.show(this.dialogueQueue[this.dialogueIndex]);
+            } else {
+                this.dialogueBox.hide();
+                this.dialogueActivo = false;
             }
         }
     }
 
-    hideInteractionUI() {
-        this.interactionText.setVisible(false);
-        this.eKeyIcon.setVisible(false);
-    }
-
-    useMachine() {
-        if (!this.objectGiven) {
-            this.objectGiven = true;
-            this.scene.player.spendCoins(this.price);
-
-            this.isInUse = true;
-            this.lastUseTime = this.scene.time.now;
-            this.remainingUses--;
-
-            this.stretchMachine();
-            this.dispenseItem();
-
-            this.once('animationcomplete', () => {
-                this.isInUse = false;
-
-                if (this.remainingUses <= 0) {
-                    this.disableMachine();
-                } else {
-                    this.play('teacher-front');
-                    this.resetMachineScale();
-                }
-            });
-        }
-    }
-
     dispenseItem() {
-        const items = ['maletin'];
-        const randomItem = Phaser.Utils.Array.GetRandom(items);
-
+        const itemName = 'maletin';
         const startX = this.x;
         const startY = this.y + 10;
-
         const offsetX = Phaser.Math.Between(-30, 30);
         const offsetY = Phaser.Math.Between(30, 50);
         const endX = this.x + offsetX;
         const endY = this.y + offsetY;
 
-        const item = new Item(this.scene, endX, endY, randomItem);
+        const item = new Item(this.scene, endX, endY, itemName);
         item.setVisible(false);
         item.setDepth(this.depth + 10);
 
@@ -144,8 +136,15 @@ export default class NPC extends SpriteBase {
             y: startY - 20,
             duration: 400,
             ease: 'Power2',
-            onStart: () => item.setVisible(true)
+            onStart: () => item.setVisible(true),
+            onComplete: () => {
+                this.scene.tweens.add({ targets: item, y: endY, duration: 0 });
+            }
         });
+    }
+
+    hitPlayer(machine, player) {
+        player.body.setVelocityX(player.body.velocity.x * -0.5);
     }
 
     flashEffect() {
@@ -164,104 +163,65 @@ export default class NPC extends SpriteBase {
         }
     }
 
-    shakeMachine() {
-        this.scene.tweens.add({
-            targets: this,
-            x: this.x + 3,
-            duration: 80,
-            yoyo: true,
-            repeat: 3,
-            ease: 'Sine.easeInOut'
-        });
-    }
-
-    stretchMachine() {
-        this.scene.tweens.add({
-            targets: this,
-            scaleX: this.originalScaleX * 0.9,
-            scaleY: this.originalScaleY * 1.1,
-            duration: 400,
-            yoyo: true,
-            ease: 'Back.easeOut'
-        });
-
-        this.scene.tweens.add({
-            targets: this,
-            y: this.y - 5,
-            duration: 200,
-            yoyo: true,
-            repeat: 2
-        });
-    }
-
-    resetMachineScale() {
-        this.scene.tweens.add({
-            targets: this,
-            scaleX: this.originalScaleX,
-            scaleY: this.originalScaleY,
-            duration: 300,
-            ease: 'Elastic.easeOut'
-        });
-    }
-
-    disableMachine() {
-        if (this.scene) {
-            this.isOperational = false;
-
-            this.stop();
-            this.setFrame(18);
-            this.setTint(0x737373);
-            this.hideInteractionUI();
-
-            this.scene.tweens.add({
-                targets: this,
-                scaleX: this.originalScaleX * 0.9,
-                scaleY: this.originalScaleY * 0.9,
-                angle: Phaser.Math.Between(-3, 3),
-                duration: 500,
-                ease: 'Bounce.easeOut'
-            });
-        }
-    }
-
-    resetMachine() {
-        this.isOperational = true;
-        this.remainingUses = this.maxUses;
-        this.clearTint();
-        this.setAlpha(1);
-        this.play('teacher-front');
-    }
-
-    hitPlayer(machine, player) {
-        player.body.setVelocityX(player.body.velocity.x * -0.5);
-    }
-
     hitBullet(machine, bullet) {
         bullet.explode();
-        if (this.isOperational) {
-            this.flashEffect();
-            this.bulletHits++;
-            this.bulletText.setText(`Disparos: ${this.bulletHits}/${this.maxBulletHits}`);
-
-            // Mostrar frase aleatoria
-            const frase = Phaser.Utils.Array.GetRandom(this.frases);
-            if (!this.dialogueActivo) {
-                this.dialogueBox.show(frase);
-                this.dialogueActivo = true;
-
-                this.scene.time.delayedCall(3000, () => {
+    
+        this.flashEffect();
+        this.bulletHits++;
+    
+        // Mostrar frase solo si no hay diálogo activo
+        if (!this.dialogueActivo) {
+            let frase = "...";
+            if (this.bulletHits != this.maxBulletHits) {
+                frase = Phaser.Utils.Array.GetRandom(this.hit_frases);
+            }
+    
+            this.dialogueBox.show(frase);
+            this.dialogueActivo = true;
+    
+            this.scene.time.delayedCall(3000, () => {
+                if (this.dialogueActivo) {
                     this.dialogueBox.hide();
                     this.dialogueActivo = false;
-                });
-            }
-
-            if (this.bulletHits >= this.maxBulletHits) {
-                this.bulletHits = 0;
-                this.dispenseItem();
-                this.disableMachine();
-                this.emit('npcDeath', this.x, this.y);
-                this.destroy();
-            }
+                }
+            });
         }
-    }
+    
+        if (this.bulletHits >= this.maxBulletHits) {
+            this.bulletHits = 0;
+        
+            // Mostrar sprite animado de la explosión
+            const explosion = this.scene.add.sprite(this.x, this.y, 'fire_loop');
+            explosion.play('fire_loop'); // Asegúrate de que esté cargada como animación
+            explosion.setScale(2);
+            explosion.setDepth(50);
+        
+            // Fade-out bonito
+            this.scene.tweens.add({
+                targets: explosion,
+                alpha: 0,
+                scale: 3,
+                duration: 2000,
+                ease: 'Cubic.easeOut',
+                onComplete: () => {
+                    explosion.destroy();
+                }
+            });
+        
+            // Tween del NPC antes de destruirlo
+            this.scene.tweens.add({
+                targets: this,
+                scale: 0,
+                alpha: 0,
+                duration: 1000,
+                ease: 'Power2',
+                onComplete: () => {
+                    this.emit('npcDeath', this.x, this.y);
+                    this.destroy();
+                }
+            });
+        }
+        
+        
+}
 }

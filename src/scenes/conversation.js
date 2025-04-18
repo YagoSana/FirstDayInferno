@@ -34,7 +34,7 @@ export default class DialogueBox {
             .setScale(this.gui_scale);
 
         // Retrato
-        this.portrait = this.scene.add.sprite(this.margin + 6, this.margin + 6, 'bartenderImg')
+        this.portrait = this.scene.add.sprite(this.margin + 6, this.margin + 6, this.imgKey)
             .setOrigin(0)
             .setScale(1.7);
 
@@ -96,8 +96,8 @@ this.nameText = this.scene.add.text(this.portrait.x + nameWidth / 2, nameY + 10,
     }
 
     show(message, spriteKey = null, animationKey = null) {
+     
         this.text.setText(message);
-
         if (animationKey) {
             this.portrait.play(animationKey);
         }
@@ -107,9 +107,11 @@ this.nameText = this.scene.add.text(this.portrait.x + nameWidth / 2, nameY + 10,
 
         this.container.setVisible(true);
         this.visible = true;
+        this.scene.freezeScene(); 
     }
 
     hide() {
+      
         this.container.setVisible(false);
         this.eKeyIcon.setVisible(false);
         this.visible = false;
@@ -117,5 +119,6 @@ this.nameText = this.scene.add.text(this.portrait.x + nameWidth / 2, nameY + 10,
         if (this.portrait.anims) {
             this.portrait.stop();
         }
+        this.scene.unfreezeScene();
     }
 }

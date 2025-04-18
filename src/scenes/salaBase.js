@@ -101,4 +101,15 @@ export default class SalaBase extends Phaser.Scene {
             this.uiController.destroy();
         }
     }
+
+    freezeScene() {
+        this.physics.world.pause();
+         this.scenePaused = true; // opcional para lógica condicional
+    }
+    
+    unfreezeScene() {
+        this.physics.world.resume();
+        this.scenePaused = false;
+    }
+    
 }
