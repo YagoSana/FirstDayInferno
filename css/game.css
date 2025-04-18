@@ -65,6 +65,23 @@ button:hover {
     transform: scale(1.1);
 }
 
+.links_container{
+    margin: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.icon{
+    width: 100px;
+    transition: 0.2s;
+
+}
+
+.icon:hover{
+    transform: scale(1.05);
+}
+
 /* Botón de inicio con efecto de fuego */
 .start {
     font-size: 30px;
@@ -148,7 +165,9 @@ button:hover {
 }
 
 #juego {
-    color: #a3a3a3;
+    width: 1000px;  /* Mismo ancho que en la configuración de Phaser */
+    height: 562px;  /* Mismo alto que en la configuración de Phaser */
+    margin: 0 auto; /* Centrar el juego */
 }
 a {
     color: #a3a3a3;
