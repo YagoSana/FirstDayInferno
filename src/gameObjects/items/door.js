@@ -6,7 +6,11 @@ export default class Door extends SpriteBase {
     constructor(scene, x, y, key) {
         super(scene, x, y, key);
 
-        if(key === "medDoor"){
+        if(key === "fdiDoor"){
+            this.animation = 'fdiDoor-open';
+            this.ini = 0;
+            this.end = 18;
+        }else if(key === "medDoor"){
             this.animation = 'medDoor-open';
             this.ini = 20;
             this.end = 37;
