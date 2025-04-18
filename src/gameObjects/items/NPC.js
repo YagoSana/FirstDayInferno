@@ -1,188 +1,169 @@
 import Phaser from 'phaser';
 import SpriteBase from '../spriteBase';
 import Item from './item';
+import DialogueBox from '../../scenes/conversation.js';
 
 export default class NPC extends SpriteBase {
     constructor(scene, x, y) {
         super(scene, x, y, 'NPC');
 
-        this.body.setImmovable(true); // Esto evita que se mueva al colisionar
-        this.body.allowGravity = false; // Por si acaso
+        this.body.setImmovable(true);
+        this.body.allowGravity = false;
 
-        // Ajustar hitbox para permitir pasar un poco por encima
-        this.body.setSize(20, 10); // Reducimos altura
-        this.body.setOffset(6, 0); // Ajustamos offset
+        this.body.setSize(20, 10);
+        this.body.setOffset(6, 0);
         this.setScale(1.2);
         this.interactionRange = 20;
-        this.originalScaleX = 1.2; 
+        this.originalScaleX = 1.2;
         this.originalScaleY = 1.2;
+        const cam = this.scene.cameras.main;
+        const boxWidth = 300;
+        const marginBottom = 20;
+        const dialogX = cam.centerX - boxWidth / 2;
+        const dialogY = cam.y + cam.height - 100 - marginBottom;
+
+        this.dialogueBox = new DialogueBox(this.scene, this.x + 100, this.y + 200, boxWidth, 'borja-frontal', 'Borja');
+
+        this.frases = [
+            "¡Eh tronco, que tengo clase luego!",
+            "¡Oye, que esto duele más de lo que parece!",
+            "¡Así no se trata a un funcionario!",
+            "¿Quién te crees que soy, Terminator?",
+            "¡Como me rompas las gafas te suspendo!"
+        ];
+        this.dialogueActivo = false;
 
         this.interactionArea = this.scene.add.circle(x, y, 20, 0x000000, 0);
         this.scene.physics.add.existing(this.interactionArea);
         this.interactionArea.body.setCircle(20);
 
-
         this.scene.physics.add.overlap(this.interactionArea, scene.player, this.showInteractionUI, null, this);
-
         this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
         this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
         this.scene.physics.add.collider(this, scene.enemyGroup);
 
-        // Propiedades del NPC
-        this.objectGiven=false;
-        this.maxBulletHits = 5; // Disparos necesarios
-        this.bulletHits = 0;    // Contador de disparos recibidos
+        this.objectGiven = false;
+        this.maxBulletHits = 3;
+        this.bulletHits = 0;
         this.maxUses = 3;
         this.remainingUses = this.maxUses;
         this.isOperational = true;
         this.isInUse = false;
-        this.useCooldown = 2000; // 2 segundos entre usos
+        this.useCooldown = 2000;
         this.lastUseTime = 0;
 
-        // Estado inicial
         this.play('teacher-front');
-        // Elementos UI
+
         this.interactionText = this.scene.add.text(0, 0, 'Hola chaval, esto es para ti!', {
             fontSize: '16px',
             fill: '#ffffff',
             fontFamily: 'monogram',
             backgroundColor: '#000000',
             padding: { x: 5, y: 4 }
-        })
-            .setVisible(false)
-            .setDepth(25).setResolution(2);
+        }).setVisible(false).setDepth(25).setResolution(2);
 
         this.eKeyIcon = this.scene.add.sprite(0, 0, 'key_E_action')
             .setVisible(false)
             .setDepth(20)
             .play('key_E_action');
 
-        // Texto para modo disparo
         this.bulletText = this.scene.add.text(this.x - 30, this.y - 40, 'Disparos: 0/5', {
             fontSize: '14px',
             fill: '#ffff00',
             fontFamily: 'monogram',
             backgroundColor: '#000000',
             padding: { x: 5, y: 3 }
-        })
-            .setVisible(false)
-            .setDepth(20).setResolution(2);
+        }).setVisible(false).setDepth(20).setResolution(2);
     }
-
-
 
     showInteractionUI(machine, player) {
         if (this.isOperational) {
-            // Guardar referencia en el jugador
             player.nearVendingMachine = this;
 
-            //si la no maquina esta en uso
             if (this.scene.time.now - this.lastUseTime > this.useCooldown) {
-                // Mostrar UI
                 this.interactionText.setPosition(this.x - 100 / 2, this.y - 40);
                 this.interactionText.setVisible(true);
 
                 this.eKeyIcon.setPosition(this.x - 60, this.y - 30);
                 this.eKeyIcon.setVisible(true);
-
-            }
-            else {
+            } else {
                 this.hideInteractionUI();
             }
         }
     }
 
     hideInteractionUI() {
-        // console.log("ocultando texto");
         this.interactionText.setVisible(false);
         this.eKeyIcon.setVisible(false);
-      
     }
 
     useMachine() {
-     if(!this.objectGiven){
-        this.objectGiven=true;
-                this.scene.player.spendCoins(this.price);
+        if (!this.objectGiven) {
+            this.objectGiven = true;
+            this.scene.player.spendCoins(this.price);
 
-                this.isInUse = true;
-                this.lastUseTime = this.scene.time.now;
-                this.remainingUses--;
+            this.isInUse = true;
+            this.lastUseTime = this.scene.time.now;
+            this.remainingUses--;
 
-                this.stretchMachine();
-                this.dispenseItem();
-                // Animación de uso
-               ;
-                this.once('animationcomplete', () => {
-                    this.isInUse = false;
+            this.stretchMachine();
+            this.dispenseItem();
 
-                    // Soltar objeto
-                  
+            this.once('animationcomplete', () => {
+                this.isInUse = false;
 
-                    // Verificar si se agotaron los usos
-                    if (this.remainingUses <= 0) {
-                        this.disableMachine();
-                    } else {
-                        this.play('teacher-front');
-                        this.resetMachineScale();
-                    }
-                });
-            
-           
-            }
+                if (this.remainingUses <= 0) {
+                    this.disableMachine();
+                } else {
+                    this.play('teacher-front');
+                    this.resetMachineScale();
+                }
+            });
+        }
     }
 
     dispenseItem() {
-        // Crear un objeto aleatorio cerca de la máquina
         const items = ['maletin'];
         const randomItem = Phaser.Utils.Array.GetRandom(items);
 
-        // Posición inicial (dentro de la máquina)
         const startX = this.x;
-        const startY = this.y + 10; // Justo debajo del centro
+        const startY = this.y + 10;
 
-        // Posición final (fuera de la máquina)
         const offsetX = Phaser.Math.Between(-30, 30);
         const offsetY = Phaser.Math.Between(30, 50);
         const endX = this.x + offsetX;
         const endY = this.y + offsetY;
 
-        // Crear el ítem en posición inicial (invisible)
         const item = new Item(this.scene, endX, endY, randomItem);
-        item.setVisible(false); // Comenzar invisible
-        item.setDepth(this.depth + 10); // Asegurar que esté sobre la máquina
+        item.setVisible(false);
+        item.setDepth(this.depth + 10);
 
-        // Animación de salida mejorada (sin sequence)
         this.scene.tweens.add({
             targets: item,
             alpha: { from: 0, to: 1 },
             y: startY - 20,
             duration: 400,
             ease: 'Power2',
-            onStart: () => item.setVisible(true),
-           
+            onStart: () => item.setVisible(true)
         });
     }
 
     flashEffect() {
         if (this.isOperational) {
-            // Guardar el tintado original si es la primera vez
             if (this.originalTint === undefined) {
                 this.originalTint = this.tint;
             }
 
-            // Flash blanco
             this.setTint(0x737373);
-            // console.log('flash effect');
-            // Volver al color original después de 100ms
+
             this.scene.time.delayedCall(300, () => {
-                if (this.isOperational) { // Verificar si el objeto existe
+                if (this.isOperational) {
                     this.setTint(this.originalTint);
                 }
             });
         }
     }
 
-    // Nuevos métodos para efectos visuales:
     shakeMachine() {
         this.scene.tweens.add({
             targets: this,
@@ -194,9 +175,7 @@ export default class NPC extends SpriteBase {
         });
     }
 
-
     stretchMachine() {
-        // Efecto de "estirarse" al usarla
         this.scene.tweens.add({
             targets: this,
             scaleX: this.originalScaleX * 0.9,
@@ -206,7 +185,6 @@ export default class NPC extends SpriteBase {
             ease: 'Back.easeOut'
         });
 
-        // Pequeño shake vertical
         this.scene.tweens.add({
             targets: this,
             y: this.y - 5,
@@ -230,12 +208,11 @@ export default class NPC extends SpriteBase {
         if (this.scene) {
             this.isOperational = false;
 
-            this.stop(); // Detener animación
-            this.setFrame(18); // Frame inicial de idle
-            // Aplicar tintado oscuro permanente
-            this.setTint(0x737373); // Usamos setTintFill para forzar el color
+            this.stop();
+            this.setFrame(18);
+            this.setTint(0x737373);
             this.hideInteractionUI();
-            console.log('maquina deshabilitada')
+
             this.scene.tweens.add({
                 targets: this,
                 scaleX: this.originalScaleX * 0.9,
@@ -244,36 +221,40 @@ export default class NPC extends SpriteBase {
                 duration: 500,
                 ease: 'Bounce.easeOut'
             });
-
         }
-
     }
 
     resetMachine() {
         this.isOperational = true;
         this.remainingUses = this.maxUses;
         this.clearTint();
-        this.setAlpha(1); // Asegurar que esté totalmente visible
+        this.setAlpha(1);
         this.play('teacher-front');
     }
 
     hitPlayer(machine, player) {
-        // Puedes añadir lógica adicional aquí
-        // Por ejemplo, un pequeño efecto de retroceso para el jugador
         player.body.setVelocityX(player.body.velocity.x * -0.5);
     }
 
     hitBullet(machine, bullet) {
-        // Efecto visual
-        // this.bulletText.setVisible(true);
         bullet.explode();
         if (this.isOperational) {
             this.flashEffect();
-            // Incrementar contador
             this.bulletHits++;
             this.bulletText.setText(`Disparos: ${this.bulletHits}/${this.maxBulletHits}`);
 
-            // Verificar si alcanzó el límite
+            // Mostrar frase aleatoria
+            const frase = Phaser.Utils.Array.GetRandom(this.frases);
+            if (!this.dialogueActivo) {
+                this.dialogueBox.show(frase);
+                this.dialogueActivo = true;
+
+                this.scene.time.delayedCall(3000, () => {
+                    this.dialogueBox.hide();
+                    this.dialogueActivo = false;
+                });
+            }
+
             if (this.bulletHits >= this.maxBulletHits) {
                 this.bulletHits = 0;
                 this.dispenseItem();
@@ -281,8 +262,6 @@ export default class NPC extends SpriteBase {
                 this.emit('npcDeath', this.x, this.y);
                 this.destroy();
             }
-
         }
     }
-
 }

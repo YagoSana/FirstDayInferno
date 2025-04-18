@@ -39,7 +39,8 @@ export default class Merchant extends SpriteBase {
         const dialogX = cam.centerX - boxWidth / 2;
         const dialogY = cam.y + cam.height - 100 - marginBottom;
 
-        this.dialogueBox = new DialogueBox(this.scene, this.x+100, this.y+200, boxWidth, 'bartender-face');
+
+        this.dialogueBox = new DialogueBox(this.scene, this.x + 100, this.y + 200, boxWidth, 'bartender-face', 'Sánchez');
         this.play('idle-front-bartender');
 
         this.interactionText = this.scene.add.text(0, this.y - 100, 'Comprar (3$)', this.createTextStyle())
@@ -47,12 +48,6 @@ export default class Merchant extends SpriteBase {
 
         this.eKeyIcon = this.scene.add.sprite(0, 0, 'key_E_action')
             .setVisible(false).setDepth(20).play('key_E_action');
-
-        this.scene.input.keyboard.on('keydown-E', () => {
-            if (this.isPlayerInRange()) {
-                this.modoHabla ? this.hablar() : this.useMachine();
-            }
-        }, this);
 
         this.bulletText = this.scene.add.text(this.x - 30, this.y - 40, 'Disparos: 0/5', this.createTextStyle('#ffff00', 14))
             .setVisible(false).setDepth(20).setResolution(2);
@@ -69,6 +64,24 @@ export default class Merchant extends SpriteBase {
         ];
 
         this.modoHabla = false;
+        this.dialogueActivo = false; // << NUEVO: Estado del diálogo activo
+
+        // Nueva lógica del input para mostrar/ocultar diálogo
+        this.scene.input.keyboard.on('keydown-E', () => {
+            if (!this.isPlayerInRange()) return;
+
+            if (this.dialogueActivo) {
+                this.dialogueBox.hide();
+                this.dialogueActivo = false;
+                return;
+            }
+
+            if (this.modoHabla) {
+                this.hablar();
+            } else {
+                this.purchaseItems();
+            }
+        }, this);
     }
 
     createTextStyle(color = '#ffffff', size = 16) {
@@ -104,7 +117,7 @@ export default class Merchant extends SpriteBase {
         return Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <= this.interactionRange;
     }
 
-    useMachine() {
+    purchaseItems() {
         if (!this.isOperational || this.isInUse || (this.scene.time.now - this.lastUseTime <= this.useCooldown)) return;
 
         if (this.scene.player.canAfford(this.price)) {
@@ -116,19 +129,25 @@ export default class Merchant extends SpriteBase {
             this.dispenseItem();
 
             this.modoHabla = true;
-            this.interactionText.setText('Hablar');
+          
             this.dialogueBox.show('Gracias por tu compra, figura.');
-
-            this.scene.time.delayedCall(3000, () => this.dialogueBox.hide());
+            this.dialogueActivo = true; 
         } else {
             this.noCoinsText.setVisible(true);
             this.shakeMachine();
         }
     }
 
+    hablar() {
+   
+        const frase = Phaser.Utils.Array.GetRandom(this.frases);
+        this.dialogueBox.show(frase);
+        this.dialogueActivo = true; // << mantiene el diálogo activo
+    }
+
     dispenseItem() {
         const items = ['hamburguesa', 'mini_tinto', 'bumbo'];
-        const startY = this.y + 60;
+        const startY = this.y + 100;
         this.compraRealizada = 1;
         this.itemsCleaned = false;
         this.dispensedItems = [];
@@ -136,7 +155,7 @@ export default class Merchant extends SpriteBase {
         items.forEach((itemName, index) => {
             const delay = index * 300;
             this.scene.time.delayedCall(delay, () => {
-                const startX = this.x - 40 + (index * 40);
+                const startX = this.x - 40 + (index *80);
                 const offsetY = Phaser.Math.Between(30, 50);
                 const endY = this.y + offsetY;
                 const item = new Item(this.scene, startX, startY, itemName);
@@ -173,12 +192,6 @@ export default class Merchant extends SpriteBase {
         });
 
         this.dispensedItems = [];
-    }
-
-    hablar() {
-        const frase = Phaser.Utils.Array.GetRandom(this.frases);
-        this.dialogueBox.show(frase);
-        this.scene.time.delayedCall(3000, () => this.dialogueBox.hide());
     }
 
     flashEffect() {

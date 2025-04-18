@@ -12,6 +12,7 @@ import player from "../../assets/sprites/player_spritesheet.png";
 import camarero from "../../assets/sprites/bartender_front_iddle.png";
 //PROFESOR
 import borja from "../../assets/sprites/borja.png"
+import borja_frontal from "../../assets/sprites/borja_frontal_32x32.png";
 //EXTRAS ------------------------------------------------------
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
 import puff from "../../assets/sprites/puff.png";

@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 
 export default class DialogueBox {
-    constructor(scene, x, y, width, imgKey) {
+    constructor(scene, x, y, width, imgKey, name) {
         this.scene = scene;
         this.x = x;
         this.y = y;
@@ -9,7 +9,7 @@ export default class DialogueBox {
         this.depth = 999;
         this.imgKey = imgKey;
         this.visible = false;
-
+        this.name= name;
         this.gui_scale = 2;
         this.margin = 10;
 
@@ -50,18 +50,37 @@ export default class DialogueBox {
         // Texto con márgenes iguales a izquierda y derecha
         const wordWrapWidth = this.width - portraitRight;
         this.text = this.scene.add.text(portraitRight, this.margin, '', {
-            fontSize: '20px',
+            fontSize: '14px',
             wordWrap: { width: wordWrapWidth },
-            fontFamily: 'monogram',
+            fontFamily: 'open-sans',
             color: '#ffffff'
         });
 
         // Icono de la tecla E (inicialmente invisible y colocado correctamente en show)
-        this.eKeyIcon = this.scene.add.sprite(this.width-20, this.portrait.y+this.portrait.displayWidth+10, 'key_E_action')
+        this.eKeyIcon = this.scene.add.sprite(this.width-20, this.portrait.y+this.portrait.displayWidth+15, 'key_E_action')
              .setVisible(false)
              .setDepth(20)
              .setScale(1.1)
              .play('key_E_action');
+        // Posición vertical justo debajo del retrato
+const nameY = this.portrait.y + this.portrait.displayHeight + 4;
+const nameWidth = this.portrait.displayWidth;
+
+// Fondo del nombre
+this.nameBg = this.scene.add.rectangle(this.portrait.x, nameY, nameWidth, 20, 0x181425, 0.7)
+    .setOrigin(0)
+    .setStrokeStyle(1, 0xffffff);
+
+// Texto del nombre
+this.nameText = this.scene.add.text(this.portrait.x + nameWidth / 2, nameY + 10, this.name, {
+    fontSize: '14px',
+    fontFamily: 'monogram',
+    color: '#ffffff',
+})
+    .setOrigin(0.5)
+    .setDepth(this.depth + 1);
+
+
 
         // Añadir todo al contenedor
         this.container.add([
@@ -70,7 +89,9 @@ export default class DialogueBox {
             this.portrait,
             this.statusFrame,
             this.text,
-            this.eKeyIcon
+            this.eKeyIcon,
+            this.nameBg,
+            this.nameText
         ]);
     }
 
