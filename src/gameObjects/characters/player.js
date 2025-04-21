@@ -94,6 +94,7 @@ export default class Player extends SpriteBase {
         this.isParrying = false;
         this.canParry = true;
         this.parryCooldown = 1000; // en milisegundos, cooldown del parry
+        
     }
 
     /**
@@ -178,7 +179,7 @@ export default class Player extends SpriteBase {
                 velocityY *= scale;
             }
 
-            if (!this.isShooting) {
+            if (!this.isShooting && !this.isParrying) {
                 if (velocityX === 0 && velocityY === 0) {
                     this.play(`idle-${this.lastDirection}`, true);
                 } else {
@@ -261,20 +262,7 @@ export default class Player extends SpriteBase {
 
             // Añadir el cooldown al parry
             if (Phaser.Input.Keyboard.JustDown(this.parryKey)) {
-                if (this.scene.time.now > this.lastParryTime + this.parryCooldown) {
-                    this.isParrying = true;
-                    this.lastParryTime = this.scene.time.now; // Actualiza el último tiempo del parry
-                    this.setTint(0x00ffff); // Cambia el color del jugador al parry
-
-                    // Activar animación de parry (si existe)
-                    // this.play('parry_anim');
-
-                    // Desactivar el parry después de unos frames
-                    this.scene.time.delayedCall(200, () => {
-                        this.isParrying = false;
-                        this.clearTint(); // Vuelve al color original
-                    });
-                }
+                this.parryAction();
             }
 
         } else {
@@ -283,6 +271,33 @@ export default class Player extends SpriteBase {
             }
             this.body.setVelocity(0, 0);
             this.setTint(0xffffff);
+        }
+    }
+
+    parryAction(){
+        if (this.scene.time.now > this.lastParryTime + this.parryCooldown) {
+            this.isParrying = true;
+            this.lastParryTime = this.scene.time.now; // Actualiza el último tiempo del parry
+            this.setTint(0x00ffff); // Cambia el color del jugador al parry
+
+            let parryAnimation = '';
+            if (this.anims.currentAnim.key == 'idle-back' || this.anims.currentAnim.key == 'walk-back' || this.anims.currentAnim.key == 'shoot-back') {
+                parryAnimation = 'shoot-back';
+            } else if (this.anims.currentAnim.key == 'idle-front' || this.anims.currentAnim.key == 'walk-front' || this.anims.currentAnim.key == 'shoot-front') {
+                parryAnimation = 'shoot-front';
+            } else if (this.anims.currentAnim.key == 'idle-left' || this.anims.currentAnim.key == 'walk-left' || this.anims.currentAnim.key == 'shoot-left') {
+                parryAnimation = 'shoot-left';
+            } else if (this.anims.currentAnim.key == 'idle-right' || this.anims.currentAnim.key == 'walk-right' || this.anims.currentAnim.key == 'shoot-right') {
+                parryAnimation = 'shoot-right';
+            }
+
+            this.play(parryAnimation, true); // Reproduce la animación de parry
+
+            // Desactivar el parry después de unos frames
+            this.scene.time.delayedCall(200, () => {
+                this.isParrying = false;
+                this.clearTint(); // Vuelve al color original
+            });
         }
     }
 
@@ -432,26 +447,21 @@ export default class Player extends SpriteBase {
         const currentTime = this.scene.time.now;
 
         // ✅ Si está en modo parry, evitamos el daño
-        if (this.isParrying && this.canParry) {
+        if (this.isParrying) {
             const tiempoDesdeParry = currentTime - this.lastParryTime;
 
             if (tiempoDesdeParry <= this.parryWindow) {
-                // 🔥 Perfect parry
+                // parry perfecto
                 if (this.health < this.maxHealth) {
                     this.health++; // Recupera vida
                     this.scene.game.events.emit('healthChanged', { health: this.health, maxHealth: this.maxHealth });
                 }
-                console.log("¡Perfect Parry!");
+                console.log("Parry perfecto");
             } else {
-                // ⚡ Parry normal (boost de disparo)
+                // parry normal
                 this.activateNormalParryBoost(); // Define este método en tu clase
                 console.log("Parry normal");
             }
-
-            this.canParry = false;
-            this.scene.time.delayedCall(500, () => {
-                this.canParry = true;
-            });
             // Efecto visual de parry
             this.setTint(0xFFFF00); // Un azul brillante tipo cian
             this.setAlpha(1);
@@ -488,8 +498,7 @@ export default class Player extends SpriteBase {
             this.lastHurtTime = currentTime;
             return; // No se recibe daño
         }
-
-        // 🩸 Si no hay parry, sigue el daño como siempre
+        //recibe daño
         if (currentTime - this.lastHurtTime >= this.damageCooldown) {
             this.setTint(0xff0000);
             if (this.itemSprite) this.itemSprite.setTint(0xff0000);

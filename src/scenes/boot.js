@@ -21,6 +21,7 @@ import tutorial_screen from "../../assets/sprites/tutorial_screen_spritesheet.pn
 import blood from "../../assets/sprites/blood.png";
 import fire from "../../assets/sprites/fire.png";
 import parrySmoke from "../../assets/sprites/parrySmoke.png";
+import spark from "../../assets/sprites/spark.png";
 
 //ITEMS ------------------------------------------------------
 import items from "../../assets/sprites/items_spritesheet.png";
@@ -103,6 +104,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('title', titulo);
     this.load.image('button', Button);
     this.load.image('button_hover', Button_hover)
+    this.load.image('spark', spark);
 
     this.load.spritesheet("parrySmoke", parrySmoke, {
       frameWidth: 64,
