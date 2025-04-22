@@ -41,6 +41,7 @@ export default class SalaBase extends Phaser.Scene {
             scale: 0.8
         });
         this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        this.mKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.scene.stop('GUI');
         this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
         this.scene.bringToTop('GUI');
@@ -79,6 +80,13 @@ export default class SalaBase extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
             this.uiController.togglePause();
         }
+
+        // Abrir mapa al presionar M
+        if (Phaser.Input.Keyboard.JustDown(this.mKey)) {
+            console.log("Abriendo mapa con clave: ", this.managerKey);
+            this.uiController.toggleMap(this.managerKey);
+        }
+
         if (this.numEnemiesBeaten == this.numEnemies) {
             this.completed = true;
             this.transitionZones.getChildren().forEach(zone => {

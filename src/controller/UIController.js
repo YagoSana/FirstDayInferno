@@ -121,6 +121,31 @@ export default class UIController {
         this.playButtonAnimation('pause');
     }
 
+    toggleMap(claveManager) {
+        console.log('toggleMap', this.scene.scene.isPaused());
+        if (this.scene.scene.isPaused()) {
+            this.quitMap();
+        } else {
+            this.showMap(claveManager);
+        }
+    }
+
+    showMap(claveManager) {
+        this.scene.scene.pause();
+        this.scene.scene.pause('GUI');
+
+        this.scene.scene.launch('MapMenu', {
+            previousScene: this.scene.scene.key,
+            claveMapa: claveManager
+        });
+        this.scene.scene.bringToTop('MapMenu');
+    }
+
+    quitMap() {
+        this.scene.scene.resume();
+        this.scene.scene.stop('MapMenu');
+    }
+
     toggleMute() {
         this.isMuted = !this.isMuted;
         this.scene.game.registry.set('isMuted', this.isMuted);
