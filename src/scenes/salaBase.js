@@ -34,9 +34,9 @@ export default class SalaBase extends Phaser.Scene {
         // this.pauseController = new PauseController(this, { x: this.cameras.main.width - 250, y: 135, scale: 0.8 });
         this.uiController = new UIController(this, {
             position: {
-                pause: { x: this.cameras.main.width - 245, y: this.cameras.main.height - 420 }, // Posiciones personalizadas
-                mute: { x: this.cameras.main.width - 280, y: this.cameras.main.height - 420 },
-                fullscreen: { x: this.cameras.main.width - 245, y: this.cameras.main.height - 140 }
+                pause: { x: this.cameras.main.width - 270, y: this.cameras.main.height - 400 }, // Posiciones personalizadas
+                mute: { x: this.cameras.main.width - 300, y: this.cameras.main.height - 400 },
+                fullscreen: { x: this.cameras.main.width - 270, y: this.cameras.main.height - 160 }
             },
             scale: 0.8
         });

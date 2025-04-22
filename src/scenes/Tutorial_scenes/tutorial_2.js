@@ -52,14 +52,14 @@ export default class Tutorial_2 extends SalaBase {
         const screenHeight = this.sys.game.config.height; // Alto de tu pantalla
         const mapWidth = map.widthInPixels;
         const mapHeight = map.heightInPixels;
-        const zoom = 1.8;
+        const zoom = 2;
         const boundX = -(screenWidth / zoom - mapWidth) / 2;
         const boundY = -(screenHeight / zoom - mapHeight) / 2;
 
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
         this.cameras.main.setZoom(zoom);
-        this.cameras.main.setBounds(boundX, boundY, map.widthInPixels, map.heightInPixels);
+        this.cameras.main.setBounds(boundX, boundY - 15, map.widthInPixels, map.heightInPixels);
 
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
