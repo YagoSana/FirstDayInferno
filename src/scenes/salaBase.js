@@ -34,9 +34,9 @@ export default class SalaBase extends Phaser.Scene {
         // this.pauseController = new PauseController(this, { x: this.cameras.main.width - 250, y: 135, scale: 0.8 });
         this.uiController = new UIController(this, {
             position: {
-                pause: { x: this.cameras.main.width - 245, y: this.cameras.main.height - 420 }, // Posiciones personalizadas
-                mute: { x: this.cameras.main.width - 280, y: this.cameras.main.height - 420 },
-                fullscreen: { x: this.cameras.main.width - 245, y: this.cameras.main.height - 140 }
+                pause: { x: this.cameras.main.width - 270, y: this.cameras.main.height - 400 }, // Posiciones personalizadas
+                mute: { x: this.cameras.main.width - 300, y: this.cameras.main.height - 400 },
+                fullscreen: { x: this.cameras.main.width - 270, y: this.cameras.main.height - 160 }
             },
             scale: 0.8
         });
@@ -47,6 +47,21 @@ export default class SalaBase extends Phaser.Scene {
         this.scene.bringToTop('GUI');
         this.doorFireManager = new DoorFireManager(this);
         this.isDoorLocked = false;
+        // emisor de partículas para el parry
+        this.emitterParry = this.add.particles(0, 0, 'spark', {
+            speed: 100,             // Velocidad fija
+            scale: { start: 1, end: 0 },
+            alpha: { start: 1, end: 0 },
+            lifespan: 500,         // 500ms de vida
+            blendMode: 'ADD',      // Para que brillen
+            gravityY: 100,         // Pequeña caída
+            emitZone: {            // Pequeña área circular
+                type: 'edge',
+                source: new Phaser.Geom.Circle(0, 0, 2),
+                quantity: 6
+            },
+            visible: false      // No visible por defecto
+        }).setDepth(9999);         // Máxima profundidad
     }
 
 
@@ -70,10 +85,10 @@ export default class SalaBase extends Phaser.Scene {
     update() {
         // console.log("Numero de enemigos: ", this.numEnemies);
         // console.log("Numero de enemigos derrotados: ", this.numEnemiesBeaten);
-        if(this.updateLight) {
+        if (this.updateLight) {
             this.updateLight();
         }
-        if(this.bossStatus){
+        if (this.bossStatus) {
             this.bossStatus();
         }
         // Abrir el menú de pausa al presionar ESC
@@ -98,7 +113,7 @@ export default class SalaBase extends Phaser.Scene {
             this.transitionZones.getChildren().forEach(zone => {
                 zone.open = false;
             });
-            if(!this.doorFireManager.checkCreatedFire()){
+            if (!this.doorFireManager.checkCreatedFire()) {
                 this.doorFireManager.createFiresForZones(this.transitionZones);
             }
         }
@@ -112,12 +127,12 @@ export default class SalaBase extends Phaser.Scene {
 
     freezeScene() {
         this.physics.world.pause();
-         this.scenePaused = true; // opcional para lógica condicional
+        this.scenePaused = true; // opcional para lógica condicional
     }
-    
+
     unfreezeScene() {
         this.physics.world.resume();
         this.scenePaused = false;
     }
-    
+
 }
