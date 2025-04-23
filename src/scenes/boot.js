@@ -53,6 +53,16 @@ import vidaJugador from "../../assets/sprites/vidaPlayer.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
 import game_over_screen from "../../assets/sprites/enemy_game_over.png";
 import bartenderImg from "../../assets/sprites/camarero.png";
+//BOSS MEDICINA ------------------------------------------------------
+import bossMedicinaIdle from "../../assets/sprites/bossMedicinaIdle.png";
+import bossMedicinaIdle2 from "../../assets/sprites/bossMedicinaIdle2.png";
+import bossMedicinaAssault from "../../assets/sprites/bossMedicinaAssault.png";
+import bossMedicinaDeath from "../../assets/sprites/bossMedicinaDeath.png";
+import bossMedicinaEspecial from "../../assets/sprites/bossMedicinaEspecial.png";
+import bossMedicinaDisparo from "../../assets/sprites/bossMedicinaDisparo.png";
+import bossMedicinaBullet from "../../assets/sprites/bossMedicinaBullet.png";
+import bossMedicinaBulletAppear from "../../assets/sprites/bossMedicinaBulletAppear.png";
+import bossMedicinaBulletDestroy from "../../assets/sprites/bossMedicinaDestroy.png";
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -105,6 +115,44 @@ export default class Boot extends Phaser.Scene {
     this.load.image('button', Button);
     this.load.image('button_hover', Button_hover)
     this.load.image('spark', spark);
+    //BOSS MEDICINA
+    this.load.spritesheet("bossMedicinaIdle", bossMedicinaIdle, {
+      frameWidth: 100,
+      frameHeight: 100,
+    });
+    this.load.spritesheet("bossMedicinaIdle2", bossMedicinaIdle2, {
+      frameWidth: 100,
+      frameHeight: 100,
+    });
+    this.load.spritesheet("bossMedicinaAssault", bossMedicinaAssault, {
+      frameWidth: 100,
+      frameHeight: 100,
+    });
+    this.load.spritesheet("bossMedicinaDeath", bossMedicinaDeath, {
+      frameWidth: 100,
+      frameHeight: 100,
+    });
+    this.load.spritesheet("bossMedicinaEspecial", bossMedicinaEspecial, {
+      frameWidth: 100,
+      frameHeight: 100,
+    });
+    this.load.spritesheet("bossMedicinaDisparo", bossMedicinaDisparo, {
+      frameWidth: 100,
+      frameHeight: 100,
+    });
+    this.load.spritesheet("bossMedicinaBullet", bossMedicinaBullet, {
+      frameWidth: 50,
+      frameHeight: 50,
+    });
+    this.load.spritesheet("bossMedicinaBulletAppear", bossMedicinaBulletAppear, {
+      frameWidth: 50,
+      frameHeight: 50,
+    });
+    this.load.spritesheet("bossMedicinaBulletDestroy", bossMedicinaBulletDestroy, {
+      frameWidth: 50,
+      frameHeight: 50,
+    });
+    //BOSS MEDICINA
 
     this.load.spritesheet("parrySmoke", parrySmoke, {
       frameWidth: 64,
@@ -222,6 +270,98 @@ export default class Boot extends Phaser.Scene {
 
 
   create() {
+    //BOSS MEDICINA
+    this.anims.create({
+      key: "bossMedicinaIdle",
+      frames: this.anims.generateFrameNames("bossMedicinaIdle", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaIdle2",
+      frames: this.anims.generateFrameNames("bossMedicinaIdle2", {
+        start: 0,
+        end: 7,
+      }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaAssault",
+      frames: this.anims.generateFrameNames("bossMedicinaAssault", {
+        start: 0,
+        end: 12,
+      }),
+      frameRate: 8,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaEspecial",
+      frames: this.anims.generateFrameNames("bossMedicinaEspecial", {
+        start: 0,
+        end: 11,
+      }),
+      frameRate: 8,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaDisparo",
+      frames: this.anims.generateFrameNames("bossMedicinaDisparo", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 8,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaDeath",
+      frames: this.anims.generateFrameNames("bossMedicinaDeath", {
+        start: 0,
+        end: 17,
+      }),
+      frameRate: 8,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaBulletDestroy",
+      frames: this.anims.generateFrameNames("bossMedicinaBulletDestroy", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaBulletApper",
+      frames: this.anims.generateFrameNames("bossMedicinaBulletAppear", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaBullet",
+      frames: this.anims.generateFrameNames("bossMedicinaBullet", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 8,
+      repeat: -1,
+    });
+    //BOSS MEDICINA
+
     this.anims.create({
       key: "teacher-front",
       frames: this.anims.generateFrameNames("borja", {

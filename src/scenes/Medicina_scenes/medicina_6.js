@@ -4,6 +4,7 @@ import Enemy from "../../gameObjects/enemies/enemy.js";
 import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
 import rangedAreaEnemy from "../../gameObjects/enemies/rangedAreaEnemy.js";
+import BossMedicina from "../../gameObjects/enemies/bossMedicina.js";
 
 export default class medicina_6 extends SalaBase {
   constructor() {
@@ -160,7 +161,7 @@ export default class medicina_6 extends SalaBase {
               break;
             case "zombie":
               this.numEnemies++;
-              this.enemyGroup.add(new rangedAreaEnemy(this, obj.x, obj.y, obj.name));
+              this.enemyGroup.add(new BossMedicina(this, 320, 320));
               break;
             case "cat":
               console.log("GatosVivos: ", this.game.global.gatosVivos);  // Accede a gatosVivos

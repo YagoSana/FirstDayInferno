@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import Npc from './npc.js';
 
-export default class AssaultEnemy extends Npc {
+export default class BossMedicina extends Npc {
   
   /**
    * Constructor de la Plataforma
@@ -10,29 +10,46 @@ export default class AssaultEnemy extends Npc {
    * @param {number} y Coordenada y
    */
 
-  constructor(scene, x, y, type) {
-    super(scene, x, y, type); // Llamada al constructor de la clase base (Enemy)
-    this.type=type;
-    this.health=8;
+  constructor(scene, x, y) {
+    super(scene, x, y, "bossMedicinaIdle"); // Llamada al constructor de la clase base (Enemy)
+    this.type="bossMedicinaIdle";
+    this.health=20;
     this.speed = 50;
     this.stunCounter = 0;
     this.attackRange = 150; // Distancia máxima de ataque
-    this.assaultCooldown = 0; // Enfriamiento para embestida
+    this.assaultCooldown = 5000; // Enfriamiento para embestida
     this.isAssaulting = false;
     this.assaultTime = 0;  // El tiempo de duración de la embestida
     this.assaultSpeed = 250; // Velocidad de la embestida (puedes ajustarla)
     this.assaultDirection = new Phaser.Math.Vector2(); // Dirección de la embestida
-    this.setScale(0.4);
+    this.introduction=false;
+    this.setScale(1);
   }
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
   preUpdate(t, dt) {
     super.preUpdate(t, dt);
-
+    if(!this.introduction){
+      this.body.enable = false;
+      this.playReverse("bossMedicinaDeath", true);
+      this.introduction=true;
+      this.scene.cameras.main.shake(800, 0.003);
+      //this.scene.cameras.main.shake(100, 0.01);
+      this.once('animationcomplete', () => {
+        this.play("bossMedicinaIdle2", true);
+        this.body.enable = true;
+      });
+    }
     if (this.health > 0) {
-
-        this.play(`${this.type}_move`, true);
-
+        if(this.body.velocity.x > 0){
+          this.flipX = false; // Mirar a la derecha
+        }
+        else{
+          this.flipX = true; // Mirar a la izquierda
+        }
+        if(!this.isAssaulting && this.anims.currentAnim.key != "bossMedicinaDeath"){
+          this.play("bossMedicinaIdle2", true);
+        }
         const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y);
 
         if(this.stunCounter>0){
@@ -45,6 +62,7 @@ export default class AssaultEnemy extends Npc {
           }
 
         if (this.isAssaulting) {
+            this.play("bossMedicinaAssault", true); // Cambia a la animación de embestida
             // Si está embistiendo, mueve al enemigo en la dirección calculada
             this.body.setVelocity(this.assaultDirection.x * this.assaultSpeed, this.assaultDirection.y * this.assaultSpeed);
 
@@ -94,7 +112,7 @@ export default class AssaultEnemy extends Npc {
     this.speed+=10;
     if(this.health <= 0){
       this.body.setVelocity(0,0);
-      this.play("enemydeath", true);
+      this.play("bossMedicinaDeath", true);
       this.once('animationcomplete', () => {
         this.destroy();
       });
