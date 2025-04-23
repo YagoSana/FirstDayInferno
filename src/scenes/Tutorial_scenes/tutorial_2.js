@@ -47,6 +47,7 @@ export default class Tutorial_2 extends SalaBase {
         this.physics.add.collider(this.player, layer7);
         this.physics.add.collider(this.enemyGroup, layer7);
         this.physics.add.collider(this.bulletGroup, layer7, this.onBulletCollision);
+        
         //Camaras
         const screenWidth = this.sys.game.config.width; // Ancho de tu pantalla
         const screenHeight = this.sys.game.config.height; // Alto de tu pantalla
