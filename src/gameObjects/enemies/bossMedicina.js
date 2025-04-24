@@ -120,6 +120,7 @@ export default class BossMedicina extends Npc {
         }
       }
       else if (this.health <= 25 && this.health > 0) {
+        this.scene.physics.moveTo(this, 320, 280, 100);
         if (!this.cambioFase) {
           this.body.enable = false;
           this.cambioFase = true;
@@ -163,7 +164,9 @@ export default class BossMedicina extends Npc {
               this.tiempoUltimoDisparo = this.scene.time.now;
             }
           }
-          this.body.setVelocity(0, 0);
+          else{
+            this.puedeInvocar = true;
+          }
         }
       }
     }
@@ -172,7 +175,6 @@ export default class BossMedicina extends Npc {
   lanzarOrbe(orbe) {
     const angle = Phaser.Math.Angle.Between(orbe.x, orbe.y, this.scene.player.x, this.scene.player.y);
     const velocidad = 200;
-
     this.scene.physics.moveTo(orbe, this.scene.player.x, this.scene.player.y, velocidad);
   }
 
