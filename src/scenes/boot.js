@@ -308,7 +308,7 @@ export default class Boot extends Phaser.Scene {
         end: 11,
       }),
       frameRate: 8,
-      repeat: 0,
+      repeat: 1,
     });
 
     this.anims.create({
