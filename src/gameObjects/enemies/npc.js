@@ -66,14 +66,15 @@ export default class Npc extends SpriteBase {
         if (this.isFrozen) {
           if(this.stunCounter>0){
             this.stunCounter--;
-            if(this.stunCounter>20){
-              this.setTint(0x00ffff);
-            }      
+            this.setTint(0x00ffff);
           }
-          
-          return; // No hacer nada si está congelado
+          //return; // No hacer nada si está congelado
         }
-        super.preUpdate(t, dt);
+        else
+        {
+          super.preUpdate(t, dt);
+        }
+        
       }
 
       dropCoin(){
@@ -85,6 +86,10 @@ export default class Npc extends SpriteBase {
         console.log("congelado! se mete en freeze");
         this.isFrozen = true;
 
+        if (this.anims && this.anims.isPlaying) {
+          this.anims.pause(); // congela el frame actual
+      }
+
         if (this.body) {
             this.body.setVelocity(0, 0);
         }
@@ -92,6 +97,9 @@ export default class Npc extends SpriteBase {
         this.scene.time.delayedCall(duration, () => {
             this.clearTint();
             this.isFrozen = false;
+            if (this.anims && this.anims.currentAnim) {
+              this.anims.resume(); // sigue desde donde se quedó
+          }
         });
       }
 }

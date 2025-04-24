@@ -41,30 +41,38 @@ export default class Item extends SpriteBase {
         player.invertir(false);
       },
       "llave": (player) => player.pickKey(1),
-      "bumbo": (player) => player.itemAppearance("bumbo", 0), // cabeza de Isaac
+      "bumbo": (player) => {
+        player.beNormal();
+        player.itemAppearance("bumbo", 0);
+      },
       "pantallazo_azul": (player) => {
+        player.beNormal();
         player.itemAppearance("pantallazo_azul", 1); // cabeza de Isaac
-        player.doFreeze();
+        player.doFreeze(true);
       },
       "bono": (player) => {
+        player.beNormal();
         player.changeSpeed(1.3);
         player.changeCooldown(-150);//TODO VER ESTO
-        player.invertir(false);
-        player.doDoubleshoot(false);
       },
       "codigo": (player) => {
+        player.beNormal();
         player.doDoubleshoot(true);
-        player.invertir(false);;
       },
       "corazon": (player) => player.changeHealth(1, false),
       "maletin": (player) => {
         player.changeSpeed(0.70);
         player.changeHealth(3, true);
         player.invertir(false);
-        player.doDoubleshoot(false);
       },
-      "bolsa_sospechosa": (player) => player.itemAppearance("bolsa_sospechosa", 3),
-      "collar_macarrones": (player) => player.itemAppearance("collar_macarrones", 2),
+      "bolsa_sospechosa": (player) => {
+        player.beNormal();
+        player.itemAppearance("bolsa_sospechosa", 3);
+      },
+      "collar_macarrones": (player) => {
+        player.beNormal();
+        player.itemAppearance("collar_macarrones", 2);
+      },
     };
 
     // Texto del nombre del objeto encima del jugador
@@ -155,7 +163,7 @@ export default class Item extends SpriteBase {
       },
       "pantallazo_azul": {
         description: "Actualizaste a Windows 11. Nadie sabe cómo funciona.",
-        effect: "Tu disparo puede bloquear a los enemigos durante 2 segundos."
+        effect: "Tu disparo bloquea a los enemigos durante 2 segundos."
       },
       "collar_macarrones": {
         description: "Creado con esfuerzo y sudor por un estudiante de magisterio como proyecto de TFG.",
