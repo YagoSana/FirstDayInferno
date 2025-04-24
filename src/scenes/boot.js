@@ -338,17 +338,17 @@ export default class Boot extends Phaser.Scene {
         end: 4,
       }),
       frameRate: 8,
-      repeat: -1,
+      repeat: 0,
     });
 
     this.anims.create({
-      key: "bossMedicinaBulletApper",
+      key: "bossMedicinaBulletAppear",
       frames: this.anims.generateFrameNames("bossMedicinaBulletAppear", {
         start: 0,
         end: 5,
       }),
       frameRate: 8,
-      repeat: -1,
+      repeat: 0,
     });
 
     this.anims.create({
