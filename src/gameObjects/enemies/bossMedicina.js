@@ -120,7 +120,9 @@ export default class BossMedicina extends Npc {
         }
       }
       else if (this.health <= 25 && this.health > 0) {
-        this.scene.physics.moveTo(this, 320, 280, 100);
+        if(this.x != 320 || this.y != 280){
+          this.scene.physics.moveTo(this, 320, 280, 100);
+        }
         if (!this.cambioFase) {
           this.body.enable = false;
           this.cambioFase = true;
