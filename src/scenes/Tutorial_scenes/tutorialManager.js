@@ -105,6 +105,18 @@ export default class tutorialManager extends Phaser.Scene {
             repeat: 0,
         });
 
+
+        let uiButtonsScene = this.scene.get('UIButtons');
+        uiButtonsScene.updateConfig({
+            position: {
+                pause: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 512 },
+                mute: { x: this.sys.game.config.width - 120, y: this.sys.game.config.height - 512 },
+                fullscreen: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 50 }
+            },
+            scale: 1.6,
+            canPause: true
+        });
+
         this.mapStatus = new Map();
         this.mapStatus.set("tutorial_1", false);
         this.mapStatus.set("tutorial_3", false);

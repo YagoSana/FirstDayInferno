@@ -1,7 +1,5 @@
 import Phaser from "phaser";
 import Player from "../gameObjects/characters/player.js";
-import PauseController from "../controller/pauseController.js";
-import UIController from "../controller/UIController.js";
 
 //MAPA LOBBY ------------------------------------------------------
 import metro from "../../assets/imgs/LobbyMETRO.png";
@@ -115,17 +113,18 @@ export default class SelectorNivel extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.invisibleZoneMedicina, this.onOverlap, null, this);
     this.physics.add.overlap(this.player, this.invisibleZoneMetro, this.onOverlap, null, this);
 
-    // this.pauseController = new PauseController(this, { x: 790, y: 120, scale: 1 });
-    this.uiController = new UIController(this, {
-      position: {
-        pause: { x: this.sys.game.config.width - 210, y: this.sys.game.config.height - 435 }, // Posiciones personalizadas
-        mute: { x: this.sys.game.config.width - 250, y: this.sys.game.config.height - 435 },
-        fullscreen: { x: this.sys.game.config.width - 205, y: this.sys.game.config.height - 125 }
-      },
-      scale: 1
+    let uiButtonsScene = this.scene.get('UIButtons');
+    uiButtonsScene.updateConfig({
+        position: {
+            pause: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 512 },
+            mute: { x: this.sys.game.config.width - 120, y: this.sys.game.config.height - 512 },
+            fullscreen: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 50 }
+        },
+        scale: 1.6,
+        canPause: true
     });
-    // Escuchar la tecla ESC
-    this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    uiButtonsScene.updateScene(this.scene.key);//le pasamos la key de la escena actual
+
     this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
     this.scene.bringToTop('GUI');
   }
@@ -148,19 +147,6 @@ export default class SelectorNivel extends Phaser.Scene {
     this.playerStats = newStats;
     if (this.player) {
       this.player.updateStats(newStats);
-    }
-  }
-
-  update() {
-    // Abrir el menú de pausa al presionar ESC
-    if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
-      this.uiController.togglePause();
-    }
-  }
-
-  shutdown() {
-    if (this.uiController) {
-      this.uiController.destroy();
     }
   }
 }

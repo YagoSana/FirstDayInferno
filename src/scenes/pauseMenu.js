@@ -3,9 +3,14 @@ import Phaser from 'phaser';
 export default class PauseMenu extends Phaser.Scene {
     constructor() {
         super({ key: 'PauseMenu' });
+        this.selectedButton = 0;
+        this.buttons = [];
     }
 
     create(data) {
+        this.cleanupButtons();
+        this.previousScene = data.previousScene; // Guardar el nombre de la escena anterior
+        console.log(`Escena actual: ${this.scene.key}`);
         this.sonidoSalir = this.sound.add('salirPausa');
         this.sound.pauseAll();
         //Configuracion del texto
@@ -15,61 +20,130 @@ export default class PauseMenu extends Phaser.Scene {
             fontFamily: 'monogram'
         };
 
-        this.previousScene = data.previousScene; // Guardar el nombre de la escena anterior
-        console.log(`Escena actual: ${this.scene.key}`);
-
-
         // Fondo semitransparente
-        const background = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.5)
+        let background = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.5)
             .setOrigin(0, 0);
 
-        // Botón "Reanudar"
-        const resumeButton = this.add.text(500, 200, 'Reanudar', textConfig)
-            .setOrigin(0.5, 0.5)
-            .setInteractive();
+        // Título
+        this.add.text(this.cameras.main.width / 2, 150, 'PAUSA', {
+            fontSize: '64px',
+            color: '#ffffff',
+            fontFamily: 'monogram'
+        }).setOrigin(0.5);
 
-        // Botón "Salir"
-        const exitButton = this.add.text(500, 300, 'Salir', textConfig)
-            .setOrigin(0.5, 0.5)
-            .setInteractive();
+        // Botones con estilo similar al main menu
+        this.createButton('Reanudar', 0, () => this.resumeGame());
+        this.createButton('Salir', 1, () => this.exitGame());
 
-        // Eventos de los botones
-        resumeButton.on('pointerdown', () => {
-            this.sonidoSalir.play();
-            this.sound.resumeAll(); // Reanudar el sonido
-            this.scene.resume(this.previousScene); // Reanudar la escena anterior
-            this.scene.stop(); // Cerrar la escena de pausa
-            this.scene.resume('GUI');
+        // console.log(this.buttons);
+
+        this.setupKeyboardControls();
+    }
+
+    cleanupButtons() {
+        // Destruir todos los botones existentes
+        this.buttons.forEach(button => {
+            if (button) button.destroy();
         });
+        this.buttons = [];
+        this.selectedButton = 0;
+        
+        // Limpiar otros elementos si existen
+        if (this.background) this.background.destroy();
+        if (this.title) this.title.destroy();
+    }
 
-        exitButton.on('pointerdown', () => {
-            this.sound.stopAll(); // Detener todos los sonidos
-            this.sonidoSalir.play();
-            if (this.previousScene === 'TutorialScene' || this.previousScene === 'selectorNivel') {
-                this.scene.stop(this.previousScene); // Cerrar la escena actual
-                this.scene.stop('GUI');
-                this.scene.start('MainMenu'); // Ir al menú principal
-            } else { // Si estás en un nivel
-                this.scene.stop(this.previousScene); // Cerrar la escena actual
-                this.scene.start('selectorNivel'); // Ir al selector de niveles
+    createButton(text, index, callback) {
+        let button = this.add.text(
+            this.cameras.main.width / 2,
+            300 + (index * 100),
+            text,
+            {
+                fontSize: '48px',
+                color: '#ffffff',
+                fontFamily: 'monogram'
             }
+        )
+            .setOrigin(0.5)
+            .setInteractive();
 
-            this.scene.stop(); // Cerrar la escena de pausa
+        button.on('pointerover', () => {
+            this.selectButton(index);
         });
 
-        // Escuchar la tecla ESC para cerrar el menú de pausa
-        this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        button.on('pointerdown', callback);
+
+        this.buttons.push(button);
+    }
+
+    selectButton(index) {
+        // Resetear todos los botones
+        this.buttons.forEach(button => {
+            button.setColor('#ffffff');
+            button.setScale(1);
+        });
+
+        // Resaltar botón seleccionado
+        this.buttons[index].setColor('#ff0');
+        this.buttons[index].setScale(1.1);
+
+        this.selectedButton = index;
+    }
+
+    setupKeyboardControls() {
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        this.keyUp = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        this.keyDown = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        this.keyEnter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+        this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     }
 
     update() {
-        // Cerrar el menú de pausa al presionar ESC
-        if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
-            this.sound.resumeAll(); // Reanudar el sonido
-            this.scene.resume(this.previousScene); // Reanudar la escena anterior
-            this.scene.resume('GUI'); // Reanudar la escena anterior
-            this.scene.stop(); // Cerrar la escena de pausa
+        // Navegación con W/S
+        if (Phaser.Input.Keyboard.JustDown(this.keyW) || Phaser.Input.Keyboard.JustDown(this.keyUp)) {
+            this.selectButton(Math.max(0, this.selectedButton - 1));
+        } else if (Phaser.Input.Keyboard.JustDown(this.keyS) || Phaser.Input.Keyboard.JustDown(this.keyDown)) {
+            this.selectButton(Math.min(this.buttons.length - 1, this.selectedButton + 1));
         }
+
+        // Confirmar con ENTER
+        if (Phaser.Input.Keyboard.JustDown(this.keyEnter)) {
+            this.buttons[this.selectedButton].emit('pointerdown');
+        }
+        // else if (Phaser.Input.Keyboard.JustDown(this.keyEsc)) {
+        //     this.resumeGame();
+        // }
     }
 
+    resumeGame() {
+        this.sonidoSalir.play();
+        this.sound.resumeAll(); // Reanudar el sonido
+        this.scene.resume(this.previousScene); // Reanudar la escena anterior
+        this.scene.resume('GUI');
+        this.cleanupButtons();
+        this.scene.stop(); // Cerrar la escena de pausa
+    }
 
+    exitGame() {
+        this.sonidoSalir.play();
+        this.sound.stopAll();
+        this.cleanupButtons();
+
+        if (this.previousScene === 'selectorNivel') {
+            this.scene.stop(this.previousScene);
+            this.scene.stop('GUI');
+            this.scene.start('MainMenu');
+        } else {
+            this.scene.stop(this.previousScene);
+            this.scene.start('selectorNivel');
+        }
+        this.buttons = [];
+        this.scene.stop();
+    }
+
+    destroy() {
+        Object.values(this.buttons).forEach(button => button.destroy());
+    }
 }

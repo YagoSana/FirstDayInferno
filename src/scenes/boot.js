@@ -831,7 +831,7 @@ export default class Boot extends Phaser.Scene {
       frameRate: 8,
       repeat: 0,
     });
-
+    this.scene.start('UIButtons');
     this.scene.start('MainMenu');
   }
 }

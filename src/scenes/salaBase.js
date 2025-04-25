@@ -1,8 +1,6 @@
 import Phaser from "phaser";
 import Player from "../gameObjects/characters/player";
 import Bullet from "../gameObjects/projectiles/bullet";
-import PauseController from "../controller/pauseController";
-import UIController from "../controller/UIController";
 import DoorFireManager from "./doorFireManager";
 
 export default class SalaBase extends Phaser.Scene {
@@ -31,16 +29,10 @@ export default class SalaBase extends Phaser.Scene {
         this.completed = false;
         this.numEnemiesBeaten = 0;
         this.numEnemies = 0;
-        // this.pauseController = new PauseController(this, { x: this.cameras.main.width - 250, y: 135, scale: 0.8 });
-        this.uiController = new UIController(this, {
-            position: {
-                pause: { x: this.cameras.main.width - 270, y: this.cameras.main.height - 400 }, // Posiciones personalizadas
-                mute: { x: this.cameras.main.width - 300, y: this.cameras.main.height - 400 },
-                fullscreen: { x: this.cameras.main.width - 270, y: this.cameras.main.height - 160 }
-            },
-            scale: 0.8
-        });
-        this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+
+        let uiButtonsScene = this.scene.get('UIButtons');
+        uiButtonsScene.updateScene(this.scene.key);//le pasamos la key de la escena actual
+
         this.scene.stop('GUI');
         this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
         this.scene.bringToTop('GUI');
@@ -89,10 +81,6 @@ export default class SalaBase extends Phaser.Scene {
         }
         if (this.bossStatus) {
             this.bossStatus();
-        }
-        // Abrir el menú de pausa al presionar ESC
-        if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
-            this.uiController.togglePause();
         }
         if (this.numEnemiesBeaten == this.numEnemies) {
             this.completed = true;
