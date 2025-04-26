@@ -27,16 +27,16 @@ export default class MapMenu extends Phaser.Scene {
         this.clave = data.claveMapa;
 
         if (this.clave === 'informaticaManager') {
-            this.add.image(100, 56.2, 'mapaFDI').setOrigin(0, 0).setScale(0.8);
+            this.add.image(100, 56.2, 'mapaFDI').setOrigin(0, 0).setScale(0.8).setAlpha(0.9);
         }
         else if (this.clave === 'medicinaManager') {
-            this.add.image(100, 56.2, 'mapaMedicina').setOrigin(0, 0).setScale(0.8);
+            this.add.image(100, 56.2, 'mapaMedicina').setOrigin(0, 0).setScale(0.8).setAlpha(0.9);
         }
 
         console.log(`Escena actual: ${this.scene.key}`);
 
         // Botón "Reanudar"
-        const closeButton = this.add.text(500, 520, 'Cerrar', textConfig)
+        const closeButton = this.add.text(500, 520, 'Cerrar [M]', textConfig)
             .setOrigin(0.5, 0.5)
             .setInteractive();
 
