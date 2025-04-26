@@ -30,6 +30,7 @@ import doors from "../../assets/sprites/doors_spritesheet.png";
 //JUGADOR CON ITEMS ----------------------------------------------
 import player_items from "../../assets/sprites/player_item.png";
 import bullets from "../../assets/sprites/bullets_spritesheet.png";
+import server from "../../assets/sprites/server.png";
 
 //AUDIO ------------------------------------------------------
 import musicaMenu from '../../assets/music/mainMenu.ogg';
@@ -124,6 +125,11 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("borjaPortrait", borjaPortrait, {
       frameWidth: 32,
       frameHeight: 32,
+    });
+     
+    this.load.spritesheet("server", server, {
+      frameWidth: 32,
+      frameHeight: 64,
     });
 
     this.load.spritesheet("bartenderImg", bartenderImg, {
@@ -647,6 +653,13 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
       startFrame: 15
+    });
+
+    this.anims.create({
+      key: "server_static",
+      frames: this.anims.generateFrameNames("server", { start: 0, end: 0}),
+      frameRate: 2,
+      repeat: -1,
     });
 
     this.anims.create({

@@ -19,6 +19,8 @@ export default class Item extends SpriteBase {
     // Tiempo de vida del objeto
     this.lifetime = LIFETIME; // 100 segundos
     this.startTime = this.scene.time.now;
+    this.buyable=false;
+    this.price=0;
 
     this.setScale(DEFAULT_SIZE);
     this.setDepth(10);
@@ -111,6 +113,14 @@ export default class Item extends SpriteBase {
     this.glowEffect = null; // Referencia al efecto de glow
   }
 
+  setBuyable(price){
+    this.price=price;
+    this.buyable=true;
+  }
+
+  setLifetime(lifetime){
+    this.lifetime=lifetime;
+  }
   // Formatea el nombre del ítem para mostrarlo bonito
   getItemName(type) {
     const itemNames = {
@@ -321,12 +331,38 @@ export default class Item extends SpriteBase {
   }
 
   pick(item, player) {
-    if (this.actions[this.type]) {
-      this.actions[this.type](player); // Aplicar el efecto del objeto
+    if (this.buyable) {
+      if (!player.canAfford(this.price)) {
+        // Efecto visual: parpadeo en rojo
+        this.setTint(0xff0000); // Rojo
+  
+        this.scene.tweens.add({
+          targets: this,
+          alpha: 0.5,
+          duration: 100,
+          yoyo: true,
+          repeat: 3,
+          onComplete: () => {
+            this.clearTint();
+            this.setAlpha(1);
+          }
+        });
+  
+        return;
+      }
+  
+      player.spendCoins(this.price);
     }
+  
+    if (this.actions[this.type]) {
+      this.actions[this.type](player);
+    }
+  
     if (this.manualPickup) {
       this.hidePickupHint();
     }
+  
     this.destroy();
   }
+  
 }
