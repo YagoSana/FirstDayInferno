@@ -64,7 +64,7 @@ export default class SelectorNivel extends Phaser.Scene {
         this.add.image(65, 238, 'fdi').setOrigin(0, 0).setDisplaySize(231, 98);
       }
       else if (obj.name == "paraninfo") {
-        this.add.image(100, 50, 'paraninfo').setOrigin(0, 0).setDisplaySize(150, 70);
+        this.add.image(100, 50, 'paraninfo').setOrigin(0, 0).setDisplaySize(231, 98);
       }
     });
 
@@ -102,9 +102,13 @@ export default class SelectorNivel extends Phaser.Scene {
     this.invisibleZoneMetro = this.add.zone(520, 220, 70, 50).setOrigin(0, 0).setName("tutorialManager");
     this.invisibleZoneMetro.setInteractive(); // Hacerla interactiva para detectar overlaping
 
+    this.invisibleZoneParaninfo = this.add.zone(100, 50, 60, 50).setOrigin(0, 0).setName("paraninfoManager");
+    this.invisibleZoneParaninfo.setInteractive();
+
     this.physics.add.existing(this.invisibleZone); // Necesario para que funcione el overlap
     this.physics.add.existing(this.invisibleZoneMedicina);
     this.physics.add.existing(this.invisibleZoneMetro);
+    this.physics.add.existing(this.invisibleZoneParaninfo);
 
     this.invisibleZone.body.setAllowGravity(false);
     this.invisibleZone.body.setImmovable(true);
@@ -115,10 +119,14 @@ export default class SelectorNivel extends Phaser.Scene {
     this.invisibleZoneMetro.body.setAllowGravity(false);
     this.invisibleZoneMetro.body.setImmovable(true);
 
+    this.invisibleZoneParaninfo.body.setAllowGravity(false);
+    this.invisibleZoneParaninfo.body.setImmovable(true);
+
     // Detectar cuando el jugador entra en la colisión invisible
     this.physics.add.overlap(this.player, this.invisibleZone, this.onOverlap, null, this);
     this.physics.add.overlap(this.player, this.invisibleZoneMedicina, this.onOverlap, null, this);
     this.physics.add.overlap(this.player, this.invisibleZoneMetro, this.onOverlap, null, this);
+    this.physics.add.overlap(this.player, this.invisibleZoneParaninfo, this.onOverlap, null, this);
 
     // this.pauseController = new PauseController(this, { x: 790, y: 120, scale: 1 });
     this.uiController = new UIController(this, {
