@@ -4,6 +4,7 @@ import Enemy from "../../gameObjects/enemies/enemy.js";
 import Item from "../../gameObjects/items/item.js";
 import VendingMachine from "../../gameObjects/items/vendingMachine.js";
 import merchant from "../../gameObjects/items/merchant.js";
+import bartender from "../../gameObjects/items/bartender.js";
 import DialogueBox from "../conversation.js";
 import boot from "../boot.js";
 
@@ -89,7 +90,7 @@ export default class FDI_4 extends SalaBase {
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
         new VendingMachine(this,64,45);
-        new merchant(this, 255, 60);
+        new bartender(this, 255, 60);
     }
 
     spawnProps(){

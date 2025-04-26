@@ -6,6 +6,7 @@ import Item from "../../gameObjects/items/item.js";
 import NPC from "../../gameObjects/items/NPC.js";
 import turretEnemy from "../../gameObjects/enemies/turretEnemy.js";
 import miniBossLab from "../../gameObjects/enemies/miniBossLab.js";
+import BreakableObjects from "../../gameObjects/items/BreakableObject.js";  // Importa la clase
 
 export default class FDI_2_2 extends SalaBase {
 
@@ -18,36 +19,39 @@ export default class FDI_2_2 extends SalaBase {
 
         const map = this.make.tilemap({ key: 'FDI_2_2_TL' }); // Cargamos el mapa
 
-        //Cargar tilesets
+        // Cargar tilesets
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
 
-        //Configurar capas
-    
-    
+        // Configurar capas
         const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
         const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
         const layer3 = map.createLayer('sin colision', [tileset1, tileset2], 0, 0);
         const layer4 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
         const layer5 = map.createLayer('objetos2', [tileset1, tileset2], 0, 0);
         const layer6 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
-        const layer7 = map.createLayer('techo_disparable', [tileset1, tileset2], 0, 0);
+    
        
-   
-        
+        // Configuración de colisiones
         layer2.setCollisionByExclusion([-1], true);
         layer4.setCollisionByExclusion([-1], true); 
         layer5.setCollisionByExclusion([-1], true);
         layer6.setCollisionByExclusion([-1], true);
-        layer7.setCollisionByExclusion([-1], true);
+   
+
+        // Crear grupo de objetos rompibles
+        this.breakableGroup = this.physics.add.group();
+
+        // Buscar tiles rompibles en las capas 'objetos' y 'objetos2'
+        this.createBreakableObjectsFromLayer(layer4);  // Buscar en 'objetos'
+        this.createBreakableObjectsFromLayer(layer5);  // Buscar en 'objetos2'
 
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
-        this.player = new Player(this, this.xSpawn, this.ySpawn, data.playerStats);//831, 240
-      
+        this.player = new Player(this, this.xSpawn, this.ySpawn, data.playerStats); // Coordenadas iniciales del jugador
 
-        //Colisiones
+        // Colisiones
         this.physics.add.collider(this.player, layer2);
         this.physics.add.collider(this.enemyGroup, layer2);
         this.physics.add.collider(this.bulletGroup, layer2, this.onBulletCollision);
@@ -68,22 +72,18 @@ export default class FDI_2_2 extends SalaBase {
         this.physics.add.collider(this.bulletGroup, layer6, this.onBulletCollision);
         this.physics.add.collider(this.enemyBulletGroup, layer6, this.onBulletCollision);
 
-        this.physics.add.collider(this.player, layer7);
-        this.physics.add.collider(this.enemyGroup, layer7);
-        this.physics.add.collider(this.bulletGroup, layer7, this.onBulletCollision);
-     
-        const teacher = new NPC(this, 160, 50);
 
+
+        const teacher = new NPC(this, 255, 104);
         teacher.on('npcDeath', (x, y) => {
-            const boss = new miniBossLab(this, x, y, "borja-malvado");
+            const boss = new miniBossLab(this, x, y, "nerd");
             boss.invulnerable = true;
             boss.setTint(0x999999); // Tint visual para indicar invulnerabilidad
             this.enemyGroup.add(boss);
-            this.numEnemies=3;
-
+            this.numEnemies = 3;
         });
-        
-        //Camaras
+
+        // Camaras
         this.physics.world.setBounds(0, 0, this.bound1, this.bound2);
         this.cameras.main.setBounds(-100, 0, this.bound1, this.bound2);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
@@ -100,5 +100,22 @@ export default class FDI_2_2 extends SalaBase {
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+    }
+
+    // Función para crear objetos rompibles desde una capa de patrones
+    createBreakableObjectsFromLayer(layer) {
+        layer.layer.data.forEach(row => {
+            row.forEach(tile => {
+                // Verificamos si el tile es un objeto rompible, por ejemplo, tile.index === 5
+                if (tile.index === 5) {  // Cambia el índice a tu propio valor
+                    const x = tile.pixelX;
+                    const y = tile.pixelY;
+
+                    // Crear un BreakableObject en la posición del tile
+                    const breakable = new BreakableObjects(this, x, y);
+                    this.breakableGroup.add(breakable);
+                }
+            });
+        });
     }
 }
