@@ -24,9 +24,11 @@ export default class ChargedEnemy extends Npc {
     this.play('server_static');
   }
 
-  preUpdate(t, dt) {
+  preUpdate(t, dt){
     super.preUpdate(t, dt);
+  }
 
+  mypreUpdate(t, dt) {
     if (this.health > 0) {
       this.body.setVelocity(0, 0);
 
