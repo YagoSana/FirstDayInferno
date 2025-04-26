@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Npc from './npc.js';
+import Bullet from '../projectiles/bullet.js';
 
 export default class BossMedicina extends Npc {
 
@@ -120,20 +121,29 @@ export default class BossMedicina extends Npc {
         }
       }
       else if (this.health <= 25 && this.health > 0) {
-        if(this.x != 320 || this.y != 280){
-          this.scene.physics.moveTo(this, 320, 280, 100);
+        if (this.stunCounter > 0) {
+          this.stunCounter--;
+          if (this.stunCounter > 20) {
+            this.setTint(0xff0000);
+          }
+        } else {
+          this.setTint(0xffffff);
         }
         if (!this.cambioFase) {
           this.body.enable = false;
           this.cambioFase = true;
-          this.body.setVelocity(0, 0);
           this.scene.cameras.main.shake(3000, 0.006);
           this.play("bossMedicinaEspecial", true);
           this.once('animationcomplete', () => {
             this.play("bossMedicinaIdle2", true);
             this.body.enable = true;
+            this.x=320;
+            this.y=280;
+            this.body.reset(320, 280);
           });
         }
+        this.x=320;
+        this.y=280;
         //Patron de ataque
         if (this.puedeInvocar && this.anims.currentAnim.key != "bossMedicinaEspecial") {
           this.puedeInvocar = false;
@@ -154,15 +164,18 @@ export default class BossMedicina extends Npc {
           this.puedeInvocar = false;
           this.tiempoUltimoDisparo = this.scene.time.now;
           this.orbesDisparados = 0;
-          this.orbeIndex = 0;
           this.play("bossMedicinaIdle2", true);
         }
         if (this.anims.currentAnim.key != "bossMedicinaDisparo") {
-          if (this.orbes.length > 0 && this.orbeIndex < this.orbes.length) {
-            if (this.scene.time.now - this.tiempoUltimoDisparo > this.cooldownOrbe) {
-              const orbe = this.orbes[this.orbeIndex];
-              this.lanzarOrbe(orbe);
-              this.orbeIndex++;
+          if (this.orbes.length > 0) {
+            if (this.scene.time.now - this.tiempoUltimoDisparo > this.cooldownOrbe) {;
+              let orbe = this.orbes.pop();
+              let orbeX = orbe.x;
+              let orbeY = orbe.y;
+              orbe.setVisible(false);
+              orbe = new Bullet(this.scene, orbeX, orbeY, 0, 0, 0, 0, false, "bossMedicinaBullet", "bossMedicina");
+              this.scene.enemyBulletGroup.add(orbe);
+              orbe.disparaOrbe(this.scene.player.x, this.scene.player.y);
               this.tiempoUltimoDisparo = this.scene.time.now;
             }
           }
@@ -174,12 +187,6 @@ export default class BossMedicina extends Npc {
     }
   }
 
-  lanzarOrbe(orbe) {
-    const angle = Phaser.Math.Angle.Between(orbe.x, orbe.y, this.scene.player.x, this.scene.player.y);
-    const velocidad = 200;
-    this.scene.physics.moveTo(orbe, this.scene.player.x, this.scene.player.y, velocidad);
-  }
-
   hitBullet(enemy, bullet) {
     //Enemigo muere
     this.stunCounter = 30;
@@ -189,6 +196,7 @@ export default class BossMedicina extends Npc {
       this.body.setVelocity(0, 0);
       this.play("bossMedicinaDeath", true);
       this.once('animationcomplete', () => {
+        this.scene.numEnemiesBeaten++;
         this.destroy();
       });
     }
