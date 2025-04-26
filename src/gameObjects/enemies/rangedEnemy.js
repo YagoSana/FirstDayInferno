@@ -24,8 +24,11 @@ export default class RangedEnemy extends Npc {
   }
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
-  preUpdate(t, dt) {
+  preUpdate(t, dt){
     super.preUpdate(t, dt); // Llamamos a la función preUpdate de la clase base
+  }
+  
+  mypreUpdate(t, dt) {
     if(this.health>0){
     if (this.anims.currentAnim && this.anims.currentAnim.key === `${this.type}_shoot`) {
       this.setTint(0xffffff);;

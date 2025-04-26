@@ -26,9 +26,11 @@ export default class AssaultEnemy extends Npc {
   }
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
-  preUpdate(t, dt) {
+  preUpdate(t, dt){
     super.preUpdate(t, dt);
-
+  }
+  
+  mypreUpdate(t, dt) {
     if (this.health > 0) {
 
         this.play(`${this.type}_move`, true);

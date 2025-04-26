@@ -44,8 +44,11 @@ export default class WakeEnemy extends Npc {
     }
   }
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
-  preUpdate(t, dt) {
+  preUpdate(t, dt){
     super.preUpdate(t, dt);
+  }
+  
+  mypreUpdate(t, dt) {
     if (this.health > 0) {
       if (this.stunCounter > 0) {
         this.stunCounter--;
