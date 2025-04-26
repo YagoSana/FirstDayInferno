@@ -70,6 +70,18 @@
                  "width":0,
                  "x":552,
                  "y":232
+                }, 
+                {
+                 "height":0,
+                 "id":5,
+                 "name":"paraninfo",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":231.333333333333,
+                 "y":74.6666666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -78,7 +90,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":4,
+ "nextobjectid":6,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

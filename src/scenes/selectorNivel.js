@@ -64,7 +64,7 @@ export default class SelectorNivel extends Phaser.Scene {
         this.add.image(65, 238, 'fdi').setOrigin(0, 0).setDisplaySize(231, 98);
       }
       else if (obj.name == "paraninfo") {
-        this.add.image(0, 0, 'paraninfo').setOrigin(0, 0).setDisplaySize(150, 70);
+        this.add.image(100, 50, 'paraninfo').setOrigin(0, 0).setDisplaySize(150, 70);
       }
     });
 
