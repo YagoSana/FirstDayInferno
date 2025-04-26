@@ -19,9 +19,11 @@ export default class RangedEnemy extends Npc {
     this.invulnerable=false;
   }
 
-  preUpdate(t, dt) {
+  preUpdate(t, dt){
     super.preUpdate(t, dt);
+  }
 
+  preUpdate(t, dt) {
     if (this.health > 0) {
       if (this.anims.currentAnim && this.anims.currentAnim.key === `${this.type}_shoot`) {
         this.setTint(0xffffff);

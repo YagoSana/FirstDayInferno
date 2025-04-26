@@ -39,7 +39,11 @@ export default class MiniBoss extends RangedEnemy {
     });
   }
 
-  preUpdate(time, delta) {
+  preUpdate(t, dt){
+    super.preUpdate(t, dt);
+  }
+
+  mypreUpdate(time, delta) {
     this.attackTimer -= delta;
     this.teleportTimer -= delta;
 

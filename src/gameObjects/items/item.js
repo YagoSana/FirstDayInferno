@@ -43,30 +43,38 @@ export default class Item extends SpriteBase {
         player.invertir(false);
       },
       "llave": (player) => player.pickKey(1),
-      "bumbo": (player) => player.itemAppearance("bumbo", 0), // cabeza de Isaac
+      "bumbo": (player) => {
+        player.beNormal();
+        player.itemAppearance("bumbo", 0);
+      },
       "pantallazo_azul": (player) => {
+        player.beNormal();
         player.itemAppearance("pantallazo_azul", 1); // cabeza de Isaac
-        player.doFreeze();
+        player.doFreeze(true);
       },
       "bono": (player) => {
+        player.beNormal();
         player.changeSpeed(1.3);
         player.changeCooldown(-150);//TODO VER ESTO
-        player.invertir(false);
-        player.doDoubleshoot(false);
       },
       "codigo": (player) => {
+        player.beNormal();
         player.doDoubleshoot(true);
-        player.invertir(false);;
       },
       "corazon": (player) => player.changeHealth(1, false),
       "maletin": (player) => {
         player.changeSpeed(0.70);
         player.changeHealth(3, true);
         player.invertir(false);
-        player.doDoubleshoot(false);
       },
-      "bolsa_sospechosa": (player) => player.itemAppearance("bolsa_sospechosa", 3),
-      "collar_macarrones": (player) => player.itemAppearance("collar_macarrones", 2),
+      "bolsa_sospechosa": (player) => {
+        player.beNormal();
+        player.itemAppearance("bolsa_sospechosa", 3);
+      },
+      "collar_macarrones": (player) => {
+        player.beNormal();
+        player.itemAppearance("collar_macarrones", 2);
+      },
     };
 
     // Texto del nombre del objeto encima del jugador
@@ -134,7 +142,6 @@ export default class Item extends SpriteBase {
       "maletin": "Maletin del Lab",
       "bolsa_sospechosa": "Bolsa Sospechosa",
       "corazon": "Corazon",
-      // Añade más mapeos según necesites
     };
 
     // Si existe en el mapeo, lo usamos, sino formateamos automáticamente
@@ -144,7 +151,7 @@ export default class Item extends SpriteBase {
   getDescription() {
     const descriptions = {
       "hamburguesa": {
-        description: "Recuperas 2 puntos de salud.",
+        description: "Fabricado en la cafe, puedes notar el sabor a parrilla.",
         effect: "Salud +2"
       },
       "mini_tinto": {
@@ -157,19 +164,19 @@ export default class Item extends SpriteBase {
       },
       "bono": {
         description: "Bono joven de transporte de la comunidad de Madrid. ¡Gracias Pedrito!",
-        effect: "Cooldown -150ms, Velocidad +30%"
+        effect: "Cooldown disparo -150ms, Velocidad +30%"
       },
       "codigo": {
         description: "Código que a veces funciona mal, ha dado time limit en el juez.",
-        effect: "Tus disparos hacen el doble de daño, 20% de probabilidades de que la bala se desvie."
+        effect: "Daño x2, 20% de probabilidades de desvio."
       },
       "pantallazo_azul": {
         description: "Actualizaste a Windows 11. Nadie sabe cómo funciona.",
-        effect: "Tu disparo puede bloquear a los enemigos durante 2 segundos."
+        effect: "Tu disparo congela a los enemigos durante 2 segundos."
       },
       "collar_macarrones": {
         description: "Creado con esfuerzo y sudor por un estudiante de magisterio como proyecto de TFG.",
-        effect: "El personaje cambia su proyectil a un cacho de plastilina."
+        effect: "Cooldown disparo -100ms, el proyectil cambia a un cacho de plastilina."
       },
       "maletin": {
         description: "Maletín que contiene una placa en su interior. Nadie sabe cómo funciona.",
@@ -177,7 +184,7 @@ export default class Item extends SpriteBase {
       },
       "bolsa_sospechosa": {
         description: "Contiene unas hojas verdes secas. Su olor te evoca recuerdos del sur de Madrid.",
-        effect: "Se invierten los controles de disparo pero hacen el doble de daño"
+        effect: "Daño x2, Controles de disparo invertidos"
       },
 
     };
@@ -227,7 +234,7 @@ export default class Item extends SpriteBase {
 
     this.descriptionText.setPosition(
       this.scene.cameras.main.centerX - this.descriptionText.width / 2,
-      this.scene.cameras.main.height - 160
+      this.scene.cameras.main.height - 175
     );
     this.descriptionText.setVisible(true);
   }
