@@ -547,6 +547,9 @@ export default class Player extends SpriteBase {
                 this.play("player-death", true);
                 this.once('animationcomplete', () => {
                     this.scene.scene.stop('GUI');
+                    if (this.scene.scene.isActive('MapMenu')) {
+                        this.scene.scene.stop('MapMenu');
+                    }
                     this.scene.scene.start('gameOver', {
                         deathData: {
                             type: this.lastDamageType,

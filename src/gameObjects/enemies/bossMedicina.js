@@ -37,8 +37,13 @@ export default class BossMedicina extends Npc {
   }
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
+
+
   preUpdate(t, dt) {
     super.preUpdate(t, dt);
+  }
+
+  mypreUpdate(t, dt) {
     if (!this.activar) {
       if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) < 150) {
         this.activar = true;
@@ -137,13 +142,13 @@ export default class BossMedicina extends Npc {
           this.once('animationcomplete', () => {
             this.play("bossMedicinaIdle2", true);
             this.body.enable = true;
-            this.x=320;
-            this.y=280;
+            this.x = 320;
+            this.y = 280;
             this.body.reset(320, 280);
           });
         }
-        this.x=320;
-        this.y=280;
+        this.x = 320;
+        this.y = 280;
         //Patron de ataque
         if (this.puedeInvocar && this.anims.currentAnim.key != "bossMedicinaEspecial") {
           this.puedeInvocar = false;
@@ -168,7 +173,8 @@ export default class BossMedicina extends Npc {
         }
         if (this.anims.currentAnim.key != "bossMedicinaDisparo") {
           if (this.orbes.length > 0) {
-            if (this.scene.time.now - this.tiempoUltimoDisparo > this.cooldownOrbe) {;
+            if (this.scene.time.now - this.tiempoUltimoDisparo > this.cooldownOrbe) {
+              ;
               let orbe = this.orbes.pop();
               let orbeX = orbe.x;
               let orbeY = orbe.y;
@@ -179,7 +185,7 @@ export default class BossMedicina extends Npc {
               this.tiempoUltimoDisparo = this.scene.time.now;
             }
           }
-          else{
+          else {
             this.puedeInvocar = true;
           }
         }

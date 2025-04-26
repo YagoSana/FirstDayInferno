@@ -29,7 +29,7 @@ export default class SelectorNivel extends Phaser.Scene {
     if (data && data.playerStats) {
       this.playerStats = data.playerStats;
     } else {
-      this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500, doubleshoot: false  }; // Valores predeterminados
+      this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500, doubleshoot: false }; // Valores predeterminados
     }
   }
 
@@ -42,7 +42,7 @@ export default class SelectorNivel extends Phaser.Scene {
     const map = this.make.tilemap({ key: 'lobby' });
     const tileset1 = map.addTilesetImage("TX Tileset Grass", "Grass");
 
-    
+
     const layer2 = map.createLayer('cesped', [tileset1], 0, 0);
     const layer1 = map.createLayer('suelo', [tileset1], 0, 0);
 
@@ -54,7 +54,7 @@ export default class SelectorNivel extends Phaser.Scene {
         this.add.image(504, 210, 'metro').setOrigin(0, 0).setDisplaySize(100, 70);
       }
       else if (obj.name == "medicina") {
-        this.add.image(390, 0, 'medicina').setOrigin(0, 0).setDisplaySize(150, 79);        
+        this.add.image(390, 0, 'medicina').setOrigin(0, 0).setDisplaySize(150, 79);
       }
       else if (obj.name == "fdi") {
         this.add.image(65, 238, 'fdi').setOrigin(0, 0).setDisplaySize(231, 98);
@@ -115,15 +115,15 @@ export default class SelectorNivel extends Phaser.Scene {
 
     let uiButtonsScene = this.scene.get('UIButtons');
     uiButtonsScene.updateConfig({
-        position: {
-            pause: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 512 },
-            mute: { x: this.sys.game.config.width - 120, y: this.sys.game.config.height - 512 },
-            fullscreen: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 50 }
-        },
-        scale: 1.6,
-        canPause: true
+      position: {
+        pause: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 512 },
+        mute: { x: this.sys.game.config.width - 120, y: this.sys.game.config.height - 512 },
+        fullscreen: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 50 }
+      },
+      scale: 1.6,
+      canPause: true
     });
-    uiButtonsScene.updateScene(this.scene.key);//le pasamos la key de la escena actual
+    uiButtonsScene.updateScene(this.scene.key, null);//le pasamos la key de la escena actual
 
     this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
     this.scene.bringToTop('GUI');

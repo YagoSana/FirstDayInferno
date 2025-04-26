@@ -12,6 +12,7 @@ export default class GameOver extends Phaser.Scene {
     }
 
     create() {
+        this.cleanupButtons();
         this.sound.stopAll();
         this.music = this.sound.add('musicaGameOver', { volume: 0.7, loop: false });
         // Fondo oscuro semi-transparente
@@ -90,6 +91,16 @@ export default class GameOver extends Phaser.Scene {
                 .setOrigin(0.5)
                 .setScale(2);
         }
+    }
+
+    cleanupButtons() {
+        // Destruir todos los botones existentes
+        this.buttons.forEach(button => {
+            if (button.bg) button.bg.destroy();
+            if (button.text) button.text.destroy();
+        });
+        this.buttons = [];
+        this.selectedButton = 0;
     }
 
     createButtons() {

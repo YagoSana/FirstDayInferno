@@ -15,7 +15,7 @@ export default class MapMenu extends Phaser.Scene {
 
     create(data) {
         this.sonidoSalir = this.sound.add('salirPausa');
-        this.sound.pauseAll();
+        // this.sound.pauseAll();
         //Configuracion del texto
         let textConfig = {
             fontSize: '40px',
@@ -44,25 +44,8 @@ export default class MapMenu extends Phaser.Scene {
         // Eventos de los botones
         closeButton.on('pointerdown', () => {
             this.sonidoSalir.play();
-            this.sound.resumeAll(); // Reanudar el sonido
-            this.scene.resume(this.previousScene); // Reanudar la escena anterior
             this.scene.stop(); // Cerrar la escena de pausa
-            this.scene.resume('GUI');
         });
-
-
-        this.mKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
     }
-
-    update() {
-        // Cerrar el menú de pausa al presionar ESC
-        if (Phaser.Input.Keyboard.JustDown(this.mKey)) {
-            this.sound.resumeAll(); // Reanudar el sonido
-            this.scene.resume(this.previousScene); // Reanudar la escena anterior
-            this.scene.resume('GUI'); // Reanudar la escena anterior
-            this.scene.stop(); // Cerrar la escena de pausa
-        }
-    }
-
 
 }

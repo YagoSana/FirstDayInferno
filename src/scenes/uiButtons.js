@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import SelectorNivel from './selectorNivel';
 
 export default class UIButtons extends Phaser.Scene {
     constructor() {
@@ -14,7 +15,7 @@ export default class UIButtons extends Phaser.Scene {
                 fullscreen: { x: 950, y: 500 }
             },
             scale: 1.6,
-            canPause: true
+            canPause: true,
         };
 
         // Combinar configuración
@@ -22,6 +23,7 @@ export default class UIButtons extends Phaser.Scene {
         this.scale = this.config.scale || 1.6;
         this.canPause = this.config.canPause;
         this.previousScene = null;
+        this.managerKey = null;
 
         // Inicializar estado desde el registro
         if (!this.registry.has('isMuted')) {
@@ -33,6 +35,8 @@ export default class UIButtons extends Phaser.Scene {
 
         this.isMuted = this.registry.get('isMuted');
         this.isFullscreen = this.registry.get('isFullscreen');
+        this.isMapShowed = this.registry.get('isMapShowed');
+        this.canMap = false;
     }
 
     create() {
@@ -98,7 +102,7 @@ export default class UIButtons extends Phaser.Scene {
             .setScrollFactor(0)
             .setDepth(200)
             .setScale(this.scale)
-            .setInteractive({ useHandCursor: true});
+            .setInteractive({ useHandCursor: true });
 
         // Guardar referencias de textura
         this.fullscreenButton.normalTexture = texture;
@@ -132,11 +136,14 @@ export default class UIButtons extends Phaser.Scene {
         if (this.escKey) this.escKey.removeAllListeners();
         if (this.muteKey) this.muteKey.removeAllListeners();
         if (this.fullScreenKey) this.fullScreenKey.removeAllListeners();
+        if (this.mapKey) this.mapKey.removeAllListeners();
+
 
         // Configurar teclas
         this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
         this.muteKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);
         this.fullScreenKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
+        this.mapKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
 
         // Asignar eventos
         if (this.canPause) {
@@ -155,6 +162,13 @@ export default class UIButtons extends Phaser.Scene {
             this.toggleFullscreen();
             this.playButtonAnimation(this.fullscreenButton);
         });
+
+        // Abrir mapa al presionar M
+        // console.log( "SETEO DE TECLAS M: ",this.managerKey);
+        this.mapKey.on('down', () => {
+            this.toggleMap(this.managerKey);
+        });
+
     }
 
 
@@ -233,9 +247,47 @@ export default class UIButtons extends Phaser.Scene {
         this.sound.resumeAll();
     }
 
-    updateScene(key){
+    toggleMap(claveManager) {
+        if(this.canMap){
+          
+            // console.log('toggleMap', this.scene.isPaused(this.previousScene));
+            // console.log("SE MUESTRA EL MAPA?",this.isMapShowed);
+            if (this.scene.isActive("MapMenu")) {
+                this.quitMap();
+            } else {
+                this.showMap(claveManager);
+            }
+        }
+    }
+
+    showMap(claveManager) {
+        // this.scene.pause(this.previousScene);
+        // this.scene.pause('GUI');
+        if (this.previousScene !== 'selectorNivel') {
+            this.scene.launch('MapMenu', {
+                previousScene: this.previousScene,
+                claveMapa: claveManager
+            });
+            this.scene.bringToTop('MapMenu');
+            this.scene.bringToTop('UIButtons');
+        }
+    }
+
+    quitMap() {
+        // this.scene.resume(this.previousScene);
+        // this.scene.resume('GUI');
+        this.scene.stop('MapMenu');
+    }
+
+
+    updateScene(key, managerKey) {
         this.previousScene = key;
-        // console.log("La escena: ",key);
+        this.managerKey = managerKey;
+
+        this.canMap = this.managerKey ? true : false;
+        this.canMap = this.managerKey !== "tutorialManager" 
+
+        // console.log("La escena: ", key, managerKey,this.canMap);
     }
 
     playButtonAnimation(button) {

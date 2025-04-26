@@ -199,6 +199,7 @@ export default class MainMenu extends Phaser.Scene {
                 },
                 scale: 2,
                 canPause: false
+
             });
             this.scene.bringToTop('UIButtons');
         }

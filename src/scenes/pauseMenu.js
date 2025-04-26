@@ -157,6 +157,16 @@ export default class PauseMenu extends Phaser.Scene {
         this.sonidoSalir.play();
         this.cleanupButtons();
 
+        // Cerrar mapa si está abierto
+        if (this.scene.isActive('MapMenu')) {
+            this.scene.stop('MapMenu');
+        }
+
+        let uiButtons = this.scene.get('UIButtons');
+            if(uiButtons){
+                uiButtons.updateScene(this.previousScene, null);
+            }
+
         if (this.previousScene === 'selectorNivel') {
             this.scene.stop(this.previousScene);
             this.scene.stop('GUI');
