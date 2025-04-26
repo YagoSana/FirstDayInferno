@@ -5,7 +5,6 @@ export default class MainMenu extends Phaser.Scene {
         super({ key: 'MainMenu' });
         this.selectedButton = 0;
         this.buttons = [];
-        this.buttonBackgrounds = [];
     }
 
     init(datos) {
@@ -110,7 +109,6 @@ export default class MainMenu extends Phaser.Scene {
             pointerover: () => {
                 this.selectButton(index);
                 buttonBg.setTexture('button_hover').setScale(this.scale + 0.05);
-                this.sonidoHover.play();
             },
             pointerout: () => {
                 if (this.selectedButton !== index) {
@@ -126,11 +124,6 @@ export default class MainMenu extends Phaser.Scene {
         buttonBg.on('pointerover', buttonEvents.pointerover);
         buttonBg.on('pointerout', buttonEvents.pointerout);
         buttonBg.on('pointerdown', buttonEvents.pointerdown);
-
-        buttonText.setInteractive({ useHandCursor: true, pixelPerfect: true })
-            .on('pointerover', buttonEvents.pointerover)
-            .on('pointerout', buttonEvents.pointerout)
-            .on('pointerdown', buttonEvents.pointerdown);
 
         // Guardar referencias para la navegación por teclado
         this.buttons.push({
@@ -152,6 +145,7 @@ export default class MainMenu extends Phaser.Scene {
         selected.bg.setTexture('button_hover').setScale(this.scale + 0.05);
         selected.text.setColor('#FFF31B').setFontSize(70);
 
+        this.sonidoHover.play();
         this.selectedButton = index;
     }
 

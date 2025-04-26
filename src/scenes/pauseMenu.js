@@ -9,84 +9,113 @@ export default class PauseMenu extends Phaser.Scene {
 
     create(data) {
         this.cleanupButtons();
+        this.scale = 0.7;
         this.previousScene = data.previousScene; // Guardar el nombre de la escena anterior
         console.log(`Escena actual: ${this.scene.key}`);
+        this.sonidoHover = this.sound.add('buttonHover');
         this.sonidoSalir = this.sound.add('salirPausa');
         this.sound.pauseAll();
         //Configuracion del texto
-        let textConfig = {
-            fontSize: '40px',
-            color: '#ffffff',
-            fontFamily: 'monogram'
-        };
 
         // Fondo semitransparente
         let background = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.5)
             .setOrigin(0, 0);
 
+        let pause_bg = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'pause_bg')
+            .setScale(this.scale + 0.5, this.scale + 0.7)
+            .setAlpha(0.9);
+
         // Título
         this.add.text(this.cameras.main.width / 2, 150, 'PAUSA', {
             fontSize: '64px',
-            color: '#ffffff',
-            fontFamily: 'monogram'
+            color: '#c0cbdc',
+            fontFamily: 'monogram',
+
         }).setOrigin(0.5);
 
         // Botones con estilo similar al main menu
-        this.createButton('Reanudar', 0, () => this.resumeGame());
-        this.createButton('Salir', 1, () => this.exitGame());
+        this.createCompleteButton('Reanudar', 0, () => this.resumeGame());
+        this.createCompleteButton('Salir', 1, () => this.exitGame());
 
         // console.log(this.buttons);
-
         this.setupKeyboardControls();
+        this.selectButton(0);
     }
 
     cleanupButtons() {
         // Destruir todos los botones existentes
         this.buttons.forEach(button => {
-            if (button) button.destroy();
+            if (button.bg) button.bg.destroy();
+            if (button.text) button.text.destroy();
         });
         this.buttons = [];
         this.selectedButton = 0;
-        
+
         // Limpiar otros elementos si existen
         if (this.background) this.background.destroy();
         if (this.title) this.title.destroy();
     }
 
-    createButton(text, index, callback) {
-        let button = this.add.text(
-            this.cameras.main.width / 2,
-            300 + (index * 100),
-            text,
-            {
-                fontSize: '48px',
-                color: '#ffffff',
-                fontFamily: 'monogram'
+    createCompleteButton(text, index, callback) {
+        const xPos = this.cameras.main.width / 2;
+        const yPos = 250 + (index * 125); // Más espacio entre botones verticales
+
+        // Crear el fondo del botón
+        const buttonBg = this.add.image(xPos, yPos, 'button')
+            .setScale(this.scale)
+            .setInteractive({ useHandCursor: true, pixelPerfect: true })
+            .setDepth(1);
+
+        // Crear el texto del botón
+        const buttonText = this.add.text(xPos, yPos - 10, text, {
+            fontSize: '48px',
+            color: '#ffffff',
+            fontFamily: 'monogram'
+        }).setOrigin(0.5).setDepth(2);
+
+        // Configurar eventos para el botón completo
+        const buttonEvents = {
+            pointerover: () => {
+                this.selectButton(index);
+                buttonBg.setTexture('button_hover').setScale(this.scale + 0.05);
+                this.sonidoHover.play();
+            },
+            pointerout: () => {
+                if (this.selectedButton !== index) {
+                    buttonBg.setTexture('button').setScale(this.scale);
+                    buttonText.setColor('#ffffff');
+                }
+            },
+            pointerdown: () => {
+                callback();
             }
-        )
-            .setOrigin(0.5)
-            .setInteractive();
+        };
 
-        button.on('pointerover', () => {
-            this.selectButton(index);
+        buttonBg.on('pointerover', buttonEvents.pointerover);
+        buttonBg.on('pointerout', buttonEvents.pointerout);
+        buttonBg.on('pointerdown', buttonEvents.pointerdown);
+
+        // Guardar referencias para la navegación por teclado
+        this.buttons.push({
+            bg: buttonBg,
+            text: buttonText,
+            callback: callback
         });
-
-        button.on('pointerdown', callback);
-
-        this.buttons.push(button);
     }
 
     selectButton(index) {
         // Resetear todos los botones
-        this.buttons.forEach(button => {
-            button.setColor('#ffffff');
-            button.setScale(1);
+        this.buttons.forEach((button) => {
+            button.bg.setTexture('button').setScale(this.scale);
+            button.text.setColor('#ffffff').setFontSize(48);
         });
 
         // Resaltar botón seleccionado
-        this.buttons[index].setColor('#ff0');
-        this.buttons[index].setScale(1.1);
+        const selected = this.buttons[index];
+        selected.bg.setTexture('button_hover').setScale(this.scale + 0.05);
+        selected.text.setColor('#FFF31B').setFontSize(52);
 
+        this.sonidoHover.play();
         this.selectedButton = index;
     }
 
@@ -110,11 +139,8 @@ export default class PauseMenu extends Phaser.Scene {
 
         // Confirmar con ENTER
         if (Phaser.Input.Keyboard.JustDown(this.keyEnter)) {
-            this.buttons[this.selectedButton].emit('pointerdown');
+            this.buttons[this.selectedButton].callback();
         }
-        // else if (Phaser.Input.Keyboard.JustDown(this.keyEsc)) {
-        //     this.resumeGame();
-        // }
     }
 
     resumeGame() {
@@ -127,8 +153,8 @@ export default class PauseMenu extends Phaser.Scene {
     }
 
     exitGame() {
-        this.sonidoSalir.play();
         this.sound.stopAll();
+        this.sonidoSalir.play();
         this.cleanupButtons();
 
         if (this.previousScene === 'selectorNivel') {
@@ -143,7 +169,7 @@ export default class PauseMenu extends Phaser.Scene {
         this.scene.stop();
     }
 
-    destroy() {
-        Object.values(this.buttons).forEach(button => button.destroy());
+    shutdown() {
+        this.cleanupButtons();
     }
 }

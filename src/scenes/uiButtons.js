@@ -36,6 +36,7 @@ export default class UIButtons extends Phaser.Scene {
     }
 
     create() {
+        this.sonidoHover = this.sound.add('buttonHover');
         // Crear botones
         this.createMuteButton();
         this.createFullscreenButton();
@@ -56,7 +57,7 @@ export default class UIButtons extends Phaser.Scene {
             .setScrollFactor(0)
             .setDepth(200)
             .setScale(this.scale)
-            .setInteractive();
+            .setInteractive({ useHandCursor: true, pixelPerfect: true });
 
         this.setupButton(this.pauseButton, 'boton_pausa', 'boton_pausa_hover', () => {
             this.togglePause();
@@ -75,7 +76,7 @@ export default class UIButtons extends Phaser.Scene {
             .setScrollFactor(0)
             .setDepth(200)
             .setScale(this.scale)
-            .setInteractive();
+            .setInteractive({ useHandCursor: true, pixelPerfect: true });
 
         // Guardar referencias de textura
         this.muteButton.normalTexture = texture;
@@ -97,7 +98,7 @@ export default class UIButtons extends Phaser.Scene {
             .setScrollFactor(0)
             .setDepth(200)
             .setScale(this.scale)
-            .setInteractive();
+            .setInteractive({ useHandCursor: true});
 
         // Guardar referencias de textura
         this.fullscreenButton.normalTexture = texture;
@@ -112,7 +113,7 @@ export default class UIButtons extends Phaser.Scene {
         button.on('pointerover', () => {
             button.setTexture(hoverTex);
             button.setScale(this.scale * 1.1);
-
+            this.sonidoHover.play();
         });
 
         button.on('pointerout', () => {
@@ -133,9 +134,9 @@ export default class UIButtons extends Phaser.Scene {
         if (this.fullScreenKey) this.fullScreenKey.removeAllListeners();
 
         // Configurar teclas
-        this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-        this.muteKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
-        this.fullScreenKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N);
+        this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+        this.muteKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);
+        this.fullScreenKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
 
         // Asignar eventos
         if (this.canPause) {
@@ -238,6 +239,7 @@ export default class UIButtons extends Phaser.Scene {
     }
 
     playButtonAnimation(button) {
+        this.sonidoHover.play();
         this.tweens.add({
             targets: button,
             scale: this.scale * 1.2,

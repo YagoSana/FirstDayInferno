@@ -3,6 +3,7 @@ import Phaser from 'phaser'
 import Background from "../../assets/imgs/metro_background.jpg";
 import Button from "../../assets/imgs/boton_on.png";
 import Button_hover from "../../assets/imgs/boton_hover.png";
+import pause_bg from "../../assets/imgs/pause_bg.png";
 import titulo from "../../assets/imgs/titulo.png";
 import monogram from "../../fonts/monogram-extended.ttf";
 
@@ -104,6 +105,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('title', titulo);
     this.load.image('button', Button);
     this.load.image('button_hover', Button_hover)
+    this.load.image('pause_bg', pause_bg)
     this.load.image('spark', spark);
 
     this.load.spritesheet("parrySmoke", parrySmoke, {
