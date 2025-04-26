@@ -7,6 +7,7 @@ import UIController from "../controller/UIController.js";
 import metro from "../../assets/imgs/LobbyMETRO.png";
 import fdi from "../../assets/imgs/LobbyFDI.png";
 import medicina from "../../assets/imgs/LobbyMEDICINA.png";
+import paraninfo from "../../assets/imgs/LobbyParaninfo.png";
 
 import lobby from "../../assets/map/lobby.json";
 import tileset_grass from "../../assets/map/TX Tileset Grass.png";
@@ -22,6 +23,7 @@ export default class SelectorNivel extends Phaser.Scene {
     this.load.tilemapTiledJSON("lobby", lobby);
     this.load.image('metro', metro);
     this.load.image('medicina', medicina);
+    this.load.image('paraninfo', paraninfo);
     this.load.image('fdi', fdi);
   }
 
@@ -60,6 +62,9 @@ export default class SelectorNivel extends Phaser.Scene {
       }
       else if (obj.name == "fdi") {
         this.add.image(65, 238, 'fdi').setOrigin(0, 0).setDisplaySize(231, 98);
+      }
+      else if (obj.name == "paraninfo") {
+        this.add.image(100, 50, 'paraninfo').setOrigin(0, 0).setDisplaySize(150, 70);
       }
     });
 
