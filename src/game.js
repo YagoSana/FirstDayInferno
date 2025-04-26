@@ -1,6 +1,7 @@
 import Boot from './scenes/boot.js';
 import MainMenu from './scenes/mainmenu.js';
 import PauseMenu from './scenes/pauseMenu.js';
+import MapMenu from './scenes/mapMenu.js';
 import End from './scenes/end.js';
 import GUI from './scenes/gui.js';
 import GameOver from './scenes/gameOver.js';
@@ -51,7 +52,7 @@ let config = {
 
     },
     pixelArt: true,
-    scene: [Boot, MainMenu, PauseMenu, SelectorNivel, GameOver, TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, Tutorial_debug2, GUI, InformaticaManager, FDI_1, FDI_2, FDI_3, FDI_4, FDI_5, FDI_6, FDI_2_1, FDI_2_2, FDI_2_3, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, End],
+    scene: [Boot, MainMenu, PauseMenu, MapMenu, SelectorNivel, GameOver, TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, Tutorial_debug2, GUI, InformaticaManager, FDI_1, FDI_2, FDI_3, FDI_4, FDI_5, FDI_6, FDI_2_1, FDI_2_2, FDI_2_3, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, End],
 
     physics: {
         default: 'arcade',
