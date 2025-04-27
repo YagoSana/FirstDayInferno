@@ -1,9 +1,7 @@
 import Phaser from "phaser";
 import Player from "../../gameObjects/characters/player";
 
-//ENEMIGOS
-import cucaracha from "../../../assets/sprites/cucaracha.png";
-import enemydeath from "../../../assets/sprites/enemy_death.png";
+
 
 
 //MAPAS Y TILES
@@ -67,16 +65,6 @@ export default class tutorialManager extends Phaser.Scene {
             loadingText.destroy();
         });
 
-        this.load.spritesheet("cucaracha", cucaracha, {
-            frameWidth: 32, //cada frame tiene este ancho
-            frameHeight: 32, //todos son 32 px de alto
-        });
-
-        this.load.spritesheet("enemydeath", enemydeath, {
-            frameWidth: 32, //cada frame tiene este ancho
-            frameHeight: 32, //todos son 32 px de alto
-        });
-
         this.load.image("Interior", img_interior);
         this.load.image("Muebles", img_muebles);
 
@@ -88,24 +76,7 @@ export default class tutorialManager extends Phaser.Scene {
     }
 
     create() {
-        this.tutorialSonido = this.sound.add("tutorialSonido", { volume: 0.5, loop: true });
-        this.anims.create({
-            key: "cucaracha",
-            frames: this.anims.generateFrameNames("cucaracha", {
-                frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-            }),
-            frameRate: 20,
-            repeat: -1,
-        });
-
-        this.anims.create({
-            key: "enemydeath",
-            frames: this.anims.generateFrameNames("enemydeath", { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] }),
-            frameRate: 24,
-            repeat: 0,
-        });
-
-
+       
         let uiButtonsScene = this.scene.get('UIButtons');
         uiButtonsScene.updateConfig({
             position: {

@@ -9,6 +9,21 @@ import monogram from "../../fonts/monogram-extended.ttf";
 
 //JUGADOR ------------------------------------------------------
 import player from "../../assets/sprites/player_spritesheet.png";
+
+//ENEMIGOS
+import cucaracha from "../../assets/sprites/cucaracha.png";
+import nand from "../../assets/sprites/nand.png";
+import cat_idle from "../../assets/sprites/cat_idle.png";
+import cat_void from "../../assets/sprites/cat_void.png";
+import cat_wake from "../../assets/sprites/cat_wake.png";
+import zombie_move from "../../assets/sprites/zombie_move.png";
+import zombie_shoot from "../../assets/sprites/zombie_shoot.png";
+import enemydeath from "../../assets/sprites/enemy_death.png";
+import nerdmove from "../../assets/sprites/nerd-move.png";
+import nerdshoot from "../../assets/sprites/nerd-shoot.png";
+import printer from "../../assets/sprites/printer_spritesheet.png";
+import skeleton from "../../assets/sprites/skeleton_spritesheet.png";
+
 //CAMAERO
 import camarero from "../../assets/sprites/bartender_front_iddle.png"
 //PROFESOR
@@ -51,7 +66,6 @@ import tutorialSonido from '../../assets/music/tutorialSonido.ogg';
 import sonidoMaquina from '../../assets/music/sonidoMaquina.wav';
 //GUI ------------------------------------------------------
 import mainMenu from "../../assets/sprites/mainmenu.png";
-import vidaJugador from "../../assets/sprites/vidaPlayer.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
 import game_over_screen from "../../assets/sprites/enemy_game_over.png";
 import bartenderImg from "../../assets/sprites/camarero.png";
@@ -176,7 +190,7 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
     });
-     
+
     this.load.spritesheet("server", server, {
       frameWidth: 32,
       frameHeight: 64,
@@ -186,7 +200,7 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
     });
-  
+
     this.load.spritesheet("player", player, {
       frameWidth: 32, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
@@ -205,11 +219,6 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("bartender", camarero, {
       frameWidth: 32,
       frameHeight: 32
-    });
-
-    this.load.spritesheet('vidaJugador', vidaJugador, {
-      frameWidth: 16,
-      frameHeight: 16
     });
 
     this.load.spritesheet('puff', puff, {
@@ -269,6 +278,65 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 108,
     });
 
+    this.load.spritesheet("cucaracha", cucaracha, {
+      frameWidth: 32, //cada frame tiene este ancho
+      frameHeight: 32, //todos son 32 px de alto
+    });
+
+    this.load.spritesheet("nand", nand, {
+      frameWidth: 32, //cada frame tiene este ancho
+      frameHeight: 32, //todos son 32 px de alto
+    });
+
+    this.load.spritesheet('zombie_move', zombie_move, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet('zombie_shoot', zombie_shoot, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet("cat_idle", cat_idle, {
+      frameWidth: 16,
+      frameHeight: 8,
+    });
+
+    this.load.spritesheet("cat_void", cat_void, {
+      frameWidth: 15,
+      frameHeight: 16,
+    });
+
+    this.load.spritesheet("cat_wake", cat_wake, {
+      frameWidth: 17,
+      frameHeight: 11,
+    });
+
+    this.load.spritesheet('nerdmove', nerdmove, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet('nerdshoot', nerdshoot, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet('skeleton', skeleton, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet('printer', printer, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet("enemydeath", enemydeath, {
+      frameWidth: 32, //cada frame tiene este ancho
+      frameHeight: 32, //todos son 32 px de alto
+    });
   }
 
   /**
@@ -419,6 +487,149 @@ export default class Boot extends Phaser.Scene {
       }),
       frameRate: 5,
       repeat: -1,
+    });
+
+    //ENEMIGOS-------------------------------------------------------------------
+
+    this.tutorialSonido = this.sound.add("tutorialSonido", { volume: 0.5, loop: true });
+    this.anims.create({
+      key: "cucaracha",
+      frames: this.anims.generateFrameNames("cucaracha", {
+        start: 0,
+        end: 9,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "nand",
+      frames: this.anims.generateFrameNames("nand", {
+        start: 0,
+        end: 9,
+      }),
+      frameRate: 14,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "zombie_move",
+      frames: this.anims.generateFrameNames("zombie_move", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "zombie_shoot",
+      frames: this.anims.generateFrameNames("zombie_shoot", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 12,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "cat_idle",
+      frames: this.anims.generateFrameNames("cat_idle", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "cat_void",
+      frames: this.anims.generateFrameNames("cat_void", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 12,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "cat_wake",
+      frames: this.anims.generateFrameNames("cat_wake", {
+        start: 0,
+        end: 7,
+      }),
+      frameRate: 12,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "nerd_move",
+      frames: this.anims.generateFrameNames("nerdmove", {
+        start: 0,
+        end: 9,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "nerd_shoot",
+      frames: this.anims.generateFrameNames("nerdshoot", {
+        start: 0,
+        end: 9,
+      }),
+      frameRate: 12,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "printer_idle",
+      frames: this.anims.generateFrameNames("printer", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "printer_attack",
+      frames: this.anims.generateFrameNames("printer", {
+        start: 6,
+        end: 11,
+      }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "skeleton_idle",
+      frames: this.anims.generateFrameNames("skeleton", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 6,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "skeleton_attack",
+      frames: this.anims.generateFrameNames("skeleton", {
+        start: 4,
+        end: 9,
+      }),
+      frameRate: 8,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "enemydeath",
+      frames: this.anims.generateFrameNames("enemydeath", {
+        start: 0,
+        end: 9,
+      }),
+      frameRate: 24,
+      repeat: 0,
     });
 
     this.anims.create({
@@ -586,7 +797,7 @@ export default class Boot extends Phaser.Scene {
       frameRate: 10,
       repeat: 3,
     });
-    
+
     this.anims.create({
       key: "key-idle",
       frames: this.anims.generateFrameNames("items", { start: 12, end: 17 }),
@@ -645,7 +856,7 @@ export default class Boot extends Phaser.Scene {
 
     this.anims.create({
       key: "Title_screen",
-      frames: this.anims.generateFrameNames("main_menu", { start: 0, end: 23}),
+      frames: this.anims.generateFrameNames("main_menu", { start: 0, end: 23 }),
       frameRate: 8,
       repeat: -1,
     });
@@ -747,7 +958,7 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 64,
       frameHeight: 32,
       startFrame: 3
-        });
+    });
 
     this.textures.addSpriteSheet('gui_heart', this.textures.get('player_gui').getSourceImage(), {
       frameWidth: 32,
@@ -772,7 +983,7 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
       startFrame: 11
     });
-    
+
     this.textures.addSpriteSheet('boton_fullscreen', this.textures.get('player_gui').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
@@ -799,7 +1010,7 @@ export default class Boot extends Phaser.Scene {
 
     this.anims.create({
       key: "server_static",
-      frames: this.anims.generateFrameNames("server", { start: 0, end: 0}),
+      frames: this.anims.generateFrameNames("server", { start: 0, end: 0 }),
       frameRate: 2,
       repeat: -1,
     });
@@ -960,7 +1171,7 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
       startFrame: 3
     });
-    
+
     this.textures.addSpriteSheet('dough_bullet', this.textures.get('bullets').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
