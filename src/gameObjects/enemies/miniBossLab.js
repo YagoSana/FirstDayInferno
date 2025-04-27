@@ -1,5 +1,6 @@
 import RangedEnemy from './rangedEnemy.js';
 import Bullet from '../projectiles/bullet.js';
+import ChargedEnemy from './chargedEnemy.js';
 
 export default class MiniBoss extends RangedEnemy {
   constructor(scene, x, y, type = 'nerd') {
@@ -31,14 +32,18 @@ export default class MiniBoss extends RangedEnemy {
   spawnGuardians() {
     const offsets = [-100, 100];
     offsets.forEach(offset => {
-      const guardian = new RangedEnemy(this.scene, this.x + offset, this.y + 60, this.type);
+      const guardian = new ChargedEnemy(this.scene, this.x + offset, this.y + 60, this.type);
       guardian.setScale(1); // Más pequeños que el miniboss
       this.scene.enemyGroup.add(guardian);
       this.guardians.push(guardian);
     });
   }
 
-  preUpdate(time, delta) {
+  preUpdate(t, dt){
+    super.preUpdate(t, dt);
+  }
+
+  mypreUpdate(time, delta) {
     this.attackTimer -= delta;
     this.teleportTimer -= delta;
 

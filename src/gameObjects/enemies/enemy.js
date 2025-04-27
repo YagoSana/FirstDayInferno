@@ -27,9 +27,12 @@ export default class Enemy extends Npc {
     this.body.setBounce(0.9); 
   }
 
-  preUpdate(t, dt) {
-    super.preUpdate(t, dt);
 
+  preUpdate(t, dt){
+    super.preUpdate(t, dt);
+  }
+
+  mypreUpdate(t, dt) {
     if (this.health > 0) {
       this.play(`${this.type}`, true);
 

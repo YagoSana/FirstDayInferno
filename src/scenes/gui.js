@@ -82,6 +82,9 @@ export default class GUI extends Phaser.Scene {
         const heartStartX = this.statsPanel.x + heart_margin;
         const heartStartY = this.statsPanel.y + heart_margin;
 
+        this.hearts.forEach(h => h.destroy());
+        this.hearts = [];
+
         for (let i = 0; i < this.playerStats.maxHealth; i++) {
             let heart = this.add.sprite(heartStartX + (i * heartSpacing), heartStartY,
                 'gui_heart' // Textura normal
