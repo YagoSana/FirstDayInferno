@@ -12,6 +12,7 @@ export default class MainMenu extends Phaser.Scene {
     }
 
     create() {
+        this.sound.stopAll();
         this.scale = 0.8;
         this.cleanupButtons();
         // Configurar fondo y título
