@@ -44,10 +44,19 @@ export default class FDI_2_2 extends SalaBase {
             breakablesObjectLayer.objects.forEach(obj => {
                 const breakableType = obj.properties?.find(p => p.name === 'breakable')?.value;
                 if (breakableType === 'table') {
-                    const breakable = new BreakableObjects(this, obj.x, obj.y, 'breakable-table');
+                    const breakable = new BreakableObjects(this, obj.x, obj.y, 112, 25,'breakable-table');
                     this.breakableGroup.add(breakable);
                     breakable.body.setImmovable(true);  // Asegurar que el objeto sea inmovible
                 }
+
+                if (breakableType === 'chair') {
+                    const breakable = new BreakableObjects(this, obj.x, obj.y, 16,16,'breakable-chair');
+                    this.breakableGroup.add(breakable);
+                    breakable.body.setImmovable(true);  // Asegurar que el objeto sea inmovible
+                }
+
+
+                
             });
         }
 
@@ -101,7 +110,7 @@ export default class FDI_2_2 extends SalaBase {
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("Transiciones");
         transitionLayer.objects.forEach(obj => {
-            const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
+            const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height).setOrigin(0, 0).setOffset(0, 0);
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
@@ -111,18 +120,4 @@ export default class FDI_2_2 extends SalaBase {
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
     }
 
-    // Función para crear objetos rompibles desde capas de tiles
-    createBreakableObjectsFromLayer(layer) {
-        layer.layer.data.forEach(row => {
-            row.forEach(tile => {
-                if (tile.index === 5) {
-                    const x = tile.pixelX;
-                    const y = tile.pixelY;
-                    const breakable = new BreakableObjects(this, x, y);
-                    this.breakableGroup.add(breakable);
-                    breakable.body.setImmovable(true);  // Asegurar que el objeto sea inmovible
-                }
-            });
-        });
-    }
 }

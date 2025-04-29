@@ -5,10 +5,10 @@ export default class BreakableObject extends SpriteBase {
   /*
   Clase que define a un objeto rompible.
   */
-  constructor(scene, x, y) {
-    super(scene, x, y, 'breakable-table');
+  constructor(scene, x, y, weight, height, sprite) {
+    super(scene, x, y, sprite);
 
-    this.maxBulletHits = 3; // Disparos necesarios para destruirse
+    this.maxBulletHits = 1; // Disparos necesarios para destruirse
     this.bulletHits = 0;
     this.isBroken = false;
     scene.add.existing(this);
@@ -17,7 +17,7 @@ export default class BreakableObject extends SpriteBase {
     this.setOrigin(0, 0); // para que x, y coincidan con la esquina superior izquierda
     this.body.setAllowGravity(false); // No afectado por la gravedad
     this.body.setVelocity(0, 0); // Estático
-    this.body.setSize(224, 50); // cuerpo físico de 224x50 (ajustado a la imagen)
+    this.body.setSize(weight, height); // cuerpo físico de 224x50 (ajustado a la imagen)
 
     // (Opcional) Texto para debug o UI
     this.bulletText = scene.add.text(x, y - 30, '', {
@@ -25,7 +25,7 @@ export default class BreakableObject extends SpriteBase {
       color: '#ffffff'
     }).setOrigin(0.5);
 
-    
+
   }
 
 
@@ -33,21 +33,36 @@ export default class BreakableObject extends SpriteBase {
     // Efecto visual
     // this.bulletText.setVisible(true);
     bullet.explode();
- 
-        this.flashEffect();
-        // Incrementar contador
-        this.bulletHits++;
-        this.bulletText.setText(`Disparos: ${this.bulletHits}/${this.maxBulletHits}`);
 
-        // Verificar si alcanzó el límite
-        if (this.bulletHits >= this.maxBulletHits) {
-            this.bulletHits = 0;
-            this.destroy();
+    this.flashEffect();
+    // Incrementar contador
+    this.bulletHits++;
+   
+    // Verificar si alcanzó el límite
+    if (this.bulletHits >= this.maxBulletHits) {
+      this.bulletHits = 0;
+      this.destroy();
+    }
+  }
+
+  flashEffect() {
+    if (this.isOperational) {
+        // Guardar el tintado original si es la primera vez
+        if (this.originalTint === undefined) {
+            this.originalTint = this.tint;
         }
 
-    
+        // Flash blanco
+        this.setTint(0x737373);
+        // console.log('flash effect');
+        // Volver al color original después de 100ms
+        this.scene.time.delayedCall(300, () => {
+            if (this.isOperational) { // Verificar si el objeto existe
+                this.setTint(this.originalTint);
+            }
+        });
+    }
 }
-
   preUpdate(time, delta) {
     super.preUpdate(time, delta);
     // Aquí no hay movimiento, solo mantenemos el objeto estático.

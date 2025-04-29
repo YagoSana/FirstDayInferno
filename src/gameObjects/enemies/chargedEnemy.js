@@ -3,11 +3,11 @@ import Bullet from '../projectiles/bullet.js';
 import Npc from './npc.js';
 
 export default class ChargedEnemy extends Npc {
-  
+
   constructor(scene, x, y, type) {
     super(scene, x, y, type);
     this.type = type;
-    this.attackCooldown = 0; 
+    this.attackCooldown = 0;
     this.attackRange = 300;
     this.chargeTime = 2000;
     this.health = 6;
@@ -20,13 +20,33 @@ export default class ChargedEnemy extends Npc {
     this.originalX = x;
     this.originalY = y;
 
-    // Siempre reproducir server_static
+    this.chargeTimer = null; // Referencia al temporizador de carga
+
     this.play('server_static');
   }
 
-  preUpdate(t, dt){
+  preUpdate(t, dt) {
     super.preUpdate(t, dt);
   }
+
+  flashEffect() {
+    if (this.active) {
+        // Guardar el tintado original si es la primera vez
+        if (this.originalTint === undefined) {
+            this.originalTint = this.tint;
+        }
+
+        // Flash blanco
+        this.setTint(0x737373);
+        // console.log('flash effect');
+        // Volver al color original después de 100ms
+        this.scene.time.delayedCall(600, () => {
+            if (this.active) { // Verificar si el objeto existe
+                this.setTint(this.originalTint);
+            }
+        });
+    }
+}
 
   mypreUpdate(t, dt) {
     if (this.health > 0) {
@@ -72,12 +92,15 @@ export default class ChargedEnemy extends Npc {
     this.isCharging = true;
     this.chargeProgress = 0;
 
-    this.scene.time.delayedCall(this.chargeTime, () => {
+    this.chargeTimer = this.scene.time.delayedCall(this.chargeTime, () => {
       this.finishCharging();
     });
   }
 
   finishCharging() {
+    // Asegura que el enemigo aún está activo antes de ejecutar
+    if (!this.scene || !this.active) return;
+
     this.isCharging = false;
     this.setTint(0xffffff);
     this.setScale(1);
@@ -97,7 +120,7 @@ export default class ChargedEnemy extends Npc {
       ease: 'Sine.easeInOut'
     });
 
-    const angleStep = (2 * Math.PI) / 8; // 8 balas en círculo
+    const angleStep = (2 * Math.PI) / 8;
     for (let i = 0; i < 8; i++) {
       const angle = i * angleStep;
       const dirX = Math.cos(angle);
@@ -107,8 +130,20 @@ export default class ChargedEnemy extends Npc {
   }
 
   hitBullet(enemy, bullet) {
-    if (!this.inmortal && !this.invulnerable) {
+    this.flashEffect();
       super.hitBullet(enemy, bullet);
+      if (this.health <= 0) {
+        this.cancelCharge();
+        this.destroy(); // o tu lógica de muerte personalizada
+      }
+    
+  }
+
+  cancelCharge() {
+    if (this.chargeTimer) {
+      this.chargeTimer.remove(false);
+      this.chargeTimer = null;
     }
+    this.isCharging = false;
   }
 }

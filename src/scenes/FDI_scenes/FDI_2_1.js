@@ -4,7 +4,6 @@ import Enemy from "../../gameObjects/enemies/enemy.js";
 import RangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import Item from "../../gameObjects/items/item.js";
 import turretEnemy from "../../gameObjects/enemies/turretEnemy.js"
-import BreakableObjects from "../../gameObjects/items/BreakableObject.js";
 
 export default class FDI_2_1 extends SalaBase {
 
@@ -32,10 +31,7 @@ export default class FDI_2_1 extends SalaBase {
         this.breakableGroup = this.physics.add.group();
         const objectLayer = map.getObjectLayer('objetos');
         
-        objectLayer.objects.forEach(obj => {
-            const breakable = new BreakableObjects(this, obj.x, obj.y);
-            this.breakableGroup.add(breakable);
-        });
+   
         
         // Configurar colisiones normales
         layer2.setCollisionByExclusion([-1], true);

@@ -43,6 +43,7 @@ import spark from "../../assets/sprites/spark.png";
 import items from "../../assets/sprites/items_spritesheet.png";
 import doors from "../../assets/sprites/doors_spritesheet.png";
 import breakable_table from "../../assets/sprites/breakable_table.png";
+import breakable_chair from "../../assets/sprites/breakable_chair.png";
 
 //JUGADOR CON ITEMS ----------------------------------------------
 import player_items from "../../assets/sprites/player_item.png";
@@ -240,6 +241,11 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.load.spritesheet('breakable-table', breakable_table, {
+      frameWidth: 112,
+      frameHeight: 25,
+    });
+
+    this.load.spritesheet('breakable-chair', breakable_chair, {
       frameWidth: 112,
       frameHeight: 25,
     });
