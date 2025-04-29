@@ -28,6 +28,9 @@ export default class Bullet extends SpriteBase {
                 case 'bossMedicinaBullet':
                     this.body.setSize(25, 25);
                     break;
+                case 'binaryBullet':
+                    this.scale = 0.8;
+                    break;
             }
             this.setScale(this.scale);
             console.log(type);

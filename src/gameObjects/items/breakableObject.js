@@ -1,91 +1,108 @@
 import Phaser from 'phaser';
 import SpriteBase from '../spriteBase';
-import Item from './item';
 
-export default class breakableObject extends Item {
-    /*
-    Clase que define a un objeto rompible.
-    */
-    constructor(scene, x, y) {
-        super(scene, x, y, 'BreakableObject');
+export default class BreakableObject extends SpriteBase {
+  /*
+  Clase que define a un objeto rompible.
+  */
+  constructor(scene, x, y) {
+    super(scene, x, y, 'breakable-table');
 
-        this.maxBulletHits = 3; // Disparos necesarios para destruirse
-        this.bulletHits = 0;   
-        this.isBroken = false;
+    this.maxBulletHits = 3; // Disparos necesarios para destruirse
+    this.bulletHits = 0;
+    this.isBroken = false;
+    scene.add.existing(this);
+    scene.physics.add.existing(this);
 
-        // (Opcional) Texto para debug o UI
-        this.bulletText = scene.add.text(x, y - 30, '', {
-            fontSize: '12px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
-    }
+    this.setOrigin(0, 0); // para que x, y coincidan con la esquina superior izquierda
+    this.body.setAllowGravity(false); // No afectado por la gravedad
+    this.body.setVelocity(0, 0); // Estático
+    this.body.setSize(224, 50); // cuerpo físico de 224x50 (ajustado a la imagen)
 
-    hitBullet(object, bullet) {
-        bullet.explode();
-        if (this.isOperational) {
-            this.bulletHits++;
-            this.updateDamageEffect(); // Mostrar daño visual
+    // (Opcional) Texto para debug o UI
+    this.bulletText = scene.add.text(x, y - 30, '', {
+      fontSize: '12px',
+      color: '#ffffff'
+    }).setOrigin(0.5);
 
-            // Actualizar texto de daño (si quieres quitarlo, comenta esta línea)
-            this.bulletText.setText(`Disparos: ${this.bulletHits}/${this.maxBulletHits}`);
+    
+  }
 
-            // Verificar si alcanzó el límite para romperse
-            if (this.bulletHits >= this.maxBulletHits) {
-                this.breakObject();
-            }
-        }
-    }
 
-    updateDamageEffect() {
-        const damageRatio = this.bulletHits / this.maxBulletHits;
+  hitBullet(machine, bullet) {
+    // Efecto visual
+    // this.bulletText.setVisible(true);
+    bullet.explode();
+ 
+        this.flashEffect();
+        // Incrementar contador
+        this.bulletHits++;
+        this.bulletText.setText(`Disparos: ${this.bulletHits}/${this.maxBulletHits}`);
 
-        // Aplicar tinte progresivo según el daño
-        if (damageRatio < 0.34) {
-            this.setTint(0xffffff); // Sin daño
-        } else if (damageRatio < 0.67) {
-            this.setTint(0xffff66); // Amarillo (daño leve)
-        } else {
-            this.setTint(0xff6666); // Rojo (daño crítico)
+        // Verificar si alcanzó el límite
+        if (this.bulletHits >= this.maxBulletHits) {
+            this.bulletHits = 0;
+            this.destroy();
         }
 
-        // Efecto de parpadeo breve
-        this.scene.tweens.add({
-            targets: this,
-            alpha: 0.5,
-            duration: 50,
-            yoyo: true,
-            repeat: 0
-        });
+    
+}
+
+  preUpdate(time, delta) {
+    super.preUpdate(time, delta);
+    // Aquí no hay movimiento, solo mantenemos el objeto estático.
+  }
+
+  updateDamageEffect() {
+    const damageRatio = this.bulletHits / this.maxBulletHits;
+
+    // Aplicar tinte progresivo según el daño
+    if (damageRatio < 0.34) {
+      this.setTint(0xffffff); // Sin daño
+    } else if (damageRatio < 0.67) {
+      this.setTint(0xffff66); // Amarillo (daño leve)
+    } else {
+      this.setTint(0xff6666); // Rojo (daño crítico)
     }
 
-    breakObject() {
-        this.isBroken = true;
-        this.bulletHits = 0;
+    // Efecto de parpadeo breve al recibir daño
+    this.scene.tweens.add({
+      targets: this,
+      alpha: 0.5,
+      duration: 50,
+      yoyo: true,
+      repeat: 0
+    });
+  }
 
-        this.emit('ObjectBroken', this.x, this.y);
+  breakObject() {
+    this.isBroken = true;
+    this.bulletHits = 0;
 
-        // (Opcional) Efecto de partículas al romperse
-        this.spawnBreakParticles();
+    this.emit('ObjectBroken', this.x, this.y); // Emitir un evento cuando el objeto se rompa
 
-        this.bulletText.destroy(); // Eliminar el texto de disparos
-        this.destroy();
-    }
+    // Efecto de partículas al romperse
+    this.spawnBreakParticles();
 
-    spawnBreakParticles() {
-        const particles = this.scene.add.particles('flares'); // Usa un sprite de partículas, asegúrate de tenerlo cargado
+    this.bulletText.destroy(); // Eliminar el texto de disparos
+    this.destroy(); // Destruir el objeto
+  }
 
-        const emitter = particles.createEmitter({
-            frame: 'red',
-            x: this.x,
-            y: this.y,
-            speed: { min: -100, max: 100 },
-            angle: { min: 0, max: 360 },
-            lifespan: 500,
-            quantity: 10,
-            scale: { start: 0.5, end: 0 },
-            on: false
-        });
+  spawnBreakParticles() {
+    const particles = this.scene.add.particles('flares'); // Asegúrate de tener el sprite 'flares' cargado
 
-        emitter.explode(10, this.x, this.y);
-    }
+    const emitter = particles.createEmitter({
+      frame: 'red', // Usamos el frame 'red' para las partículas, asegúrate de que esté disponible
+      x: this.x,
+      y: this.y,
+      speed: { min: -100, max: 100 },
+      angle: { min: 0, max: 360 },
+      lifespan: 500,
+      quantity: 10,
+      scale: { start: 0.5, end: 0 },
+      on: false
+    });
+
+    emitter.explode(10, this.x, this.y);
+  }
 }

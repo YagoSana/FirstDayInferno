@@ -26,10 +26,12 @@ import spark from "../../assets/sprites/spark.png";
 //ITEMS ------------------------------------------------------
 import items from "../../assets/sprites/items_spritesheet.png";
 import doors from "../../assets/sprites/doors_spritesheet.png";
+import breakable_table from "../../assets/sprites/breakable_table.png";
 
 //JUGADOR CON ITEMS ----------------------------------------------
 import player_items from "../../assets/sprites/player_item.png";
 import bullets from "../../assets/sprites/bullets_spritesheet.png";
+import binaryBullet from "../../assets/sprites/binary-bullet.png";
 import server from "../../assets/sprites/server.png";
 
 //AUDIO ------------------------------------------------------
@@ -125,6 +127,7 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 100,
       frameHeight: 100,
     });
+
     this.load.spritesheet("bossMedicinaAssault", bossMedicinaAssault, {
       frameWidth: 100,
       frameHeight: 100,
@@ -225,6 +228,10 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
+    this.load.spritesheet('breakable-table', breakable_table, {
+      frameWidth: 112,
+      frameHeight: 25,
+    });
     //items del player
     this.load.spritesheet("player_items", player_items, {
       frameWidth: 32,
@@ -258,6 +265,11 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.load.spritesheet('bullets', bullets, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet('binaryBullet', binaryBullet, {
       frameWidth: 32,
       frameHeight: 32,
     });
@@ -413,7 +425,7 @@ export default class Boot extends Phaser.Scene {
       key: "bartender-face",
       frames: this.anims.generateFrameNames("bartenderImg", {
         start: 0,
-        end: 2,
+        end: 0,
       }),
       frameRate: 5,
       repeat: -1,
@@ -936,6 +948,12 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.textures.addSpriteSheet('paperbullet', this.textures.get('bullets').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 0
+    });
+
+    this.textures.addSpriteSheet('binaryBullet', this.textures.get('binayBullet').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
       startFrame: 0

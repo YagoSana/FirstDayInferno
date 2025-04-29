@@ -95,7 +95,10 @@ export default class NPC extends SpriteBase {
         if (!this.scene || !this.scene.player || !this.scene.player.x || !this.x) return false;
         return Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <= this.interactionRange;
     }
-
+    preUpdate(t, dt){
+        super.preUpdate(t, dt);
+      }
+      
     hablar(frase) {
         if (!this.dialogueActivo) {
             // Primera vez que se activa el diálogo

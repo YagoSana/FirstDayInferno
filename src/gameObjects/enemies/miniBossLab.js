@@ -28,7 +28,10 @@ export default class MiniBoss extends RangedEnemy {
 
     this.health = 10; // Más vida que un enemigo normal
   }
-
+  
+  preUpdate(t, dt){
+    super.preUpdate(t, dt);
+  }
   spawnGuardians() {
     const offsets = [-100, 100];
     offsets.forEach(offset => {
