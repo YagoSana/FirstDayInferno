@@ -50,7 +50,7 @@ export default class SelectorNivel extends Phaser.Scene {
     const layer2 = map.createLayer('cesped', [tileset1], 0, 0);
     const layer1 = map.createLayer('suelo', [tileset1], 0, 0);
 
-    this.player = new Player(this, 550, 180, this.playerStats);//1170, 460,
+    this.player = new Player(this, 550, 180, this.playerStats);//1170, 460
 
     let spritesLayer = map.getObjectLayer("objetos");
     spritesLayer.objects.forEach(obj => {

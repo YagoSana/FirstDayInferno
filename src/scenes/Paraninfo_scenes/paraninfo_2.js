@@ -1,19 +1,20 @@
 //Poner en el boot los paraninfos, y tambien tengo que poner en game las salas? mirar paraninfo_1 pq me faltaba algo mas creo, modificar el manager
 import SalaBase from "../salaBase";
+import Player from "../../gameObjects/characters/player";
 
 export default class Paraninfo_2 extends SalaBase{
     constructor(key){
-        super('Paraninfo_2');
+        super('paraninfo_2');
     }
 
     create(){
-        super.create('Paraninfo_2');
+        super.create('paraninfo_2');
 
-        const map = this.make.tilemap({ key: 'Paraninfo_2' });
+        const map = this.make.tilemap({ key: 'paraninfo_2' });
 
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
-        const tileset3= map.addTilesetImage('Paraninfo_Tileset', 'Paraninfo');
+        const tileset3= map.addTilesetImage('paraninfo', 'Paraninfo');
 
         const layer1 = map.createLayer('suelo', [tileset1, tileset2, tileset3], 0, 0);
         const layer2 = map.createLayer('suelo2', [tileset1, tileset2, tileset3], 0, 0);
@@ -46,13 +47,11 @@ export default class Paraninfo_2 extends SalaBase{
         const mapWidth = map.widthInPixels;
         const mapHeight = map.heightInPixels;
         const zoom = 1.8;
-        const boundX = -(screenWidth / zoom - mapWidth) / 2;
-        const boundY = -(screenHeight / zoom - mapHeight) / 2;
-
-        this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        
+        this.physics.world.setBounds(0, 0, mapWidth, mapHeight);
+        this.cameras.main.setBounds(0, 0, mapWidth, mapHeight);
 
         this.cameras.main.setZoom(zoom);
-        this.cameras.main.setBounds(boundX, boundY, map.widthInPixels, map.heightInPixels);
 
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 

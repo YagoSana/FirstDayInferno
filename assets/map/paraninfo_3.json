@@ -231,13 +231,13 @@
                 {
                  "height":0,
                  "id":3,
-                 "name":"candado",
+                 "name":"secret",
                  "point":true,
                  "properties":[
                         {
                          "name":"tipo",
                          "type":"string",
-                         "value":"candado"
+                         "value":"door"
                         }],
                  "rotation":0,
                  "type":"",

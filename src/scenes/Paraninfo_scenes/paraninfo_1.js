@@ -1,18 +1,19 @@
 import SalaBase from "../salaBase";
+import Player from "../../gameObjects/characters/player";
 
 export default class Paraninfo_1 extends SalaBase {
     constructor(key){
-        super('Paraninfo_1');
+        super('paraninfo_1');
     }
 
     create(){
-        super.create('Paraninfo_1');
+        super.create('paraninfo_1');
 
-        const map = this.make.tilemap({ key: 'Paraninfo_1' });
+        const map = this.make.tilemap({ key: 'paraninfo_1' });
 
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
-        const tileset3= map.addTilesetImage('Paraninfo_Tileset', 'Paraninfo');
+        const tileset3= map.addTilesetImage('paraninfo', 'Paraninfo');
 
         const layer1 = map.createLayer('suelo', [tileset1, tileset2, tileset3], 0, 0);
         const layer2 = map.createLayer('suelo2', [tileset1, tileset2, tileset3], 0, 0);
@@ -21,10 +22,10 @@ export default class Paraninfo_1 extends SalaBase {
         const layer5 = map.createLayer('pared', [tileset1, tileset2, tileset3], 0, 0);
         const layer6 = map.createLayer('colision', [tileset1, tileset2, tileset3], 0, 0);
 
-        layer3.setDepth(10);
-
         layer5.setCollisionByExclusion([-1], true);
         layer6.setCollisionByExclusion([-1], true);
+
+        layer3.setDepth(10);
 
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
@@ -47,13 +48,11 @@ export default class Paraninfo_1 extends SalaBase {
         const mapWidth = map.widthInPixels;
         const mapHeight = map.heightInPixels;
         const zoom = 1.8;
-        const boundX = -(screenWidth / zoom - mapWidth) / 2;
-        const boundY = -(screenHeight / zoom - mapHeight) / 2;
-
-        this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        
+        this.physics.world.setBounds(0, 0, mapWidth, mapHeight);
+        this.cameras.main.setBounds(0, 0, mapWidth, mapHeight);
 
         this.cameras.main.setZoom(zoom);
-        this.cameras.main.setBounds(boundX, boundY, map.widthInPixels, map.heightInPixels);
 
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 

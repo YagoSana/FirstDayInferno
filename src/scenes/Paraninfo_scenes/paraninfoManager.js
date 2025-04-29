@@ -6,10 +6,10 @@ import enemydeath from "../../../assets/sprites/enemy_death.png";
 import paraninfo_1 from "../../../assets/map/paraninfo_1.json";
 import paraninfo_2 from "../../../assets/map/paraninfo_2.json";
 import paraninfo_3 from "../../../assets/map/paraninfo_3.json";
-import paraninfo_secret from "./paraninfo_secret";
+import paraninfo_secret from "../../../assets/map/paraninfo_secret.json";
 import img_interior from "../../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../../assets/map/Room_Builder_free_16x16.png";
-import img_paraninfo from "../../../assets/map/Paraninfo_Tileset.png";
+import img_paraninfo from "../../../assets/map/paraninfo.png";
 
 export default class ParaninfoManager extends Phaser.Scene {
     constructor(){
