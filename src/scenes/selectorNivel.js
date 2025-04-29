@@ -1,12 +1,11 @@
 import Phaser from "phaser";
 import Player from "../gameObjects/characters/player.js";
-import PauseController from "../controller/pauseController.js";
-import UIController from "../controller/UIController.js";
 
 //MAPA LOBBY ------------------------------------------------------
 import metro from "../../assets/imgs/LobbyMETRO.png";
 import fdi from "../../assets/imgs/LobbyFDI.png";
 import medicina from "../../assets/imgs/LobbyMEDICINA.png";
+import paraninfo from "../../assets/imgs/LobbyParaninfo.png";
 
 import lobby from "../../assets/map/lobby.json";
 import tileset_grass from "../../assets/map/TX Tileset Grass.png";
@@ -22,6 +21,7 @@ export default class SelectorNivel extends Phaser.Scene {
     this.load.tilemapTiledJSON("lobby", lobby);
     this.load.image('metro', metro);
     this.load.image('medicina', medicina);
+    this.load.image('paraninfo', paraninfo);
     this.load.image('fdi', fdi);
   }
 
@@ -31,7 +31,7 @@ export default class SelectorNivel extends Phaser.Scene {
     if (data && data.playerStats) {
       this.playerStats = data.playerStats;
     } else {
-      this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500, doubleshoot: false  }; // Valores predeterminados
+      this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500, doubleshoot: false }; // Valores predeterminados
     }
   }
 
@@ -44,11 +44,11 @@ export default class SelectorNivel extends Phaser.Scene {
     const map = this.make.tilemap({ key: 'lobby' });
     const tileset1 = map.addTilesetImage("TX Tileset Grass", "Grass");
 
-    
+
     const layer2 = map.createLayer('cesped', [tileset1], 0, 0);
     const layer1 = map.createLayer('suelo', [tileset1], 0, 0);
 
-    this.player = new Player(this, 550, 180, this.playerStats);//1170, 460,
+    this.player = new Player(this, 550, 180, this.playerStats);//1170, 460
 
     let spritesLayer = map.getObjectLayer("objetos");
     spritesLayer.objects.forEach(obj => {
@@ -56,10 +56,13 @@ export default class SelectorNivel extends Phaser.Scene {
         this.add.image(504, 210, 'metro').setOrigin(0, 0).setDisplaySize(100, 70);
       }
       else if (obj.name == "medicina") {
-        this.add.image(390, 0, 'medicina').setOrigin(0, 0).setDisplaySize(150, 79);        
+        this.add.image(390, 0, 'medicina').setOrigin(0, 0).setDisplaySize(150, 79);
       }
       else if (obj.name == "fdi") {
         this.add.image(65, 238, 'fdi').setOrigin(0, 0).setDisplaySize(231, 98);
+      }
+      else if (obj.name == "paraninfo") {
+        this.add.image(111, 51, 'paraninfo').setOrigin(0, 0).setDisplaySize(231, 110);
       }
     });
 
@@ -97,9 +100,13 @@ export default class SelectorNivel extends Phaser.Scene {
     this.invisibleZoneMetro = this.add.zone(520, 220, 70, 50).setOrigin(0, 0).setName("tutorialManager");
     this.invisibleZoneMetro.setInteractive(); // Hacerla interactiva para detectar overlaping
 
+    this.invisibleZoneParaninfo = this.add.zone(145, 65, 160, 70).setOrigin(0, 0).setName("paraninfoManager");
+    this.invisibleZoneParaninfo.setInteractive();
+
     this.physics.add.existing(this.invisibleZone); // Necesario para que funcione el overlap
     this.physics.add.existing(this.invisibleZoneMedicina);
     this.physics.add.existing(this.invisibleZoneMetro);
+    this.physics.add.existing(this.invisibleZoneParaninfo);
 
     this.invisibleZone.body.setAllowGravity(false);
     this.invisibleZone.body.setImmovable(true);
@@ -110,22 +117,27 @@ export default class SelectorNivel extends Phaser.Scene {
     this.invisibleZoneMetro.body.setAllowGravity(false);
     this.invisibleZoneMetro.body.setImmovable(true);
 
+    this.invisibleZoneParaninfo.body.setAllowGravity(false);
+    this.invisibleZoneParaninfo.body.setImmovable(true);
+
     // Detectar cuando el jugador entra en la colisión invisible
     this.physics.add.overlap(this.player, this.invisibleZone, this.onOverlap, null, this);
     this.physics.add.overlap(this.player, this.invisibleZoneMedicina, this.onOverlap, null, this);
     this.physics.add.overlap(this.player, this.invisibleZoneMetro, this.onOverlap, null, this);
+    this.physics.add.overlap(this.player, this.invisibleZoneParaninfo, this.onOverlap, null, this);
 
-    // this.pauseController = new PauseController(this, { x: 790, y: 120, scale: 1 });
-    this.uiController = new UIController(this, {
+    let uiButtonsScene = this.scene.get('UIButtons');
+    uiButtonsScene.updateConfig({
       position: {
-        pause: { x: this.sys.game.config.width - 210, y: this.sys.game.config.height - 435 }, // Posiciones personalizadas
-        mute: { x: this.sys.game.config.width - 250, y: this.sys.game.config.height - 435 },
-        fullscreen: { x: this.sys.game.config.width - 205, y: this.sys.game.config.height - 125 }
+        pause: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 512 },
+        mute: { x: this.sys.game.config.width - 120, y: this.sys.game.config.height - 512 },
+        fullscreen: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 50 }
       },
-      scale: 1
+      scale: 1.6,
+      canPause: true
     });
-    // Escuchar la tecla ESC
-    this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    uiButtonsScene.updateScene(this.scene.key, null);//le pasamos la key de la escena actual
+
     this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
     this.scene.bringToTop('GUI');
   }
@@ -148,19 +160,6 @@ export default class SelectorNivel extends Phaser.Scene {
     this.playerStats = newStats;
     if (this.player) {
       this.player.updateStats(newStats);
-    }
-  }
-
-  update() {
-    // Abrir el menú de pausa al presionar ESC
-    if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
-      this.uiController.togglePause();
-    }
-  }
-
-  shutdown() {
-    if (this.uiController) {
-      this.uiController.destroy();
     }
   }
 }

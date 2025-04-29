@@ -23,7 +23,7 @@ export default class Door extends SpriteBase {
         this.body.setSize(32, 32);
         this.body.setOffset(16, 0); 
 
-        //Area interaccion -> cambiar?
+        //Area interaccion
         this.interactionArea = this.scene.add.circle(x, y, 30, 0x000000, 0);
         this.scene.physics.add.existing(this.interactionArea);
         this.interactionArea.body.setCircle(30);

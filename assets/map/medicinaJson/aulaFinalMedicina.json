@@ -217,44 +217,8 @@
                 }, 
                 {
                  "height":0,
-                 "id":3,
-                 "name":"cucaracha",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"tipo",
-                         "type":"string",
-                         "value":"enemy"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":104.333333333333,
-                 "y":460
-                }, 
-                {
-                 "height":0,
-                 "id":4,
-                 "name":"cucaracha",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"tipo",
-                         "type":"string",
-                         "value":"enemy"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":426,
-                 "y":389
-                }, 
-                {
-                 "height":0,
                  "id":8,
-                 "name":"zombie",
+                 "name":"bossMedicina",
                  "point":true,
                  "properties":[
                         {
@@ -284,8 +248,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":112,
-                 "y":156
+                 "x":52,
+                 "y":269
                 }],
          "opacity":1,
          "type":"objectgroup",
