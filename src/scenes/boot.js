@@ -26,6 +26,7 @@ import spark from "../../assets/sprites/spark.png";
 //ITEMS ------------------------------------------------------
 import items from "../../assets/sprites/items_spritesheet.png";
 import doors from "../../assets/sprites/doors_spritesheet.png";
+import secretDoor from "../../assets/sprites/secretDoor_spritesheet.png";
 
 //JUGADOR CON ITEMS ----------------------------------------------
 import player_items from "../../assets/sprites/player_item.png";
@@ -169,6 +170,11 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('doors', doors, {
       frameWidth: 64,
       frameHeight: 32,
+    });
+
+    this.load.spritesheet('secretDoor', secretDoor,{
+      frameWidth: 32,
+      frameHeight: 39,
     });
 
     //items del player
@@ -470,6 +476,13 @@ export default class Boot extends Phaser.Scene {
     this.anims.create({
       key: "medDoor-open",
       frames: this.anims.generateFrameNames("doors", { start: 20, end: 37 }),
+      frameRate: 12,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "secretDoor-open",
+      frames: this.anims.generateFrameNames("secretDoor", { start: 0, end: 7 }),
       frameRate: 12,
       repeat: 0,
     });

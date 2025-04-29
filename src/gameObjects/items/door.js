@@ -14,19 +14,28 @@ export default class Door extends SpriteBase {
             this.animation = 'medDoor-open';
             this.ini = 20;
             this.end = 37;
+        }else if(key==="secretDoor"){
+            this.animation = 'secretDoor-open';
+            this.ini = 0;
+            this.end = 7;
         }
 
         this.body.setImmovable(true);
         this.body.allowGravity = false;
 
         //Hitbox
-        this.body.setSize(32, 32);
-        this.body.setOffset(16, 0); 
+        if(key === "secretDoor"){
+            this.body.setSize(32, 32);
+            this.body.setOffset(4, 0);
+        }else{
+            this.body.setSize(32, 32);
+            this.body.setOffset(16, 0); 
+        }
 
         //Area interaccion
-        this.interactionArea = this.scene.add.circle(x, y, 30, 0x000000, 0);
+        this.interactionArea = this.scene.add.circle(x, y, 40, 0x000000, 0);
         this.scene.physics.add.existing(this.interactionArea);
-        this.interactionArea.body.setCircle(30);
+        this.interactionArea.body.setCircle(40);
         this.scene.physics.add.overlap(this.interactionArea, scene.player, this.showInteractionUI, null, this);
 
         //Colisiones -> when isLocked == false cambiar colisiones
