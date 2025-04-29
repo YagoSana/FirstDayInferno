@@ -64,7 +64,7 @@ export default class SelectorNivel extends Phaser.Scene {
         this.add.image(65, 238, 'fdi').setOrigin(0, 0).setDisplaySize(231, 98);
       }
       else if (obj.name == "paraninfo") {
-        this.add.image(100, 50, 'paraninfo').setOrigin(0, 0).setDisplaySize(231, 98);
+        this.add.image(111, 51, 'paraninfo').setOrigin(0, 0).setDisplaySize(231, 110);
       }
     });
 
@@ -102,7 +102,7 @@ export default class SelectorNivel extends Phaser.Scene {
     this.invisibleZoneMetro = this.add.zone(520, 220, 70, 50).setOrigin(0, 0).setName("tutorialManager");
     this.invisibleZoneMetro.setInteractive(); // Hacerla interactiva para detectar overlaping
 
-    this.invisibleZoneParaninfo = this.add.zone(100, 50, 60, 50).setOrigin(0, 0).setName("paraninfoManager");
+    this.invisibleZoneParaninfo = this.add.zone(145, 65, 160, 70).setOrigin(0, 0).setName("paraninfoManager");
     this.invisibleZoneParaninfo.setInteractive();
 
     this.physics.add.existing(this.invisibleZone); // Necesario para que funcione el overlap
