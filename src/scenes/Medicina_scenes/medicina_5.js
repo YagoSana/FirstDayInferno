@@ -72,9 +72,7 @@ export default class medicina_5 extends SalaBase {
     const mapHeight = map.heightInPixels;
     const zoom = 2;
     const boundX = -(screenWidth / zoom - mapWidth) / 2;
-    //bound Y to the bottom of the screen
-    //const boundY = -(screenHeight / zoom - mapHeight) / 2;
-    const boundY = -(screenHeight / zoom - mapHeight) / 2 + (mapHeight - screenHeight / zoom) / 2;
+    const boundY = -(screenHeight / zoom - mapHeight) / 2;
     console.log("boundX: ", boundX);
     console.log("boundY: ", boundY);
 
