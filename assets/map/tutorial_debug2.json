@@ -121,9 +121,92 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":4,
+         "name":"sprites",
+         "objects":[
+                {
+                 "height":0,
+                 "id":2,
+                 "name":"fdi",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"tipo",
+                         "type":"string",
+                         "value":"fdi"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":128.159815597388,
+                 "y":128.159815597388
+                }, 
+                {
+                 "height":0,
+                 "id":3,
+                 "name":"med",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"tipo",
+                         "type":"string",
+                         "value":"med"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":315.328467153285,
+                 "y":116.173645793315
+                }, 
+                {
+                 "height":0,
+                 "id":4,
+                 "name":"secret",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"tipo",
+                         "type":"string",
+                         "value":"secret"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":119.861698040722,
+                 "y":270.149827122551
+                }, 
+                {
+                 "height":0,
+                 "id":5,
+                 "name":"lock",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"tipo",
+                         "type":"string",
+                         "value":"lock"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":317.172493276988,
+                 "y":259.08567038033
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":4,
- "nextobjectid":2,
+ "nextlayerid":5,
+ "nextobjectid":6,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -132,7 +215,7 @@
         {
          "columns":17,
          "firstgid":1,
-         "image":"..\/Desktop\/Uni\/Cuarto\/DVI\/FirstDayInferno\/assets\/map\/Room_Builder_free_16x16.png",
+         "image":"Room_Builder_free_16x16.png",
          "imageheight":368,
          "imagewidth":272,
          "margin":0,
@@ -145,7 +228,7 @@
         {
          "columns":16,
          "firstgid":392,
-         "image":"..\/Desktop\/Uni\/Cuarto\/DVI\/FirstDayInferno\/assets\/map\/Interiors_free_16x16.png",
+         "image":"Interiors_free_16x16.png",
          "imageheight":1424,
          "imagewidth":256,
          "margin":0,

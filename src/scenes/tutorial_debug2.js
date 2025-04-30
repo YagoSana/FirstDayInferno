@@ -1,5 +1,6 @@
 import SalaBase from "./salaBase.js";
 import Player from "../gameObjects/characters/player.js";
+import Door from "../gameObjects/items/door.js";
 
 export default class Tutorial_debug2 extends SalaBase{
     constructor(key) {
@@ -59,5 +60,20 @@ export default class Tutorial_debug2 extends SalaBase{
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+
+        let spritesLayer = map.getObjectLayer("sprites");
+        spritesLayer.objects.forEach(obj => {
+            let type = obj.properties.find(p => p.name === "tipo")?.value;
+            
+            if (type === "fdi") {
+                new Door(this, obj.x, obj.y, 'fdiDoor');
+            }else if(type === "secret"){
+                new Door(this, obj.x, obj.y, 'secretDoor');
+            }else if(type === "med"){
+                new Door(this, obj.x, obj.y, 'medDoor');
+            }else if(type === "lock"){
+                new Door(this, obj.x, obj.y, 'candado');
+            }
+        });
     }
 }

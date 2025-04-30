@@ -30,7 +30,7 @@ export default class Door extends SpriteBase {
         //Hitbox
         if(key === "secretDoor"){
             this.body.setSize(32, 32);
-            this.body.setOffset(4, 0);
+            this.body.setOffset(0, 0);
         }else if(key === "candado"){
             this.body.setSize(16, 32);
             this.body.setOffset(0, -8);//comprobar

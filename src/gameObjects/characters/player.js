@@ -648,7 +648,6 @@ export default class Player extends SpriteBase {
         console.log("this.equipedItem", this.equippedItem);
         console.log("this.itemSprite", this.itemSprite);
         this.bulletType = 'paperbullet';
-        //this.setTintFill(this.playerTint);
         this.doDoubleshoot(false);
         this.doFreeze(false);
         this.invertir(false);
@@ -665,6 +664,7 @@ export default class Player extends SpriteBase {
     changeCooldown(p) {
         if(this.shootCooldown > 350){
             this.shootCooldown += p; // En milisegundos
+            this.originalShootCooldown = this.shootCooldown;
         }
     }
 
@@ -714,6 +714,7 @@ export default class Player extends SpriteBase {
 
     spendKey(p) {
         this.keys -= p;
+        this.scene.game.events.emit('keyChanged', this.keys);
     }
 
     slowDown() {
