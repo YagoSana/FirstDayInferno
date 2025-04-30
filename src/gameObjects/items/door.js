@@ -18,6 +18,10 @@ export default class Door extends SpriteBase {
             this.animation = 'secretDoor-open';
             this.ini = 0;
             this.end = 7;
+        }else if(key==="candado"){
+            this.animation = 'lock-open';
+            this.ini = 0;
+            this.end = 7;
         }
 
         this.body.setImmovable(true);
@@ -27,6 +31,9 @@ export default class Door extends SpriteBase {
         if(key === "secretDoor"){
             this.body.setSize(32, 32);
             this.body.setOffset(4, 0);
+        }else if(key === "candado"){
+            this.body.setSize(16, 32);
+            this.body.setOffset(0, -8);//comprobar
         }else{
             this.body.setSize(32, 32);
             this.body.setOffset(16, 0); 

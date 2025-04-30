@@ -27,6 +27,7 @@ import spark from "../../assets/sprites/spark.png";
 import items from "../../assets/sprites/items_spritesheet.png";
 import doors from "../../assets/sprites/doors_spritesheet.png";
 import secretDoor from "../../assets/sprites/secretDoor_spritesheet.png";
+import lock from "../../assets/sprites/lock.png";
 
 //JUGADOR CON ITEMS ----------------------------------------------
 import player_items from "../../assets/sprites/player_item.png";
@@ -176,6 +177,11 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 39,
     });
+
+    this.load.spritesheet('lock', lock,{
+      frameWidth: 16,
+      frameHeigth: 16,
+    })
 
     //items del player
     this.load.spritesheet("player_items", player_items, {
@@ -464,6 +470,14 @@ export default class Boot extends Phaser.Scene {
       frames: this.anims.generateFrameNames("items", { start: 24, end: 29 }),
       frameRate: 8,
       repeat: 1,
+    });
+
+    
+    this.anims.create({
+      key: "lock-open",
+      frames: this.anims.generateFrameNames("lock", { start: 0, end: 7 }),
+      frameRate: 8,//ver framerate
+      repeat: 0,
     });
 
     this.anims.create({
