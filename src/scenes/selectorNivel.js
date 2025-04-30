@@ -1,7 +1,5 @@
 import Phaser from "phaser";
 import Player from "../gameObjects/characters/player.js";
-import PauseController from "../controller/pauseController.js";
-import UIController from "../controller/UIController.js";
 
 //MAPA LOBBY ------------------------------------------------------
 import metro from "../../assets/imgs/LobbyMETRO.png";
@@ -33,7 +31,7 @@ export default class SelectorNivel extends Phaser.Scene {
     if (data && data.playerStats) {
       this.playerStats = data.playerStats;
     } else {
-      this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500, doubleshoot: false  }; // Valores predeterminados
+      this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500, doubleshoot: false }; // Valores predeterminados
     }
   }
 
@@ -46,7 +44,7 @@ export default class SelectorNivel extends Phaser.Scene {
     const map = this.make.tilemap({ key: 'lobby' });
     const tileset1 = map.addTilesetImage("TX Tileset Grass", "Grass");
 
-    
+
     const layer2 = map.createLayer('cesped', [tileset1], 0, 0);
     const layer1 = map.createLayer('suelo', [tileset1], 0, 0);
 
@@ -58,7 +56,7 @@ export default class SelectorNivel extends Phaser.Scene {
         this.add.image(504, 210, 'metro').setOrigin(0, 0).setDisplaySize(100, 70);
       }
       else if (obj.name == "medicina") {
-        this.add.image(390, 0, 'medicina').setOrigin(0, 0).setDisplaySize(150, 79);        
+        this.add.image(390, 0, 'medicina').setOrigin(0, 0).setDisplaySize(150, 79);
       }
       else if (obj.name == "fdi") {
         this.add.image(65, 238, 'fdi').setOrigin(0, 0).setDisplaySize(231, 98);
@@ -128,17 +126,18 @@ export default class SelectorNivel extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.invisibleZoneMetro, this.onOverlap, null, this);
     this.physics.add.overlap(this.player, this.invisibleZoneParaninfo, this.onOverlap, null, this);
 
-    // this.pauseController = new PauseController(this, { x: 790, y: 120, scale: 1 });
-    this.uiController = new UIController(this, {
+    let uiButtonsScene = this.scene.get('UIButtons');
+    uiButtonsScene.updateConfig({
       position: {
-        pause: { x: this.sys.game.config.width - 210, y: this.sys.game.config.height - 435 }, // Posiciones personalizadas
-        mute: { x: this.sys.game.config.width - 250, y: this.sys.game.config.height - 435 },
-        fullscreen: { x: this.sys.game.config.width - 205, y: this.sys.game.config.height - 125 }
+        pause: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 512 },
+        mute: { x: this.sys.game.config.width - 120, y: this.sys.game.config.height - 512 },
+        fullscreen: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 50 }
       },
-      scale: 1
+      scale: 1.6,
+      canPause: true
     });
-    // Escuchar la tecla ESC
-    this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    uiButtonsScene.updateScene(this.scene.key, null);//le pasamos la key de la escena actual
+
     this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
     this.scene.bringToTop('GUI');
   }
@@ -161,19 +160,6 @@ export default class SelectorNivel extends Phaser.Scene {
     this.playerStats = newStats;
     if (this.player) {
       this.player.updateStats(newStats);
-    }
-  }
-
-  update() {
-    // Abrir el menú de pausa al presionar ESC
-    if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
-      this.uiController.togglePause();
-    }
-  }
-
-  shutdown() {
-    if (this.uiController) {
-      this.uiController.destroy();
     }
   }
 }

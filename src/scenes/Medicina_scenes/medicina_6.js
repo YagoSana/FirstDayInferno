@@ -4,6 +4,7 @@ import Enemy from "../../gameObjects/enemies/enemy.js";
 import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
 import rangedAreaEnemy from "../../gameObjects/enemies/rangedAreaEnemy.js";
+import BossMedicina from "../../gameObjects/enemies/bossMedicina.js";
 
 export default class medicina_6 extends SalaBase {
   constructor() {
@@ -12,6 +13,8 @@ export default class medicina_6 extends SalaBase {
 
   create() {
     super.create("medicina_6");
+
+    this.numEnemiesBeaten = 0;
 
     // Inicialización de grupos
     this.enemyGroup = this.physics.add.group();
@@ -154,23 +157,15 @@ export default class medicina_6 extends SalaBase {
         console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
           switch (obj.name) {
-            case "cucaracha":
-              this.numEnemies++;
-              this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
-              break;
-            case "zombie":
-              this.numEnemies++;
-              this.enemyGroup.add(new rangedAreaEnemy(this, obj.x, obj.y, obj.name));
-              break;
             case "cat":
               console.log("GatosVivos: ", this.game.global.gatosVivos);  // Accede a gatosVivos
               this.game.global.gatosVivos.push(obj.id); // Añadir el ID del gato a la lista
               this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
               break;
-            //case "boss":
-              //this.numEnemies++;
-              //this.enemyGroup.add(new bossEnemy(this, obj.x, obj.y, obj.name));
-              //break;
+            case "bossMedicina":
+              this.numEnemies++;
+              this.enemyGroup.add(new BossMedicina(this, obj.x, obj.y));
+              break;
             default:
               console.log("Tipo de enemigo no reconocido:", obj.name);
           }

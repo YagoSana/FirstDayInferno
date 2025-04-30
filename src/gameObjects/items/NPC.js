@@ -70,17 +70,24 @@ export default class NPC extends SpriteBase {
 
         // Ocultar ícono si te alejas
         this.scene.events.on('update', () => {
-            if (!this.isPlayerInRange()) {
+            if (!this.isPlayerInRange() || this.dialogueActivo===true) {
                 this.eKeyIcon.setVisible(false);
             } else {
                 this.eKeyIcon.setVisible(true);
             }
         });
 
-        // Input para hablar / avanzar diálogo
+        // ACCION DE HABLAR (PULSAR LA E)
         this.scene.input.keyboard.on('keydown-E', () => {
-            if (!this.isPlayerInRange()) return;
-            this.hablar();
+            if (!this.isPlayerInRange() && !this.dialogueActivo) return;
+            if(!this.dialogueActivo){
+            const fraseAleatoria = Phaser.Utils.Array.GetRandom(this.talk_frases);
+            this.hablar(fraseAleatoria);
+            }
+            else {
+                this.dialogueBox.hide();
+                this.dialogueActivo = false;
+            }
         });
     }
 
@@ -88,33 +95,21 @@ export default class NPC extends SpriteBase {
         if (!this.scene || !this.scene.player || !this.scene.player.x || !this.x) return false;
         return Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <= this.interactionRange;
     }
-
-    hablar() {
+    preUpdate(t, dt){
+        super.preUpdate(t, dt);
+      }
+      
+    hablar(frase) {
         if (!this.dialogueActivo) {
             // Primera vez que se activa el diálogo
             if (!this.objectGiven) {
-                this.dialogueQueue = ["Esto es para ti, cuidao con él."];
+                this.dialogueBox.show("Esto es para ti, cuidao con él.");
                 this.objectGiven = true;
                 this.dispenseItem(); // Puedes mover esto al final del diálogo si prefieres
-            } else {
-                const frase = Phaser.Utils.Array.GetRandom(this.talk_frases);
-                this.dialogueQueue = [frase];
             }
-
-            this.dialogueIndex = 0;
             this.dialogueActivo = true;
-            this.dialogueBox.show(this.dialogueQueue[this.dialogueIndex]);
-        } else {
-            // Avanzar en el diálogo
-            this.dialogueIndex++;
-
-            if (this.dialogueIndex < this.dialogueQueue.length) {
-                this.dialogueBox.show(this.dialogueQueue[this.dialogueIndex]);
-            } else {
-                this.dialogueBox.hide();
-                this.dialogueActivo = false;
-            }
-        }
+            this.dialogueBox.show(frase);
+        } 
     }
 
     dispenseItem() {
@@ -178,13 +173,6 @@ export default class NPC extends SpriteBase {
     
             this.dialogueBox.show(frase);
             this.dialogueActivo = true;
-    
-            this.scene.time.delayedCall(3000, () => {
-                if (this.dialogueActivo) {
-                    this.dialogueBox.hide();
-                    this.dialogueActivo = false;
-                }
-            });
         }
     
         if (this.bulletHits >= this.maxBulletHits) {

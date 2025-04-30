@@ -3,11 +3,27 @@ import Phaser from 'phaser'
 import Background from "../../assets/imgs/metro_background.jpg";
 import Button from "../../assets/imgs/boton_on.png";
 import Button_hover from "../../assets/imgs/boton_hover.png";
+import pause_bg from "../../assets/imgs/pause_bg.png";
 import titulo from "../../assets/imgs/titulo.png";
 import monogram from "../../fonts/monogram-extended.ttf";
 
 //JUGADOR ------------------------------------------------------
 import player from "../../assets/sprites/player_spritesheet.png";
+
+//ENEMIGOS
+import cucaracha from "../../assets/sprites/cucaracha.png";
+import nand from "../../assets/sprites/nand.png";
+import cat_idle from "../../assets/sprites/cat_idle.png";
+import cat_void from "../../assets/sprites/cat_void.png";
+import cat_wake from "../../assets/sprites/cat_wake.png";
+import zombie_move from "../../assets/sprites/zombie_move.png";
+import zombie_shoot from "../../assets/sprites/zombie_shoot.png";
+import enemydeath from "../../assets/sprites/enemy_death.png";
+import nerdmove from "../../assets/sprites/nerd-move.png";
+import nerdshoot from "../../assets/sprites/nerd-shoot.png";
+import printer from "../../assets/sprites/printer_spritesheet.png";
+import skeleton from "../../assets/sprites/skeleton_spritesheet.png";
+
 //CAMAERO
 import camarero from "../../assets/sprites/bartender_front_iddle.png"
 //PROFESOR
@@ -28,10 +44,14 @@ import items from "../../assets/sprites/items_spritesheet.png";
 import doors from "../../assets/sprites/doors_spritesheet.png";
 import secretDoor from "../../assets/sprites/secretDoor_spritesheet.png";
 import lock from "../../assets/sprites/lock.png";
+import breakable_table from "../../assets/sprites/breakable_table.png";
+import breakable_chair from "../../assets/sprites/breakable_chair.png";
 
 //JUGADOR CON ITEMS ----------------------------------------------
 import player_items from "../../assets/sprites/player_item.png";
 import bullets from "../../assets/sprites/bullets_spritesheet.png";
+import binaryBullet from "../../assets/sprites/binary-bullet.png";
+import server from "../../assets/sprites/server.png";
 
 //AUDIO ------------------------------------------------------
 import musicaMenu from '../../assets/music/mainMenu.ogg';
@@ -51,10 +71,19 @@ import tutorialSonido from '../../assets/music/tutorialSonido.ogg';
 import sonidoMaquina from '../../assets/music/sonidoMaquina.wav';
 //GUI ------------------------------------------------------
 import mainMenu from "../../assets/sprites/mainmenu.png";
-import vidaJugador from "../../assets/sprites/vidaPlayer.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
 import game_over_screen from "../../assets/sprites/enemy_game_over.png";
 import bartenderImg from "../../assets/sprites/camarero.png";
+//BOSS MEDICINA ------------------------------------------------------
+import bossMedicinaIdle from "../../assets/sprites/bossMedicinaIdle.png";
+import bossMedicinaIdle2 from "../../assets/sprites/bossMedicinaIdle2.png";
+import bossMedicinaAssault from "../../assets/sprites/bossMedicinaAssault.png";
+import bossMedicinaDeath from "../../assets/sprites/bossMedicinaDeath.png";
+import bossMedicinaEspecial from "../../assets/sprites/bossMedicinaEspecial.png";
+import bossMedicinaDisparo from "../../assets/sprites/bossMedicinaDisparo.png";
+import bossMedicinaBullet from "../../assets/sprites/bossMedicinaBullet.png";
+import bossMedicinaBulletAppear from "../../assets/sprites/bossMedicinaBulletAppear.png";
+import bossMedicinaBulletDestroy from "../../assets/sprites/bossMedicinaDestroy.png";
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -106,7 +135,47 @@ export default class Boot extends Phaser.Scene {
     this.load.image('title', titulo);
     this.load.image('button', Button);
     this.load.image('button_hover', Button_hover)
+    this.load.image('pause_bg', pause_bg)
     this.load.image('spark', spark);
+    //BOSS MEDICINA
+    this.load.spritesheet("bossMedicinaIdle", bossMedicinaIdle, {
+      frameWidth: 100,
+      frameHeight: 100,
+    });
+    this.load.spritesheet("bossMedicinaIdle2", bossMedicinaIdle2, {
+      frameWidth: 100,
+      frameHeight: 100,
+    });
+
+    this.load.spritesheet("bossMedicinaAssault", bossMedicinaAssault, {
+      frameWidth: 100,
+      frameHeight: 100,
+    });
+    this.load.spritesheet("bossMedicinaDeath", bossMedicinaDeath, {
+      frameWidth: 100,
+      frameHeight: 100,
+    });
+    this.load.spritesheet("bossMedicinaEspecial", bossMedicinaEspecial, {
+      frameWidth: 100,
+      frameHeight: 100,
+    });
+    this.load.spritesheet("bossMedicinaDisparo", bossMedicinaDisparo, {
+      frameWidth: 100,
+      frameHeight: 100,
+    });
+    this.load.spritesheet("bossMedicinaBullet", bossMedicinaBullet, {
+      frameWidth: 50,
+      frameHeight: 50,
+    });
+    this.load.spritesheet("bossMedicinaBulletAppear", bossMedicinaBulletAppear, {
+      frameWidth: 50,
+      frameHeight: 50,
+    });
+    this.load.spritesheet("bossMedicinaBulletDestroy", bossMedicinaBulletDestroy, {
+      frameWidth: 50,
+      frameHeight: 50,
+    });
+    //BOSS MEDICINA
 
     this.load.spritesheet("parrySmoke", parrySmoke, {
       frameWidth: 64,
@@ -128,11 +197,16 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
+    this.load.spritesheet("server", server, {
+      frameWidth: 32,
+      frameHeight: 64,
+    });
+
     this.load.spritesheet("bartenderImg", bartenderImg, {
       frameWidth: 32,
       frameHeight: 32,
     });
-  
+
     this.load.spritesheet("player", player, {
       frameWidth: 32, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
@@ -151,11 +225,6 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("bartender", camarero, {
       frameWidth: 32,
       frameHeight: 32
-    });
-
-    this.load.spritesheet('vidaJugador', vidaJugador, {
-      frameWidth: 16,
-      frameHeight: 16
     });
 
     this.load.spritesheet('puff', puff, {
@@ -183,6 +252,15 @@ export default class Boot extends Phaser.Scene {
       frameHeigth: 16,
     })
 
+    this.load.spritesheet('breakable-table', breakable_table, {
+      frameWidth: 112,
+      frameHeight: 25,
+    });
+
+    this.load.spritesheet('breakable-chair', breakable_chair, {
+      frameWidth: 112,
+      frameHeight: 25,
+    });
     //items del player
     this.load.spritesheet("player_items", player_items, {
       frameWidth: 32,
@@ -220,11 +298,75 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
+    this.load.spritesheet('binaryBullet', binaryBullet, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
     this.load.spritesheet("main_menu", mainMenu, {
       frameWidth: 192,
       frameHeight: 108,
     });
 
+    this.load.spritesheet("cucaracha", cucaracha, {
+      frameWidth: 32, //cada frame tiene este ancho
+      frameHeight: 32, //todos son 32 px de alto
+    });
+
+    this.load.spritesheet("nand", nand, {
+      frameWidth: 32, //cada frame tiene este ancho
+      frameHeight: 32, //todos son 32 px de alto
+    });
+
+    this.load.spritesheet('zombie_move', zombie_move, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet('zombie_shoot', zombie_shoot, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet("cat_idle", cat_idle, {
+      frameWidth: 16,
+      frameHeight: 8,
+    });
+
+    this.load.spritesheet("cat_void", cat_void, {
+      frameWidth: 15,
+      frameHeight: 16,
+    });
+
+    this.load.spritesheet("cat_wake", cat_wake, {
+      frameWidth: 17,
+      frameHeight: 11,
+    });
+
+    this.load.spritesheet('nerdmove', nerdmove, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet('nerdshoot', nerdshoot, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet('skeleton', skeleton, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet('printer', printer, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet("enemydeath", enemydeath, {
+      frameWidth: 32, //cada frame tiene este ancho
+      frameHeight: 32, //todos son 32 px de alto
+    });
   }
 
   /**
@@ -234,6 +376,98 @@ export default class Boot extends Phaser.Scene {
 
 
   create() {
+    //BOSS MEDICINA
+    this.anims.create({
+      key: "bossMedicinaIdle",
+      frames: this.anims.generateFrameNames("bossMedicinaIdle", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaIdle2",
+      frames: this.anims.generateFrameNames("bossMedicinaIdle2", {
+        start: 0,
+        end: 7,
+      }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaAssault",
+      frames: this.anims.generateFrameNames("bossMedicinaAssault", {
+        start: 0,
+        end: 12,
+      }),
+      frameRate: 8,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaEspecial",
+      frames: this.anims.generateFrameNames("bossMedicinaEspecial", {
+        start: 0,
+        end: 11,
+      }),
+      frameRate: 8,
+      repeat: 1,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaDisparo",
+      frames: this.anims.generateFrameNames("bossMedicinaDisparo", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 8,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaDeath",
+      frames: this.anims.generateFrameNames("bossMedicinaDeath", {
+        start: 0,
+        end: 17,
+      }),
+      frameRate: 8,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaBulletDestroy",
+      frames: this.anims.generateFrameNames("bossMedicinaBulletDestroy", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 8,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaBulletAppear",
+      frames: this.anims.generateFrameNames("bossMedicinaBulletAppear", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 8,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "bossMedicinaBullet",
+      frames: this.anims.generateFrameNames("bossMedicinaBullet", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 8,
+      repeat: -1,
+    });
+    //BOSS MEDICINA
+
     this.anims.create({
       key: "teacher-front",
       frames: this.anims.generateFrameNames("borja", {
@@ -279,10 +513,153 @@ export default class Boot extends Phaser.Scene {
       key: "bartender-face",
       frames: this.anims.generateFrameNames("bartenderImg", {
         start: 0,
-        end: 2,
+        end: 0,
       }),
       frameRate: 5,
       repeat: -1,
+    });
+
+    //ENEMIGOS-------------------------------------------------------------------
+
+    this.tutorialSonido = this.sound.add("tutorialSonido", { volume: 0.5, loop: true });
+    this.anims.create({
+      key: "cucaracha",
+      frames: this.anims.generateFrameNames("cucaracha", {
+        start: 0,
+        end: 9,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "nand",
+      frames: this.anims.generateFrameNames("nand", {
+        start: 0,
+        end: 9,
+      }),
+      frameRate: 14,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "zombie_move",
+      frames: this.anims.generateFrameNames("zombie_move", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "zombie_shoot",
+      frames: this.anims.generateFrameNames("zombie_shoot", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 12,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "cat_idle",
+      frames: this.anims.generateFrameNames("cat_idle", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 4,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "cat_void",
+      frames: this.anims.generateFrameNames("cat_void", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 12,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "cat_wake",
+      frames: this.anims.generateFrameNames("cat_wake", {
+        start: 0,
+        end: 7,
+      }),
+      frameRate: 12,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "nerd_move",
+      frames: this.anims.generateFrameNames("nerdmove", {
+        start: 0,
+        end: 9,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "nerd_shoot",
+      frames: this.anims.generateFrameNames("nerdshoot", {
+        start: 0,
+        end: 9,
+      }),
+      frameRate: 12,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "printer_idle",
+      frames: this.anims.generateFrameNames("printer", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "printer_attack",
+      frames: this.anims.generateFrameNames("printer", {
+        start: 6,
+        end: 11,
+      }),
+      frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "skeleton_idle",
+      frames: this.anims.generateFrameNames("skeleton", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 6,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "skeleton_attack",
+      frames: this.anims.generateFrameNames("skeleton", {
+        start: 4,
+        end: 9,
+      }),
+      frameRate: 8,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "enemydeath",
+      frames: this.anims.generateFrameNames("enemydeath", {
+        start: 0,
+        end: 9,
+      }),
+      frameRate: 24,
+      repeat: 0,
     });
 
     this.anims.create({
@@ -450,7 +827,7 @@ export default class Boot extends Phaser.Scene {
       frameRate: 10,
       repeat: 3,
     });
-    
+
     this.anims.create({
       key: "key-idle",
       frames: this.anims.generateFrameNames("items", { start: 12, end: 17 }),
@@ -524,7 +901,7 @@ export default class Boot extends Phaser.Scene {
 
     this.anims.create({
       key: "Title_screen",
-      frames: this.anims.generateFrameNames("main_menu", { start: 0, end: 23}),
+      frames: this.anims.generateFrameNames("main_menu", { start: 0, end: 23 }),
       frameRate: 8,
       repeat: -1,
     });
@@ -626,7 +1003,7 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 64,
       frameHeight: 32,
       startFrame: 3
-        });
+    });
 
     this.textures.addSpriteSheet('gui_heart', this.textures.get('player_gui').getSourceImage(), {
       frameWidth: 32,
@@ -651,7 +1028,7 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
       startFrame: 11
     });
-    
+
     this.textures.addSpriteSheet('boton_fullscreen', this.textures.get('player_gui').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
@@ -674,6 +1051,13 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
       startFrame: 15
+    });
+
+    this.anims.create({
+      key: "server_static",
+      frames: this.anims.generateFrameNames("server", { start: 0, end: 0 }),
+      frameRate: 2,
+      repeat: -1,
     });
 
     this.anims.create({
@@ -815,6 +1199,12 @@ export default class Boot extends Phaser.Scene {
       startFrame: 0
     });
 
+    this.textures.addSpriteSheet('binaryBullet', this.textures.get('binayBullet').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 0
+    });
+
     this.textures.addSpriteSheet('zombiebullet', this.textures.get('bullets').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
@@ -832,7 +1222,7 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
       startFrame: 3
     });
-    
+
     this.textures.addSpriteSheet('dough_bullet', this.textures.get('bullets').getSourceImage(), {
       frameWidth: 32,
       frameHeight: 32,
@@ -858,7 +1248,7 @@ export default class Boot extends Phaser.Scene {
       frameRate: 8,
       repeat: 0,
     });
-
+    this.scene.start('UIButtons');
     this.scene.start('MainMenu');
   }
 }

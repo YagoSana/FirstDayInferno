@@ -84,7 +84,7 @@ export default class Player extends SpriteBase {
         this.stepTimer = 0;
         this.stepInterval = 500;
         this.originalShootCooldown = this.shootCooldown; // cooldown original
-        this.powerupTimer = null; // Temporizador para el powerup de parry
+        this.powerupTimer = false; // Temporizador para el powerup de parry
         this.rapidFireDuration = 3000; // 3 segundos de disparo rápido
         this.rapidFireActive = false;
         this.originalShootCooldown = this.shootCooldown; // Guardamos el cooldown original
@@ -306,10 +306,8 @@ export default class Player extends SpriteBase {
     //Cambia la apariencia del jugador con un item
     itemAppearance(itemKey, spriteRow) {
         const spriteKey = `player_items`;
-        if (spriteRow != -1)
+        if (spriteRow != -1){
             this.equippedItemRow = spriteRow;
-        if (this.glowEffect) {
-            this.postFX.remove(this.glowEffect);
         }
 
         this.setTint(0xffffff);
@@ -319,11 +317,6 @@ export default class Player extends SpriteBase {
         }
 
         let currentBullet = 'paperbullet';
-
-        this.doDoubleshoot(false);
-        this.invertir(false);
-        this.playerTint = 0xffffff;
-        this.pantallazo = false;
 
         switch (itemKey) {
             case 'bumbo':
@@ -554,6 +547,9 @@ export default class Player extends SpriteBase {
                 this.play("player-death", true);
                 this.once('animationcomplete', () => {
                     this.scene.scene.stop('GUI');
+                    if (this.scene.scene.isActive('MapMenu')) {
+                        this.scene.scene.stop('MapMenu');
+                    }
                     this.scene.scene.start('gameOver', {
                         deathData: {
                             type: this.lastDamageType,
@@ -643,20 +639,41 @@ export default class Player extends SpriteBase {
         this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'good' });
     }
 
+    beNormal(){
+        this.playerTint = 0xffffff;
+        if (this.itemSprite) {
+            this.itemAppearance(null, -1);
+            this.itemSprite.destroy();
+        }
+        console.log("this.equipedItem", this.equippedItem);
+        console.log("this.itemSprite", this.itemSprite);
+        this.bulletType = 'paperbullet';
+        //this.setTintFill(this.playerTint);
+        this.doDoubleshoot(false);
+        this.doFreeze(false);
+        this.invertir(false);
+        this.speed = 100;
+        this.shootCooldown = 500;
+    }
+
     changeSpeed(p) {
-        this.speed *= p;
+        if(this.speed < 169){
+            this.speed *= p;
+        }
     }
 
     changeCooldown(p) {
-        this.shootCooldown += p; // En milisegundos
+        if(this.shootCooldown > 350){
+            this.shootCooldown += p; // En milisegundos
+        }
     }
 
     doDoubleshoot(p) {
         this.doubleshoot = p;
     }
 
-    doFreeze() {
-        this.pantallazo = true;
+    doFreeze(p) {
+        this.pantallazo = p;
     }
 
     maxHealthUp() {
@@ -720,21 +737,16 @@ export default class Player extends SpriteBase {
 
     activateNormalParryBoost(duration = 3000, boostFactor = 0.5) {
         // Evita aplicar múltiples boosts superpuestos
-        if (this.powerupTimer) {
-            this.scene.time.removeEvent(this.powerupTimer);
-        }
-
+        if (!this.powerupTimer) {
         this.shootCooldown *= boostFactor; // Reduce el cooldown (más velocidad)
-
-        this.powerupTimer = this.scene.time.addEvent({
-            delay: duration,
-            callback: () => {
-                this.shootCooldown = this.originalShootCooldown;
-                this.powerupTimer = null;
-            }
+        this.powerupTimer = true; // Activa el temporizador del powerup
+        this.scene.time.delayedCall(duration, () => {
+            this.shootCooldown = this.originalShootCooldown;
+            this.powerupTimer = false
         });
 
         console.log("Parry normal: velocidad de disparo aumentada temporalmente");
+        }
     }
 
     activatePerfectParryEffect() {

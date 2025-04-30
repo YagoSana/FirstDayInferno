@@ -25,6 +25,12 @@ export default class Bullet extends SpriteBase {
                 case 'zombiebullet':
                     this.scale = 0.5;
                     break;
+                case 'bossMedicinaBullet':
+                    this.body.setSize(25, 25);
+                    break;
+                case 'binaryBullet':
+                    this.scale = 0.8;
+                    break;
             }
             this.setScale(this.scale);
             console.log(type);
@@ -70,6 +76,11 @@ export default class Bullet extends SpriteBase {
         this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
             this.destroy();
         });
+    }
+
+    disparaOrbe(x, y){
+        const velocidad = 200;
+        this.scene.physics.moveTo(this, x, y, velocidad);
     }
 
     parry(){
