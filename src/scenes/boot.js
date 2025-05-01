@@ -69,6 +69,7 @@ import explode from '../../assets/music/explode.wav';
 import musicaGameOver from '../../assets/music/musicaGameOver.ogg';
 import tutorialSonido from '../../assets/music/tutorialSonido.ogg';
 import sonidoMaquina from '../../assets/music/sonidoMaquina.wav';
+import sonidoParaninfo from '../../assets/music/paraninfo.mp3';
 //GUI ------------------------------------------------------
 import mainMenu from "../../assets/sprites/mainmenu.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
@@ -129,6 +130,7 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('musicaGameOver', musicaGameOver);
     this.load.audio('tutorialSonido', tutorialSonido);
     this.load.audio('sonidoMaquina', sonidoMaquina);
+    this.load.audio('sonidoParaninfo', sonidoParaninfo);
     //AUDIO
     this.loadFont('monogram', monogram);
     this.load.image('background', Background);

@@ -10,6 +10,7 @@ export default class Paraninfo_3 extends SalaBase{
     create(){
         super.create('paraninfo_3');
 
+
         const map = this.make.tilemap({ key: 'paraninfo_3' });
 
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');

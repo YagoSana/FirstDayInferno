@@ -44,6 +44,8 @@ export default class ParaninfoManager extends Phaser.Scene {
     }
 
     create(){
+        this.music = this.sound.add("sonidoParaninfo", { volume: 0.5, loop: true });
+        this.music.play();
 
         //Meter animacion nuevo enemigo
 
