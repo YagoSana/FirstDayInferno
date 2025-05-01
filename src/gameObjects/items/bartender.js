@@ -19,7 +19,7 @@ export default class bartender extends SpriteBase {
         this.scene.physics.add.collider(this, scene.player);
 
         // Para diálogo opcional
-        this.dialogueBox = new DialogueBox(this.scene, this.x + 100, this.y + 200, 300, 'bartender-face', 'Sánchez');
+        this.dialogueBox = new DialogueBox(this.scene, this.x + 100, this.y + 200, 300, 'bartenderImg', 'Sánchez');
 
         this.frases = [
             "Todo en su sitio...",
@@ -86,7 +86,7 @@ class ShopItem extends Item {
         this.scene = scene;
 
         // Mostrar el precio encima del objeto
-        this.priceText = scene.add.text(this.x, this.y - 30, `€{price}$`, {
+        this.priceText = scene.add.text(this.x, this.y - 30, `${price} lereles`, {
             fontSize: '16px',
             fill: '#ffff00',
             fontFamily: 'monogram',
