@@ -23,7 +23,7 @@ export default class RangedEnemy extends Npc {
     super.preUpdate(t, dt);
   }
 
-  preUpdate(t, dt) {
+  mypreUpdate(t, dt) {
     if (this.health > 0) {
       if (this.anims.currentAnim && this.anims.currentAnim.key === `${this.type}_shoot`) {
         this.setTint(0xffffff);

@@ -76,6 +76,7 @@ export default class tutorialManager extends Phaser.Scene {
     }
 
     create() {
+        this.tutorialSonido = this.sound.add('tutorialSonido');
        
         let uiButtonsScene = this.scene.get('UIButtons');
         uiButtonsScene.updateConfig({
