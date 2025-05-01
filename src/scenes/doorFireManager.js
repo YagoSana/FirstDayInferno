@@ -9,7 +9,7 @@ export default class DoorFireManager {
         this.fireCreated = false;
     }
 
-    checkCreatedFire(transitionZones){
+    checkCreatedFire(transitionZones) {
         return this.fireCreated;
     }
 
@@ -17,6 +17,7 @@ export default class DoorFireManager {
         this.doorFires.clear(true, true); // Limpiar fuegos existentes
 
         transitionZones.getChildren().forEach(zone => {
+            const noFire = (zone.name == "noFire");
             const doorWidth = zone.body.width;
             const doorHeight = zone.body.height;
             const isVertical = doorHeight > doorWidth;
@@ -26,29 +27,31 @@ export default class DoorFireManager {
             let fireOverlap = 20; // Solapamiento entre fuegos (ajustable)
             // console.log(doorHeight, doorWidth, isVertical);
 
-            if (isVertical) {
-                let segmentCount = Math.ceil(doorHeight / (fireHeight - fireOverlap));
+            if (!noFire) {
+                if (isVertical) {
+                    let segmentCount = Math.ceil(doorHeight / (fireHeight - fireOverlap));
 
-                for (let i = 0; i < segmentCount; i++) {
-                    let yPos = zone.y + (i * (fireHeight - fireOverlap));
-                    // console.log(yPos);
-                    this.createFire(
-                        zone.x + doorWidth / 2,
-                        yPos + fireHeight / 2,
-                        true
-                    );
-                }
-            } else {
-                let segmentCount = Math.ceil(doorWidth / (fireWidth - fireOverlap));
+                    for (let i = 0; i < segmentCount; i++) {
+                        let yPos = zone.y + (i * (fireHeight - fireOverlap));
+                        // console.log(yPos);
+                        this.createFire(
+                            zone.x + doorWidth / 2,
+                            yPos + fireHeight / 2,
+                            true
+                        );
+                    }
+                } else {
+                    let segmentCount = Math.ceil(doorWidth / (fireWidth - fireOverlap));
 
-                for (let i = 0; i < segmentCount; i++) {
-                    let xPos = zone.x + (i * (fireWidth - fireOverlap));
+                    for (let i = 0; i < segmentCount; i++) {
+                        let xPos = zone.x + (i * (fireWidth - fireOverlap));
 
-                    this.createFire(
-                        xPos + fireWidth / 2 - 8,
-                        zone.y + doorHeight / 2,
-                        false
-                    );
+                        this.createFire(
+                            xPos + fireWidth / 2 - 8,
+                            zone.y + doorHeight / 2,
+                            false
+                        );
+                    }
                 }
             }
 
