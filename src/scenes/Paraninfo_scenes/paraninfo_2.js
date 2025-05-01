@@ -47,9 +47,10 @@ export default class Paraninfo_2 extends SalaBase{
         const mapWidth = map.widthInPixels;
         const mapHeight = map.heightInPixels;
         const zoom = 1.8;
+        const boundX = -(screenWidth / zoom - mapWidth) / 2;
         
         this.physics.world.setBounds(0, 0, mapWidth, mapHeight);
-        this.cameras.main.setBounds(0, 0, mapWidth, mapHeight);
+        this.cameras.main.setBounds(boundX, 0, mapWidth, mapHeight);
 
         this.cameras.main.setZoom(zoom);
 

@@ -420,7 +420,12 @@ export default class Player extends SpriteBase {
             if (this.pantallazo) {
                 new FreezeBullet(this.scene, this.x, this.y, (this.doubleshoot ? dirX + desvio : dirX), (this.doubleshoot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y);
             } else {
-                new Bullet(this.scene, this.x, this.y, ((this.doubleshoot && !this.invertirDisparo) ? dirX + desvio : dirX), (this.doubleshoot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
+                console.log("valor: ", this.doubleshoot && !this.invertirDisparo);
+                if(this.doubleshoot && !this.invertirDisparo){
+                    new Bullet(this.scene, this.x, this.y, dirX + desvio, dirY + desvio, this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
+                }else{
+                    new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
+                }
             }
         }
         //new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
@@ -654,6 +659,7 @@ export default class Player extends SpriteBase {
         this.invertir(false);
         this.speed = 100;
         this.shootCooldown = 500;
+        this.originalShootCooldown = this.shootCooldown;
     }
 
     openDoor(key){
