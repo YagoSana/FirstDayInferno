@@ -191,7 +191,7 @@
                  "y":223.5
                 }, 
                 {
-                 "height":30.5,
+                 "height":27.1666666666667,
                  "id":2,
                  "name":"portal2",
                  "properties":[
@@ -213,7 +213,7 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":33,
+                 "width":30.6666666666667,
                  "x":303,
                  "y":0.5
                 }],
@@ -245,42 +245,6 @@
                  "width":0,
                  "x":320.090909090909,
                  "y":7
-                }, 
-                {
-                 "height":0,
-                 "id":14,
-                 "name":"vending_machine",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"tipo",
-                         "type":"string",
-                         "value":"item"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":144.136363636364,
-                 "y":35.8333333333333
-                }, 
-                {
-                 "height":0,
-                 "id":15,
-                 "name":"nerd",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"tipo",
-                         "type":"string",
-                         "value":"enemy"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":98,
-                 "y":91.5
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -289,7 +253,7 @@
          "y":0
         }],
  "nextlayerid":10,
- "nextobjectid":17,
+ "nextobjectid":18,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

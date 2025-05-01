@@ -1,8 +1,6 @@
 import SalaBase from "../salaBase";
 import Player from "../../gameObjects/characters/player";
 import Door from "../../gameObjects/items/door.js";
-import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
-import VendingMachine from "../../gameObjects/items/vendingMachine";
 
 export default class Paraninfo_3 extends SalaBase{
     constructor(key){
@@ -86,13 +84,9 @@ export default class Paraninfo_3 extends SalaBase{
         spritesLayer.objects.forEach(obj => {
             let type = obj.properties.find(p => p.name === "tipo")?.value;
             
-            if (type === "item") {
-                let vm = new VendingMachine(this, obj.x, obj.y);
-                if (this.status) { //sala completada y la maquina ya esta usada
-                    vm.disableMachine();
-                }
-            }else if(type === "door"){
-                new Door(this, obj.x, obj.y, 'secretDoor');
+            if(type === "door"){
+                let locked2 = this.playerStats.doorsLocked['secretDoor'];
+                new Door(this, obj.x, obj.y, 'secretDoor', locked2);
             }
         });
     }

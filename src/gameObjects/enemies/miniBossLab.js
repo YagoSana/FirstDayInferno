@@ -68,6 +68,10 @@ export default class MiniBoss extends RangedEnemy {
     super.hitBullet(enemy, bullet);
   }
 
+  preUpdate(t, dt){
+    super.preUpdate(t, dt);
+  }
+
   mypreUpdate(time, delta) {
     if (!this.active || this.destroyed) return;
 

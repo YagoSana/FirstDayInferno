@@ -66,13 +66,17 @@ export default class Tutorial_debug2 extends SalaBase{
             let type = obj.properties.find(p => p.name === "tipo")?.value;
             
             if (type === "fdi") {
-                new Door(this, obj.x, obj.y, 'fdiDoor');
+                let locked1 = this.playerStats.doorsLocked['fdiDoor'];
+                new Door(this, obj.x, obj.y, 'fdiDoor', locked1);
             }else if(type === "secret"){
-                new Door(this, obj.x, obj.y, 'secretDoor');
+                let locked2 = this.playerStats.doorsLocked['secretDoor'];
+                new Door(this, obj.x, obj.y, 'secretDoor', locked2);
             }else if(type === "med"){
-                new Door(this, obj.x, obj.y, 'medDoor');
+                let locked3 = this.playerStats.doorsLocked['medDoor'];
+                new Door(this, obj.x, obj.y, 'medDoor', locked3);
             }else if(type === "lock"){
-                new Door(this, obj.x, obj.y, 'candado');
+                let locked4 = this.playerStats.doorsLocked['candado'];
+                new Door(this, obj.x, obj.y, 'candado', locked4);
             }
         });
     }

@@ -27,6 +27,7 @@ export default class Player extends SpriteBase {
         this.equippedItem = playerData.equippedItem; // item que cambia apariencia
         this.equippedItemRow = playerData.equippedItemRow;
         this.doubleshoot = playerData.doubleshoot;
+        this.doorsLocked = playerData.doorsLocked;
         this.playerTint = 0xffffff;
         this.bulletType = 'paperbullet';
         if (this.equippedItem) {
@@ -655,6 +656,10 @@ export default class Player extends SpriteBase {
         this.shootCooldown = 500;
     }
 
+    openDoor(key){
+        this.doorsLocked[key] = false;
+    }
+
     changeSpeed(p) {
         if(this.speed < 169){
             this.speed *= p;
@@ -687,7 +692,7 @@ export default class Player extends SpriteBase {
 
     pickKey(p) {
         this.keys += p;
-        this.scene.game.events.emit('keyChanged', this.keys);//?
+        this.scene.game.events.emit('keyChanged', this.keys);
     }
 
     addCoin(amount) {
@@ -732,7 +737,8 @@ export default class Player extends SpriteBase {
             itemSprite: this.itemSprite,
             speed: this.speed,
             shootCooldown: this.shootCooldown,
-            doubleshoot: this.doubleshoot
+            doubleshoot: this.doubleshoot,
+            doorsLocked: this.doorsLocked
         };
     }
 

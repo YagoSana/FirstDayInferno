@@ -159,7 +159,8 @@ export default class medicina_5 extends SalaBase {
               console.log("Tipo de enemigo no reconocido:", obj.name);
           }
         } else if (type === "door"){
-          new Door(this, obj.x, obj.y, 'medDoor');
+          let locked3 = this.playerStats.doorsLocked['medDoor'];
+          new Door(this, obj.x, obj.y, 'medDoor', locked3);
         }
       });
     }
