@@ -21,6 +21,16 @@ export default class Item extends SpriteBase {
     this.startTime = this.scene.time.now;
     this.buyable=false;
     this.price=0;
+    this.sonidoCorazon = scene.sound.add('cogerCorazon');
+    this.sonidoComer = scene.sound.add('comer');
+    this.sonidoBeber = scene.sound.add('beber');
+    this.sonidoIsaac = scene.sound.add('isaac');
+    this.sonidoError = scene.sound.add('error');
+    this.sonidoBono = scene.sound.add('bono');
+    this.sonidoWindows = scene.sound.add('windows');
+    this.sonidoSmoke = scene.sound.add('smoke');
+    this.sonidoPipe = scene.sound.add('pipe');
+    this.sonidoCry = scene.sound.add('cry');
 
     this.setScale(DEFAULT_SIZE);
     this.setDepth(10);
@@ -33,45 +43,57 @@ export default class Item extends SpriteBase {
     // Acciones de los objetos
     this.actions = {
       "hamburguesa": (player) => {
+        this.sonidoComer.play();
         player.changeHealth(2, true);
         player.invertir(false);
       },
       "moneda": (player) => player.addCoin(1),
       "mini_tinto": (player) => {
+        this.sonidoBeber.play();
         player.changeHealth(4, true);
         player.changeSpeed(0.75);
         player.invertir(false);
       },
       "llave": (player) => player.pickKey(1),
       "bumbo": (player) => {
+        this.sonidoIsaac.play();
         player.beNormal();
         player.itemAppearance("bumbo", 0);
       },
       "pantallazo_azul": (player) => {
+        this.sonidoWindows.play();
         player.beNormal();
         player.itemAppearance("pantallazo_azul", 1); // cabeza de Isaac
         player.doFreeze(true);
       },
       "bono": (player) => {
+        this.sonidoBono.play();
         player.beNormal();
         player.changeSpeed(1.3);
         player.changeCooldown(-150);//TODO VER ESTO
       },
       "codigo": (player) => {
+        this.sonidoError.play();
         player.beNormal();
         player.doDoubleshoot(true);
       },
-      "corazon": (player) => player.changeHealth(1, false),
+      "corazon": (player) =>{
+        this.sonidoCorazon.play();
+        player.changeHealth(1, false);
+      },
       "maletin": (player) => {
+        this.sonidoPipe.play();
         player.changeSpeed(0.70);
         player.changeHealth(3, true);
         player.invertir(false);
       },
       "bolsa_sospechosa": (player) => {
+        this.sonidoSmoke.play();
         player.beNormal();
         player.itemAppearance("bolsa_sospechosa", 3);
       },
       "collar_macarrones": (player) => {
+        this.sonidoCry.play();
         player.beNormal();
         player.itemAppearance("collar_macarrones", 2);
       },
