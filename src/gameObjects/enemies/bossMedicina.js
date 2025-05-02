@@ -12,11 +12,11 @@ export default class BossMedicina extends Npc {
    */
 
   constructor(scene, x, y) {
-    super(scene, x, y, "bossMedicinaIdle"); // Llamada al constructor de la clase base (Enemy)
+    super(scene, x, y, "bossMedicina"); // Llamada al constructor de la clase base (Enemy)
     console.log("escena", scene);
     this.scene = scene;
     console.log("escena", this.scene);
-    this.type = "bossMedicinaIdle";
+    this.type = "bossMedicina";
     this.health = 50;
     this.speed = 50;
     this.stunCounter = 0;
