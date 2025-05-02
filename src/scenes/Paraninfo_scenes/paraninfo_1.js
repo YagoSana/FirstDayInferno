@@ -22,9 +22,11 @@ export default class Paraninfo_1 extends SalaBase {
         const layer4 = map.createLayer('sin colision arriba', [tileset1, tileset2, tileset3], 0, 0);
         const layer5 = map.createLayer('pared', [tileset1, tileset2, tileset3], 0, 0);
         const layer6 = map.createLayer('colision', [tileset1, tileset2, tileset3], 0, 0);
+        const layer7 = map.createLayer('colision enemigos', [tileset1, tileset2, tileset3], 0, 0);
 
         layer5.setCollisionByExclusion([-1], true);
         layer6.setCollisionByExclusion([-1], true);
+        layer7.setCollisionByExclusion([-1], true);
 
         layer3.setDepth(10);
 
@@ -42,6 +44,9 @@ export default class Paraninfo_1 extends SalaBase {
         this.physics.add.collider(this.enemyGroup, layer6);
         this.physics.add.collider(this.bulletGroup, layer6, this.onBulletCollision);
         this.physics.add.collider(this.enemyBulletGroup, layer6, this.onBulletCollision);
+
+        this.physics.add.collider(this.enemyGroup, layer7);
+        this.physics.add.collider(this.enemyBulletGroup, layer7, this.onBulletCollision);
 
         //Camaras
         const screenWidth = this.sys.game.config.width; // Ancho de tu pantalla

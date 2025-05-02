@@ -79,7 +79,7 @@ export default class Paraninfo_2 extends SalaBase{
             spritesLayer.objects.forEach(obj => {
                 let type = obj.properties.find(p => p.name === "tipo")?.value;
                 
-                if(obj.name === "enemy"){
+                if(obj.name === "cucaracha"){
                     this.numEnemies++
                     this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
                 }else if(obj.name == "phantom"){

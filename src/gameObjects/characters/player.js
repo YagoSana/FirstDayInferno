@@ -82,6 +82,7 @@ export default class Player extends SpriteBase {
         this.sonidoDisparo = scene.sound.add('disparaJugador');
         this.sonidoAndar = scene.sound.add('andarJugador');
         this.sonidoMoneda = scene.sound.add('cogerMoneda');
+        this.sonidoLlave = scene.sound.add('cogerLlave');
         this.stepTimer = 0;
         this.stepInterval = 500;
         this.originalShootCooldown = this.shootCooldown; // cooldown original
@@ -699,6 +700,7 @@ export default class Player extends SpriteBase {
     pickKey(p) {
         this.keys += p;
         this.scene.game.events.emit('keyChanged', this.keys);
+        this.sonidoLlave.play();
     }
 
     addCoin(amount) {
