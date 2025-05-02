@@ -78,6 +78,12 @@ export default class Bullet extends SpriteBase {
         });
     }
 
+    disappear(){
+        this.body.setVelocity(0, 0);
+        this.body.enable = false;
+        this.destroy();
+    }
+
     disparaOrbe(x, y){
         const velocidad = 200;
         this.scene.physics.moveTo(this, x, y, velocidad);

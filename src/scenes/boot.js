@@ -23,6 +23,7 @@ import nerdmove from "../../assets/sprites/nerd-move.png";
 import nerdshoot from "../../assets/sprites/nerd-shoot.png";
 import printer from "../../assets/sprites/printer_spritesheet.png";
 import skeleton from "../../assets/sprites/skeleton_spritesheet.png";
+import phantom from "../../assets/sprites/phantom.png";
 
 //CAMAERO
 import camarero from "../../assets/sprites/bartender_front_iddle.png"
@@ -360,6 +361,11 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
+    this.load.spritesheet('phantom', phantom, {
+      frameWidth: 22,
+      frameHeight: 22,
+    });
+
     this.load.spritesheet('printer', printer, {
       frameWidth: 32,
       frameHeight: 32,
@@ -652,6 +658,26 @@ export default class Boot extends Phaser.Scene {
       }),
       frameRate: 8,
       repeat: 0,
+    });
+
+    this.anims.create({
+      key: "phantom",
+      frames: this.anims.generateFrameNames("phantom", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "phantom_invisible_move",
+      frames: this.anims.generateFrameNames("phantom", {
+        start: 5,
+        end: 9,
+      }),
+      frameRate: 6,
+      repeat: -1,
     });
 
     this.anims.create({

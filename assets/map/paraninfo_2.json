@@ -228,7 +228,7 @@
                 {
                  "height":0,
                  "id":4,
-                 "name":"digEnemy",
+                 "name":"phantom",
                  "point":true,
                  "properties":[
                         {
@@ -250,7 +250,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":5,
+ "nextobjectid":6,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

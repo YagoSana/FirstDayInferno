@@ -1,6 +1,9 @@
 //Poner en el boot los paraninfos, y tambien tengo que poner en game las salas? mirar paraninfo_1 pq me faltaba algo mas creo, modificar el manager
 import SalaBase from "../salaBase";
 import Player from "../../gameObjects/characters/player";
+import Enemy from "../../gameObjects/enemies/enemy";
+import PhantomEnemy from "../../gameObjects/enemies/phantomEnemy";
+import RangedEnemy from "../../gameObjects/enemies/rangedEnemy";
 
 export default class Paraninfo_2 extends SalaBase{
     constructor(key){
@@ -71,6 +74,32 @@ export default class Paraninfo_2 extends SalaBase{
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
         
         //Capa sprites
-    
+        let spritesLayer = map.getObjectLayer("sprites");
+        if(!this.status){
+            spritesLayer.objects.forEach(obj => {
+                let type = obj.properties.find(p => p.name === "tipo")?.value;
+                
+                if(obj.name === "enemy"){
+                    this.numEnemies++
+                    this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+                }else if(obj.name == "phantom"){
+                    this.numEnemies++;
+                    this.enemyGroup.add(new PhantomEnemy(this, obj.x, obj.y, obj.name, true));
+                }
+            });
+        } else {
+            spritesLayer.objects.forEach(obj => {
+                let type = obj.properties.find(p => p.name === "tipo")?.value;
+                console.log(`Tipo del objeto de tiled ${type}`);
+
+                if (type === "asset") {
+                    let sprite = this.add.sprite(obj.x, obj.y, obj.name).setVisible(true).setDepth(3).play(obj.name);
+                    sprite.setOrigin(0, 0); // Ajusta según tu necesidad
+                }
+                else if (type === "enemy") {
+                    this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
+                }
+            });
+        }
     }
 }
