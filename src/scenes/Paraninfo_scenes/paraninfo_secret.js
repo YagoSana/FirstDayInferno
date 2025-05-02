@@ -1,5 +1,6 @@
 import SalaBase from "../salaBase";
 import Player from "../../gameObjects/characters/player";
+import VendingMachine from "../../gameObjects/items/vendingMachine";
 
 export default class Paraninfo_secret extends SalaBase{
     constructor(key){
@@ -68,5 +69,15 @@ export default class Paraninfo_secret extends SalaBase{
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
          
+        let spritesLayer = map.getObjectLayer("sprites");
+        spritesLayer.objects.forEach(obj => {
+            let type = obj.properties.find(p => p.name === "tipo")?.value;
+            if (type === "item") {
+                let vm = new VendingMachine(this, obj.x, obj.y);
+                if (this.status) { //sala completada y la maquina ya esta usada
+                    vm.disableMachine();
+                }
+            }
+        });
     }
 }

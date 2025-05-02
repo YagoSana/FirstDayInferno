@@ -17,7 +17,11 @@ export default class ParaninfoManager extends Phaser.Scene {
     }
 
     init(data){
-        this.playerStats = data.playerStats;
+        if (data && data.playerStats) {
+            this.playerStats = data.playerStats;
+        } else {
+            this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500, doubleshoot: false, doorsLocked: { 'secretDoor': true, 'fdiDoor': true, 'medDoor': true, 'candado': true } }; // Valores predeterminados
+        }
     }
 
     preload(){
@@ -40,6 +44,8 @@ export default class ParaninfoManager extends Phaser.Scene {
     }
 
     create(){
+        this.music = this.sound.add("sonidoParaninfo", { volume: 0.5, loop: true });
+        this.music.play();
 
         //Meter animacion nuevo enemigo
 

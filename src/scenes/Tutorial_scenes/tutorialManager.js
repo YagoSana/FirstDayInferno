@@ -28,7 +28,7 @@ export default class tutorialManager extends Phaser.Scene {
             this.playerStats = data.playerStats;
             this.isTutorial = false;
         } else {
-            this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500, doubleshoot: false }; // Valores predeterminados
+            this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500, doubleshoot: false, doorsLocked: { 'secretDoor': true, 'fdiDoor': true, 'medDoor': true, 'candado': true } }; // Valores predeterminados
             this.isTutorial = true;
         }
     }
@@ -76,6 +76,7 @@ export default class tutorialManager extends Phaser.Scene {
     }
 
     create() {
+        this.tutorialSonido = this.sound.add('tutorialSonido');
        
         let uiButtonsScene = this.scene.get('UIButtons');
         uiButtonsScene.updateConfig({

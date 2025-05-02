@@ -3,7 +3,7 @@ import Bullet from '../projectiles/bullet.js';
 import Npc from './npc.js';
 
 export default class RangedAreaEnemy extends Npc {
-  constructor(scene, x, y, type) {
+  constructor(scene, x, y, type, key = false) {
     super(scene, x, y, type);
     this.type = type;
     this.attackCooldown = 0;
@@ -12,6 +12,7 @@ export default class RangedAreaEnemy extends Npc {
     this.health = 4;
     this.speed = 90;
     this.stunCounter = 0;
+    this.dropKey = key;
   }
 
   preUpdate(t, dt){

@@ -4,6 +4,7 @@ import Enemy from "../../gameObjects/enemies/enemy.js";
 import RangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import Item from "../../gameObjects/items/item.js";
 import turretEnemy from "../../gameObjects/enemies/turretEnemy.js"
+import Door from "../../gameObjects/items/door.js";
 
 export default class FDI_2_1 extends SalaBase {
 
@@ -86,6 +87,15 @@ export default class FDI_2_1 extends SalaBase {
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+    
+        let spritesLayer = map.getObjectLayer("sprites");
+        spritesLayer.objects.forEach(obj => {
+            let type = obj.properties.find(p => p.name === "tipo")?.value;
+            if (type === "door") {
+                let locked = this.playerStats.doorsLocked['fdiDoor'];
+                new Door(this, obj.x, obj.y, 'fdiDoor', locked);
+            }
+        });
     }
 
     spawnProps(){

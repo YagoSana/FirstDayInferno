@@ -85,10 +85,10 @@ export default class FDI_3 extends SalaBase {
 
     spawnProps(){
  
-            this.enemyGroup.add(new RangedAreaEnemy(this, 160, 240, "nerd"));
-            this.numEnemies++;
-    
-        }
+        this.enemyGroup.add(new RangedAreaEnemy(this, 160, 240, "nerd", true));
+        this.numEnemies++;
+
+    }
     
     spawnBlood(){
         this.add.sprite(154, 210, "blood").setVisible(true).setDepth(3).setFrame(12);

@@ -12,7 +12,7 @@ export default class Npc extends SpriteBase {
    * @param {number} x Coordenada x
    * @param {number} y Coordenada y
    */
-  constructor(scene, x, y, spriteKey, anim, key = false) {
+  constructor(scene, x, y, spriteKey, key = false) {
     super(scene, x, y, spriteKey);
     this.scene = scene;
     this.spriteKey = spriteKey;
@@ -34,8 +34,6 @@ export default class Npc extends SpriteBase {
     this.sonidoDropMoneda = this.scene.sound.add("enemigoSueltaMoneda");
     this.dropKey = key;
     this.isFrozen = false;
-    this.anim = anim;
-    console.log("anim: ", anim);
   }
 
   hitPlayer(enemy, player) {

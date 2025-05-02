@@ -23,6 +23,7 @@ import nerdmove from "../../assets/sprites/nerd-move.png";
 import nerdshoot from "../../assets/sprites/nerd-shoot.png";
 import printer from "../../assets/sprites/printer_spritesheet.png";
 import skeleton from "../../assets/sprites/skeleton_spritesheet.png";
+import phantom from "../../assets/sprites/phantom.png";
 
 //CAMAERO
 import camarero from "../../assets/sprites/bartender_front_iddle.png"
@@ -45,6 +46,8 @@ import spark from "../../assets/sprites/spark.png";
 //ITEMS ------------------------------------------------------
 import items from "../../assets/sprites/items_spritesheet.png";
 import doors from "../../assets/sprites/doors_spritesheet.png";
+import secretDoor from "../../assets/sprites/secretDoor_spritesheet.png";
+import lock from "../../assets/sprites/lock.png";
 import breakable_table from "../../assets/sprites/breakable_table.png";
 import breakable_chair from "../../assets/sprites/breakable_chair.png";
 import toilet from "../../assets/sprites/toilet.png"
@@ -71,6 +74,7 @@ import explode from '../../assets/music/explode.wav';
 import musicaGameOver from '../../assets/music/musicaGameOver.ogg';
 import tutorialSonido from '../../assets/music/tutorialSonido.ogg';
 import sonidoMaquina from '../../assets/music/sonidoMaquina.wav';
+import sonidoParaninfo from '../../assets/music/paraninfo.mp3';
 //GUI ------------------------------------------------------
 import mainMenu from "../../assets/sprites/mainmenu.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
@@ -131,6 +135,7 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('musicaGameOver', musicaGameOver);
     this.load.audio('tutorialSonido', tutorialSonido);
     this.load.audio('sonidoMaquina', sonidoMaquina);
+    this.load.audio('sonidoParaninfo', sonidoParaninfo);
     //AUDIO
     this.loadFont('monogram', monogram);
     this.load.image('background', Background);
@@ -258,6 +263,16 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
+    this.load.spritesheet('secretDoor', secretDoor,{
+      frameWidth: 32,
+      frameHeight: 39,
+    });
+
+    this.load.spritesheet('lock', lock,{
+      frameWidth: 16,
+      frameHeigth: 16,
+    })
+
     this.load.spritesheet('breakable-table', breakable_table, {
       frameWidth: 112,
       frameHeight: 25,
@@ -362,6 +377,11 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('skeleton', skeleton, {
       frameWidth: 32,
       frameHeight: 32,
+    });
+
+    this.load.spritesheet('phantom', phantom, {
+      frameWidth: 22,
+      frameHeight: 22,
     });
 
     this.load.spritesheet('printer', printer, {
@@ -669,6 +689,26 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.anims.create({
+      key: "phantom",
+      frames: this.anims.generateFrameNames("phantom", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "phantom_invisible_move",
+      frames: this.anims.generateFrameNames("phantom", {
+        start: 5,
+        end: 9,
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+
+    this.anims.create({
       key: "enemydeath",
       frames: this.anims.generateFrameNames("enemydeath", {
         start: 0,
@@ -865,6 +905,14 @@ export default class Boot extends Phaser.Scene {
       repeat: 1,
     });
 
+    
+    this.anims.create({
+      key: "lock-open",
+      frames: this.anims.generateFrameNames("lock", { start: 0, end: 7 }),
+      frameRate: 8,//ver framerate
+      repeat: 0,
+    });
+
     this.anims.create({
       key: "fdiDoor-open",
       frames: this.anims.generateFrameNames("doors", { start: 0, end: 18 }),
@@ -875,6 +923,13 @@ export default class Boot extends Phaser.Scene {
     this.anims.create({
       key: "medDoor-open",
       frames: this.anims.generateFrameNames("doors", { start: 20, end: 37 }),
+      frameRate: 12,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "secretDoor-open",
+      frames: this.anims.generateFrameNames("secretDoor", { start: 0, end: 7 }),
       frameRate: 12,
       repeat: 0,
     });

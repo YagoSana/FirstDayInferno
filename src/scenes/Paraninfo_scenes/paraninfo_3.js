@@ -1,5 +1,6 @@
 import SalaBase from "../salaBase";
 import Player from "../../gameObjects/characters/player";
+import Door from "../../gameObjects/items/door.js";
 
 export default class Paraninfo_3 extends SalaBase{
     constructor(key){
@@ -8,6 +9,7 @@ export default class Paraninfo_3 extends SalaBase{
 
     create(){
         super.create('paraninfo_3');
+
 
         const map = this.make.tilemap({ key: 'paraninfo_3' });
 
@@ -78,6 +80,15 @@ export default class Paraninfo_3 extends SalaBase{
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
 
-        //capa sprites, puerta, vendin machine
+        //capa sprites, puerta, vending machine
+        let spritesLayer = map.getObjectLayer("sprites");
+        spritesLayer.objects.forEach(obj => {
+            let type = obj.properties.find(p => p.name === "tipo")?.value;
+            
+            if(type === "door"){
+                let locked2 = this.playerStats.doorsLocked['secretDoor'];
+                new Door(this, obj.x, obj.y, 'secretDoor', locked2);
+            }
+        });
     }
 }

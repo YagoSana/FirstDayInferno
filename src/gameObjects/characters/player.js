@@ -27,6 +27,7 @@ export default class Player extends SpriteBase {
         this.equippedItem = playerData.equippedItem; // item que cambia apariencia
         this.equippedItemRow = playerData.equippedItemRow;
         this.doubleshoot = playerData.doubleshoot;
+        this.doorsLocked = playerData.doorsLocked;
         this.playerTint = 0xffffff;
         this.bulletType = 'paperbullet';
         if (this.equippedItem) {
@@ -419,7 +420,12 @@ export default class Player extends SpriteBase {
             if (this.pantallazo) {
                 new FreezeBullet(this.scene, this.x, this.y, (this.doubleshoot ? dirX + desvio : dirX), (this.doubleshoot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y);
             } else {
-                new Bullet(this.scene, this.x, this.y, ((this.doubleshoot && !this.invertirDisparo) ? dirX + desvio : dirX), (this.doubleshoot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
+                console.log("valor: ", this.doubleshoot && !this.invertirDisparo);
+                if(this.doubleshoot && !this.invertirDisparo){
+                    new Bullet(this.scene, this.x, this.y, dirX + desvio, dirY + desvio, this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
+                }else{
+                    new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
+                }
             }
         }
         //new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, "paperbullet");
@@ -648,12 +654,16 @@ export default class Player extends SpriteBase {
         console.log("this.equipedItem", this.equippedItem);
         console.log("this.itemSprite", this.itemSprite);
         this.bulletType = 'paperbullet';
-        //this.setTintFill(this.playerTint);
         this.doDoubleshoot(false);
         this.doFreeze(false);
         this.invertir(false);
         this.speed = 100;
         this.shootCooldown = 500;
+        this.originalShootCooldown = this.shootCooldown;
+    }
+
+    openDoor(key){
+        this.doorsLocked[key] = false;
     }
 
     changeSpeed(p) {
@@ -665,6 +675,7 @@ export default class Player extends SpriteBase {
     changeCooldown(p) {
         if(this.shootCooldown > 350){
             this.shootCooldown += p; // En milisegundos
+            this.originalShootCooldown = this.shootCooldown;
         }
     }
 
@@ -687,7 +698,7 @@ export default class Player extends SpriteBase {
 
     pickKey(p) {
         this.keys += p;
-        this.scene.game.events.emit('keyChanged', this.keys);//?
+        this.scene.game.events.emit('keyChanged', this.keys);
     }
 
     addCoin(amount) {
@@ -714,6 +725,7 @@ export default class Player extends SpriteBase {
 
     spendKey(p) {
         this.keys -= p;
+        this.scene.game.events.emit('keyChanged', this.keys);
     }
 
     slowDown() {
@@ -731,7 +743,8 @@ export default class Player extends SpriteBase {
             itemSprite: this.itemSprite,
             speed: this.speed,
             shootCooldown: this.shootCooldown,
-            doubleshoot: this.doubleshoot
+            doubleshoot: this.doubleshoot,
+            doorsLocked: this.doorsLocked
         };
     }
 
