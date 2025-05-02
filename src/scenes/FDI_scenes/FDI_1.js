@@ -2,7 +2,7 @@ import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
 import Item from "../../gameObjects/items/item.js";
-
+import DialogueNPC from "../../gameObjects/items/DialogueNPC.js";
 
 export default class FDI_1 extends SalaBase {
 
@@ -10,14 +10,14 @@ export default class FDI_1 extends SalaBase {
         super('FDI_1');
     }
 
-    create(){
+    create() {
         super.create('FDI_1');
 
         const map = this.make.tilemap({ key: 'FDI_1_TL' }); // Cargamos el mapa
         //Cargar tilesets
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
-        const tileset3= map.addTilesetImage('tileset_nuevo','Decorado' );
+        const tileset3 = map.addTilesetImage('tileset_nuevo', 'Decorado');
         const tileset4 = map.addTilesetImage("TX Tileset Grass", "Grass");
 
         //Configurar capas
@@ -25,8 +25,8 @@ export default class FDI_1 extends SalaBase {
         const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
         const layer3 = map.createLayer('objetos', [tileset1, tileset2, tileset3], 0, 0);
         const layer4 = map.createLayer('sin colision', [tileset1, tileset2, tileset3], 0, 0);
-        const layer5 = map.createLayer('techo', [tileset1, tileset2], 0, 0);     
-        
+        const layer5 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
+
         layer4.setDepth(10);
 
         layer2.setCollisionByExclusion([-1], true);
@@ -57,15 +57,15 @@ export default class FDI_1 extends SalaBase {
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setZoom(1.8);
 
-        if(!this.status){
+        if (!this.status) {
             this.spawnProps();
         }
-        else{
+        else {
             this.spawnBlood();
         }
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
-        
+
         transitionLayer.objects.forEach(obj => {
             const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
@@ -74,18 +74,33 @@ export default class FDI_1 extends SalaBase {
             zone.prev = "FDI_1";
             zone.open = false;
         });
-        
+
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
-        
+        const frasesFilosoficas = [
+            "El tiempo es relativo, como la puntualidad del profesor.",
+            "Pienso, luego me da ansiedad.",
+            "¿Y si esta cerveza no existe?",
+            "El verdadero examen es el que nos hace la vida.",
+            "No suspendo, exploro caminos alternativos."
+        ];
+
+        // Crear el NPC tipo hippie
+        this.hippieNPC = new DialogueNPC(this, 180, 220, 'hippie', 'Estudiante', frasesFilosoficas);
+
+        // Detección de impacto entre balas y el NPC
+        this.physics.add.overlap(this.bulletGroup, this.hippieNPC, (bullet, npc) => {
+            npc.hitBullet(npc, bullet);
+        });
+
     }
 
-    spawnProps(){
-        
-    }
-      
+    spawnProps() {
 
-    spawnBlood(){
+    }
+
+
+    spawnBlood() {
         this.add.sprite(154, 210, "blood").setVisible(true).setDepth(3).setFrame(12);
     }
 }

@@ -2,7 +2,7 @@ import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
 import Item from "../../gameObjects/items/item.js";
-
+import BreakableObject from "../../gameObjects/items/BreakableObject.js";
 
 export default class FDI_2_3 extends SalaBase {
 
@@ -10,13 +10,13 @@ export default class FDI_2_3 extends SalaBase {
         super('FDI_2_3');
     }
 
-    create(){
+    create() {
         super.create('FDI_2_3');
         const map = this.make.tilemap({ key: 'FDI_2_3_TL' }); // Cargamos el mapa
         //Cargar tilesets
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
-        const tileset3= map.addTilesetImage('tileset_nuevo','Decorado' );
+        const tileset3 = map.addTilesetImage('tileset_nuevo', 'Decorado');
 
         //Configurar capas
         const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
@@ -24,11 +24,19 @@ export default class FDI_2_3 extends SalaBase {
         const layer3 = map.createLayer('sin colision', [tileset1, tileset2, tileset3], 0, 0);
         const layer4 = map.createLayer('objetos', [tileset1, tileset2, tileset3], 0, 0);
         const layer6 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
-        
-       
-        
+
+        //vater 
+        const toiletLayer = map.getObjectLayer('toilet');
+        if (toiletLayer) {
+            toiletLayer.objects.forEach(obj => {
+                const toiletObject = obj.properties?.find(p => p.name === 'toilet')?.value;
+                const toiletEntity = new BreakableObject(this, obj.x, obj.y, 32, 32, 'toilet');
+            });
+        }
+
+
         layer3.setDepth(0);
-    
+
         layer2.setCollisionByExclusion([-1], true);
         layer4.setCollisionByExclusion([-1], true);
         layer6.setCollisionByExclusion([-1], true);
@@ -60,16 +68,16 @@ export default class FDI_2_3 extends SalaBase {
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setZoom(1.8);
 
-        if(!this.status){
+        if (!this.status) {
             this.spawnProps();
         }
-        else{
+        else {
             this.spawBlood();
         }
-        
+
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
-        
+
         transitionLayer.objects.forEach(obj => {
             const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
@@ -83,11 +91,11 @@ export default class FDI_2_3 extends SalaBase {
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
     }
 
-    spawnProps(){
-         //this.numEnemies=0
-        }
-    
-    spawBlood(){
+    spawnProps() {
+        //this.numEnemies=0
+    }
+
+    spawBlood() {
         this.add.sprite(154, 210, "blood").setVisible(true).setDepth(3).setFrame(12);
     }
 }

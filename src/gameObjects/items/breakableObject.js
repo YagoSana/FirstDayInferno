@@ -8,7 +8,7 @@ export default class BreakableObject extends SpriteBase {
   constructor(scene, x, y, weight, height, sprite) {
     super(scene, x, y, sprite);
 
-    this.maxBulletHits = 1; // Disparos necesarios para destruirse
+    this.maxBulletHits = 2; // Disparos necesarios para destruirse
     this.bulletHits = 0;
     this.isBroken = false;
     scene.add.existing(this);
@@ -25,6 +25,8 @@ export default class BreakableObject extends SpriteBase {
       color: '#ffffff'
     }).setOrigin(0.5);
 
+    this.crackGraphics = scene.add.graphics().setDepth(1).setVisible(false);
+
 
   }
 
@@ -37,7 +39,9 @@ export default class BreakableObject extends SpriteBase {
     this.flashEffect();
     // Incrementar contador
     this.bulletHits++;
-   
+    if(this.bulletHits===1){
+      this.setTint(0xffcc00); // naranja: casi roto
+    }
     // Verificar si alcanzó el límite
     if (this.bulletHits >= this.maxBulletHits) {
       this.bulletHits = 0;
@@ -47,22 +51,22 @@ export default class BreakableObject extends SpriteBase {
 
   flashEffect() {
     if (this.isOperational) {
-        // Guardar el tintado original si es la primera vez
-        if (this.originalTint === undefined) {
-            this.originalTint = this.tint;
-        }
+      // Guardar el tintado original si es la primera vez
+      if (this.originalTint === undefined) {
+        this.originalTint = this.tint;
+      }
 
-        // Flash blanco
-        this.setTint(0x737373);
-        // console.log('flash effect');
-        // Volver al color original después de 100ms
-        this.scene.time.delayedCall(300, () => {
-            if (this.isOperational) { // Verificar si el objeto existe
-                this.setTint(this.originalTint);
-            }
-        });
+      // Flash blanco
+      this.setTint(0x737373);
+      // console.log('flash effect');
+      // Volver al color original después de 100ms
+      this.scene.time.delayedCall(300, () => {
+        if (this.isOperational) { // Verificar si el objeto existe
+          this.setTint(this.originalTint);
+        }
+      });
     }
-}
+  }
   preUpdate(time, delta) {
     super.preUpdate(time, delta);
     // Aquí no hay movimiento, solo mantenemos el objeto estático.

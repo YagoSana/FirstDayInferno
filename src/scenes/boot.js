@@ -30,6 +30,9 @@ import camarero from "../../assets/sprites/bartender_front_iddle.png"
 import borja from "../../assets/sprites/borja.png"
 import borjaPortrait from "../../assets/sprites/borja_frontal_32x32.png";
 import borjaMalvado from "../../assets/sprites/borja_malvado.png"
+//NPCS 
+import hippie from "../../assets/sprites/sprite_hippie_32x32.png"
+import hippiePortrait from "../../assets/sprites/hippie.png"
 //EXTRAS ------------------------------------------------------
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
 import puff from "../../assets/sprites/puff.png";
@@ -44,6 +47,7 @@ import items from "../../assets/sprites/items_spritesheet.png";
 import doors from "../../assets/sprites/doors_spritesheet.png";
 import breakable_table from "../../assets/sprites/breakable_table.png";
 import breakable_chair from "../../assets/sprites/breakable_chair.png";
+import toilet from "../../assets/sprites/toilet.png"
 
 //JUGADOR CON ITEMS ----------------------------------------------
 import player_items from "../../assets/sprites/player_item.png";
@@ -180,6 +184,16 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 64,
     });
 
+    this.load.spritesheet("hippie", hippie, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet("hippie-face", hippiePortrait,{
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
     this.load.spritesheet("borja", borja, {
       frameWidth: 32,
       frameHeight: 32,
@@ -198,6 +212,10 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("server", server, {
       frameWidth: 32,
       frameHeight: 64,
+    });
+    this.load.spritesheet("toilet", toilet, {
+      frameWidth: 32,
+      frameHeight: 32,
     });
 
     this.load.spritesheet("bartenderImg", bartenderImg, {
@@ -393,6 +411,16 @@ export default class Boot extends Phaser.Scene {
       }),
       frameRate: 8,
       repeat: 0,
+    });
+
+    this.anims.create({
+      key: "hippie",
+      frames: this.anims.generateFrameNames("hippie", {
+        start: 0,
+        end: 0,
+      }),
+      frameRate: 8,
+      repeat: 1,
     });
 
     this.anims.create({

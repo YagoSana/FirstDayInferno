@@ -63,7 +63,7 @@ export default class FDI_4 extends SalaBase {
         this.physics.add.collider(this.enemyGroup, layer6);
         this.physics.add.collider(this.bulletGroup, layer6, this.onBulletCollision);
         this.physics.add.collider(this.enemyBulletGroup, layer6, this.onBulletCollision);
-
+        
         //Camaras
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.setBounds(0, -30, map.widthInPixels, map.heightInPixels);
