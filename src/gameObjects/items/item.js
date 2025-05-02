@@ -208,7 +208,9 @@ export default class Item extends SpriteBase {
       ease: 'Sine.easeInOut'
     });
   }
-
+  setItemHitBox(width, height){
+    this.body.setSize(width, height); // Ajusta el tamaño de la hitbox
+  }
   showPickupHint(item, player) {
     player.nearItem = this; // Guardamos el objeto cerca
 

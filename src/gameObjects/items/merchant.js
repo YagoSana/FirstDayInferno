@@ -66,7 +66,6 @@ export default class Merchant extends SpriteBase {
         this.modoHabla = false;
         this.dialogueActivo = false; // << NUEVO: Estado del diálogo activo
 
-        // Nueva lógica del input para mostrar/ocultar diálogo
         this.scene.input.keyboard.on('keydown-E', () => {
             if (!this.isPlayerInRange()) return;
 

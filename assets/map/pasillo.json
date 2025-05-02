@@ -134,7 +134,7 @@
          "name":"transiciones",
          "objects":[
                 {
-                 "height":43.3333333333333,
+                 "height":47.9583333333333,
                  "id":10,
                  "name":"",
                  "properties":[
@@ -156,12 +156,12 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":18,
-                 "x":1.33333333333333,
-                 "y":81.3333333333333
+                 "width":15.375,
+                 "x":0.0833333333333299,
+                 "y":79.9583333333333
                 }, 
                 {
-                 "height":30.6666666666667,
+                 "height":15.9549209005427,
                  "id":13,
                  "name":"",
                  "properties":[
@@ -183,12 +183,12 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":32.6666666666666,
-                 "x":367.333333333333,
-                 "y":16
+                 "width":32.1150362318841,
+                 "x":367.761363636364,
+                 "y":15.8246808607985
                 }, 
                 {
-                 "height":31.3333333333334,
+                 "height":15.9774659863946,
                  "id":16,
                  "name":"",
                  "properties":[
@@ -210,12 +210,12 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":32.6666666666667,
-                 "x":79.3333333333337,
-                 "y":15.3333333333333
+                 "width":32.1666666666667,
+                 "x":80.0151515151519,
+                 "y":16.115980117274
                 }, 
                 {
-                 "height":31.3333333333333,
+                 "height":15.3333333333333,
                  "id":17,
                  "name":"",
                  "properties":[
@@ -237,9 +237,9 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":30.6666666666666,
-                 "x":688,
-                 "y":15.3333333333333
+                 "width":31.770390070922,
+                 "x":687.635638297872,
+                 "y":15.9583333333333
                 }],
          "opacity":1,
          "properties":[
@@ -302,7 +302,7 @@
         {
          "columns":17,
          "firstgid":1,
-         "image":"Room_Builder_free_16x16.png",
+         "image":"..\/TILESETS\/Room_Builder_free_16x16.png",
          "imageheight":368,
          "imagewidth":272,
          "margin":0,
@@ -315,7 +315,7 @@
         {
          "columns":16,
          "firstgid":392,
-         "image":"Interiors_free_16x16.png",
+         "image":"..\/TILESETS\/Interiors_free_16x16.png",
          "imageheight":1424,
          "imagewidth":256,
          "margin":0,
@@ -328,7 +328,7 @@
         {
          "columns":2,
          "firstgid":1816,
-         "image":"tileset_nuevo.png",
+         "image":"..\/TILESETS\/tileset_nuevo.png",
          "imageheight":400,
          "imagewidth":32,
          "margin":0,

@@ -25,15 +25,18 @@ import printer from "../../assets/sprites/printer_spritesheet.png";
 import skeleton from "../../assets/sprites/skeleton_spritesheet.png";
 import phantom from "../../assets/sprites/phantom.png";
 
-//CAMAERO
+//CAMARERO
 import camarero from "../../assets/sprites/bartender_front_iddle.png"
+
 //PROFESOR
 import borja from "../../assets/sprites/borja.png"
 import borjaPortrait from "../../assets/sprites/borja_frontal_32x32.png";
 import borjaMalvado from "../../assets/sprites/borja_malvado.png"
+
 //NPCS 
 import hippie from "../../assets/sprites/sprite_hippie_32x32.png"
 import hippiePortrait from "../../assets/sprites/hippie.png"
+
 //EXTRAS ------------------------------------------------------
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
 import puff from "../../assets/sprites/puff.png";
@@ -75,6 +78,8 @@ import musicaGameOver from '../../assets/music/musicaGameOver.ogg';
 import tutorialSonido from '../../assets/music/tutorialSonido.ogg';
 import sonidoMaquina from '../../assets/music/sonidoMaquina.wav';
 import sonidoParaninfo from '../../assets/music/paraninfo.mp3';
+import flush from '../../assets/sounds/flush.mp3';
+
 //GUI ------------------------------------------------------
 import mainMenu from "../../assets/sprites/mainmenu.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
@@ -136,6 +141,7 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('tutorialSonido', tutorialSonido);
     this.load.audio('sonidoMaquina', sonidoMaquina);
     this.load.audio('sonidoParaninfo', sonidoParaninfo);
+    this.load.audio('flush', flush);
     //AUDIO
     this.loadFont('monogram', monogram);
     this.load.image('background', Background);

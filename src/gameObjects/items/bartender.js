@@ -3,22 +3,24 @@ import SpriteBase from '../spriteBase';
 import Item from './item';
 import DialogueBox from '../../scenes/conversation.js';
 
-export default class bartender extends SpriteBase {
+export default class Bartender extends SpriteBase {
     constructor(scene, x, y) {
-        super(scene, x, y, 'merchant'); // Usa el sprite que quieras
+        super(scene, x, y, 'merchant');
+
+        this.scene = scene;
         this.play('idle-front-bartender');
         this.body.setImmovable(true);
         this.body.allowGravity = false;
         this.setScale(1.2);
-        this.originalScaleX = 1.2;
-        this.originalScaleY = 1.2;
 
         this.interactionRange = 60;
         this.itemsSpawned = false;
+        this.dialogueActivo = false;
+        this.playerIsNear = false;
 
         this.scene.physics.add.collider(this, scene.player);
 
-        // Para diálogo opcional
+        // Caja de diálogo estilo DialogueNPC
         this.dialogueBox = new DialogueBox(this.scene, this.x + 100, this.y + 200, 300, 'bartenderImg', 'Sánchez');
 
         this.frases = [
@@ -27,32 +29,64 @@ export default class bartender extends SpriteBase {
             "No se aceptan devoluciones, figura."
         ];
 
+        // Icono de tecla E
+        this.eKeyIcon = scene.add.sprite(this.x, this.y - 20, 'key_E_action')
+            .setVisible(false)
+            .setDepth(20)
+            .play('key_E_action');
+
+        // Área de interacción invisible
+        this.interactionArea = scene.add.circle(this.x, this.y, this.interactionRange, 0x000000, 0);
+        scene.physics.add.existing(this.interactionArea);
+        this.interactionArea.body.setAllowGravity(false);
+        this.interactionArea.body.setImmovable(true);
+
+        // Mostrar ícono E cuando el jugador está cerca
+        this.scene.physics.add.overlap(this.interactionArea, this.scene.player, () => {
+            if (!this.dialogueActivo) {
+                this.eKeyIcon.setPosition(this.x, this.y - 30).setVisible(true);
+            }
+        });
+
+        // Ocultar ícono si se aleja
+        this.scene.events.on('update', () => {
+            if (!this.isPlayerInRange() || this.dialogueActivo) {
+                this.eKeyIcon.setVisible(false);
+            }
+        });
+
+        // Escucha la tecla E
         this.scene.input.keyboard.on('keydown-E', () => {
             if (!this.isPlayerInRange()) return;
 
             if (this.dialogueActivo) {
-                // Si ya hay diálogo abierto, cerrarlo
                 this.dialogueBox.hide();
                 this.dialogueActivo = false;
                 return;
             }
 
-            // Si no hay diálogo activo, abrimos uno nuevo
             if (!this.itemsSpawned) {
                 this.spawnItems();
                 this.itemsSpawned = true;
-                this.dialogueBox.show("Mira a ver si te interesa algo...");
-                this.dialogueActivo = true;
+                this.mostrarDialogo("Mira a ver si te interesa algo...");
             } else {
                 const frase = Phaser.Utils.Array.GetRandom(this.frases);
-                this.dialogueBox.show(frase);
-                this.dialogueActivo = true;
+                this.mostrarDialogo(frase);
             }
         }, this);
     }
 
+    preUpdate() {
+        this.playerIsNear = this.isPlayerInRange();
+    }
+
     isPlayerInRange() {
         return Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <= this.interactionRange;
+    }
+
+    mostrarDialogo(frase) {
+        this.dialogueBox.show(frase);
+        this.dialogueActivo = true;
     }
 
     spawnItems() {
@@ -65,19 +99,19 @@ export default class bartender extends SpriteBase {
         this.spawnedItems = [];
 
         items.forEach((itemData, index) => {
-            const offsetX = (index - 1) * 80; // distribuye a izquierda-centro-derecha
+            const offsetX = (index - 1) * 80;
             const itemX = this.x + offsetX;
             const itemY = this.y + 100;
 
             const item = new ShopItem(this.scene, itemX, itemY, itemData.name, itemData.price);
-            item.setBuyable(itemData.price)
+            item.setItemHitBox(30, 30);
+            item.setBuyable(itemData.price);
             item.setLifetime(Infinity);
             this.spawnedItems.push(item);
         });
     }
 }
 
-// NUEVA CLASE para objetos de la tienda
 class ShopItem extends Item {
     constructor(scene, x, y, texture, price) {
         super(scene, x, y, texture);
@@ -85,7 +119,6 @@ class ShopItem extends Item {
         this.price = price;
         this.scene = scene;
 
-        // Mostrar el precio encima del objeto
         this.priceText = scene.add.text(this.x, this.y - 30, `${price} lereles`, {
             fontSize: '16px',
             fill: '#ffff00',
