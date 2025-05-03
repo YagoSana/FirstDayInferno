@@ -83,6 +83,16 @@
                  "name":"",
                  "properties":[
                         {
+                         "name":"bossKey",
+                         "type":"string",
+                         "value":"bossMedicina"
+                        }, 
+                        {
+                         "name":"isBossTransition",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"spawnRoom",
                          "type":"string",
                          "value":"medicina_6"

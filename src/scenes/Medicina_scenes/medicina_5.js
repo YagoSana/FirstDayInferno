@@ -58,6 +58,9 @@ export default class medicina_5 extends SalaBase {
         zone.spawnX = obj.properties.find((p) => p.name === "spawnX")?.value;
         zone.spawnY = obj.properties.find((p) => p.name === "spawnY")?.value;
         zone.prev = "medicina_5";
+        //solo para la sala del boss
+        zone.isBossTransition = obj.properties.find((p) => p.name === "isBossTransition")?.value || false;
+        zone.bossKey = obj.properties.find((p) => p.name === "bossKey")?.value || "bossMedicina";
       });
     }
 
@@ -179,26 +182,32 @@ export default class medicina_5 extends SalaBase {
 
   cambiarSala(player, zone) {
     if (!zone.spawnRoom || !this.player.canChangeRoom || !zone.open) return;
-
+    
     this.player.canChangeRoom = false;
     this.manager.guardarPlayerStats(this.player.getStats());
-
-    // Detenemos el fadeOut anterior si existe
+    
+    this.time.delayedCall(1000, () => {
+        this.player.canChangeRoom = true;
+    });
+    
     this.cameras.main.fadeOut(500, 0, 0, 0);
     this.cameras.main.once('camerafadeoutcomplete', () => {
-      // IMPORTANTE: Detenemos medicina_5 antes de ir a la VS
-      this.scene.stop();
-
-      // Iniciamos la VS screen
-      this.scene.start('VSScreen', {
-        bossKey: 'bossMedicina',
-        nextScene: 'medicina_6',
-        playerStats: this.player.getStats(),
-        // Pasamos la zona para que la VS screen pueda continuar
-        transitionData: zone
-      });
+        if (zone.isBossTransition) {
+            // Si es transición al jefe, mostramos VS screen
+            this.scene.stop();
+            this.scene.start('VSScreen', {
+                bossKey: zone.bossKey,
+                nextScene: zone.spawnRoom, // medicina_6
+                playerStats: this.player.getStats(),
+                transitionData: zone
+            });
+        } else {
+            // Transición normal, vamos directamente a la otra sala
+            this.scene.stop();
+            this.manager.cambiarSala(zone);
+        }
     });
-  }
+}
 
   updateLight() {
     this.light.x = this.player.x;
