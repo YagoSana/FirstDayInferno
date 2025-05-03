@@ -209,6 +209,9 @@ export default class medicina_5 extends SalaBase {
             this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
           }
           else this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
+        } else if (type === "door"){
+          let locked3 = this.playerStats.doorsLocked['medDoor'];
+          new Door(this, obj.x, obj.y, 'medDoor', locked3);
         }
       });
     }
