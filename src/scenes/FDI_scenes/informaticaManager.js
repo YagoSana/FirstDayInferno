@@ -22,6 +22,7 @@ import FDI_Boss_2 from "../../../assets/map/FDI_Boss_2.json";
 import img_interior from "../../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../../assets/map/Room_Builder_free_16x16.png";
 import img_FDI from "../../../assets/map/tileset_nuevo.png";
+import img_paraninfo from "../../../assets/map/paraninfo.png";
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -97,6 +98,7 @@ export default class informaticaManager extends Phaser.Scene {
     this.load.image("Interior", img_interior);
     this.load.image("Muebles", img_muebles);
     this.load.image("Decorado", img_FDI);
+    this.load.image("Paraninfo", img_paraninfo);
 
     //TODO AÑADIR TILEDJSON (MAPA)
     this.load.tilemapTiledJSON("FDI_2_TL", FDI_2_TL);
@@ -118,9 +120,9 @@ export default class informaticaManager extends Phaser.Scene {
    */
   create() {
     this.mapStatus = new Map();
-    this.mapStatus.set("FDI_4", false);
+    this.mapStatus.set("FDI_Boss_2", false);
   // this.scene.start("FDI_1", {x: 358, y:170, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("FDI_1")});
-    this.scene.start("FDI_4", {x: 100, y:100, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("FDI_4")});    
+    this.scene.start("FDI_Boss_2", {x: 100, y:100, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("FDI_4")});    
   } //358 170
 
   cambiarSala(zone){
