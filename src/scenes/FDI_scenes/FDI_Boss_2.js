@@ -1,5 +1,6 @@
 import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
+import BossFDI from "../../gameObjects/enemies/bossFDI";
 
 export default class FDI_Boss_2 extends SalaBase{
     constructor(key){
@@ -41,5 +42,7 @@ export default class FDI_Boss_2 extends SalaBase{
 
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
+        this.enemyGroup.add(new BossFDI(this, 300, 100, 2 ));
+        this.numEnemies++;
     }
 }
