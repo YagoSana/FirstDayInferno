@@ -17,6 +17,7 @@ import FDI_6_TL from "../../../assets/map/biblioteca.json";
 import FDI_2_1_TL from "../../../assets/map/pasillo.json";
 import FDI_2_2_TL from "../../../assets/map/laboratorio.json";
 import FDI_2_3_TL from "../../../assets/map/baño.json";
+import FDI_Boss_2 from "../../../assets/map/FDI_Boss_2.json";
 
 import img_interior from "../../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../../assets/map/Room_Builder_free_16x16.png";
@@ -107,6 +108,7 @@ export default class informaticaManager extends Phaser.Scene {
     this.load.tilemapTiledJSON("FDI_2_1_TL", FDI_2_1_TL);
     this.load.tilemapTiledJSON("FDI_2_2_TL", FDI_2_2_TL);
     this.load.tilemapTiledJSON("FDI_2_3_TL", FDI_2_3_TL);
+    this.load.tilemapTiledJSON("FDI_Boss_2", FDI_Boss_2);
 
   }
 

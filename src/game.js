@@ -17,6 +17,7 @@ import FDI_6 from './scenes/FDI_scenes/FDI_6.js';
 import FDI_2_1 from './scenes/FDI_scenes/FDI_2_1.js';
 import FDI_2_2 from './scenes/FDI_scenes/FDI_2_2.js';
 import FDI_2_3 from './scenes/FDI_scenes/FDI_2_3.js';
+import FDI_Boss_2 from './scenes/FDI_scenes/FDI_Boss_2.js';
 
 import SelectorNivel from './scenes/selectorNivel.js';
 
@@ -59,7 +60,7 @@ let config = {
 
     },
     pixelArt: true,
-    scene: [Boot, MainMenu, PauseMenu, MapMenu, SelectorNivel, UIButtons , GameOver, ParaninfoManager, Paraninfo_1, Paraninfo_2, Paraninfo_3, Paraninfo_secret, TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, Tutorial_debug2, GUI, InformaticaManager, FDI_1, FDI_2, FDI_3, FDI_4, FDI_5, FDI_6, FDI_2_1, FDI_2_2, FDI_2_3, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, End],
+    scene: [Boot, MainMenu, PauseMenu, MapMenu, SelectorNivel, UIButtons , GameOver, ParaninfoManager, Paraninfo_1, Paraninfo_2, Paraninfo_3, Paraninfo_secret, TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, Tutorial_debug2, GUI, InformaticaManager, FDI_1, FDI_2, FDI_3, FDI_4, FDI_5, FDI_6, FDI_2_1, FDI_2_2, FDI_2_3, FDI_Boss_2, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, End],
 
     physics: {
         default: 'arcade',
