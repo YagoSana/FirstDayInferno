@@ -10,13 +10,13 @@ export default class FDI_Boss_2 extends SalaBase{
     create(){
         super.create('FDI_Boss_2');
 
-        const map = this.make.tilemap({key:'FDI_Boss_2'});
+        const map = this.make.tilemap({ key: 'FDI_Boss_2' });
 
         const tileset1= map.addTilesetImage('paraninfo', 'Paraninfo');
 
         const layer1 = map.createLayer('suelo', [tileset1], 0, 0);
         const layer2 = map.createLayer('colision enemigos', [tileset1], 0, 0);
-        
+
         layer2.setCollisionByExclusion([-1], true);
 
         this.bulletGroup = this.physics.add.group();
@@ -42,6 +42,7 @@ export default class FDI_Boss_2 extends SalaBase{
 
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
+        this.transitionZones = this.physics.add.group();
         this.enemyGroup.add(new BossFDI(this, 300, 100, 2 ));
         this.numEnemies++;
     }

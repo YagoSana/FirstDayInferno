@@ -82,8 +82,17 @@
  "tileheight":16,
  "tilesets":[
         {
+         "columns":17,
          "firstgid":1,
-         "source":"..\/..\/..\/Mapas\/paraninfo.tsx"
+         "image":"paraninfo.png",
+         "imageheight":368,
+         "imagewidth":272,
+         "margin":0,
+         "name":"paraninfo",
+         "spacing":0,
+         "tilecount":391,
+         "tileheight":16,
+         "tilewidth":16
         }],
  "tilewidth":16,
  "type":"map",
