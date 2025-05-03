@@ -22,7 +22,7 @@ export default class FDI_Boss_2 extends SalaBase{
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
-        this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
+        this.player = new Player(this, 200, 300, this.playerStats);
 
         this.physics.add.collider(this.enemyGroup, layer2);
         this.physics.add.collider(this.enemyBulletGroup, layer2, this.onBulletCollision);
@@ -43,7 +43,7 @@ export default class FDI_Boss_2 extends SalaBase{
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
         this.transitionZones = this.physics.add.group();
-        this.enemyGroup.add(new BossFDI(this, 300, 100, 2 ));
+        this.enemyGroup.add(new BossFDI(this, 200, 50, 2 ));
         this.numEnemies++;
     }
 }
