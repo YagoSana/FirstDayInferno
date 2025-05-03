@@ -6,15 +6,22 @@ import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
 import Door from "../../gameObjects/items/door.js";
 import Item from "../../gameObjects/items/item.js";
 
+import libreria from "../../../assets/imgs/libreria.png";
+
 export default class medicina_5 extends SalaBase {
   constructor() {
     super("medicina_5");
+  }
+
+  preload() {
+    this.load.image('libreria', libreria);
   }
 
   create() {
     super.create("medicina_5");
 
     console.log("Sala 5 de medicina inicializada");
+    this.load.image('libreria', libreria);
 
     // Inicialización de grupos
     this.enemyGroup = this.physics.add.group();
@@ -58,6 +65,7 @@ export default class medicina_5 extends SalaBase {
         zone.spawnX = obj.properties.find((p) => p.name === "spawnX")?.value;
         zone.spawnY = obj.properties.find((p) => p.name === "spawnY")?.value;
         zone.prev = "medicina_5";
+        zone.name = obj.name;
       });
     }
 
@@ -134,6 +142,35 @@ export default class medicina_5 extends SalaBase {
 
     this.doorFireManager.createFiresForZones(this.transitionZones);
     this.doorFireManager.setupCollisions(this.player);
+
+    //libreria que se mueve
+    this.libreriaZone = this.physics.add.group();
+    let libreriaLayer = map.getObjectLayer("puerta");
+    if (libreriaLayer) {
+      libreriaLayer.objects.forEach((obj) => {
+        console.log("width: ", obj.width, " height: ", obj.height);
+        const zone = this.libreriaZone.create(obj.x, obj.y - 49, "libreria")
+          .setOrigin(0, 0)
+          .setOffset(0, 32);
+
+        // Make hitbox wider by 16px to the right only
+        zone.body.setSize(obj.width + 16, obj.height);
+        zone.body.setOffset(0, 32); // Keep the original vertical offset
+      });
+    }
+    this.libreriaZone.setVisible(true);
+    this.physics.add.overlap(this.player, this.libreriaZone, (player, door) => {
+      if (!door.hasMoved) {
+        door.hasMoved = true;
+        this.tweens.add({
+          targets: door,
+          x: door.x + 32,
+          tint: 0x999999,
+          duration: 500,
+          ease: 'Power2'
+        });
+      }
+    }, null, this);
 
     let spritesLayer = map.getObjectLayer("sprites");
     if (!this.status) {
