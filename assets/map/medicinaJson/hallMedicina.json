@@ -132,31 +132,31 @@
                  "y":32
                 }, 
                 {
-                 "height":26.2,
+                 "height":16,
                  "id":14,
                  "name":"noFire",
                  "properties":[
                         {
                          "name":"spawnRoom",
                          "type":"string",
-                         "value":"medicina_3"
+                         "value":"medicina_atajo"
                         }, 
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":35
+                         "value":80
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":390
+                         "value":288
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":32,
                  "x":80,
-                 "y":150
+                 "y":160.5
                 }],
          "opacity":1,
          "type":"objectgroup",

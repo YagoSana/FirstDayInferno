@@ -18,6 +18,7 @@ export default class DoorFireManager {
 
         transitionZones.getChildren().forEach(zone => {
             const noFire = (zone.name == "noFire");
+            console.log("Zona:", zone.name, "noFire:", noFire);
             const doorWidth = zone.body.width;
             const doorHeight = zone.body.height;
             const isVertical = doorHeight > doorWidth;

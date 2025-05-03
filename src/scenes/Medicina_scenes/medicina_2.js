@@ -20,8 +20,6 @@ export default class medicina_2 extends SalaBase {
     super.create("medicina_2");
 
     this.load.image('libreria', libreria);
-    console.log(this.textures.exists('libreria')); // Debe devolver true
-
 
     // Crear grupos correctamente
     this.enemyGroup = this.physics.add.group();

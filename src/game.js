@@ -36,6 +36,7 @@ import medicina_3 from './scenes/Medicina_scenes/medicina_3.js';
 import medicina_4 from './scenes/Medicina_scenes/medicina_4.js';
 import medicina_5 from './scenes/Medicina_scenes/medicina_5.js';
 import medicina_6 from './scenes/Medicina_scenes/medicina_6.js';
+import medicina_atajo from './scenes/Medicina_scenes/medicina_atajo.js';
 
 import ParaninfoManager from './scenes/Paraninfo_scenes/paraninfoManager.js';
 import Paraninfo_1 from './scenes/Paraninfo_scenes/paraninfo_1.js';
@@ -59,7 +60,7 @@ let config = {
 
     },
     pixelArt: true,
-    scene: [Boot, MainMenu, PauseMenu, MapMenu, SelectorNivel, UIButtons , GameOver, ParaninfoManager, Paraninfo_1, Paraninfo_2, Paraninfo_3, Paraninfo_secret, TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, Tutorial_debug2, GUI, InformaticaManager, FDI_1, FDI_2, FDI_3, FDI_4, FDI_5, FDI_6, FDI_2_1, FDI_2_2, FDI_2_3, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, End],
+    scene: [Boot, MainMenu, PauseMenu, MapMenu, SelectorNivel, UIButtons , GameOver, ParaninfoManager, Paraninfo_1, Paraninfo_2, Paraninfo_3, Paraninfo_secret, TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, Tutorial_debug2, GUI, InformaticaManager, FDI_1, FDI_2, FDI_3, FDI_4, FDI_5, FDI_6, FDI_2_1, FDI_2_2, FDI_2_3, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, medicina_atajo, End],
 
     physics: {
         default: 'arcade',

@@ -3,14 +3,13 @@ import SalaBase from "../../scenes/salaBase.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
 import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
-import Door from "../../gameObjects/items/door.js";
 import Item from "../../gameObjects/items/item.js";
 
 import libreria from "../../../assets/imgs/libreria.png";
 
-export default class medicina_5 extends SalaBase {
+export default class medicina_atajo extends SalaBase {
   constructor() {
-    super("medicina_5");
+    super("medicina_atajo");
   }
 
   preload() {
@@ -18,36 +17,29 @@ export default class medicina_5 extends SalaBase {
   }
 
   create() {
-    super.create("medicina_5");
+    super.create("medicina_atajo");
 
-    console.log("Sala 5 de medicina inicializada");
     this.load.image('libreria', libreria);
 
-    // Inicialización de grupos
+    // Crear grupos correctamente
     this.enemyGroup = this.physics.add.group();
     this.bulletGroup = this.physics.add.group();
     this.enemyBulletGroup = this.physics.add.group();
-    this.troncos = this.physics.add.staticGroup();
+    this.obstaculos = this.physics.add.staticGroup();
 
     console.log("Grupos de física inicializados");
 
     // Cargar el mapa y los tilesets
-    const map = this.make.tilemap({ key: "medicina_5" });
-    const tileset1 = map.addTilesetImage("Interiors_free_16x16", "Interior");
-    const tileset2 = map.addTilesetImage("Room_Builder_free_16x16", "Muebles");
+    const map = this.make.tilemap({ key: "medicina_atajo" });
+    const tileset1 = map.addTilesetImage("Interior16", "Interior");
+    const tileset2 = map.addTilesetImage("ParedSuelo16", "Muebles");
 
-    console.log("Tilesets cargados");
-
-    // Crear capas del mapa
     const layer1 = map.createLayer("suelo", [tileset1, tileset2], 0, 0);
     const layer2 = map.createLayer("pared", [tileset1, tileset2], 0, 0);
-    const layer3 = map.createLayer("techo", [tileset1, tileset2], 0, 0);
+    const layer3 = map.createLayer("bordes", [tileset1, tileset2], 0, 0);
     const layer4 = map.createLayer("objetos", [tileset1, tileset2], 0, 0);
     const layer5 = map.createLayer("sin colision", [tileset1, tileset2], 0, 0);
 
-    console.log("Capas creadas");
-
-    // Configurar colisiones
     layer2.setCollisionByExclusion([-1], true);
     layer3.setCollisionByExclusion([-1], true);
     layer4.setCollisionByExclusion([-1], true);
@@ -64,15 +56,18 @@ export default class medicina_5 extends SalaBase {
         zone.spawnRoom = obj.properties.find((p) => p.name === "spawnRoom")?.value;
         zone.spawnX = obj.properties.find((p) => p.name === "spawnX")?.value;
         zone.spawnY = obj.properties.find((p) => p.name === "spawnY")?.value;
-        zone.prev = "medicina_5";
+        zone.prev = "medicina_atajo";
         zone.name = obj.name;
       });
     }
-
     this.transitionZones.setVisible(false);
     this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
 
+    this.doorFireManager.createFiresForZones(this.transitionZones);
+    this.doorFireManager.setupCollisions(this.player);
+
     console.log("Capas y transiciones cargadas");
+
     //Camaras
     const screenWidth = this.sys.game.config.width; // Ancho de tu pantalla
     const screenHeight = this.sys.game.config.height; // Alto de tu pantalla
@@ -81,42 +76,36 @@ export default class medicina_5 extends SalaBase {
     const zoom = 2;
     const boundX = -(screenWidth / zoom - mapWidth) / 2;
     const boundY = -(screenHeight / zoom - mapHeight) / 2;
-    console.log("boundX: ", boundX);
-    console.log("boundY: ", boundY);
 
     this.cameras.main.setZoom(zoom);
-    this.cameras.main.setBounds(boundX, boundY, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
     // Ajustar límites del mundo y cámara
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-    console.log("Cámara configurada");
-
     // Añadir colisiones
     this.physics.add.collider(this.player, layer2);
     this.physics.add.collider(this.player, layer3);
     this.physics.add.collider(this.player, layer4);
-
-    console.log("Colisiones del jugador configuradas");
+    this.physics.add.collider(this.player, this.obstaculos);
 
     this.physics.add.collider(this.enemyGroup, layer2);
     this.physics.add.collider(this.enemyGroup, layer3);
     this.physics.add.collider(this.enemyGroup, layer4);
-
-    console.log("Colisiones enemigos configuradas");
+    this.physics.add.collider(this.enemyGroup, this.obstaculos);
 
     this.physics.add.collider(this.bulletGroup, layer2, this.onBulletCollision);
     this.physics.add.collider(this.bulletGroup, layer3, this.onBulletCollision);
     this.physics.add.collider(this.bulletGroup, layer4, this.onBulletCollision);
-
-    console.log("Colisiones de balas configuradas");
+    this.physics.add.collider(this.bulletGroup, this.obstaculos, this.onBulletCollision);
 
     this.physics.add.collider(this.enemyBulletGroup, layer2, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, layer3, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, layer4, this.onBulletCollision);
+    this.physics.add.collider(this.enemyBulletGroup, this.obstaculos, this.onBulletCollision);
 
-    console.log("Colisiones de balas enemigas configuradas");
+    console.log("Colisiones añadidas correctamente");
     // Crear una capa negra semitransparente
     this.darkOverlay = this.add.rectangle(
       0, 0,
@@ -140,44 +129,12 @@ export default class medicina_5 extends SalaBase {
     // Aplicar la máscara a la capa oscura
     this.darkOverlay.setMask(this.lightMask);
 
-    this.doorFireManager.createFiresForZones(this.transitionZones);
-    this.doorFireManager.setupCollisions(this.player);
-
-    //libreria que se mueve
-    this.libreriaZone = this.physics.add.group();
-    let libreriaLayer = map.getObjectLayer("puerta");
-    if (libreriaLayer) {
-      libreriaLayer.objects.forEach((obj) => {
-        console.log("width: ", obj.width, " height: ", obj.height);
-        const zone = this.libreriaZone.create(obj.x, obj.y - 49, "libreria")
-          .setOrigin(0, 0)
-          .setOffset(0, 32);
-
-        // Make hitbox wider by 16px to the right only
-        zone.body.setSize(obj.width + 16, obj.height);
-        zone.body.setOffset(0, 32); // Keep the original vertical offset
-      });
-    }
-    this.libreriaZone.setVisible(true);
-    this.physics.add.overlap(this.player, this.libreriaZone, (player, door) => {
-      if (!door.hasMoved) {
-        door.hasMoved = true;
-        this.tweens.add({
-          targets: door,
-          x: door.x + 32,
-          tint: 0x999999,
-          duration: 500,
-          ease: 'Power2'
-        });
-      }
-    }, null, this);
-
     let spritesLayer = map.getObjectLayer("sprites");
     if (!this.status) {
       spritesLayer.objects.forEach(obj => {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
-        console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
+          console.log("AAA enemigo ", obj.name, ", id ", obj.id);
           switch (obj.name) {
             case "cucaracha":
               this.numEnemies++;
@@ -185,7 +142,7 @@ export default class medicina_5 extends SalaBase {
               break;
             case "zombie":
               this.numEnemies++;
-              this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name, true));
+              this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
               break;
             case "cat":
               console.log("GatosVivos: ", this.game.global.gatosVivos);  // Accede a gatosVivos
@@ -195,8 +152,6 @@ export default class medicina_5 extends SalaBase {
             default:
               console.log("Tipo de enemigo no reconocido:", obj.name);
           }
-        } else if (type === "door") {
-          new Door(this, obj.x, obj.y, 'medDoor');
         }
       });
     }
