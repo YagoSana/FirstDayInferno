@@ -113,8 +113,10 @@ export default class Merchant extends SpriteBase {
     }
 
     isPlayerInRange() {
+        if (!this.scene || !this.scene.player) return false; // Verifica si existen estas referencias
         return Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <= this.interactionRange;
     }
+    
 
     purchaseItems() {
         if (!this.isOperational || this.isInUse || (this.scene.time.now - this.lastUseTime <= this.useCooldown)) return;

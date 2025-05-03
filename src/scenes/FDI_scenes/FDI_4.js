@@ -16,7 +16,7 @@ export default class FDI_4 extends SalaBase {
 
     create(){
         super.create('FDI_4');
-
+        this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
 
         const map = this.make.tilemap({ key: 'FDI_4_TL' }); // Cargamos el mapa
         //Cargar tilesets
@@ -27,7 +27,7 @@ export default class FDI_4 extends SalaBase {
 
         const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
         const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
-        const layer5 = map.createLayer('sin colision', [tileset1, tileset2], 0, 0);
+        const layer5 = map.createLayer('sin colisiones', [tileset1, tileset2], 0, 0);
         const layer3 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
         const layer4 = map.createLayer('objetos2', [tileset1, tileset2], 0, 0);
         const layer6 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
@@ -41,7 +41,7 @@ export default class FDI_4 extends SalaBase {
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
-        this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
+       
 
         //Colisiones
         this.physics.add.collider(this.player, layer2);
@@ -80,7 +80,7 @@ export default class FDI_4 extends SalaBase {
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
         transitionLayer.objects.forEach(obj => {
-            const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
+            const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height).setOrigin(0, 0).setOffset(0, 0);
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
@@ -89,8 +89,21 @@ export default class FDI_4 extends SalaBase {
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
-        new VendingMachine(this,64,45);
-        new bartender(this, 255, 60);
+
+        const spawnLayer = map.getObjectLayer('spawn');
+        if (spawnLayer) {
+        spawnLayer.objects.forEach(obj => {
+                const spawnType = obj.properties?.find(p => p.name === 'spawn')?.value;
+                if (spawnType === 'bartender') {
+                    let spawneable= new bartender(this, obj.x, obj.y-10, 112, 25,'bartender');
+                }
+                else if (spawnType==='vendingMachine'){
+                    let vm = new VendingMachine(this, obj.x, obj.y);
+                }
+        }
+    )};
+    this.sound.play('musicaCafe1', { loop: true, volume: 0.1 });
+
     }
 
     spawnProps(){
@@ -104,4 +117,5 @@ export default class FDI_4 extends SalaBase {
     spawBlood(){
         
     }
+    
 }
