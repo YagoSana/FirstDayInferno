@@ -7,6 +7,7 @@ import medicina_3 from "../../../assets/map/medicinaJson/pasilloMedicina.json";
 import medicina_4 from "../../../assets/map/medicinaJson/aulaMedicina.json";
 import medicina_5 from "../../../assets/map/medicinaJson/pasillo2Medicina.json";
 import medicina_6 from "../../../assets/map/medicinaJson/aulaFinalMedicina.json";
+import medicina_atajo from "../../../assets/map/medicinaJson/atajoMedicina.json";
 
 import img_interior from "../../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../../assets/map/Room_Builder_free_16x16.png";
@@ -90,6 +91,7 @@ export default class medicinaManager extends Phaser.Scene {
     this.load.tilemapTiledJSON("medicina_4", medicina_4);
     this.load.tilemapTiledJSON("medicina_5", medicina_5);
     this.load.tilemapTiledJSON("medicina_6", medicina_6);
+    this.load.tilemapTiledJSON("medicina_atajo", medicina_atajo);
 
   }
 
