@@ -17,7 +17,10 @@ export default class DialogueNPC extends SpriteBase {
     this.frasePurchase = frasePurchase;
     this.purchaseCost = purchaseCost;
     this.itemKey = itemKey;
-    this.purchaseDone = false;
+
+    // Recuperar el estado de compra desde localStorage
+    const purchaseStatus = localStorage.getItem(`purchaseDone_${this.nombre}`);
+    this.purchaseDone = purchaseStatus ? JSON.parse(purchaseStatus) : false;
 
     // Asegurarse de que este NPC tiene un cuerpo físico y es inmóvil
     this.scene.physics.add.existing(this);  // Aseguramos que este NPC tiene física
@@ -71,7 +74,6 @@ export default class DialogueNPC extends SpriteBase {
 
   hitBullet(bullet) {
     bullet.explode();
-   
   }
 
   hablar() {
@@ -85,10 +87,13 @@ export default class DialogueNPC extends SpriteBase {
         player.spendCoins(this.purchaseCost);
         this.purchaseDone = true;
 
+        // Guardar el estado de compra en localStorage
+        localStorage.setItem(`purchaseDone_${this.nombre}`, JSON.stringify(this.purchaseDone));
+
         // Mostrar diálogo de compra exitosa
         this.dialogueBox.show(this.frasePurchase);
         this.dialogueActivo = true;
-
+        this.purchase = false;
         // Dispensar el objeto
         this.dispenseItemEffect();
 
