@@ -239,7 +239,12 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.load.spritesheet("player_gui_64", player_gui, {
-      frameWidth: 64, //cada frame tiene este ancho
+      frameWidth: 64, //solo por la barra de vida del player
+      frameHeight: 32, //todos son 32 px de alto
+    });
+
+    this.load.spritesheet("player_gui_96", player_gui, {
+      frameWidth: 96, //solo por la barra del boss
       frameHeight: 32, //todos son 32 px de alto
     });
 
@@ -1184,6 +1189,18 @@ export default class Boot extends Phaser.Scene {
       frames: this.anims.generateFrameNames("player_gui", { start: 34, end: 35 }),
       frameRate: 2,
       repeat: -1,
+    });
+
+    this.textures.addSpriteSheet('boss_bar', this.textures.get('player_gui_96').getSourceImage(), {
+      frameWidth: 96,
+      frameHeight: 32,
+      startFrame: 9
+    });
+
+    this.textures.addSpriteSheet('boss_icon', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 39
     });
 
     this.anims.create({

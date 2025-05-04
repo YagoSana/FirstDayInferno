@@ -45,7 +45,7 @@ export default class VSScreen extends Phaser.Scene {
             color: '#0000FF', // Verde brillante
             stroke: '#0000FF',
             strokeThickness: 2
-        }).setOrigin(0.5).setAlpha(0).setDepth(1);
+        }).setOrigin(0.5).setAlpha(0).setDepth(1).setResolution(2);
 
         // Imagen VS (centro)
         this.vsImage = this.add.image(centerX - 20, imagesY + 50, 'vs_text')
@@ -66,7 +66,7 @@ export default class VSScreen extends Phaser.Scene {
             color: '#FF0000', // Rojo
             stroke: '#FF0000',
             strokeThickness: 2
-        }).setOrigin(0.5).setAlpha(0).setDepth(1);
+        }).setOrigin(0.5).setAlpha(0).setDepth(1).setResolution(2);
 
         // Animación de entrada
         this.tweens.add({
@@ -102,23 +102,26 @@ export default class VSScreen extends Phaser.Scene {
                 // Configurar tecla para continuar
                 this.continueKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
                 this.canSkip = false;
-                this.time.delayedCall(2000, () => { this.canSkip = true; });
-                // Texto para continuar (parpadeante)
-                this.continueText = this.add.text(centerX, this.cameras.main.height - 40, 'PULSA E PARA CONTINUAR', {
-                    fontSize: '32px',
-                    fontFamily: 'monogram',
-                    color: '#FFFFFF',
-                    stroke: '#000000',
-                    strokeThickness: 3
-                }).setOrigin(0.5).setAlpha(0).setDepth(1);
+                this.time.delayedCall(1000, () => {
+                    this.canSkip = true;
+                    // Texto para continuar (parpadeante)
+                    this.continueText = this.add.text(centerX, this.cameras.main.height - 40, 'PULSA E PARA CONTINUAR', {
+                        fontSize: '32px',
+                        fontFamily: 'monogram',
+                        color: '#FFFFFF',
+                        stroke: '#000000',
+                        strokeThickness: 3
+                    }).setOrigin(0.5).setAlpha(0).setDepth(1).setResolution(2);
 
-                this.tweens.add({
-                    targets: this.continueText,
-                    alpha: 1,
-                    duration: 1000,
-                    yoyo: true,
-                    repeat: -1
+                    this.tweens.add({
+                        targets: this.continueText,
+                        alpha: 1,
+                        duration: 1000,
+                        yoyo: true,
+                        repeat: -1
+                    });
                 });
+
             }
         });
 

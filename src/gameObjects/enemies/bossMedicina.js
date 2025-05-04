@@ -17,6 +17,7 @@ export default class BossMedicina extends Npc {
     this.scene = scene;
     console.log("escena", this.scene);
     this.type = "bossMedicina";
+    this.maxHealth = 50;
     this.health = 50;
     this.speed = 50;
     this.stunCounter = 0;
@@ -60,6 +61,19 @@ export default class BossMedicina extends Npc {
         this.playReverse("bossMedicinaDeath", true);
         this.introduction = true;
         this.scene.cameras.main.shake(800, 0.003);
+
+        // Lanzar escena de barra de vida
+        if (!this.scene.scene.isActive('BossHealthBarScene')) {
+          console.log('BOSS BAR LANZADA');
+          this.scene.scene.launch('BossHealthBarScene', {
+            type: this.type,
+            maxHealth: this.maxHealth,
+            currentHealth: this.health
+          });
+          this.scene.scene.bringToTop('BossHealthBarScene');
+        }
+
+
         //this.scene.cameras.main.shake(100, 0.01);
         this.once('animationcomplete', () => {
           this.play("bossMedicinaIdle2", true);
@@ -208,12 +222,22 @@ export default class BossMedicina extends Npc {
 
     console.log("escena", this.scene);
 
+    // Emitir evento de cambio de salud
+    this.scene.game.events.emit('bossHealthChanged', {
+      currentHealth: this.health,
+      maxHealth: this.maxHealth
+    });
+
     if (this.health <= 0) {
       this.body.setVelocity(0, 0);
       this.play("bossMedicinaDeath", true);
       this.once('animationcomplete', () => {
         this.hasFinishedDying = true;  // nuevo flag
+        // Emitir evento de boss derrotado
+        this.scene.game.events.emit('bossDefeated');
       });
+      
+      this.scene.scene.stop('BossHealthBarScene');
     }
     bullet.explode();
   }
