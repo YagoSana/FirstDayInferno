@@ -74,6 +74,7 @@ hitBullet(enemy, bullet){
   if(!this.inmortal && !this.invulnerable){
     super.hitBullet(enemy, bullet);
   }
+  else bullet.explode();
 }
   
   // Función para disparar 3 proyectiles en el eje X
