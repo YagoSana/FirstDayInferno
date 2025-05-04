@@ -1,6 +1,6 @@
 import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
-import BossFDI from "../../gameObjects/enemies/bossFDI";
+import BossFDI from "../../gameObjects/enemies/bossFDI.js";
 
 export default class FDI_Boss_2 extends SalaBase{
     constructor(key){

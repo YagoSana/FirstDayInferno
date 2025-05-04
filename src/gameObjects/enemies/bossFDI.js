@@ -63,6 +63,7 @@ export default class BossFDI extends Npc {
     console.log("escena", this.scene);
 
     if (this.health <= 0) {
+      this.body.enable = false;
       this.body.setVelocity(0, 0);
       this.dead = true;
       if(this.fase == 1){

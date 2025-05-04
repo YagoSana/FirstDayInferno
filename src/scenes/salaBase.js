@@ -22,6 +22,7 @@ export default class SalaBase extends Phaser.Scene {
     }
 
     create() {
+        this.game.events.on('bossDefeated', this.bossDefeated, this);
         this.manager = this.scene.get(this.managerKey);
         if (this.player) {
             this.player.destroy();
@@ -74,13 +75,10 @@ export default class SalaBase extends Phaser.Scene {
     }
 
     update() {
-        // console.log("Numero de enemigos: ", this.numEnemies);
-        // console.log("Numero de enemigos derrotados: ", this.numEnemiesBeaten);
+        //console.log("Numero de enemigos: ", this.numEnemies);
+        //console.log("Numero de enemigos derrotados: ", this.numEnemiesBeaten);
         if (this.updateLight) {
             this.updateLight();
-        }
-        if (this.bossStatus) {
-            this.bossStatus();
         }
         
         if (this.numEnemiesBeaten == this.numEnemies) {
@@ -98,6 +96,11 @@ export default class SalaBase extends Phaser.Scene {
                 this.doorFireManager.createFiresForZones(this.transitionZones);
             }
         }
+    }
+
+    bossDefeated() {
+        this.manager.guardarPlayerStats(this.player.getStats());
+        this.manager.volverAlLobby(this.scene.key);
     }
 
     shutdown() {

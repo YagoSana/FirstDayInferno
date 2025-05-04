@@ -239,7 +239,8 @@ export default class medicina_5 extends SalaBase {
                 bossKey: zone.bossKey,
                 nextScene: zone.spawnRoom, // medicina_6
                 playerStats: this.player.getStats(),
-                transitionData: zone
+                transitionData: zone,
+                managerKey: this.managerKey
             });
         } else {
             // Transición normal, vamos directamente a la otra sala

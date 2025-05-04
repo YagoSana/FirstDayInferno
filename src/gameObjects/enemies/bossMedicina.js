@@ -30,7 +30,8 @@ export default class BossMedicina extends Npc {
     this.introduction = false;
     this.activar = false;
     this.setScale(1);
-    this.body.setSize(75, 75); // Tamaño del cuerpo del enemigo
+    this.body.setSize(65, 65); // Tamaño del cuerpo del enemigo
+    this.body.setOffset(25, 25); // Ajustar el offset del cuerpo
     this.setVisible(false); // Inicialmente invisible
     this.cambioFase = false;
     this.puedeInvocar = true;
@@ -229,6 +230,7 @@ export default class BossMedicina extends Npc {
     });
 
     if (this.health <= 0) {
+      this.body.enable = false;
       this.body.setVelocity(0, 0);
       this.play("bossMedicinaDeath", true);
       this.once('animationcomplete', () => {

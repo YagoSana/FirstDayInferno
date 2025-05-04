@@ -11,6 +11,7 @@ export default class VSScreen extends Phaser.Scene {
         this.nextScene = data.nextScene;
         this.playerStats = data.playerStats;
         this.transitionData = data.transitionData; // Datos de transición
+        this.managerKey = data.managerKey; // Para saber de qué manager estamos hablando
     }
 
     create() {
@@ -142,7 +143,8 @@ export default class VSScreen extends Phaser.Scene {
                         bossKey: this.bossKey,
                         // Pasamos los datos necesarios para el spawn
                         x: this.transitionData.spawnX,
-                        y: this.transitionData.spawnY
+                        y: this.transitionData.spawnY,
+                        managerKey: this.managerKey
                     });
                 } else {
                     console.error('No se pudo realizar la transición correctamente');
