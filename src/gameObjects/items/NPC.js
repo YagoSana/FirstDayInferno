@@ -7,6 +7,7 @@ export default class NPC extends SpriteBase {
     constructor(scene, x, y) {
         super(scene, x, y, 'NPC');
 
+        this.scene = scene;
         this.body.setImmovable(true);
         this.body.allowGravity = false;
         this.body.setSize(20, 10);
@@ -17,7 +18,6 @@ export default class NPC extends SpriteBase {
         this.bulletHits = 0;
         this.maxBulletHits = 3;
 
-        this.dialogueBox = new DialogueBox(this.scene, this.x + 100, this.y + 200, 300, 'borjaPortrait', 'Borja');
 
         this.hit_frases = [
             "¡Eh tronco, que tengo clase luego!",
@@ -37,6 +37,7 @@ export default class NPC extends SpriteBase {
         this.objectGiven = false;
         this.modoHabla = true;
         this.interactionRange = 60;
+        this.playerIsNear = false;
 
         // Cola de diálogo
         this.dialogueQueue = [];
@@ -54,23 +55,11 @@ export default class NPC extends SpriteBase {
             .setDepth(20)
             .play('key_E_action');
 
-        // Mostrar ícono si estás cerca
-        this.scene.physics.add.overlap(
-            this,
-            this.scene.player,
-            () => {
-                if (!this.dialogueActivo) {
-                    this.eKeyIcon.setPosition(this.x, this.y - 30);
-                    this.eKeyIcon.setVisible(true);
-                }
-            },
-            null,
-            this
-        );
+
 
         // Ocultar ícono si te alejas
         this.scene.events.on('update', () => {
-            if (!this.isPlayerInRange() || this.dialogueActivo===true) {
+            if (!this.isPlayerInRange() || this.dialogueActivo === true) {
                 this.eKeyIcon.setVisible(false);
             } else {
                 this.eKeyIcon.setVisible(true);
@@ -78,38 +67,75 @@ export default class NPC extends SpriteBase {
         });
 
         // ACCION DE HABLAR (PULSAR LA E)
+        // this.scene.input.keyboard.on('keydown-E', () => {
+        //     if (!this.isPlayerInRange() && !this.dialogueActivo) return;
+        //     if (!this.dialogueActivo) {
+        //         const fraseAleatoria = Phaser.Utils.Array.GetRandom(this.talk_frases);
+        //         this.hablar(fraseAleatoria);
+        //     }
+        //     else {
+        //         this.dialogueBox.hide();
+        //         this.dialogueActivo = false;
+        //     }
+        // });
+
+        this.setupInteraction();
+    }
+
+    setupInteraction() {
+        // Mostrar ícono E cuando el jugador está cerca
+        this.scene.physics.add.overlap(this, this.scene.player, () => {
+            this.playerIsNear = true;
+            if (!this.dialogueActivo) {
+                this.eKeyIcon.setPosition(this.x, this.y - 30).setVisible(true);
+            }
+        }, null, this);
+
+        // Escucha la tecla E
         this.scene.input.keyboard.on('keydown-E', () => {
-            if (!this.isPlayerInRange() && !this.dialogueActivo) return;
-            if(!this.dialogueActivo){
-            const fraseAleatoria = Phaser.Utils.Array.GetRandom(this.talk_frases);
-            this.hablar(fraseAleatoria);
+            if (!this.isPlayerInRange()) return;
+
+            if (this.dialogueActivo) {
+                this.scene.events.emit('closeDialogue');
+                return;
             }
-            else {
-                this.dialogueBox.hide();
-                this.dialogueActivo = false;
-            }
-        });
+
+            const frase = Phaser.Utils.Array.GetRandom(this.talk_frases);
+            this.mostrarDialogo(frase);
+        }, this);
     }
 
     isPlayerInRange() {
-        if (!this.scene || !this.scene.player || !this.scene.player.x || !this.x) return false;
-        return Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <= this.interactionRange;
+        if (!this.scene || !this.scene.player) return false;
+        return Phaser.Math.Distance.Between(
+            this.x, this.y,
+            this.scene.player.x, this.scene.player.y
+        ) <= this.interactionRange;
     }
-    preUpdate(t, dt){
+
+    preUpdate(t, dt) {
         super.preUpdate(t, dt);
-      }
-      
-    hablar(frase) {
-        if (!this.dialogueActivo) {
-            // Primera vez que se activa el diálogo
-            if (!this.objectGiven) {
-                this.dialogueBox.show("Esto es para ti, cuidao con él.");
-                this.objectGiven = true;
-                this.dispenseItem(); // Puedes mover esto al final del diálogo si prefieres
+    }
+
+    mostrarDialogo(frase) {
+        this.dialogueActivo = true;
+        this.eKeyIcon.setVisible(false);
+        
+        this.scene.scene.launch('DialogueScene', {
+            message: frase,
+            speaker: 'Borja',
+            portraitKey: 'borjaPortrait',
+            textSpeed: 35,
+            previousScene: this.scene.scene.key,
+            onClose: () => {
+                this.dialogueActivo = false;
+                if (this.isPlayerInRange()) {
+                    this.eKeyIcon.setVisible(true);
+                }
             }
-            this.dialogueActivo = true;
-            this.dialogueBox.show(frase);
-        } 
+        });
+        
+        this.scene.scene.bringToTop('DialogueScene');
     }
 
     dispenseItem() {
@@ -160,30 +186,25 @@ export default class NPC extends SpriteBase {
 
     hitBullet(machine, bullet) {
         bullet.explode();
-    
+
         this.flashEffect();
         this.bulletHits++;
-    
+
         // Mostrar frase solo si no hay diálogo activo
         if (!this.dialogueActivo) {
-            let frase = "...";
-            if (this.bulletHits != this.maxBulletHits) {
-                frase = Phaser.Utils.Array.GetRandom(this.hit_frases);
-            }
-    
-            this.dialogueBox.show(frase);
-            this.dialogueActivo = true;
+            const frase = Phaser.Utils.Array.GetRandom(this.hit_frases);
+            this.mostrarDialogo(frase);
         }
-    
+
         if (this.bulletHits >= this.maxBulletHits) {
             this.bulletHits = 0;
-        
+
             // Mostrar sprite animado de la explosión
             const explosion = this.scene.add.sprite(this.x, this.y, 'fire_loop');
             explosion.play('fire_loop'); // Asegúrate de que esté cargada como animación
             explosion.setScale(2);
             explosion.setDepth(50);
-        
+
             // Fade-out bonito
             this.scene.tweens.add({
                 targets: explosion,
@@ -195,7 +216,7 @@ export default class NPC extends SpriteBase {
                     explosion.destroy();
                 }
             });
-        
+
             // Tween del NPC antes de destruirlo
             this.scene.tweens.add({
                 targets: this,
@@ -209,7 +230,7 @@ export default class NPC extends SpriteBase {
                 }
             });
         }
-        
-        
-}
+
+
+    }
 }

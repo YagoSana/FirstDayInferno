@@ -11,18 +11,13 @@ export default class DialogueNPC extends SpriteBase {
     this.frases = frases.length > 0 ? frases : ['...'];
     this.dialogueActivo = false;
     this.interactionRange = 60;
-    this.bulletHits=0;
-
-    // Caja de diálogo
-    this.dialogueBox = new DialogueBox(scene, this.x + 100, this.y + 100, 300, spriteKey + '-face', nombre);
+    this.bulletHits = 0;
 
     // Área de interacción invisible
     this.interactionArea = scene.add.circle(x, y, this.interactionRange, 0x000000, 0);
     scene.physics.add.existing(this.interactionArea);
     this.interactionArea.body.setCircle(this.interactionRange);
     this.interactionArea.body.setAllowGravity(false);
-
-    // Texto de interacción
 
 
     // Icono E opcional
@@ -31,25 +26,35 @@ export default class DialogueNPC extends SpriteBase {
       .setDepth(20)
       .play('key_E_action');
 
-    // Comprobar cercanía
-    scene.physics.add.overlap(this.interactionArea, scene.player, this.showInteractionUI, null, this);
+    this.setupInteraction();
+  }
 
-    // Entrada de teclado
-    scene.input.keyboard.on('keydown-E', () => {
+  setupInteraction() {
+    // Mostrar ícono E cuando el jugador está cerca
+    this.scene.physics.add.overlap(this, this.scene.player, () => {
+      if (this.isPlayerInRange() && !this.dialogueActivo) {
+        this.eKeyIcon.setPosition(this.x, this.y - 30).setVisible(true);
+      }
+    }, null, this);
+
+    // Escucha la tecla E
+    this.scene.input.keyboard.on('keydown-E', () => {
       if (!this.isPlayerInRange()) return;
 
       if (this.dialogueActivo) {
-        this.dialogueBox.hide();
-        this.dialogueActivo = false;
-      } else {
-        this.hablar();
+        this.scene.events.emit('closeDialogue');
+        return;
       }
-    });
+
+      this.hablar();
+    }, this);
   }
 
   isPlayerInRange() {
+    if (!this.scene || !this.scene.player) return false;
     return Phaser.Math.Distance.Between(
-      this.x, this.y, this.scene.player.x, this.scene.player.y
+      this.x, this.y,
+      this.scene.player.x, this.scene.player.y
     ) <= this.interactionRange;
   }
 
@@ -67,7 +72,7 @@ export default class DialogueNPC extends SpriteBase {
   hitBullet(machine, bullet) {
     bullet.explode();
 
-    
+
     this.bulletHits++;
     if (this.bulletHits >= 3) {
       this.bulletHits = 0;
@@ -78,7 +83,23 @@ export default class DialogueNPC extends SpriteBase {
 
   hablar() {
     const frase = Phaser.Utils.Array.GetRandom(this.frases);
-    this.dialogueBox.show(frase);
     this.dialogueActivo = true;
+    this.eKeyIcon.setVisible(false);
+
+    this.scene.scene.launch('DialogueScene', {
+      message: frase,
+      speaker: this.nombre,
+      portraitKey: this.texture.key + '-face',
+      textSpeed: 35,
+      previousScene: this.scene.scene.key,
+      onClose: () => {
+        this.dialogueActivo = false;
+        if (this.isPlayerInRange()) {
+          this.eKeyIcon.setVisible(true);
+        }
+      }
+    });
+
+    this.scene.scene.bringToTop('DialogueScene');
   }
 }

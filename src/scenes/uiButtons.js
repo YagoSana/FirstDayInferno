@@ -219,6 +219,9 @@ export default class UIButtons extends Phaser.Scene {
     }
 
     togglePause() {
+        if (this.scene.isActive('DialogueScene')) {
+            return; //no se puede pausar en dialogo
+        }
         if (this.scene.isPaused(this.previousScene)) {
             this.resumeGame();
         } else {
@@ -248,8 +251,8 @@ export default class UIButtons extends Phaser.Scene {
     }
 
     toggleMap(claveManager) {
-        if(this.canMap){
-          
+        if (this.canMap) {
+
             // console.log('toggleMap', this.scene.isPaused(this.previousScene));
             // console.log("SE MUESTRA EL MAPA?",this.isMapShowed);
             if (this.scene.isActive("MapMenu")) {
@@ -285,7 +288,7 @@ export default class UIButtons extends Phaser.Scene {
         this.managerKey = managerKey;
 
         this.canMap = this.managerKey ? true : false;
-        this.canMap = this.managerKey !== "tutorialManager" 
+        this.canMap = this.managerKey !== "tutorialManager"
 
         // console.log("La escena: ", key, managerKey,this.canMap);
     }
