@@ -71,11 +71,7 @@ export default class DialogueNPC extends SpriteBase {
 
   hitBullet(bullet) {
     bullet.explode();
-    this.bulletHits++;
-    if (this.bulletHits >= 3) {
-      this.bulletHits = 0;
-      this.destroy();
-    }
+   
   }
 
   hablar() {

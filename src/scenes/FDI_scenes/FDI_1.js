@@ -151,7 +151,7 @@ export default class FDI_1 extends SalaBase {
         });
         
         this.physics.add.collider(this.player, this.npcGroup);
-        this.physics.add.collider(this.bulletGroup, this.npcGroup);
+        this.physics.add.collider(this.bulletGroup, this.npcGroup,  this.onBulletCollision);
 
         // Rango de interacción con el coche
         this.time.addEvent({
