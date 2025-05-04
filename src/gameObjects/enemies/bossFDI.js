@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import Npc from './npc.js';
 import Bullet from '../projectiles/bullet.js';
+import Laser from '../projectiles/laser.js';
 
 export default class BossFDI extends Npc {
 
@@ -12,11 +13,11 @@ export default class BossFDI extends Npc {
    */
 
   constructor(scene, x, y, fase) {
-    if(fase == 1){
-        super(scene, x, y, "bossFDIIdle");
+    if (fase == 1) {
+      super(scene, x, y, "bossFDIIdle");
     }
-    else if(fase == 2){
-        super(scene, x, y, "bossFDIfase2");
+    else if (fase == 2) {
+      super(scene, x, y, "bossFDIfase2");
     }
     this.scene = scene;
     this.fase = fase;
@@ -34,6 +35,8 @@ export default class BossFDI extends Npc {
     this.puedeInvocar = true;
     this.dead = false;
     this.setDepth(999);
+    this.initialX = x;
+    this.initialY = y;
   }
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
@@ -44,13 +47,29 @@ export default class BossFDI extends Npc {
   }
 
   mypreUpdate(t, dt) {
-    if(!this.dead){
-        if(this.fase == 1){
-            this.play("bossFDIIdle", true);
+    if (!this.dead) {
+      if (this.stunCounter > 0) {
+        this.stunCounter--;
+        if (this.stunCounter > 20) {
+          this.setTint(0xff0000);
         }
-        else if(this.fase == 2){
-
+      } else {
+        this.setTint(0xffffff);
+      }
+      if (this.fase == 1) {
+        this.play("bossFDIIdle", true);
+      }
+      else if (this.fase == 2) {
+        const waveX = Math.sin(t * 0.0003 * 3) * 180; // izquierda-derecha
+        const waveY = Math.cos(t * 0.0006 * 3 * 1.3) * 20;  // subida-bajada
+        this.setX(this.initialX + waveX);
+        this.setY(this.initialY + waveY);
+        if (!this.lastLaserTime) this.lastLaserTime = t;
+        if (t - this.lastLaserTime > 400) {
+          this.launchLaserAttack();
+          this.lastLaserTime = t;
         }
+      }
     }
   }
 
@@ -66,13 +85,31 @@ export default class BossFDI extends Npc {
       this.body.enable = false;
       this.body.setVelocity(0, 0);
       this.dead = true;
-      if(this.fase == 1){
+      if (this.fase == 1) {
         //dialogo y cambio sala
       }
-      else if(this.fase == 2){
+      else if (this.fase == 2) {
         //animacion final
       }
     }
     bullet.explode();
   }
+
+  launchLaserAttack() {
+    const offsets = [-100, 0, 100];
+
+    offsets.forEach((offsetX, i) => {
+      const laser = new Laser(this.scene, this.x + offsetX, this.y + 10);
+      this.scene.physics.add.existing(laser);
+      this.scene.add.existing(laser);
+
+      // Colisión
+      this.scene.physics.add.overlap(this.scene.player, laser, (player, laser) => {
+        if (laser.damageActive) {
+          player.hurt();
+        }
+      });
+    });
+  }
+
 }
