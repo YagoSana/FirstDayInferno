@@ -164,7 +164,9 @@ export default class medicina_6 extends SalaBase {
               break;
             case "bossMedicina":
               this.numEnemies++;
-              this.enemyGroup.add(new BossMedicina(this, obj.x, obj.y));
+              let boss = new BossMedicina(this, obj.x, obj.y);
+              this.enemyGroup.add(boss);
+
               break;
             default:
               console.log("Tipo de enemigo no reconocido:", obj.name);

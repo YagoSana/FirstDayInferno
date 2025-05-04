@@ -15,7 +15,7 @@ export default class RangedAreaEnemy extends Npc {
     this.dropKey = key;
   }
 
-  preUpdate(t, dt){
+  preUpdate(t, dt) {
     super.preUpdate(t, dt);
   }
 
@@ -27,7 +27,7 @@ export default class RangedAreaEnemy extends Npc {
         this.setTint(0xffffff);
         this.play(`${this.type}_move`, true);
       }
-      
+
       if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <= this.attackRange) {
         this.body.setVelocity(0, 0);
         if (this.attackCooldown <= 0) {
@@ -38,7 +38,7 @@ export default class RangedAreaEnemy extends Npc {
         this.scene.physics.moveToObject(this, this.scene.player, this.speed);
         this.flipX = this.body.velocity.x >= 0;
       }
-      
+
       if (this.attackCooldown > 0) {
         this.attackCooldown -= dt;
       }
@@ -65,7 +65,7 @@ export default class RangedAreaEnemy extends Npc {
       const angle = i * angleStep;
       const dirX = Math.cos(angle);
       const dirY = Math.sin(angle);
-      new Bullet(this.scene, this.x, this.y, dirX, dirY, 0, 0, false, `${this.type}bullet`);
+      new Bullet(this.scene, this.x, this.y, dirX, dirY, 0, 0, false, `${this.type}bullet`, this.type);
     }
   }
 }

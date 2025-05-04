@@ -66,6 +66,9 @@ export default class medicina_5 extends SalaBase {
         zone.spawnY = obj.properties.find((p) => p.name === "spawnY")?.value;
         zone.prev = "medicina_5";
         zone.name = obj.name;
+        //solo para la sala del boss
+        zone.isBossTransition = obj.properties.find((p) => p.name === "isBossTransition")?.value || false;
+        zone.bossKey = obj.properties.find((p) => p.name === "bossKey")?.value || "bossMedicina";
       });
     }
 
@@ -195,7 +198,7 @@ export default class medicina_5 extends SalaBase {
             default:
               console.log("Tipo de enemigo no reconocido:", obj.name);
           }
-        } else if (type === "door"){
+        } else if (type === "door") {
           let locked3 = this.playerStats.doorsLocked['medDoor'];
           new Door(this, obj.x, obj.y, 'medDoor', locked3);
         }
@@ -209,10 +212,42 @@ export default class medicina_5 extends SalaBase {
             this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
           }
           else this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
+        } else if (type === "door"){
+          let locked3 = this.playerStats.doorsLocked['medDoor'];
+          new Door(this, obj.x, obj.y, 'medDoor', locked3);
         }
       });
     }
   }
+
+  cambiarSala(player, zone) {
+    if (!zone.spawnRoom || !this.player.canChangeRoom || !zone.open) return;
+    
+    this.player.canChangeRoom = false;
+    this.manager.guardarPlayerStats(this.player.getStats());
+    
+    this.time.delayedCall(1000, () => {
+        this.player.canChangeRoom = true;
+    });
+    
+    this.cameras.main.fadeOut(500, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+        if (zone.isBossTransition) {
+            // Si es transición al jefe, mostramos VS screen
+            this.scene.stop();
+            this.scene.start('VSScreen', {
+                bossKey: zone.bossKey,
+                nextScene: zone.spawnRoom, // medicina_6
+                playerStats: this.player.getStats(),
+                transitionData: zone
+            });
+        } else {
+            // Transición normal, vamos directamente a la otra sala
+            this.scene.stop();
+            this.manager.cambiarSala(zone);
+        }
+    });
+}
 
   updateLight() {
     this.light.x = this.player.x;

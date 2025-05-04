@@ -45,7 +45,9 @@ export default class Paraninfo_1 extends SalaBase {
         this.physics.add.collider(this.bulletGroup, layer6, this.onBulletCollision);
         this.physics.add.collider(this.enemyBulletGroup, layer6, this.onBulletCollision);
 
+        this.physics.add.collider(this.player, layer7);
         this.physics.add.collider(this.enemyGroup, layer7);
+        this.physics.add.collider(this.bulletGroup, layer7, this.onBulletCollision);
         this.physics.add.collider(this.enemyBulletGroup, layer7, this.onBulletCollision);
 
         //Camaras

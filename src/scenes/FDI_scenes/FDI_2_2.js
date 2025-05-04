@@ -36,8 +36,6 @@ export default class FDI_2_2 extends SalaBase {
         // Crear grupo de objetos rompibles
         this.breakableGroup = this.physics.add.group();
 
-    ;
-
         // Crear objetos rompibles desde la capa de objetos 'Breakables'
         const breakablesObjectLayer = map.getObjectLayer('Breakables');
         if (breakablesObjectLayer) {
@@ -54,9 +52,6 @@ export default class FDI_2_2 extends SalaBase {
                     this.breakableGroup.add(breakable);
                     breakable.body.setImmovable(true);  // Asegurar que el objeto sea inmovible
                 }
-
-
-                
             });
         }
 

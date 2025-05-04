@@ -24,7 +24,9 @@ export default class FDI_Boss_2 extends SalaBase{
         this.enemyBulletGroup = this.physics.add.group();
         this.player = new Player(this, 200, 300, this.playerStats);
 
+        this.physics.add.collider(this.player, layer2);
         this.physics.add.collider(this.enemyGroup, layer2);
+        this.physics.add.collider(this.bulletGroup, layer2, this.onBulletCollision);
         this.physics.add.collider(this.enemyBulletGroup, layer2, this.onBulletCollision);
 
         //Camaras

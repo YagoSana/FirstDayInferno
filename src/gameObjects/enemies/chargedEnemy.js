@@ -127,7 +127,7 @@ export default class ChargedEnemy extends Npc {
       const angle = i * angleStep;
       const dirX = Math.cos(angle);
       const dirY = Math.sin(angle);
-      new Bullet(this.scene, this.x, this.y, dirX, dirY, 0, 0, false, 'binaryBullet');
+      new Bullet(this.scene, this.x, this.y, dirX, dirY, 0, 0, false, 'binaryBullet',this.type);
     }
   }
 

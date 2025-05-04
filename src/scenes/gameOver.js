@@ -220,6 +220,12 @@ export default class GameOver extends Phaser.Scene {
             'zombie': '¡Un zombie te ha convertido en uno de ellos!',
             'turret': '¡La torreta te ha alcanzado!',
             'cat': 'Xdxdxdxdxxdxddxxddddx',
+            'bossMedicina': 'Tu hora ha llegado antes de lo previsto',
+            'printer': 'No se puede imprimir a color, me falta tinta',
+            'skeleton': 'Con tu física y tu química, y tambien tu anatomía ...',
+            'server': 'Paso 1: instala Eduroam, Paso 2: muere',
+            'fisica': 'No se que diría uno de fisica ... Bazinga',
+            'phantom': 'Tío, yo antes molaba. Ahora soy un balón ...',
         };
         return texts[enemyType] || '¡Un enemigo te ha derrotado!';
     }

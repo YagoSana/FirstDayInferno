@@ -21,22 +21,23 @@ export default class FDI_2_1 extends SalaBase {
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
         const tileset3 = map.addTilesetImage('tileset_nuevo', 'Decorado');
+    
         
         // Configurar capas normales
         const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
         const layer2 = map.createLayer('pared', [tileset1, tileset2, tileset3], 0, 0);
+        const layer3 = map.createLayer('objetos', [tileset1, tileset2, tileset3], 0, 0 );
         const layer4 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
         const layer5 = map.createLayer('sin colisiones', [tileset1, tileset2], 0, 0);
         
-        // Cargar "objetos" como GameObjects personalizados
-        this.breakableGroup = this.physics.add.group();
-        const objectLayer = map.getObjectLayer('objetos');
+
         
    
         
         // Configurar colisiones normales
         layer2.setCollisionByExclusion([-1], true);
         layer4.setCollisionByExclusion([-1], true);
+        layer3.setCollisionByExclusion([-1], true);
         
         // Agrupar balas, enemigos, etc.
         this.bulletGroup = this.physics.add.group();
@@ -59,6 +60,11 @@ export default class FDI_2_1 extends SalaBase {
         this.physics.add.collider(this.enemyGroup, layer2);
         this.physics.add.collider(this.bulletGroup, layer2, this.onBulletCollision);
         this.physics.add.collider(this.enemyBulletGroup, layer2, this.onBulletCollision);
+
+        this.physics.add.collider(this.player, layer3);
+        this.physics.add.collider(this.enemyGroup, layer3);
+        this.physics.add.collider(this.bulletGroup, layer3, this.onBulletCollision);
+        this.physics.add.collider(this.enemyBulletGroup, layer3, this.onBulletCollision);
         
         this.physics.add.collider(this.player, layer4);
         this.physics.add.collider(this.enemyGroup, layer4);
@@ -66,10 +72,7 @@ export default class FDI_2_1 extends SalaBase {
         this.physics.add.collider(this.enemyBulletGroup, layer4, this.onBulletCollision);
         
         // Ahora colisiones entre balas y breakableObjects
-        this.physics.add.collider(this.bulletGroup, this.breakableGroup, (bullet, breakable) => {
-            breakable.hitBullet(breakable, bullet);
-        });
-        
+     
         // Camara
         this.physics.world.setBounds(0, 0, this.bound1, this.bound2);
         this.cameras.main.setBounds(0, -150, this.bound1, this.bound2);
