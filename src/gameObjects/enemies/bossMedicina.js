@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import Npc from './npc.js';
 import Bullet from '../projectiles/bullet.js';
+import DialogueBox from '../../scenes/conversation.js';
 
 export default class BossMedicina extends Npc {
 
@@ -39,6 +40,23 @@ export default class BossMedicina extends Npc {
     this.orbes = [];
     this.ultimoDisparo = 0;
     this.orbesDisparados = 0;
+    this.dialogueBox = new DialogueBox(this.scene, 310, 310, 400, '', 'La Muerte');
+    this.dialogo = [
+      "Veo que ya has llegado hasta aquí...",
+      "Te sugiero que abandones esto...",
+      "Lo hago por tu bien...",
+      "Creeme",
+      "No quiero hacerte daño...",
+      "Pero no tengo otra opción...",
+    ];
+    this.dialogoMuerte = [
+      "No sabes lo que has hecho...",
+      "Eres fuerte...",
+      "Pero EL lo es más...",
+    ];
+    this.haHablado = false;
+    this.primerDialogo = false;
+    this.dead = false;
   }
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
@@ -56,31 +74,13 @@ export default class BossMedicina extends Npc {
       this.body.setVelocity(0, 0);
     }
     else {
-      if (!this.introduction) {
-        this.setVisible(true); // Hacemos visible al enemigo
-        this.body.enable = false;
-        this.playReverse("bossMedicinaDeath", true);
-        this.introduction = true;
-        this.scene.cameras.main.shake(800, 0.003);
-
-        // Lanzar escena de barra de vida
-        if (!this.scene.scene.isActive('BossHealthBarScene')) {
-          console.log('BOSS BAR LANZADA');
-          this.scene.scene.launch('BossHealthBarScene', {
-            type: this.type,
-            maxHealth: this.maxHealth,
-            currentHealth: this.health
-          });
-          this.scene.scene.bringToTop('BossHealthBarScene');
-        }
-
-
-        //this.scene.cameras.main.shake(100, 0.01);
-        this.once('animationcomplete', () => {
-          this.play("bossMedicinaIdle2", true);
-          this.body.enable = true;
-        });
+      if (!this.introduction && !this.haHablado) {
+        this.haHablado = true;
+        this.scene.physics.world.pause(); // Pausa el mundo temporalmente
+        this.dialogueSecuencia(0);
+        return;
       }
+      if (!this.introduction || !this.haHablado) return;
       if (this.health > 25) {
         if (this.body.velocity.x > 0) {
           this.flipX = false; // Mirar a la derecha
@@ -238,9 +238,55 @@ export default class BossMedicina extends Npc {
         // Emitir evento de boss derrotado
         this.scene.game.events.emit('bossDefeated');
       });
-      
+
       this.scene.scene.stop('BossHealthBarScene');
     }
     bullet.explode();
   }
+
+  dialogueSecuencia(indice) {
+    if (!this.primerDialogo) {
+      if (indice >= this.dialogo.length) {
+        this.dialogueBox.hide();
+        this.scene.physics.world.resume(); // Reanuda el mundo
+        this.iniciarCombate(); // Activa visualmente al jefe y lanza la barra de vida
+        return;
+      }
+
+      this.dialogueBox.show(this.dialogo[indice]);
+
+      // Avanzar con tecla E
+      const avanzar = () => {
+        this.scene.input.keyboard.off('keydown-E', avanzar);
+        this.dialogueSecuencia(indice + 1);
+      };
+
+      this.scene.input.keyboard.on('keydown-E', avanzar);
+    }
+  }
+
+  iniciarCombate() {
+    this.primerDialogo = true;
+    this.setVisible(true);
+    this.body.enable = false;
+    this.playReverse("bossMedicinaDeath", true);
+    this.introduction = true;
+    this.scene.cameras.main.shake(800, 0.003);
+
+    if (!this.scene.scene.isActive('BossHealthBarScene')) {
+      this.scene.scene.launch('BossHealthBarScene', {
+        type: this.type,
+        maxHealth: this.maxHealth,
+        currentHealth: this.health
+      });
+      this.scene.scene.bringToTop('BossHealthBarScene');
+    }
+
+    this.once('animationcomplete', () => {
+      this.play("bossMedicinaIdle2", true);
+      this.body.enable = true;
+    });
+  }
+
+
 }

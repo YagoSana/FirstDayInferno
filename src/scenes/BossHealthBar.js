@@ -152,6 +152,8 @@ export default class BossHealthBarScene extends Phaser.Scene {
     getBossName(bossType) {
         const names = {
             'bossMedicina': 'LA MUERTE',
+            'bossFDIfase1': 'PROFESOR',
+            'bossFDIfase2': '¿?QUIÉN ERES¿?'
             // Añadir más bosses aquí
         };
         return names[bossType] || bossType.toUpperCase();
