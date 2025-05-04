@@ -94,6 +94,7 @@ import sonidoMaquina from '../../assets/music/sonidoMaquina.wav';
 import sonidoParaninfo from '../../assets/music/paraninfo.mp3';
 import flush from '../../assets/sounds/flush.mp3';
 import musicaCafe1 from '../../assets/music/musicaCafe1.mp3';
+import motorSound from '../../assets/sounds/engine.mp3';
 
 //GUI ------------------------------------------------------
 import mainMenu from "../../assets/sprites/mainmenu.png";
@@ -172,6 +173,7 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('sonidoParaninfo', sonidoParaninfo);
     this.load.audio('flush', flush);
     this.load.audio('musicaCafe1', musicaCafe1);
+    this.load.audio('motorSound', motorSound);
     //AUDIO
     this.loadFont('monogram', monogram);
     this.load.image('background', Background);
