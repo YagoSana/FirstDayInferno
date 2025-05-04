@@ -113,6 +113,25 @@ export default class FDI_2_2 extends SalaBase {
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+
+        let spritesLayer = map.getObjectLayer("sprites");
+        if (!this.status) {
+            spritesLayer.objects.forEach(obj => {
+                let type = obj.properties.find(p => p.name === "tipo")?.value;
+                if (type === "enemy") {
+                    this.numEnemies++
+                    this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+                }
+            });
+        } else {
+            spritesLayer.objects.forEach(obj => {
+                let type = obj.properties.find(p => p.name === "tipo")?.value;
+
+                if (type === "enemy") {
+                    this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
+                }
+            });
+        }
     }
 
 }
