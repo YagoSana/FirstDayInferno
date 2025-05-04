@@ -233,6 +233,7 @@ export default class BossMedicina extends Npc {
       this.body.enable = false;
       this.body.setVelocity(0, 0);
       this.play("bossMedicinaDeath", true);
+      this.scene.cameras.main.fadeOut(3000, 0, 0, 0);
       this.once('animationcomplete', () => {
         this.hasFinishedDying = true;  // nuevo flag
         // Emitir evento de boss derrotado
