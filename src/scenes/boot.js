@@ -58,7 +58,6 @@ import toilet from "../../assets/sprites/toilet.png"
 //JUGADOR CON ITEMS ----------------------------------------------
 import player_items from "../../assets/sprites/player_item.png";
 import bullets from "../../assets/sprites/bullets_spritesheet.png";
-import binaryBullet from "../../assets/sprites/binary-bullet.png";
 import server from "../../assets/sprites/server.png";
 
 //AUDIO ------------------------------------------------------
@@ -97,6 +96,7 @@ import mainMenu from "../../assets/sprites/mainmenu.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
 import game_over_screen from "../../assets/sprites/enemy_game_over.png";
 import bartenderImg from "../../assets/sprites/camarero.png";
+import vs_screen from "../../assets/sprites/vs_spritesheet.png";
 //BOSS MEDICINA ------------------------------------------------------
 import bossMedicinaIdle from "../../assets/sprites/bossMedicinaIdle.png";
 import bossMedicinaIdle2 from "../../assets/sprites/bossMedicinaIdle2.png";
@@ -224,7 +224,7 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
-    this.load.spritesheet("hippie-face", hippiePortrait,{
+    this.load.spritesheet("hippie-face", hippiePortrait, {
       frameWidth: 32,
       frameHeight: 32,
     });
@@ -269,7 +269,12 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.load.spritesheet("player_gui_64", player_gui, {
-      frameWidth: 64, //cada frame tiene este ancho
+      frameWidth: 64, //solo por la barra de vida del player
+      frameHeight: 32, //todos son 32 px de alto
+    });
+
+    this.load.spritesheet("player_gui_96", player_gui, {
+      frameWidth: 96, //solo por la barra del boss
       frameHeight: 32, //todos son 32 px de alto
     });
 
@@ -293,12 +298,12 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
-    this.load.spritesheet('secretDoor', secretDoor,{
+    this.load.spritesheet('secretDoor', secretDoor, {
       frameWidth: 32,
       frameHeight: 39,
     });
 
-    this.load.spritesheet('lock', lock,{
+    this.load.spritesheet('lock', lock, {
       frameWidth: 16,
       frameHeigth: 16,
     })
@@ -339,17 +344,17 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
+    this.load.spritesheet('vs_screen', vs_screen, {
+      frameWidth: 100,
+      frameHeigth: 100,
+    });
+
     this.load.spritesheet("game_over_screen", game_over_screen, {
       frameWidth: 100,
       frameHeight: 100,
     });
 
     this.load.spritesheet('bullets', bullets, {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
-
-    this.load.spritesheet('binaryBullet', binaryBullet, {
       frameWidth: 32,
       frameHeight: 32,
     });
@@ -935,7 +940,7 @@ export default class Boot extends Phaser.Scene {
       repeat: 1,
     });
 
-    
+
     this.anims.create({
       key: "lock-open",
       frames: this.anims.generateFrameNames("lock", { start: 0, end: 7 }),
@@ -1216,6 +1221,18 @@ export default class Boot extends Phaser.Scene {
       repeat: -1,
     });
 
+    this.textures.addSpriteSheet('boss_bar', this.textures.get('player_gui_96').getSourceImage(), {
+      frameWidth: 96,
+      frameHeight: 32,
+      startFrame: 9
+    });
+
+    this.textures.addSpriteSheet('boss_icon', this.textures.get('player_gui').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 39
+    });
+
     this.anims.create({
       key: "fire_start",
       frames: this.anims.generateFrameNames("fire", { start: 0, end: 3 }),
@@ -1273,11 +1290,54 @@ export default class Boot extends Phaser.Scene {
       startFrame: 5
     });
 
+    this.textures.addSpriteSheet('nand_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 6
+    });
+
+    this.textures.addSpriteSheet('skeleton_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 7
+    });
+
     this.textures.addSpriteSheet('uncanny_cat', this.textures.get('game_over_screen').getSourceImage(), {
       frameWidth: 100,
       frameHeight: 100,
       startFrame: 8
     });
+
+    this.textures.addSpriteSheet('bossMedicina_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 9
+    });
+
+    this.textures.addSpriteSheet('printer_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 10
+    });
+
+    this.textures.addSpriteSheet('server_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 11
+    });
+
+    this.textures.addSpriteSheet('fisica_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 12
+    });
+
+    this.textures.addSpriteSheet('phantom_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 13
+    });
+
 
     this.textures.addSpriteSheet('paperbullet', this.textures.get('bullets').getSourceImage(), {
       frameWidth: 32,
@@ -1285,11 +1345,6 @@ export default class Boot extends Phaser.Scene {
       startFrame: 0
     });
 
-    this.textures.addSpriteSheet('binaryBullet', this.textures.get('binayBullet').getSourceImage(), {
-      frameWidth: 32,
-      frameHeight: 32,
-      startFrame: 0
-    });
 
     this.textures.addSpriteSheet('zombiebullet', this.textures.get('bullets').getSourceImage(), {
       frameWidth: 32,
@@ -1321,6 +1376,25 @@ export default class Boot extends Phaser.Scene {
       startFrame: 9
     });
 
+    this.textures.addSpriteSheet('binaryBullet', this.textures.get('bullets').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 10
+    });
+
+    this.textures.addSpriteSheet('fisicaBullet', this.textures.get('bullets').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 11
+    });
+
+    this.textures.addSpriteSheet('printerBullet', this.textures.get('bullets').getSourceImage(), {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 12
+    });
+
+
     this.anims.create({
       key: "nerdbullet",
       frames: this.anims.generateFrameNames("bullets", { start: 4, end: 7 }),
@@ -1334,6 +1408,25 @@ export default class Boot extends Phaser.Scene {
       frameRate: 8,
       repeat: 0,
     });
+
+    this.textures.addSpriteSheet('vs_text', this.textures.get('vs_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 0
+    });
+
+    this.textures.addSpriteSheet('vs_player', this.textures.get('vs_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 1
+    });
+
+    this.textures.addSpriteSheet('vs_bossMedicina', this.textures.get('vs_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 2
+    });
+
     this.scene.start('UIButtons');
     this.scene.start('MainMenu');
   }

@@ -36,7 +36,7 @@ export default class MiniBoss extends RangedEnemy {
   spawnGuardians() {
     const offsets = [-100, 100];
     offsets.forEach(offset => {
-      const guardian = new ChargedEnemy(this.scene, this.x + offset, this.y + 60, this.type);
+      const guardian = new ChargedEnemy(this.scene, this.x + offset, this.y + 60, 'server');
       guardian.setScale(1);
       this.scene.enemyGroup.add(guardian);
       this.guardians.push(guardian);

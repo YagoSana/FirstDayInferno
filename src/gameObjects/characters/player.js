@@ -557,6 +557,9 @@ export default class Player extends SpriteBase {
                     if (this.scene.scene.isActive('MapMenu')) {
                         this.scene.scene.stop('MapMenu');
                     }
+                    if (this.scene.scene.isActive('BossHealthBarScene')) {
+                        this.scene.scene.stop('BossHealthBarScene');
+                    }
                     this.scene.scene.start('gameOver', {
                         deathData: {
                             type: this.lastDamageType,
