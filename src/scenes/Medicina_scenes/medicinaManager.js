@@ -102,7 +102,7 @@ export default class medicinaManager extends Phaser.Scene {
    
     this.mapStatus = new Map();
     this.mapStatus.set("medicina_5", false);
-    this.scene.start("medicina_5", { x: 320, y: 280, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get("introMedicina") });
+    this.scene.start("medicina_5", { x: 320, y: 280, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get("medicina_5") });
   }
 
 
@@ -123,8 +123,8 @@ export default class medicinaManager extends Phaser.Scene {
   }
 
   volverAlLobby(sala) {
-    this.mapStatus.set(sala, true);
     this.scene.stop(sala);
+    this.mapStatus.set(sala, true);
     this.scene.sleep('medicinaManager');
     this.scene.start('selectorNivel', {playerStats: this.playerStats});
   }

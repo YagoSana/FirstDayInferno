@@ -1,18 +1,18 @@
-//Poner en el boot los paraninfos, y tambien tengo que poner en game las salas? mirar paraninfo_1 pq me faltaba algo mas creo, modificar el manager
-import SalaBase from "../salaBase";
-import Player from "../../gameObjects/characters/player";
+import SalaBase from "../../scenes/salaBase.js";
+import Player from "../../gameObjects/characters/player.js";
+import BossFDI from "../../gameObjects/enemies/bossFDI.js";
 
-export default class FDI_Boss_2 extends SalaBase{
-    constructor(key){
+export default class FDI_Boss_2 extends SalaBase {
+    constructor(key) {
         super('FDI_Boss_2');
     }
 
-    create(){
+    create() {
         super.create('FDI_Boss_2');
 
         const map = this.make.tilemap({ key: 'FDI_Boss_2' });
 
-        const tileset1= map.addTilesetImage('paraninfo', 'Paraninfo');
+        const tileset1 = map.addTilesetImage('paraninfo', 'Paraninfo');
 
         const layer1 = map.createLayer('suelo', [tileset1], 0, 0);
         const layer2 = map.createLayer('colision enemigos', [tileset1], 0, 0);
@@ -22,7 +22,7 @@ export default class FDI_Boss_2 extends SalaBase{
         this.bulletGroup = this.physics.add.group();
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
-        this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
+        this.player = new Player(this, 200, 300, this.playerStats);
 
         this.physics.add.collider(this.player, layer2);
         this.physics.add.collider(this.enemyGroup, layer2);
@@ -36,14 +36,18 @@ export default class FDI_Boss_2 extends SalaBase{
         const mapHeight = map.heightInPixels;
         const zoom = 1.8;
         const boundX = -(screenWidth / zoom - mapWidth) / 2;
-        
+
         this.physics.world.setBounds(0, 0, mapWidth, mapHeight);
         this.cameras.main.setBounds(boundX, 0, mapWidth, mapHeight);
 
         this.cameras.main.setZoom(zoom);
 
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
-
+        this.cameras.main.shake(10000000000, 0.001); // duración larga, intensidad muy baja
         this.transitionZones = this.physics.add.group();
+        this.enemyGroup.add(new BossFDI(this, 270, 80, 2));
+        this.numEnemies++;
+        this.cameras.main.setBackgroundColor('#110011'); // tono oscuro
     }
+
 }

@@ -111,6 +111,8 @@ import bossMedicinaDisparo from "../../assets/sprites/bossMedicinaDisparo.png";
 import bossMedicinaBullet from "../../assets/sprites/bossMedicinaBullet.png";
 import bossMedicinaBulletAppear from "../../assets/sprites/bossMedicinaBulletAppear.png";
 import bossMedicinaBulletDestroy from "../../assets/sprites/bossMedicinaDestroy.png";
+//BOSS FDI ------------------------------------------------------
+import bossFDIfase2 from "../../assets/sprites/bossFDIfase2.png";
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -178,6 +180,8 @@ export default class Boot extends Phaser.Scene {
     this.load.image('button_hover', Button_hover)
     this.load.image('pause_bg', pause_bg)
     this.load.image('spark', spark);
+    //BOSS FDI
+    this.load.image('bossFDIfase2', bossFDIfase2);
     //BOSS MEDICINA
     this.load.spritesheet("bossMedicinaIdle", bossMedicinaIdle, {
       frameWidth: 100,
