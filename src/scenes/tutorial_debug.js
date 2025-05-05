@@ -2,6 +2,7 @@ import SalaBase from "./salaBase.js";
 import Player from "../gameObjects/characters/player.js";
 import Item from "../gameObjects/items/item.js";
 import VendingMachine from "../gameObjects/items/vendingMachine.js";
+import Bartender from "../gameObjects/items/bartender.js";
 
 export default class Tutorial_debug extends SalaBase {
     constructor(key) {
@@ -71,6 +72,9 @@ export default class Tutorial_debug extends SalaBase {
             }
             else if (type === "item") {
                 let it = new Item(this, obj.x, obj.y, obj.name);
+            }
+            else if (type === "merchant") {
+                let bar = new Bartender(this, obj.x, obj.y);
             }
         });
 

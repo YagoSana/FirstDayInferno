@@ -9,14 +9,14 @@ export default class VendingMachine extends SpriteBase {
         this.sonidoUso = this.scene.sound.add('sonidoMaquina', { volume: 0.5, loop: false });
         this.body.setImmovable(true); // Esto evita que se mueva al colisionar
         this.body.allowGravity = false; // Por si acaso
-
+        this.scale = 1.4;
         // Ajustar hitbox para permitir pasar un poco por encima
         this.body.setSize(20, 10); // Reducimos altura
         this.body.setOffset(6, 0); // Ajustamos offset
-        this.setScale(1.2);
+        this.setScale(this.scale);
         this.interactionRange = 60;
-        this.originalScaleX = 1.2;
-        this.originalScaleY = 1.2;
+        this.originalScaleX = this.scale;
+        this.originalScaleY = this.scale;
 
         this.interactionArea = this.scene.add.circle(x, y, 20, 0x000000, 0);
         this.scene.physics.add.existing(this.interactionArea);

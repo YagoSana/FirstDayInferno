@@ -166,6 +166,10 @@ export default class PauseMenu extends Phaser.Scene {
             this.scene.stop('BossHealthBarScene');
         }
 
+        if (this.scene.isActive('DialogueScene')) {
+            this.scene.stop('DialogueScene');
+        }
+
         let uiButtons = this.scene.get('UIButtons');
             if(uiButtons){
                 uiButtons.updateScene(this.previousScene, null);

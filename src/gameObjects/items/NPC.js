@@ -7,6 +7,7 @@ export default class NPC extends SpriteBase {
     constructor(scene, x, y) {
         super(scene, x, y, 'NPC');
 
+        this.scene = scene;
         this.body.setImmovable(true);
         this.body.allowGravity = false;
         this.body.setSize(20, 10);
@@ -17,7 +18,6 @@ export default class NPC extends SpriteBase {
         this.bulletHits = 0;
         this.maxBulletHits = 3;
 
-        this.dialogueBox = new DialogueBox(this.scene, this.x + 100, this.y + 200, 300, 'borjaPortrait', 'Borja');
 
         this.hit_frases = [
             "¡Eh tronco, que tengo clase luego!",
@@ -35,16 +35,8 @@ export default class NPC extends SpriteBase {
 
         this.dialogueActivo = false;
         this.objectGiven = false;
-        this.modoHabla = true;
         this.interactionRange = 60;
-
-        // Cola de diálogo
-        this.dialogueQueue = [];
-        this.dialogueIndex = 0;
-
-        this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
-        this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
-        this.scene.physics.add.collider(this, scene.enemyGroup);
+        this.playerIsNear = false;
 
         this.play('teacher-front');
 
@@ -54,62 +46,87 @@ export default class NPC extends SpriteBase {
             .setDepth(20)
             .play('key_E_action');
 
-        // Mostrar ícono si estás cerca
-        this.scene.physics.add.overlap(
-            this,
-            this.scene.player,
-            () => {
-                if (!this.dialogueActivo) {
-                    this.eKeyIcon.setPosition(this.x, this.y - 30);
-                    this.eKeyIcon.setVisible(true);
-                }
-            },
-            null,
-            this
-        );
+        this.setupPhysics();
+        this.setupInteraction();
+    }
 
-        // Ocultar ícono si te alejas
+    setupPhysics() {
+        this.scene.physics.add.collider(this, this.scene.player, this.hitPlayer, null, this);
+        if (this.scene.bulletGroup) {
+            this.scene.physics.add.collider(this, this.scene.bulletGroup, this.hitBullet, null, this);
+        }
+        if (this.scene.enemyGroup) {
+            this.scene.physics.add.collider(this, this.scene.enemyGroup);
+        }
+    }
+
+    setupInteraction() {
+        // Mostrar/ocultar ícono E
         this.scene.events.on('update', () => {
-            if (!this.isPlayerInRange() || this.dialogueActivo===true) {
-                this.eKeyIcon.setVisible(false);
-            } else {
-                this.eKeyIcon.setVisible(true);
-            }
+            this.playerIsNear = this.isPlayerInRange();
+            this.eKeyIcon.setVisible(this.playerIsNear && !this.dialogueActivo);
+            this.eKeyIcon.setPosition(this.x, this.y - 30);
         });
 
-        // ACCION DE HABLAR (PULSAR LA E)
+        // Escuchar tecla E
         this.scene.input.keyboard.on('keydown-E', () => {
-            if (!this.isPlayerInRange() && !this.dialogueActivo) return;
-            if(!this.dialogueActivo){
-            const fraseAleatoria = Phaser.Utils.Array.GetRandom(this.talk_frases);
-            this.hablar(fraseAleatoria);
+            if (!this.playerIsNear) return;
+
+            if (this.dialogueActivo) {
+                this.scene.events.emit('closeDialogue');
+                return;
             }
-            else {
-                this.dialogueBox.hide();
-                this.dialogueActivo = false;
-            }
-        });
+
+            this.iniciarDialogo();
+        }, this);
     }
 
     isPlayerInRange() {
-        if (!this.scene || !this.scene.player || !this.scene.player.x || !this.x) return false;
-        return Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <= this.interactionRange;
+        if (!this.scene || !this.scene.player) return false;
+        return Phaser.Math.Distance.Between(
+            this.x, this.y,
+            this.scene.player.x, this.scene.player.y
+        ) <= this.interactionRange;
     }
-    preUpdate(t, dt){
+
+    preUpdate(t, dt) {
         super.preUpdate(t, dt);
-      }
-      
-    hablar(frase) {
-        if (!this.dialogueActivo) {
-            // Primera vez que se activa el diálogo
-            if (!this.objectGiven) {
-                this.dialogueBox.show("Esto es para ti, cuidao con él.");
-                this.objectGiven = true;
-                this.dispenseItem(); // Puedes mover esto al final del diálogo si prefieres
+    }
+
+    iniciarDialogo() {
+        this.dialogueActivo = true;
+        this.eKeyIcon.setVisible(false);
+
+        // Mensaje especial si es la primera interacción
+        if (!this.objectGiven) {
+            this.mostrarDialogo("Esto es para ti, cuidao con él.");
+            this.dispenseItem();
+            this.objectGiven = true;
+        } else {
+            const frase = Phaser.Utils.Array.GetRandom(this.talk_frases);
+            this.mostrarDialogo(frase);
+        }
+    }
+
+    mostrarDialogo(frase) {
+        this.dialogueActivo = true;
+        this.eKeyIcon.setVisible(false);
+
+        this.scene.scene.launch('DialogueScene', {
+            message: frase,
+            speaker: 'Borja',
+            portraitKey: 'borjaPortrait',
+            textSpeed: 35,
+            previousScene: this.scene.scene.key,
+            onClose: () => {
+                this.dialogueActivo = false;
+                if (this.isPlayerInRange()) {
+                    this.eKeyIcon.setVisible(true);
+                }
             }
-            this.dialogueActivo = true;
-            this.dialogueBox.show(frase);
-        } 
+        });
+
+        this.scene.scene.bringToTop('DialogueScene');
     }
 
     dispenseItem() {
@@ -160,56 +177,48 @@ export default class NPC extends SpriteBase {
 
     hitBullet(machine, bullet) {
         bullet.explode();
-    
+
         this.flashEffect();
         this.bulletHits++;
-    
+
         // Mostrar frase solo si no hay diálogo activo
         if (!this.dialogueActivo) {
-            let frase = "...";
-            if (this.bulletHits != this.maxBulletHits) {
-                frase = Phaser.Utils.Array.GetRandom(this.hit_frases);
-            }
-    
-            this.dialogueBox.show(frase);
-            this.dialogueActivo = true;
+            const frase = Phaser.Utils.Array.GetRandom(this.hit_frases);
+            this.mostrarDialogo(frase);
         }
-    
+
         if (this.bulletHits >= this.maxBulletHits) {
             this.bulletHits = 0;
-        
-            // Mostrar sprite animado de la explosión
-            const explosion = this.scene.add.sprite(this.x, this.y, 'fire_loop');
-            explosion.play('fire_loop'); // Asegúrate de que esté cargada como animación
-            explosion.setScale(2);
-            explosion.setDepth(50);
-        
-            // Fade-out bonito
-            this.scene.tweens.add({
-                targets: explosion,
-                alpha: 0,
-                scale: 3,
-                duration: 2000,
-                ease: 'Cubic.easeOut',
-                onComplete: () => {
-                    explosion.destroy();
-                }
-            });
-        
-            // Tween del NPC antes de destruirlo
-            this.scene.tweens.add({
-                targets: this,
-                scale: 0,
-                alpha: 0,
-                duration: 1000,
-                ease: 'Power2',
-                onComplete: () => {
-                    this.emit('npcDeath', this.x, this.y);
-                    this.destroy();
-                }
-            });
+            this.destruirNPC();
         }
-        
-        
-}
+    }
+
+    destruirNPC() {
+        this.bulletHits = 0;
+        const explosion = this.scene.add.sprite(this.x, this.y, 'fire_loop')
+            .play('fire_loop')
+            .setScale(2)
+            .setDepth(50);
+
+        this.scene.tweens.add({
+            targets: explosion,
+            alpha: 0,
+            scale: 3,
+            duration: 2000,
+            ease: 'Cubic.easeOut',
+            onComplete: () => explosion.destroy()
+        });
+
+        this.scene.tweens.add({
+            targets: this,
+            scale: 0,
+            alpha: 0,
+            duration: 1000,
+            ease: 'Power2',
+            onComplete: () => {
+                this.emit('npcDeath', this.x, this.y);
+                this.destroy();
+            }
+        });
+    }
 }
