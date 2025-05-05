@@ -106,11 +106,23 @@ export default class FDI_4 extends SalaBase {
 
     }
 
+    cambiarSala(player, zone) {
+        this.sound.stopByKey('musicaCafe1');
+        if (!zone.spawnRoom || !this.player.canChangeRoom || !zone.open) return;
+        this.player.canChangeRoom = false;
+        this.manager.guardarPlayerStats(this.player.getStats());
+        this.time.delayedCall(1000, () => {
+            this.player.canChangeRoom = true;
+        });
+        this.cameras.main.fadeOut(500, 0, 0, 0);
+        this.cameras.main.once('camerafadeoutcomplete', () => {
+            this.manager.cambiarSala(zone);
+        });
+    }
+
     spawnProps(){
         //this.enemyGroup.add(new Enemy(this, 154, 210, "cucaracha"));
        // this.numEnemies++;
-       
-       
            
         }
     

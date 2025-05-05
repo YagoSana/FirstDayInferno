@@ -847,9 +847,56 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":11,
+         "name":"sprites",
+         "objects":[
+                {
+                 "height":0,
+                 "id":47,
+                 "name":"nand",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"tipo",
+                         "type":"string",
+                         "value":"enemy"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":167.806377257011,
+                 "y":477.602766039186
+                }, 
+                {
+                 "height":0,
+                 "id":48,
+                 "name":"nand",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"tipo",
+                         "type":"string",
+                         "value":"enemy"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":307.645024971187,
+                 "y":476.527084133692
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":11,
- "nextobjectid":47,
+ "nextlayerid":12,
+ "nextobjectid":49,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -858,7 +905,7 @@
         {
          "columns":16,
          "firstgid":1,
-         "image":"..\/TILESETS\/Interiors_free_16x16.png",
+         "image":"Interiors_free_16x16.png",
          "imageheight":1424,
          "imagewidth":256,
          "margin":0,
@@ -871,7 +918,7 @@
         {
          "columns":17,
          "firstgid":1425,
-         "image":"..\/TILESETS\/Room_Builder_free_16x16.png",
+         "image":"Room_Builder_free_16x16.png",
          "imageheight":368,
          "imagewidth":272,
          "margin":0,

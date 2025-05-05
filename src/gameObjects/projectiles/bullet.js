@@ -31,6 +31,9 @@ export default class Bullet extends SpriteBase {
                 case 'binaryBullet':
                     this.scale = 0.8;
                     break;
+                case 'printerBullet':
+                    this.scale = 0.8;
+                    break;
             }
             this.setScale(this.scale);
             console.log(type);

@@ -461,7 +461,7 @@
          "y":0
         }],
  "nextlayerid":12,
- "nextobjectid":7,
+ "nextobjectid":11,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -505,10 +505,6 @@
          "tilecount":1424,
          "tileheight":16,
          "tilewidth":16
-        }, 
-        {
-         "firstgid":2207,
-         "source":"..\/..\/..\/Mapas\/paraninfo.tsx"
         }],
  "tilewidth":16,
  "type":"map",

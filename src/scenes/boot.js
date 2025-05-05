@@ -31,11 +31,15 @@ import camarero from "../../assets/sprites/bartender_front_iddle.png"
 //PROFESOR
 import borja from "../../assets/sprites/borja.png"
 import borjaPortrait from "../../assets/sprites/borja_frontal_32x32.png";
-import borjaMalvado from "../../assets/sprites/borja_malvado.png"
+import borjaMalvado from "../../assets/sprites/borja_malvado.png";
 
 //NPCS 
-import hippie from "../../assets/sprites/sprite_hippie_32x32.png"
-import hippiePortrait from "../../assets/sprites/hippie.png"
+import hippie from "../../assets/sprites/sprite_hippie_32x32.png";
+import hippiePortrait from "../../assets/sprites/hippie.png";
+import seller from "../../assets/sprites/alcohol_seller_32x32.png";
+import fdi_student from "../../assets/sprites/fdi_student_32x32.png";
+import fdi_studentPortrait from "../../assets/sprites/fdi_student_portrait_32x32.png";
+import car from "../../assets/sprites/car_crash_64x64.png";
 
 //EXTRAS ------------------------------------------------------
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
@@ -90,6 +94,7 @@ import sonidoMaquina from '../../assets/music/sonidoMaquina.wav';
 import sonidoParaninfo from '../../assets/music/paraninfo.mp3';
 import flush from '../../assets/sounds/flush.mp3';
 import musicaCafe1 from '../../assets/music/musicaCafe1.mp3';
+import motorSound from '../../assets/sounds/engine.mp3';
 
 //GUI ------------------------------------------------------
 import mainMenu from "../../assets/sprites/mainmenu.png";
@@ -168,6 +173,7 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('sonidoParaninfo', sonidoParaninfo);
     this.load.audio('flush', flush);
     this.load.audio('musicaCafe1', musicaCafe1);
+    this.load.audio('motorSound', motorSound);
     //AUDIO
     this.loadFont('monogram', monogram);
     this.load.image('background', Background);
@@ -223,6 +229,7 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 64,
     });
 
+//PERSONAJES DE LA FDI
     this.load.spritesheet("hippie", hippie, {
       frameWidth: 32,
       frameHeight: 32,
@@ -231,6 +238,26 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("hippie-face", hippiePortrait, {
       frameWidth: 32,
       frameHeight: 32,
+    });
+
+    this.load.spritesheet("fdi_student", fdi_student, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet("fdi_student-face",fdi_studentPortrait, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet("seller", seller, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet("car", car,{
+      frameWidth: 64,
+      frameHeight: 64,
     });
 
     this.load.spritesheet("borja", borja, {

@@ -12,14 +12,12 @@ export default class Paraninfo_secret extends SalaBase{
 
         const map = this.make.tilemap({ key: 'paraninfo_secret' });
 
-        const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
-        const tileset3= map.addTilesetImage('paraninfo', 'Paraninfo');
 
-        const layer1 = map.createLayer('suelo', [tileset1, tileset2, tileset3], 0, 0);
-        const layer2 = map.createLayer('pared', [tileset1, tileset2, tileset3], 0, 0);
-        const layer3 = map.createLayer('sin colision', [tileset1, tileset2, tileset3], 0, 0);
-        const layer4 = map.createLayer('techo', [tileset1, tileset2, tileset3], 0, 0);
+        const layer1 = map.createLayer('suelo', [tileset2], 0, 0);
+        const layer2 = map.createLayer('pared', [tileset2], 0, 0);
+        const layer3 = map.createLayer('sin colision', [tileset2], 0, 0);
+        const layer4 = map.createLayer('techo', [tileset2], 0, 0);
 
         layer2.setCollisionByExclusion([-1], true);
         layer4.setCollisionByExclusion([-1], true);
@@ -73,6 +71,9 @@ export default class Paraninfo_secret extends SalaBase{
         spritesLayer.objects.forEach(obj => {
             let type = obj.properties.find(p => p.name === "tipo")?.value;
             if (type === "item") {
+                if (!this.status) { //sala sin objetios
+                    this.numEnemies++
+                }
                 let vm = new VendingMachine(this, obj.x, obj.y);
                 if (this.status) { //sala completada y la maquina ya esta usada
                     vm.disableMachine();

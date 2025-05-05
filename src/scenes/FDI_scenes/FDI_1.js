@@ -14,7 +14,14 @@ export default class FDI_1 extends SalaBase {
         super.create('FDI_1');
 
         const map = this.make.tilemap({ key: 'FDI_1_TL' }); // Cargamos el mapa
-        //Cargar tilesets
+        
+        // Cargar los sonidos
+        this.engineSound = this.sound.add('motorSound', { loop: true, volume: 0 });
+
+        // Empezar a reproducir el sonido
+        this.engineSound.play();
+
+        // Cargar tilesets
         const tileset1 = map.addTilesetImage('Interiors_free_16x16', 'Interior');
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
         const tileset3 = map.addTilesetImage('tileset_nuevo', 'Decorado');
@@ -37,6 +44,7 @@ export default class FDI_1 extends SalaBase {
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
         this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
+        
         //Colisiones
         this.physics.add.collider(this.player, layer2);
         this.physics.add.collider(this.enemyGroup, layer2);
@@ -63,6 +71,7 @@ export default class FDI_1 extends SalaBase {
         else {
             this.spawnBlood();
         }
+        
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
 
@@ -77,28 +86,104 @@ export default class FDI_1 extends SalaBase {
 
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+
         const frasesFilosoficas = [
-            "El tiempo es relativo, como la puntualidad del profesor.",
+            "Si pregunta la poli yo no te he dado nada.",
             "Pienso, luego me da ansiedad.",
             "¿Y si esta cerveza no existe?",
             "El verdadero examen es el que nos hace la vida.",
             "No suspendo, exploro caminos alternativos."
         ];
 
-        // Crear el NPC tipo hippie
-        this.hippieNPC = new DialogueNPC(this, 300, 220, 'hippie', 'Estudiante', frasesFilosoficas);
+        const frasesEstudiante = [
+            "Estoy en una relación estable… con mi compilador.",
+            "Dicen que tengo ‘carácter’, pero solo uso strings.",
+            "No sudo, hago overclock.",
+            "Bombardeen FAL",
+            "Bebo para olvidar que existe algoritmia"
+        ];
 
-        // Detección de impacto entre balas y el NPC
-        this.physics.add.overlap(this.bulletGroup, this.hippieNPC, (bullet, npc) => {
-            npc.hitBullet(npc, bullet);
+        const frasesVendedor = [
+            "Clases hay muchas, sangriadas, de vez en cuando",
+            "Ni siquiera estudio aquí",
+            "2 lereles el mini",
+            "Lo del coche ha sido histórico",
+            "Se me ha olvidado traer el tequifresi"
+        ];
+
+        const frasesCoche = [
+            "Kuchau",
+            "Brrrrrrr",
+            "(sonidos de coche y tal)",
+        ];
+
+        // NPCs
+        this.npcGroup = this.physics.add.group();
+
+        const spawnLayer = map.getObjectLayer('npcs');
+        if (spawnLayer) {
+            spawnLayer.objects.forEach(obj => {
+                const spawnType = obj.properties?.find(p => p.name === 'npc')?.value;
+                if (spawnType === 'seller') {
+                    let seller = new DialogueNPC(this, obj.x, obj.y, 'seller', 'Vendedor', frasesVendedor, true, "Un mini para el chaval", 0, "mini_tinto");
+                    this.npcGroup.add(seller);
+                    seller.body.setImmovable(true);
+                }
+                else if (spawnType === 'hippie') {
+                    let hippie = new DialogueNPC(this, obj.x + 20, obj.y, 'hippie', 'Estudiante', frasesFilosoficas, true, "Para que te relajes un poco", 0, "bolsa_sospechosa");
+                    this.npcGroup.add(hippie);
+                }
+                else if (spawnType === 'fdi_student') {
+                    let student = new DialogueNPC(this, obj.x + 80, obj.y, 'fdi_student', 'Estudiante', frasesEstudiante, false, " ", 0, 'mini_tinto');
+                    this.npcGroup.add(student);
+                }
+                else if (spawnType === 'crashed_car') {
+                    let car = new DialogueNPC(this, obj.x , obj.y + 32, 'car', 'coche', frasesCoche,  false, " ", 0, 'tinto');
+                    this.npcGroup.add(car);
+                }
+            });
+        }
+
+        this.npcGroup.children.iterate((npc) => {
+            if (npc.body) {
+                npc.body.setImmovable(true);
+            }
         });
+        
+        this.physics.add.collider(this.player, this.npcGroup);
+        this.physics.add.collider(this.bulletGroup, this.npcGroup,  this.onBulletCollision);
 
+        // Rango de interacción con el coche
+        this.time.addEvent({
+            delay: 100, // Cada 100 ms
+            callback: this.updateEngineSoundVolume,
+            callbackScope: this,
+            loop: true
+        });
+    }
+
+    updateEngineSoundVolume() {
+        // Encuentra el coche en el grupo
+        let car = this.npcGroup.getChildren().find(npc => npc.nombre === 'coche');
+        if (car) {
+            // Calcula la distancia entre el jugador y el coche
+            const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, car.x, car.y);
+
+            // Rango de distancia para cambiar el volumen (ajusta estos valores)
+            const maxDistance = 300;  // Distancia máxima para volumen completo
+            const minDistance = 50;   // Distancia mínima para volumen más bajo
+
+            // Normaliza la distancia
+            let normalizedDistance = Phaser.Math.Clamp((distance - minDistance) / (maxDistance - minDistance), 0, 1);
+
+            // Ajusta el volumen inversamente proporcional a la distancia
+            this.engineSound.setVolume(1 - normalizedDistance);
+        }
     }
 
     spawnProps() {
-
+        // Función para generar otros objetos
     }
-
 
     spawnBlood() {
         this.add.sprite(154, 210, "blood").setVisible(true).setDepth(3).setFrame(12);

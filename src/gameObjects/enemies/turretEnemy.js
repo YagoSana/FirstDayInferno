@@ -25,11 +25,11 @@ export default class RangedEnemy extends Npc {
 
   mypreUpdate(t, dt) {
     if (this.health > 0) {
-      if (this.anims.currentAnim && this.anims.currentAnim.key === `${this.type}_shoot`) {
+      if (this.anims.currentAnim && this.anims.currentAnim.key === `${this.type}_attack`) {
         this.setTint(0xffffff);
       } else {
         this.setTint(0xffffff);
-        this.play(`${this.type}_move`, true);
+        this.play(`${this.type}_idle`, true);
 
       } if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <=300) {
         this.inmortal = false; // El enemigo deja de ser invencible cuando está en rango
@@ -74,13 +74,14 @@ hitBullet(enemy, bullet){
   if(!this.inmortal && !this.invulnerable){
     super.hitBullet(enemy, bullet);
   }
+  else bullet.explode();
 }
   
   // Función para disparar 3 proyectiles en el eje X
   shoot() {
-    this.play(`${this.type}_shoot`, true);
+    this.play(`${this.type}_attack`, true);
     this.once('animationcomplete', () => {
-      this.play(`${this.type}_move`);
+      this.play(`${this.type}_idle`);
     });
 
     // Disparar balas constantemente en el eje X (hacia la derecha o izquierda)
@@ -88,13 +89,13 @@ hitBullet(enemy, bullet){
 
     // Disparar 3 balas con un pequeño retraso entre ellas
     this.scene.time.delayedCall(0, () => {
-      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}bullet`);
+      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}Bullet`);
     });
     this.scene.time.delayedCall(this.shootDelay, () => {
-      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}bullet`);
+      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}Bullet`);
     });
     this.scene.time.delayedCall(this.shootDelay * 2, () => {
-      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}bullet`);
+      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}Bullet`);
     });
     
   }
