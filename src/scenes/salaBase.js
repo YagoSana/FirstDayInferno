@@ -80,7 +80,7 @@ export default class SalaBase extends Phaser.Scene {
         if (this.updateLight) {
             this.updateLight();
         }
-        
+
         if (this.numEnemiesBeaten == this.numEnemies) {
             this.completed = true;
             this.transitionZones.getChildren().forEach(zone => {
@@ -98,9 +98,14 @@ export default class SalaBase extends Phaser.Scene {
         }
     }
 
-    bossDefeated() {
+    bossDefeated(texto) {
         this.manager.guardarPlayerStats(this.player.getStats());
-        this.manager.volverAlLobby(this.scene.key);
+        this.scene.pause(this.scene.key);
+        this.scene.start('MessageScreen', {
+            texto: texto,
+            prevScene: this.scene.key, // medicina_6
+            managerKey: this.managerKey
+        });
     }
 
     shutdown() {

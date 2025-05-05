@@ -237,7 +237,7 @@ export default class BossMedicina extends Npc {
       this.once('animationcomplete', () => {
         this.hasFinishedDying = true;  // nuevo flag
         // Emitir evento de boss derrotado
-        this.scene.game.events.emit('bossDefeated');
+        this.scene.game.events.emit('bossDefeated', "Te advertí, no podrás con EL...");
       });
 
       this.scene.scene.stop('BossHealthBarScene');

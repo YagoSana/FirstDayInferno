@@ -9,6 +9,7 @@ import UIButtons from './scenes/uiButtons.js';
 import DialogueBox from './scenes/conversation.js';
 import VSScreen from './scenes/vsScreen.js';
 import BossHealthBarScene from './scenes/BossHealthBar.js';
+import MessageScreen from './scenes/messageScreen.js';
 
 import FDI_1 from './scenes/FDI_scenes/FDI_1.js';
 import FDI_2 from './scenes/FDI_scenes/FDI_2.js';
@@ -63,7 +64,7 @@ let config = {
 
     },
     pixelArt: true,
-    scene: [Boot, MainMenu, PauseMenu, MapMenu, SelectorNivel, UIButtons , GameOver, VSScreen, BossHealthBarScene, ParaninfoManager, Paraninfo_1, Paraninfo_2, Paraninfo_3, Paraninfo_secret, TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, Tutorial_debug2, GUI, InformaticaManager, FDI_1, FDI_2, FDI_3, FDI_4, FDI_5, FDI_6, FDI_2_1, FDI_2_2, FDI_2_3, FDI_Boss_2, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, medicina_atajo, End],
+    scene: [Boot, MainMenu, PauseMenu, MapMenu, SelectorNivel, UIButtons , GameOver, MessageScreen, VSScreen, BossHealthBarScene, ParaninfoManager, Paraninfo_1, Paraninfo_2, Paraninfo_3, Paraninfo_secret, TutorialManager, Tutorial_1, Tutorial_2, Tutorial_3, Tutorial_debug, Tutorial_debug2, GUI, InformaticaManager, FDI_1, FDI_2, FDI_3, FDI_4, FDI_5, FDI_6, FDI_2_1, FDI_2_2, FDI_2_3, FDI_Boss_2, MedicinaManager, introMedicina, medicina_2, medicina_3, medicina_4, medicina_5, medicina_6, medicina_atajo, End],
 
     physics: {
         default: 'arcade',
