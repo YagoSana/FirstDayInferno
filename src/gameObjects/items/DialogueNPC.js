@@ -20,8 +20,6 @@ export default class DialogueNPC extends SpriteBase {
     this.itemKey = itemKey;
 
     // Recuperar el estado de compra desde localStorage
-    const purchaseStatus = localStorage.getItem(`purchaseDone_${this.nombre}`);
-    this.purchaseDone = purchaseStatus ? JSON.parse(purchaseStatus) : false;
 
     // Asegurarse de que este NPC tiene un cuerpo físico y es inmóvil
     this.scene.physics.add.existing(this);  // Aseguramos que este NPC tiene física
