@@ -11,8 +11,9 @@ export default class DialogueNPC extends SpriteBase {
     this.nombre = nombre;
     this.frases = frases.length > 0 ? frases : ['...'];
     this.dialogueActivo = false;
-    this.interactionRange = 40;
-    this.bulletHits = 0;
+    this.interactionRange = 60;
+    this.bulletHits=0;
+    this.health = 100;
     this.purchase = purchase;
     this.frasePurchase = frasePurchase;
     this.purchaseCost = purchaseCost;
@@ -24,11 +25,10 @@ export default class DialogueNPC extends SpriteBase {
 
     // Asegurarse de que este NPC tiene un cuerpo físico y es inmóvil
     this.scene.physics.add.existing(this);  // Aseguramos que este NPC tiene física
-    this.body.setImmovable(true);  // Hacemos que no se mueva al colisionar
-    // Caja de diálogo
-    const centerX = scene.cameras.main.width / 2;
-    const centerY = scene.cameras.main.height / 2;
-    this.dialogueBox = new DialogueBox(scene, centerX - 150, centerY, 300, spriteKey + '-face', nombre);
+    this.body.setImmovable(true); 
+
+    this.scene.physics.add.collider(this, scene.player);
+    this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
 
     // Área de interacción invisible
     this.interactionArea = scene.add.circle(x, y, this.interactionRange, 0x000000, 0);
@@ -36,26 +36,66 @@ export default class DialogueNPC extends SpriteBase {
     this.interactionArea.body.setCircle(this.interactionRange);
     this.interactionArea.body.setAllowGravity(false);
 
+    this.scene.physics.add.overlap(this.interactionArea, scene.player, this.handleInteractionRange, null, this);
+    this.playerInRange = false;
+
+    // Texto de interacción
+
+
     // Icono E opcional
     this.eKeyIcon = scene.add.sprite(x, y - 30, 'key_E_action')
       .setVisible(false)
       .setDepth(20)
       .play('key_E_action');
 
-    // Comprobar cercanía
-    scene.physics.add.overlap(this.interactionArea, scene.player, this.showInteractionUI, null, this);
 
-    // Entrada de teclado
-    scene.input.keyboard.on('keydown-E', () => {
-      if (!this.isPlayerInRange()) return;
+      this.setupInteraction();
+  }
 
-      if (this.dialogueActivo) {
-        this.dialogueBox.hide();
-        this.dialogueActivo = false;
-      } else {
-        this.hablar();
+  setupInteraction() {
+    // Escucha la tecla E
+    this.scene.input.keyboard.on('keydown-E', () => {
+      if (!this.playerInRange  || this.dialogueActivo) return;
+
+      this.hablar();
+    }, this);
+  }
+
+  handleInteractionRange(area, player) {
+    // Calculamos la distancia real cada frame mientras hay overlap
+    const distance = Phaser.Math.Distance.Between(
+      this.x, this.y,
+      player.x, player.y
+    );
+    
+    // Si está dentro del rango circular
+    if (distance <= this.interactionRange) {
+      if (!this.playerInRange && !this.dialogueActivo) {
+        this.playerInRange = true;
+        this.eKeyIcon.setPosition(this.x, this.y - 30).setVisible(true);
       }
-    });
+    } else {
+      // Si salió del rango circular
+      if (this.playerInRange) {
+        this.playerInRange = false;
+        this.eKeyIcon.setVisible(false);
+      }
+    }
+  }
+
+  // Actualizamos en el game loop para detectar salidas
+  update() {
+    if (this.playerInRange && this.scene.player) {
+      const distance = Phaser.Math.Distance.Between(
+        this.x, this.y,
+        this.scene.player.x, this.scene.player.y
+      );
+      
+      if (distance > this.interactionRange) {
+        this.playerInRange = false;
+        this.eKeyIcon.setVisible(false);
+      }
+    }
   }
 
   isPlayerInRange() {
@@ -66,14 +106,48 @@ export default class DialogueNPC extends SpriteBase {
 
   showInteractionUI() {
     if (this.isPlayerInRange()) {
+
       this.eKeyIcon.setPosition(this.x, this.y - 30).setVisible(true);
     } else {
-      this.eKeyIcon.setVisible(false);
+      // Si salió del rango circular
+      if (this.playerInRange) {
+        this.playerInRange = false;
+        this.eKeyIcon.setVisible(false);
+      }
     }
   }
 
-  hitBullet(bullet) {
+  // Actualizamos en el game loop para detectar salidas
+  update() {
+    if (this.playerInRange && this.scene.player) {
+      const distance = Phaser.Math.Distance.Between(
+        this.x, this.y,
+        this.scene.player.x, this.scene.player.y
+      );
+      
+      if (distance > this.interactionRange) {
+        this.playerInRange = false;
+        this.eKeyIcon.setVisible(false);
+      }
+    }
+  }
+
+  // Oculta la tecla E cuando el jugador sale del rango
+  hideInteractionUI(area, player) {
+    console.log('Saliendo de interactionRange');
+    this.eKeyIcon.setVisible(false);
+  }
+
+  hitBullet(machine, bullet) {
     bullet.explode();
+
+
+    this.bulletHits++;
+    if (this.bulletHits >= this.health) {
+      this.bulletHits = 0;
+      this.destroy();
+
+    }
   }
 
   hablar() {
@@ -107,8 +181,24 @@ export default class DialogueNPC extends SpriteBase {
 
     // Mostrar diálogo normal
     const frase = Phaser.Utils.Array.GetRandom(this.frases);
-    this.dialogueBox.show(frase);
     this.dialogueActivo = true;
+    this.eKeyIcon.setVisible(false);
+
+    this.scene.scene.launch('DialogueScene', {
+      message: frase,
+      speaker: this.nombre,
+      portraitKey: this.texture.key + '-face',
+      textSpeed: 35,
+      previousScene: this.scene.scene.key,
+      onClose: () => {
+        this.dialogueActivo = false;
+        if (this.playerInRange) {
+          this.eKeyIcon.setVisible(true);
+        }
+      }
+    });
+
+    this.scene.scene.bringToTop('DialogueScene');
   }
 
   dispenseItemEffect() {

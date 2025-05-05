@@ -20,9 +20,6 @@ export default class Bartender extends SpriteBase {
 
         this.scene.physics.add.collider(this, scene.player);
 
-        // Caja de diálogo estilo DialogueNPC
-        this.dialogueBox = new DialogueBox(this.scene, this.x + 100, this.y + 200, 300, 'bartenderImg', 'Sánchez');
-
         this.frases = [
             "Todo en su sitio...",
             "¡Pilla lo que quieras, si tienes suelto!",
@@ -41,27 +38,37 @@ export default class Bartender extends SpriteBase {
         this.interactionArea.body.setAllowGravity(false);
         this.interactionArea.body.setImmovable(true);
 
+        this.setupInteraction();
+    }
+
+    setupInteraction() {
         // Mostrar ícono E cuando el jugador está cerca
         this.scene.physics.add.overlap(this.interactionArea, this.scene.player, () => {
+            this.playerIsNear = true;
             if (!this.dialogueActivo) {
                 this.eKeyIcon.setPosition(this.x, this.y - 30).setVisible(true);
             }
-        });
+        }, null, this);
 
         // Ocultar ícono si se aleja
-        this.scene.events.on('update', () => {
-            if (!this.isPlayerInRange() || this.dialogueActivo) {
+        this.scene.physics.add.overlap(this.interactionArea, this.scene.player, () => {
+            this.playerIsNear = Phaser.Math.Distance.Between(
+                this.x, this.y,
+                this.scene.player.x, this.scene.player.y
+            ) <= this.interactionRange;
+
+            if (!this.playerIsNear || this.dialogueActivo) {
                 this.eKeyIcon.setVisible(false);
             }
-        });
+        }, null, this);
 
         // Escucha la tecla E
         this.scene.input.keyboard.on('keydown-E', () => {
-            if (!this.isPlayerInRange()) return;
+            if (!this.playerIsNear) return;
 
             if (this.dialogueActivo) {
-                this.dialogueBox.hide();
-                this.dialogueActivo = false;
+                // Enviar evento a la escena de diálogo para que se cierre
+                this.scene.events.emit('closeDialogue');
                 return;
             }
 
@@ -80,13 +87,34 @@ export default class Bartender extends SpriteBase {
         this.playerIsNear = this.isPlayerInRange();
     }
 
+
     isPlayerInRange() {
-        return Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <= this.interactionRange;
+        if (!this.scene || !this.scene.player) return false;
+        return Phaser.Math.Distance.Between(
+            this.x, this.y, 
+            this.scene.player.x, this.scene.player.y
+        ) <= this.interactionRange;
     }
 
     mostrarDialogo(frase) {
-        this.dialogueBox.show(frase);
         this.dialogueActivo = true;
+        this.eKeyIcon.setVisible(false);
+        // Lanzamos la escena de diálogo con los parámetros necesarios
+        this.scene.scene.launch('DialogueScene', {
+            message: frase,
+            speaker: 'Sánchez',
+            portraitKey: 'bartenderImg',
+            textSpeed: 35, // Velocidad del efecto de texto
+            previousScene: this.scene.scene.key, // Pasar la escena actual
+            onClose: () => {
+                this.dialogueActivo = false;
+                if (this.playerIsNear) {
+                    this.eKeyIcon.setVisible(true);
+                }
+            }
+        });
+
+        this.scene.scene.bringToTop('DialogueScene');
     }
 
     spawnItems() {
@@ -119,7 +147,7 @@ class ShopItem extends Item {
         this.price = price;
         this.scene = scene;
 
-        this.priceText = scene.add.text(this.x, this.y - 30, `${price} lereles`, {
+        this.priceText = scene.add.text(this.x, this.y - 30, `${price} €`, {
             fontSize: '16px',
             fill: '#ffff00',
             fontFamily: 'monogram',
