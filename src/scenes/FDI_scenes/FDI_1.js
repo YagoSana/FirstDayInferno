@@ -88,10 +88,10 @@ export default class FDI_1 extends SalaBase {
         // Crear el NPC tipo hippie
         this.hippieNPC = new DialogueNPC(this, 300, 220, 'hippie', 'Estudiante', frasesFilosoficas);
 
-        // Detección de impacto entre balas y el NPC
-        this.physics.add.overlap(this.bulletGroup, this.hippieNPC, (bullet, npc) => {
-            npc.hitBullet(npc, bullet);
-        });
+        // // Detección de impacto entre balas y el NPC
+        // this.physics.add.collider(this.bulletGroup, this.hippieNPC, (bullet, npc) => {
+        //     npc.hitBullet(npc, bullet);
+        // });
 
     }
 

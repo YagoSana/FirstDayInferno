@@ -96,11 +96,22 @@ export default class FDI_2_2 extends SalaBase {
             this.enemyGroup.add(boss);
             this.numEnemies = 3;
         });
+        //Camaras
+        const screenWidth = this.sys.game.config.width; // Ancho de tu pantalla
+        const screenHeight = this.sys.game.config.height; // Alto de tu pantalla
+        const mapWidth = map.widthInPixels;
+        const mapHeight = map.heightInPixels;
+        const zoom = 2;
+        const boundX = -(screenWidth / zoom - mapWidth) / 2;
+        const boundY = -(screenHeight / zoom - mapHeight) / 2;
 
-        this.physics.world.setBounds(0, 0, this.bound1, this.bound2);
-        this.cameras.main.setBounds(-100, 0, this.bound1, this.bound2);
+        this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+        this.cameras.main.setZoom(zoom);
+        this.cameras.main.setBounds(boundX, 0, map.widthInPixels, map.heightInPixels);
+
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
-        this.cameras.main.setZoom(1.8);
+
 
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("Transiciones");
