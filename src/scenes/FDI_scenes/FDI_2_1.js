@@ -103,8 +103,8 @@ export default class FDI_2_1 extends SalaBase {
 
     spawnProps(){
         this.numEnemies=2;
-        this.enemyGroup.add(new turretEnemy(this, 750, 65, "nerd"));
-        this.enemyGroup.add(new turretEnemy(this, 750, 95, "nerd"));
+        this.enemyGroup.add(new turretEnemy(this, 750, 65, "printer"));
+        this.enemyGroup.add(new turretEnemy(this, 750, 95, "printer"));
    
      
     }

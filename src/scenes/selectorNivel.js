@@ -5,6 +5,7 @@ import Player from "../gameObjects/characters/player.js";
 import metro from "../../assets/imgs/LobbyMETRO.png";
 import fdi from "../../assets/imgs/LobbyFDI.png";
 import medicina from "../../assets/imgs/LobbyMEDICINA.png";
+import medicinaDestruido from "../../assets/imgs/LobbyMEDICINADestruido.png";
 import paraninfo from "../../assets/imgs/LobbyParaninfo.png";
 
 import lobby from "../../assets/map/lobby.json";
@@ -21,6 +22,7 @@ export default class SelectorNivel extends Phaser.Scene {
     this.load.tilemapTiledJSON("lobby", lobby);
     this.load.image('metro', metro);
     this.load.image('medicina', medicina);
+    this.load.image('medicinaDestruido', medicinaDestruido);
     this.load.image('paraninfo', paraninfo);
     this.load.image('fdi', fdi);
   }
@@ -33,6 +35,7 @@ export default class SelectorNivel extends Phaser.Scene {
     } else {
       this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500, doubleshoot: false, doorsLocked: { 'secretDoor': true, 'fdiDoor': true, 'medDoor': true, 'candado': true } }; // Valores predeterminados
     }
+    this.medicinaBeaten = data.medicinaBeaten || false;
   }
 
   create(data) {
@@ -56,7 +59,12 @@ export default class SelectorNivel extends Phaser.Scene {
         this.add.image(504, 210, 'metro').setOrigin(0, 0).setDisplaySize(100, 70);
       }
       else if (obj.name == "medicina") {
-        this.add.image(390, 0, 'medicina').setOrigin(0, 0).setDisplaySize(150, 79);
+        if (!this.medicinaBeaten) {
+          this.add.image(390, 0, 'medicina').setOrigin(0, 0).setDisplaySize(150, 79);
+        }
+        else {
+          this.add.image(390, 0, 'medicinaDestruido').setOrigin(0, 0).setDisplaySize(150, 79);
+        }
       }
       else if (obj.name == "fdi") {
         this.add.image(65, 238, 'fdi').setOrigin(0, 0).setDisplaySize(231, 98);
@@ -122,7 +130,12 @@ export default class SelectorNivel extends Phaser.Scene {
 
     // Detectar cuando el jugador entra en la colisión invisible
     this.physics.add.overlap(this.player, this.invisibleZone, this.onOverlap, null, this);
-    this.physics.add.overlap(this.player, this.invisibleZoneMedicina, this.onOverlap, null, this);
+    if (!this.medicinaBeaten) {
+      this.physics.add.overlap(this.player, this.invisibleZoneMedicina, this.onOverlap, null, this);
+    }
+    else{
+      this.physics.add.collider(this.player, this.invisibleZoneMedicina, null, null, this);
+    }
     this.physics.add.overlap(this.player, this.invisibleZoneMetro, this.onOverlap, null, this);
     this.physics.add.overlap(this.player, this.invisibleZoneParaninfo, this.onOverlap, null, this);
 

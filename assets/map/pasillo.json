@@ -205,7 +205,7 @@
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":55
+                         "value":520
                         }],
                  "rotation":0,
                  "type":"",
@@ -302,7 +302,7 @@
         {
          "columns":17,
          "firstgid":1,
-         "image":"..\/TILESETS\/Room_Builder_free_16x16.png",
+         "image":"Room_Builder_free_16x16.png",
          "imageheight":368,
          "imagewidth":272,
          "margin":0,
@@ -315,7 +315,7 @@
         {
          "columns":16,
          "firstgid":392,
-         "image":"..\/TILESETS\/Interiors_free_16x16.png",
+         "image":"Interiors_free_16x16.png",
          "imageheight":1424,
          "imagewidth":256,
          "margin":0,
@@ -328,7 +328,7 @@
         {
          "columns":2,
          "firstgid":1816,
-         "image":"..\/TILESETS\/tileset_nuevo.png",
+         "image":"tileset_nuevo.png",
          "imageheight":400,
          "imagewidth":32,
          "margin":0,

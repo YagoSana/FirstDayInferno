@@ -95,7 +95,11 @@ import sonidoParaninfo from '../../assets/music/paraninfo.mp3';
 import flush from '../../assets/sounds/flush.mp3';
 import musicaCafe1 from '../../assets/music/musicaCafe1.mp3';
 import motorSound from '../../assets/sounds/engine.mp3';
-
+import bossMedicinaAmbiente from '../../assets/music/bossMedicinaAmbiente.ogg';
+import bossMedicinaDaño from '../../assets/music/bossMedicinaDaño.wav';
+import bossMedicinaOrbes from '../../assets/music/bossMedicinaOrbes.wav';
+import bossMedicinaMusica from '../../assets/music/bossMedicinaMusica.wav';
+ 
 //GUI ------------------------------------------------------
 import mainMenu from "../../assets/sprites/mainmenu.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
@@ -144,6 +148,10 @@ export default class Boot extends Phaser.Scene {
    */
   preload() {
     //AUDIO
+    this.load.audio('bossMedicinaMusica', bossMedicinaMusica);
+    this.load.audio('bossMedicinaAmbiente', bossMedicinaAmbiente);
+    this.load.audio('bossMedicinaDaño', bossMedicinaDaño);
+    this.load.audio('bossMedicinaOrbes', bossMedicinaOrbes);
     this.load.audio('musicaMenu', musicaMenu);
     this.load.audio('buttonHover', buttonHover);
     this.load.audio('startgame', startgame);

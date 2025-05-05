@@ -176,12 +176,12 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":63
+                         "value":79
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":89
+                         "value":115
                         }],
                  "rotation":0,
                  "type":"",
@@ -262,7 +262,7 @@
         {
          "columns":17,
          "firstgid":1,
-         "image":"..\/Desktop\/Uni\/Cuarto\/DVI\/FirstDayInferno\/assets\/map\/paraninfo.png",
+         "image":"paraninfo.png",
          "imageheight":368,
          "imagewidth":272,
          "margin":0,
@@ -275,7 +275,7 @@
         {
          "columns":17,
          "firstgid":392,
-         "image":"..\/Desktop\/Uni\/Cuarto\/DVI\/FirstDayInferno\/assets\/map\/Room_Builder_free_16x16.png",
+         "image":"Room_Builder_free_16x16.png",
          "imageheight":368,
          "imagewidth":272,
          "margin":0,
@@ -288,7 +288,7 @@
         {
          "columns":16,
          "firstgid":783,
-         "image":"..\/Desktop\/Uni\/Cuarto\/DVI\/FirstDayInferno\/assets\/map\/Interiors_free_16x16.png",
+         "image":"Interiors_free_16x16.png",
          "imageheight":1424,
          "imagewidth":256,
          "margin":0,

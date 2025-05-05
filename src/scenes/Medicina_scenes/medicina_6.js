@@ -185,6 +185,11 @@ export default class medicina_6 extends SalaBase {
         }
       });
     }
+    this.sound.stopAll();
+    this.sonidoAmbiente = this.sound.add('bossMedicinaAmbiente', { volume: 0.7, loop: true });
+    this.musica = this.sound.add('bossMedicinaMusica', { volume: 0.7, loop: true });
+    this.musica.play();
+    this.sonidoAmbiente.play();
   }
 
   updateLight() {
