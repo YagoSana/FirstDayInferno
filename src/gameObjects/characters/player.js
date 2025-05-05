@@ -79,9 +79,9 @@ export default class Player extends SpriteBase {
         this.nearVendingMachine = null;
         this.nearDoor = null;
         this.pickupKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-        this.sonidoDisparo = scene.sound.add('disparaJugador');
+        this.sonidoDisparo = scene.sound.add('disparaJugador', { volume: 0.5});
         this.sonidoAndar = scene.sound.add('andarJugador');
-        this.sonidoMoneda = scene.sound.add('cogerMoneda');
+        this.sonidoMoneda = scene.sound.add('cogerMoneda', { volume: 0.5});
         this.sonidoLlave = scene.sound.add('cogerLlave');
         this.stepTimer = 0;
         this.stepInterval = 500;

@@ -40,24 +40,11 @@ export default class BossMedicina extends Npc {
     this.orbes = [];
     this.ultimoDisparo = 0;
     this.orbesDisparados = 0;
-    this.dialogueBox = new DialogueBox(this.scene, 310, 310, 400, '', 'La Muerte');
-    this.dialogo = [
-      "Veo que ya has llegado hasta aquí...",
-      "Te sugiero que abandones esto...",
-      "Lo hago por tu bien...",
-      "Creeme",
-      "No quiero hacerte daño...",
-      "Pero no tengo otra opción...",
-    ];
-    this.dialogoMuerte = [
-      "No sabes lo que has hecho...",
-      "Eres fuerte...",
-      "Pero EL lo es más...",
-    ];
+    this.dialogo = "Te sugiero que no sigas, puede que a mi me derrotes, pero EL no te dejará con vida.\n\nTe lo advierto";
     this.haHablado = false;
     this.primerDialogo = false;
     this.dead = false;
-    this.sonidoDaño = scene.sound.add('bossMedicinaDaño', { volume: 0.3 });
+    this.sonidoDaño = scene.sound.add('bossMedicinaDaño', { volume: 0.1 });
     this.sonidoOrbes = scene.sound.add('bossMedicinaOrbes', { volume: 0.5 });
   }
 
@@ -78,8 +65,7 @@ export default class BossMedicina extends Npc {
     else {
       if (!this.introduction && !this.haHablado) {
         this.haHablado = true;
-        this.scene.physics.world.pause(); // Pausa el mundo temporalmente
-        this.dialogueSecuencia(0);
+        this.dialogueSecuencia(this.dialogo);
         return;
       }
       if (!this.introduction || !this.haHablado) return;
@@ -219,7 +205,7 @@ export default class BossMedicina extends Npc {
 
   hitBullet(enemy, bullet) {
     //Enemigo muere
-    if (Phaser.Math.Between(1, 100) <= 20) {
+    if (Phaser.Math.Between(1, 100) <= 15) {
       this.sonidoDaño.play();
     }
     this.stunCounter = 30;
@@ -250,25 +236,19 @@ export default class BossMedicina extends Npc {
     bullet.explode();
   }
 
-  dialogueSecuencia(indice) {
-    if (!this.primerDialogo) {
-      if (indice >= this.dialogo.length) {
-        this.dialogueBox.hide();
-        this.scene.physics.world.resume(); // Reanuda el mundo
-        this.iniciarCombate(); // Activa visualmente al jefe y lanza la barra de vida
-        return;
+  dialogueSecuencia(frase) {
+    this.scene.scene.launch('DialogueScene', {
+      message: frase,
+      speaker: 'La muerte',
+      portraitKey: 'bossMedicinaIdle2',
+      textSpeed: 35, // Velocidad del efecto de texto
+      previousScene: this.scene.scene.key, // Pasar la escena actual
+      onClose: () => {
+          this.iniciarCombate();
       }
+  });
 
-      this.dialogueBox.show(this.dialogo[indice]);
-
-      // Avanzar con tecla E
-      const avanzar = () => {
-        this.scene.input.keyboard.off('keydown-E', avanzar);
-        this.dialogueSecuencia(indice + 1);
-      };
-
-      this.scene.input.keyboard.on('keydown-E', avanzar);
-    }
+  this.scene.scene.bringToTop('DialogueScene');
   }
 
   iniciarCombate() {
