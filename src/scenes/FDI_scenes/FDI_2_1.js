@@ -99,6 +99,8 @@ export default class FDI_2_1 extends SalaBase {
                 new Door(this, obj.x, obj.y, 'fdiDoor', locked);
             }
         });
+        this.doorFireManager.createFiresForZones(this.transitionZones);
+        this.doorFireManager.setupCollisions(this.player);
     }
 
     spawnProps(){

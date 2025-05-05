@@ -92,7 +92,6 @@ export default class FDI_2_2 extends SalaBase {
         teacher.on('npcDeath', (x, y) => {
             const boss = new miniBossLab(this, x, y, "nerd");
             boss.invulnerable = true;
-            boss.setTint(0x999999);
             this.enemyGroup.add(boss);
             this.numEnemies = 3;
         });
@@ -124,6 +123,8 @@ export default class FDI_2_2 extends SalaBase {
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+        this.doorFireManager.createFiresForZones(this.transitionZones);
+        this.doorFireManager.setupCollisions(this.player);
 
         let spritesLayer = map.getObjectLayer("sprites");
         if (!this.status) {

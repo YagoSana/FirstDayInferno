@@ -17,7 +17,7 @@ export default class ChargedEnemy extends Npc {
     this.isCharging = false;
     this.chargeProgress = 0;
     this.setScale(1); // asegúrate de escalar antes si afecta al tamaño
-    this.body.setSize(this.width, this.height*2, true); 
+    this.body.setSize(this.width, this.height, true); 
     this.body.setOffset(this.body.offset.x, this.height*0.07); // baj
     this.originalX = x;
     this.originalY = y;

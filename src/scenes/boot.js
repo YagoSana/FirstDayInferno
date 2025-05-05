@@ -94,6 +94,9 @@ import sonidoMaquina from '../../assets/music/sonidoMaquina.wav';
 import sonidoParaninfo from '../../assets/music/paraninfo.mp3';
 import flush from '../../assets/sounds/flush.mp3';
 import musicaCafe1 from '../../assets/music/musicaCafe1.mp3';
+import musicaCafe2 from '../../assets/music/musicaCafe2.mp3';
+import musicaCafe3 from '../../assets/music/musicaCafe3.mp3';
+import musicaCafe4 from '../../assets/music/musicaCafe4.mp3';
 import motorSound from '../../assets/sounds/engine.mp3';
 import bossMedicinaAmbiente from '../../assets/music/bossMedicinaAmbiente.ogg';
 import bossMedicinaDaño from '../../assets/music/bossMedicinaDaño.wav';
@@ -181,6 +184,9 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('sonidoParaninfo', sonidoParaninfo);
     this.load.audio('flush', flush);
     this.load.audio('musicaCafe1', musicaCafe1);
+    this.load.audio('musicaCafe2', musicaCafe2);
+    this.load.audio('musicaCafe3', musicaCafe3);
+    this.load.audio('musicaCafe4', musicaCafe4);
     this.load.audio('motorSound', motorSound);
     //AUDIO
     this.loadFont('monogram', monogram);

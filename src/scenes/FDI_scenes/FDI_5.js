@@ -127,7 +127,8 @@ export default class FDI_5 extends SalaBase {
         this.physics.add.collider(this.breakableGroup, this.enemyBulletGroup, (breakable, bullet) => {
             breakable.hitBullet(breakable, bullet);
         });
-    
+        this.doorFireManager.createFiresForZones(this.transitionZones);
+        this.doorFireManager.setupCollisions(this.player);
     }
 
     spawBlood() {

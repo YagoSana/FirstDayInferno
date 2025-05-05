@@ -30,7 +30,7 @@ export default class MiniBoss extends RangedEnemy {
     this.setScale(1.5);
     this.setTint(0xffcc00);
 
-    this.health = 30;
+    this.health = 3;
   }
 
   spawnGuardians() {
@@ -43,9 +43,9 @@ export default class MiniBoss extends RangedEnemy {
     });
 
     this.isInvulnerable = true;
-  this.setTint(0xffcc00);
-  this.body.setVelocity(0, 0); // Detener movimiento
-  this.play(`${this.type}_move`, true);
+    this.setTint(0xffcc00);
+    this.body.setVelocity(0, 0); // Detener movimiento
+    this.play(`${this.type}_move`, true);
   }
 
   flashEffect() {
@@ -54,7 +54,7 @@ export default class MiniBoss extends RangedEnemy {
         this.originalTint = this.tint;
       }
 
-      this.setTint(0x737373);
+      this.setTint(0xff0000);   
       this.scene.time.delayedCall(600, () => {
         if (this.active) {
           this.setTint(this.originalTint);
@@ -64,8 +64,12 @@ export default class MiniBoss extends RangedEnemy {
   }
 
   hitbullet(enemy, bullet) {
-    this.flashEffect();
-    super.hitBullet(enemy, bullet);
+    bullet.explode();
+    if (!this.isInvulnerable) {
+      this.flashEffect(); // Aplica tinte rojo temporal
+      super.hitBullet(enemy, bullet);
+    }
+ 
   }
 
   preUpdate(t, dt){
@@ -74,6 +78,16 @@ export default class MiniBoss extends RangedEnemy {
 
   mypreUpdate(time, delta) {
     if (!this.active || this.destroyed) return;
+    if (this.health > 0) {
+      if (!this._isFlashingDamage) { // Asegura que el tint no se sobrescriba si está parpadeando
+        if (this.anims.currentAnim && this.anims.currentAnim.key === `${this.type}_shoot`) {
+          this.setTint(0xffffff);
+        } else {
+          this.setTint(0xffffff);
+          this.play(`${this.type}_move`, true);
+        }
+      }
+    }
 
     this.attackTimer -= delta;
     this.teleportTimer -= delta;
@@ -83,45 +97,46 @@ export default class MiniBoss extends RangedEnemy {
     // Actualizar guardianes activos
     this.guardians = this.guardians.filter(g => g && g.active);
 
-    // Detectar muerte de ambos guardianes y comenzar el contador
+    // Detectar si todos murieron
     if (this.guardians.length === 0 && this.guardiansWereAlive) {
       this.guardianRespawnTimer = this.guardianRespawnCooldown;
       this.guardiansWereAlive = false;
     }
 
-    // Reiniciar el flag si al menos uno está vivo
+    // Detectar si revivieron
     if (this.guardians.length > 0) {
       this.guardiansWereAlive = true;
     }
 
-    // Respawn si han muerto ambos y pasó el tiempo
+    // Respawn si murieron y pasó el tiempo
     if (this.guardians.length === 0 && this.guardianRespawnTimer <= 0) {
       this.spawnGuardians();
     }
 
-    // Pierde invulnerabilidad si ya no hay guardianes vivos
+    // Invulnerabilidad visual y lógica
     if (this.guardians.length === 0 && this.isInvulnerable) {
       this.isInvulnerable = false;
-      this.clearTint();
-    }
-
-    if (this.isInvulnerable) {
+      //this.clearTint();
+    } else if (this.isInvulnerable) {
+      // Solo aplicar tinte si no está dañado visualmente
+      if (!this._isFlashingDamage) {
+        this.setTint(0x0000ff); // Azul mientras invulnerable
+      }
       this.speed = 0;
-      this.play(`${this.type}_move`, true);
+      if (!this.anims.isPlaying || this.anims.currentAnim.key !== `${this.type}_move`) {
+        this.play(`${this.type}_move`);
+      }
       return;
     }
 
-    // Movimiento hacia el jugador
-    if (
-      this.scene && this.scene.player && this.active && !this.destroyed &&
-      Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) > this.attackRange
-    ) {
+    // Movimiento hacia el jugador si está lejos
+    if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) > this.attackRange) {
       this.scene.physics.moveToObject(this, this.scene.player, this.speed);
     } else {
       this.body.setVelocity(0, 0);
     }
 
-    // Ataque por fases
+    // Ataques por fases
     if (this.attackTimer <= 0) {
       this.attackPhase++;
       if (this.attackPhase % 5 === 0) {
@@ -134,13 +149,13 @@ export default class MiniBoss extends RangedEnemy {
       this.attackTimer = this.attackCooldown;
     }
 
-    // Teletransporte si tiene guardianes
+    // Teletransporte
     if (this.teleportTimer <= 0 && this.guardians.length > 0) {
       this.teleport();
       this.teleportTimer = this.teleportCooldown;
     }
 
-    // Incremento de dificultad progresiva
+    // Incrementar dificultad
     if (this.difficultyTimer >= this.difficultyInterval) {
       this.difficultyTimer = 0;
       this.attackCooldown = Math.max(1000, this.attackCooldown - 200);
@@ -196,20 +211,5 @@ export default class MiniBoss extends RangedEnemy {
     const offsetY = Phaser.Math.Between(-50, 50);
     this.setPosition(player.x + offsetX, player.y + offsetY);
     this.play(`${this.type}_move`, true);
-  }
-
-  receiveBulletDamage(damage = 1) {
-    if (this.isInvulnerable) return;
-
-    this.health -= damage;
-    if (this.health <= 0) {
-      this.guardians.forEach(g => {
-        if (g && g.active) g.destroy();
-      });
-      this.destroy();
-    } else {
-      this.setTint(0xff9999);
-      this.scene.time.delayedCall(200, () => this.clearTint());
-    }
   }
 }

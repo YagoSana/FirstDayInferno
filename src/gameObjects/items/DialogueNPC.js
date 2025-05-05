@@ -115,21 +115,7 @@ export default class DialogueNPC extends SpriteBase {
     }
   }
 
-  // Actualizamos en el game loop para detectar salidas
-  update() {
-    if (this.playerInRange && this.scene.player) {
-      const distance = Phaser.Math.Distance.Between(
-        this.x, this.y,
-        this.scene.player.x, this.scene.player.y
-      );
-      
-      if (distance > this.interactionRange) {
-        this.playerInRange = false;
-        this.eKeyIcon.setVisible(false);
-      }
-    }
-  }
-
+  
   // Oculta la tecla E cuando el jugador sale del rango
   hideInteractionUI(area, player) {
     console.log('Saliendo de interactionRange');
@@ -150,38 +136,50 @@ export default class DialogueNPC extends SpriteBase {
 
   hablar() {
     const player = this.scene.player;
-
+    let frase = "";
+  
     // Si el NPC vende algo
     if (this.purchase && !this.purchaseDone) {
-      // Verificar si el jugador puede pagar
       if (player.canAfford(this.purchaseCost)) {
-        // Cobrar
         player.spendCoins(this.purchaseCost);
         this.purchaseDone = true;
-
-        // Guardar el estado de compra en localStorage
+  
         localStorage.setItem(`purchaseDone_${this.nombre}`, JSON.stringify(this.purchaseDone));
-
-        // Mostrar diálogo de compra exitosa
-        this.dialogueBox.show(this.frasePurchase);
+  
+        frase = this.frasePurchase;
         this.dialogueActivo = true;
         this.purchase = false;
-        // Dispensar el objeto
+  
         this.dispenseItemEffect();
-
       } else {
-        this.dialogueBox.show("No tienes suficientes monedas...");
+        frase = "No tienes suficientes monedas...";
         this.dialogueActivo = true;
       }
-
-      return; // Evita mostrar frases normales
+  
+      // Mostrar el diálogo ya sea por compra o por falta de monedas
+      this.scene.scene.launch('DialogueScene', {
+        message: frase,
+        speaker: this.nombre,
+        portraitKey: this.texture.key + '-face',
+        textSpeed: 35,
+        previousScene: this.scene.scene.key,
+        onClose: () => {
+          this.dialogueActivo = false;
+          if (this.playerInRange) {
+            this.eKeyIcon.setVisible(true);
+          }
+        }
+      });
+  
+      this.scene.scene.bringToTop('DialogueScene');
+      return;
     }
-
-    // Mostrar diálogo normal
-    const frase = Phaser.Utils.Array.GetRandom(this.frases);
+  
+    // Diálogo normal si no hay compra
+    frase = Phaser.Utils.Array.GetRandom(this.frases);
     this.dialogueActivo = true;
     this.eKeyIcon.setVisible(false);
-
+  
     this.scene.scene.launch('DialogueScene', {
       message: frase,
       speaker: this.nombre,
@@ -195,9 +193,10 @@ export default class DialogueNPC extends SpriteBase {
         }
       }
     });
-
+  
     this.scene.scene.bringToTop('DialogueScene');
   }
+  
 
   dispenseItemEffect() {
     const item = new Item(this.scene, this.x, this.y + 100, this.itemKey);
