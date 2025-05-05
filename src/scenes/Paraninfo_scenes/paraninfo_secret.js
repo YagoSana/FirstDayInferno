@@ -71,11 +71,8 @@ export default class Paraninfo_secret extends SalaBase{
         spritesLayer.objects.forEach(obj => {
             let type = obj.properties.find(p => p.name === "tipo")?.value;
             if (type === "item") {
-                if (!this.status) { //sala sin objetios
-                    this.numEnemies++
-                }
                 let vm = new VendingMachine(this, obj.x, obj.y);
-                if (this.status) { //sala completada y la maquina ya esta usada
+                if (this.status) {
                     vm.disableMachine();
                 }
             }
