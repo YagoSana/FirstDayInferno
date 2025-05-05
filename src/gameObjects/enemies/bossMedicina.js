@@ -57,6 +57,8 @@ export default class BossMedicina extends Npc {
     this.haHablado = false;
     this.primerDialogo = false;
     this.dead = false;
+    this.sonidoDaño = scene.sound.add('bossMedicinaDaño', { volume: 0.3 });
+    this.sonidoOrbes = scene.sound.add('bossMedicinaOrbes', { volume: 0.5 });
   }
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
@@ -169,6 +171,7 @@ export default class BossMedicina extends Npc {
         this.y = 280;
         //Patron de ataque
         if (this.puedeInvocar && this.anims.currentAnim.key != "bossMedicinaEspecial") {
+          this.sonidoOrbes.play();
           this.puedeInvocar = false;
           const radio = 50;
           for (let i = 0; i < 6; i++) {
@@ -192,7 +195,6 @@ export default class BossMedicina extends Npc {
         if (this.anims.currentAnim.key != "bossMedicinaDisparo") {
           if (this.orbes.length > 0) {
             if (this.scene.time.now - this.tiempoUltimoDisparo > this.cooldownOrbe) {
-              ;
               let orbe = this.orbes.pop();
               let orbeX = orbe.x;
               let orbeY = orbe.y;
@@ -217,6 +219,9 @@ export default class BossMedicina extends Npc {
 
   hitBullet(enemy, bullet) {
     //Enemigo muere
+    if (Phaser.Math.Between(1, 100) <= 20) {
+      this.sonidoDaño.play();
+    }
     this.stunCounter = 30;
     this.health--;
     this.speed += 10;
