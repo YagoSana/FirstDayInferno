@@ -34,6 +34,9 @@ export default class Bullet extends SpriteBase {
                 case 'printerBullet':
                     this.scale = 0.8;
                     break;
+                case 'bossFDIBullet':
+                    this.scale = 1.2;
+                    break;
             }
             this.setScale(this.scale);
             console.log(type);
@@ -92,15 +95,15 @@ export default class Bullet extends SpriteBase {
         this.scene.physics.moveTo(this, x, y, velocidad);
     }
 
+    disparaVacio(){
+        this.scene.physics.moveToObject(this, this.scene.player, 50); 
+    }
+
     parry(){
          // Deshabilitar colisión y movimiento
          this.body.setVelocity(0, 0);
          this.body.enable = false;
- 
-         // Reproducir animación de explosión
          this.play("parrySmoke").setScale(0.7);
- 
-         // Esperar el tiempo de duración de la animación antes de destruir la bala
          this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
              this.destroy();
          });

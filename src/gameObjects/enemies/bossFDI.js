@@ -41,7 +41,10 @@ export default class BossFDI extends Npc {
     this.initialX = x;
     this.initialY = y;
     this.ataqueLaserCooldown = 15000; // Enfriamiento para ataque de láser
+    this.ataqueInvocacionCooldown = 20000; // Enfriamiento para invocación de enemigos
+    this.ataqueVacioCooldown = 2000; // Enfriamiento para ataque vacío
     this.ataqueLaserTime = 0; // Tiempo de ataque de láser
+    this.ataqueVacioTime = 0; // Tiempo de ataque vacío
   }
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
@@ -98,6 +101,12 @@ export default class BossFDI extends Npc {
             this.ataqueLaserTime = t;
           });
         }
+        if (t - this.ataqueVacioTime > this.ataqueVacioCooldown) {
+          this.ataqueVacioTime = t;
+          let vacio = new Bullet(this.scene, this.x, this.y, 0, 0, 0, 0, false, "bossFDIBullet", "bossFDI");
+          this.scene.enemyBulletGroup.add(vacio);
+          vacio.disparaVacio();
+        }
       }
     }
   }
@@ -126,7 +135,7 @@ export default class BossFDI extends Npc {
       }
       else if (this.fase == 2) {
         //animacion final
-        this.scene.game.events.emit('bossDefeated');
+        this.scene.game.events.emit('bossDefeated', "Esto no ha hecho más que empezar...");
         this.scene.scene.stop('BossHealthBarScene');
       }
     }

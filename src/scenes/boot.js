@@ -121,6 +121,7 @@ import bossMedicinaBulletAppear from "../../assets/sprites/bossMedicinaBulletApp
 import bossMedicinaBulletDestroy from "../../assets/sprites/bossMedicinaDestroy.png";
 //BOSS FDI ------------------------------------------------------
 import bossFDIfase2 from "../../assets/sprites/bossFDIfase2.png";
+import bossFDIBullet from "../../assets/sprites/bossFDIBullet.png";
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -190,6 +191,7 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('motorSound', motorSound);
     //AUDIO
     this.loadFont('monogram', monogram);
+    this.load.image('bossFDIBullet', bossFDIBullet);
     this.load.image('background', Background);
     this.load.image('title', titulo);
     this.load.image('button', Button);
