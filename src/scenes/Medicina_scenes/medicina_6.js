@@ -33,11 +33,11 @@ export default class medicina_6 extends SalaBase {
 
     // Crear capas del mapa
     const layer1 = map.createLayer("suelo", [tileset1, tileset2], 0, 0);
-    const layer2 = map.createLayer("pared", [tileset1, tileset2], 0, 0);
-    const layer3 = map.createLayer("sin colision", [tileset1, tileset2], 0, 0);
+    const layer2 = map.createLayer("pared", [tileset1, tileset2], 0, 0); 
     const layer4 = map.createLayer("objetos", [tileset1, tileset2], 0, 0);
     const layer5 = map.createLayer("techo", [tileset1, tileset2], 0, 0);
-
+    const layer3 = map.createLayer("sin colision", [tileset1, tileset2], 0, 0);
+    
     console.log("Capas creadas");
 
     // Configurar colisiones

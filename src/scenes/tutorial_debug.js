@@ -3,6 +3,7 @@ import Player from "../gameObjects/characters/player.js";
 import Item from "../gameObjects/items/item.js";
 import VendingMachine from "../gameObjects/items/vendingMachine.js";
 import Bartender from "../gameObjects/items/bartender.js";
+import DialogueNPC from "../gameObjects/items/DialogueNPC.js";
 
 export default class Tutorial_debug extends SalaBase {
     constructor(key) {
@@ -63,6 +64,13 @@ export default class Tutorial_debug extends SalaBase {
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
 
+
+        const frasesCoche = [
+            "Kuchau",
+            "Brrrrrrr",
+            "(sonidos de coche y tal)",
+        ];
+
         let spritesLayer = map.getObjectLayer("sprites");
         spritesLayer.objects.forEach(obj => {
             let type = obj.properties.find(p => p.name === "tipo")?.value;
@@ -74,7 +82,7 @@ export default class Tutorial_debug extends SalaBase {
                 let it = new Item(this, obj.x, obj.y, obj.name);
             }
             else if (type === "merchant") {
-                let bar = new Bartender(this, obj.x, obj.y);
+                let car = new DialogueNPC(this, obj.x, obj.y + 32, 'car', 'coche', frasesCoche, false, " ", 0, 'tinto');
             }
         });
 

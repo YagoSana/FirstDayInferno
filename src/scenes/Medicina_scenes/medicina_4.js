@@ -116,7 +116,6 @@ export default class medicina_4 extends SalaBase {
 
     this.physics.add.collider(this.bulletGroup, layer2, this.onBulletCollision);
     this.physics.add.collider(this.bulletGroup, layer3, this.onBulletCollision);
-    this.physics.add.collider(this.bulletGroup, this.colisiones, this.onBulletCollision);
 
     console.log("Colisiones de balas configuradas");
 

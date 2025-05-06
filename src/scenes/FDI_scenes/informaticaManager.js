@@ -136,7 +136,7 @@ export default class informaticaManager extends Phaser.Scene {
       this.mapStatus.set(zone.spawnRoom, false);
     }
     this.scene.start(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get(zone.spawnRoom)});
-    this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
+    // this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
   }
 
   guardarPlayerStats(stats){

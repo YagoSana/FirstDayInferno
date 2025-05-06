@@ -68,7 +68,7 @@ export default class DialogueScene extends Phaser.Scene {
 
         // Texto del mensaje (inicialmente vacío)
         this.text = this.add.text(
-            this.portrait ? this.portrait.x + this.portrait.displayWidth + 40 : centerX - width / 2 + 40,
+            this.portrait ? this.portrait.x + this.portrait.displayWidth + 40 :  250,
             dialogueY + 30,
             '',
             {
@@ -82,8 +82,8 @@ export default class DialogueScene extends Phaser.Scene {
         // Nombre del hablante
         if (this.speaker) {
             this.nameText = this.add.text(
-                this.portrait ? this.portrait.x + this.portrait.displayWidth / 2 : centerX - width / 2 + 30,
-                this.portrait ? this.portrait.y + this.portrait.displayHeight + 10 : centerY - height / 2 + 10,
+                this.portrait ? this.portrait.x + this.portrait.displayWidth / 2 :  140,
+                this.portrait ? this.portrait.y + this.portrait.displayHeight + 10 : centerY + height/2 + 100,
                 this.speaker,
                 {
                     fontSize: '32px',
