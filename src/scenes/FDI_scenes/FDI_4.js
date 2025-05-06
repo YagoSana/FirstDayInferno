@@ -225,8 +225,18 @@ export default class FDI_4 extends SalaBase {
             this.cambiarSala(player, zone);
         }, null, this);
 
-        new VendingMachine(this, 64, 45);
-        new bartender(this, 255, 60);
+        const spawnLayer = map.getObjectLayer('spawn');
+        if (spawnLayer) {
+        spawnLayer.objects.forEach(obj => {
+                const spawnType = obj.properties?.find(p => p.name === 'spawn')?.value;
+                if (spawnType === 'bartender') {
+                    let spawneable= new bartender(this, obj.x, obj.y-10, 112, 25,'bartender');
+                }
+                else if (spawnType==='vendingMachine'){
+                    let vm = new VendingMachine(this, obj.x, obj.y);
+                }
+        }
+    )};
 
         // Música aleatoria sin repetición inmediata
         const musicTracks = ['musicaCafe1', 'musicaCafe2', 'musicaCafe3', 'musicaCafe4'];

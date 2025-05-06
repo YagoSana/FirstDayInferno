@@ -11,7 +11,7 @@ export default class DialogueNPC extends SpriteBase {
     this.nombre = nombre;
     this.frases = frases.length > 0 ? frases : ['...'];
     this.dialogueActivo = false;
-    this.interactionRange = 60;
+    this.interactionRange = 40;
     this.bulletHits=0;
     this.health = 100;
     this.purchase = purchase;
