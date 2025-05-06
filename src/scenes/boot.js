@@ -40,6 +40,7 @@ import seller from "../../assets/sprites/alcohol_seller_32x32.png";
 import fdi_student from "../../assets/sprites/fdi_student_32x32.png";
 import fdi_studentPortrait from "../../assets/sprites/fdi_student_portrait_32x32.png";
 import car from "../../assets/sprites/car_crash_64x64.png";
+import kuchau from "../../assets/sprites/kuchau.png";
 
 //EXTRAS ------------------------------------------------------
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
@@ -272,6 +273,11 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("car", car,{
       frameWidth: 64,
       frameHeight: 64,
+    });
+
+ this.load.spritesheet("car-face", kuchau,{
+      frameWidth: 350,
+      frameHeight: 350,
     });
 
     this.load.spritesheet("borja", borja, {
