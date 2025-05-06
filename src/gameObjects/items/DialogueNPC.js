@@ -6,7 +6,7 @@ import Item from './item';
 export default class DialogueNPC extends SpriteBase {
   constructor(scene, x, y, spriteKey, nombre = 'NPC', frases = [], purchase, frasePurchase, purchaseCost, itemKey) {
     super(scene, x, y, spriteKey);
-
+    this.spriteKey = spriteKey;
     this.scene = scene;
     this.nombre = nombre;
     this.frases = frases.length > 0 ? frases : ['...'];
@@ -160,7 +160,7 @@ export default class DialogueNPC extends SpriteBase {
       this.scene.scene.launch('DialogueScene', {
         message: frase,
         speaker: this.nombre,
-        portraitKey: this.texture.key + '-face',
+        portraitKey: `${this.spriteKey}_talk`,
         textSpeed: 35,
         previousScene: this.scene.scene.key,
         onClose: () => {
@@ -183,7 +183,7 @@ export default class DialogueNPC extends SpriteBase {
     this.scene.scene.launch('DialogueScene', {
       message: frase,
       speaker: this.nombre,
-      portraitKey: this.texture.key + '-face',
+      portraitKey: `${this.spriteKey}_talk`,
       textSpeed: 35,
       previousScene: this.scene.scene.key,
       onClose: () => {

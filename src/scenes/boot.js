@@ -26,7 +26,7 @@ import skeleton from "../../assets/sprites/skeleton_spritesheet.png";
 import phantom from "../../assets/sprites/phantom.png";
 
 //CAMARERO
-import camarero from "../../assets/sprites/bartender_front_iddle.png"
+import camarero from "../../assets/sprites/bartender_front_iddle.png";
 
 //PROFESOR
 import borja from "../../assets/sprites/borja.png"
@@ -40,6 +40,7 @@ import seller from "../../assets/sprites/alcohol_seller_32x32.png";
 import fdi_student from "../../assets/sprites/fdi_student_32x32.png";
 import fdi_studentPortrait from "../../assets/sprites/fdi_student_portrait_32x32.png";
 import car from "../../assets/sprites/car_crash_64x64.png";
+import npcPortrait from "../../assets/sprites/Characters_GUI.png"
 
 //EXTRAS ------------------------------------------------------
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
@@ -321,6 +322,11 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet("player_gui_96", player_gui, {
       frameWidth: 96, //solo por la barra del boss
       frameHeight: 32, //todos son 32 px de alto
+    });
+
+    this.load.spritesheet("npcsPortrait", npcPortrait, {
+      frameWidth: 32,
+      frameHeight: 32
     });
 
     this.load.spritesheet("bartender", camarero, {
@@ -662,7 +668,7 @@ export default class Boot extends Phaser.Scene {
       key: "zombie_move",
       frames: this.anims.generateFrameNames("zombie_move", {
         start: 0,
-        end: 4,
+        end: 3,
       }),
       frameRate: 10,
       repeat: -1,
@@ -1277,6 +1283,43 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
       startFrame: 39
     });
+
+    this.anims.create({
+      key: "bartender_talk",
+      frames: this.anims.generateFrameNames("npcsPortrait", { start: 0, end: 1 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "borja_talk",
+      frames: this.anims.generateFrameNames("npcsPortrait", { start: 2, end: 3 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "fdi_student1_talk",
+      frames: this.anims.generateFrameNames("npcsPortrait", { start: 4, end: 5 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "hippie_talk",
+      frames: this.anims.generateFrameNames("npcsPortrait", { start: 6, end: 7 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "bossMedicina_talk",
+      frames: this.anims.generateFrameNames("npcsPortrait", { start: 8, end: 9 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+    
+    
 
     this.anims.create({
       key: "fire_start",

@@ -134,7 +134,7 @@ export default class FDI_1 extends SalaBase {
                     this.npcGroup.add(hippie);
                 }
                 else if (spawnType === 'fdi_student') {
-                    let student = new DialogueNPC(this, obj.x + 80, obj.y, 'fdi_student', 'Estudiante', frasesEstudiante, false, " ", 0, 'mini_tinto');
+                    let student = new DialogueNPC(this, obj.x + 80, obj.y, 'fdi_student1', 'Estudiante', frasesEstudiante, false, " ", 0, 'mini_tinto');
                     this.npcGroup.add(student);
                 }
                 else if (spawnType === 'crashed_car') {
