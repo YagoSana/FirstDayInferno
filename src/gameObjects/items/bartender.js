@@ -102,7 +102,7 @@ export default class Bartender extends SpriteBase {
         this.scene.scene.launch('DialogueScene', {
             message: frase,
             speaker: 'Sánchez',
-            portraitKey: 'bartenderImg',
+            portraitKey: 'bartender_talk',
             textSpeed: 35, // Velocidad del efecto de texto
             previousScene: this.scene.scene.key, // Pasar la escena actual
             onClose: () => {

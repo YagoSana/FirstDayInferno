@@ -240,7 +240,7 @@ export default class BossMedicina extends Npc {
     this.scene.scene.launch('DialogueScene', {
       message: frase,
       speaker: 'La muerte',
-      portraitKey: 'bossMedicinaIdle2',
+      portraitKey: 'bossMedicina_talk',
       textSpeed: 35, // Velocidad del efecto de texto
       previousScene: this.scene.scene.key, // Pasar la escena actual
       onClose: () => {

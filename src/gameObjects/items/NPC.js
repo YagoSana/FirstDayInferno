@@ -115,7 +115,7 @@ export default class NPC extends SpriteBase {
         this.scene.scene.launch('DialogueScene', {
             message: frase,
             speaker: 'Borja',
-            portraitKey: 'borjaPortrait',
+            portraitKey: 'borja_talk',
             textSpeed: 35,
             previousScene: this.scene.scene.key,
             onClose: () => {
