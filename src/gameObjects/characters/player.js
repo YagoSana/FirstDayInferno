@@ -30,9 +30,7 @@ export default class Player extends SpriteBase {
         this.doorsLocked = playerData.doorsLocked;
         this.playerTint = 0xffffff;
         this.bulletType = 'paperbullet';
-        if (this.equippedItem) {
-            this.itemAppearance(this.equippedItem, this.equippedItemRow);
-        }
+
         this.isShooting = false;
         this.depth = 5; // Asegura que el jugador este en la capa correcta
         this.setDepth(this.depth);
@@ -97,6 +95,9 @@ export default class Player extends SpriteBase {
         this.canParry = true;
         this.parryCooldown = 1000; // en milisegundos, cooldown del parry
         this.emitter = this.scene.emitterParry; // Emitter para el efecto de parry
+        if (this.equippedItem) {
+            this.firstItemAppearance(this.equippedItem, this.equippedItemRow);
+        }
     }
 
     /**
@@ -364,6 +365,67 @@ export default class Player extends SpriteBase {
 
         console.log(`Item ${this.equippedItem}: equipado`);
     }
+
+      //Cambia la apariencia del jugador con un item
+      firstItemAppearance(itemKey, spriteRow) {
+        const spriteKey = `player_items`;
+        if (spriteRow != -1){
+            this.equippedItemRow = spriteRow;
+        }
+
+        this.setTint(0xffffff);
+
+        if (this.itemSprite) {
+            this.itemSprite.destroy(); // Elimina el sprite anterior si ya hay uno
+        }
+
+        let currentBullet = 'paperbullet';
+
+        switch (itemKey) {
+            case 'bumbo':
+                currentBullet = 'bumbo_bullet';
+                this.playerTint = 0xe6c5c7;
+                break;
+
+            case 'pantallazo_azul':
+                currentBullet = 'pantallazo_azul_bullet';
+                this.playerTint = 0x66ccff;
+                this.pantallazo = true;
+                break;
+
+            case 'collar_macarrones':
+                currentBullet = 'dough_bullet';
+                this.changeCooldown(100);
+                break;
+            case 'bolsa_sospechosa':
+                currentBullet = 'smoke_bullet';
+                this.invertir(true);
+                this.doDoubleshoot(true);
+                break;
+
+            default:
+                currentBullet = 'paperbullet';
+                this.playerTint = 0xffffff;
+        }
+
+        this.setTintFill(this.playerTint);
+
+        this.bulletType = currentBullet;
+
+        // Crea el nuevo sprite del ítem sobre el jugador
+        this.itemSprite = this.scene.add.sprite(this.x, this.y, spriteKey);
+        this.depth = 5; // Asegura que el jugador este en la capa correcta
+        this.itemSprite.depth = this.depth + 1; // Asegura que esté sobre el jugador
+        this.itemSprite.setDepth(this.itemSprite.depth); // Asegura que esté sobre el jugador
+        console.log(`Item ${itemKey}: equipado en fila ${spriteRow + 1}`);
+        // console.log("jugador", this.depth);
+
+        this.equippedItem = itemKey; // Guarda el ítem equipado
+
+        console.log(`Item ${this.equippedItem}: equipado`);
+    }
+
+
 
     shoot(dirX, dirY) {
         this.sonidoDisparo.play();
