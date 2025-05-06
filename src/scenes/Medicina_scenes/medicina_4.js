@@ -3,6 +3,7 @@ import SalaBase from "../../scenes/salaBase.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
 import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
+import skeletonEnemy from "../../gameObjects/enemies/skeletonEnemy.js";
 import Item from "../../gameObjects/items/item.js";
 
 export default class medicina_4 extends SalaBase {
@@ -160,7 +161,9 @@ export default class medicina_4 extends SalaBase {
           this.numEnemies++;
           switch (obj.name) {
             case "cucaracha":
-              this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+              const skeleton = new skeletonEnemy(this, obj.x, obj.y, "skeleton")
+              this.enemyGroup.add(skeleton);
+              skeleton.setPlayer(this.player);
               break;
             case "zombie":
               this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));

@@ -12,7 +12,7 @@ export default class PhantomEnemy extends Npc {
 
         this.invisible = false;
         this.invisibleTimer = 0;
-        this.invisibleCooldown = 5000; // cada 5 segundos se vuelve invisible
+        this.invisibleCooldown = 4000; // cada 4 segundos se vuelve invisible
         this.invisibleDuration = 2000; // permanece invisible 2 segundos
 
         this.ghostAngle = 0;
