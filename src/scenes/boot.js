@@ -256,7 +256,7 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
-    this.load.spritesheet("fdi_student", fdi_student, {
+    this.load.spritesheet("fdi_student1", fdi_student, {
       frameWidth: 32,
       frameHeight: 32,
     });
