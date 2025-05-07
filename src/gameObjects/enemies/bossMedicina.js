@@ -43,7 +43,7 @@ export default class BossMedicina extends Npc {
     this.haHablado = false;
     this.primerDialogo = false;
     this.dead = false;
-    this.sonidoDaño = scene.sound.add('bossMedicinaDaño', { volume: 0.1 });
+    this.sonidoDanyo = scene.sound.add('bossMedicinaDanyo', { volume: 0.1 });
     this.sonidoOrbes = scene.sound.add('bossMedicinaOrbes', { volume: 0.5 });
   }
 
@@ -205,7 +205,7 @@ export default class BossMedicina extends Npc {
   hitBullet(enemy, bullet) {
     //Enemigo muere
     if (Phaser.Math.Between(1, 100) <= 15) {
-      this.sonidoDaño.play();
+      this.sonidoDanyo.play();
     }
     this.stunCounter = 30;
     this.health--;

@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import SpriteBase from '../spriteBase';
-import ShopItem from './shopItem';
+import SpriteBase from '../spriteBase.js';
+import ShopItem from './shopItem.js';
 
 export default class Bartender extends SpriteBase {
     constructor(scene, x, y) {

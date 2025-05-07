@@ -97,7 +97,7 @@ import musicaCafe3 from '../../assets/music/musicaCafe3.mp3';
 import musicaCafe4 from '../../assets/music/musicaCafe4.mp3';
 import motorSound from '../../assets/sounds/engine.mp3';
 import bossMedicinaAmbiente from '../../assets/music/bossMedicinaAmbiente.ogg';
-import bossMedicinaDaño from '../../assets/music/bossMedicinaDaño.wav';
+import bossMedicinaDanyo from '../../assets/music/bossMedicinaDanyo.wav';
 import bossMedicinaOrbes from '../../assets/music/bossMedicinaOrbes.wav';
 import bossMedicinaMusica from '../../assets/music/bossMedicinaMusica.wav';
  
@@ -150,7 +150,7 @@ export default class Boot extends Phaser.Scene {
     //AUDIO
     this.load.audio('bossMedicinaMusica', bossMedicinaMusica);
     this.load.audio('bossMedicinaAmbiente', bossMedicinaAmbiente);
-    this.load.audio('bossMedicinaDaño', bossMedicinaDaño);
+    this.load.audio('bossMedicinaDanyo', bossMedicinaDanyo);
     this.load.audio('bossMedicinaOrbes', bossMedicinaOrbes);
     this.load.audio('musicaMenu', musicaMenu);
     this.load.audio('buttonHover', buttonHover);

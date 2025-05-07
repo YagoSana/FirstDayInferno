@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import Npc from './npc';
+import Npc from './npc.js';
 /**
  * Clase que representa las plataformas que aparecen en el escenario de juego.
  * Cada plataforma es responsable de crear la base que aparece sobre ella y en la 
