@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import Bullet from "./bullet";
 
 export default class FreezeBullet extends Bullet {
