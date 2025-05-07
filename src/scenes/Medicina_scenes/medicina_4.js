@@ -121,7 +121,6 @@ export default class medicina_4 extends SalaBase {
 
     //this.physics.add.collider(this.enemyBulletGroup, layer2, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, layer3, this.onBulletCollision);
-    this.physics.add.collider(this.enemyBulletGroup, this.colisiones, this.onBulletCollision);
 
     this.physics.add.collider(this.enemyGroup, this.colisiones);
 
