@@ -3,63 +3,90 @@ import SpriteBase from '../spriteBase';
 import Item from './item';
 
 export default class Door extends SpriteBase {
-    constructor(scene, x, y, key) {
+    constructor(scene, x, y, key, isLocked) {
         super(scene, x, y, key);
 
-        if(key === "medDoor"){
+        if(key === "fdiDoor"){
+            this.animation = 'fdiDoor-open';
+            this.ini = 0;
+            this.end = 18;
+        }else if(key === "medDoor"){
             this.animation = 'medDoor-open';
             this.ini = 20;
             this.end = 37;
+        }else if(key==="secretDoor"){
+            this.animation = 'secretDoor-open';
+            this.ini = 0;
+            this.end = 7;
+        }else if(key==="candado"){
+            this.animation = 'lock-open';
+            this.ini = 0;
+            this.end = 7;
         }
 
         this.body.setImmovable(true);
         this.body.allowGravity = false;
 
-        //Hitbox
-        this.body.setSize(32, 32);
-        this.body.setOffset(16, 0); 
-
-        //Area interaccion -> cambiar?
-        this.interactionArea = this.scene.add.circle(x, y, 30, 0x000000, 0);
-        this.scene.physics.add.existing(this.interactionArea);
-        this.interactionArea.body.setCircle(30);
-        this.scene.physics.add.overlap(this.interactionArea, scene.player, this.showInteractionUI, null, this);
-
-        //Colisiones -> when isLocked == false cambiar colisiones
-        this.collider = this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
-        this.scene.physics.add.collider(this, scene.enemyGroup);
-        this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
-
-        this.isLocked = true;
+        this.key = key;
+        this.isLocked = isLocked;
         this.bulletHits = 0;
 
-        this.play(this.animation);
-        this.stop();
-        this.setFrame(this.ini);//Primer frame (puerta cerrada)
+        if(this.isLocked){
+            if(key === "secretDoor"){
+                this.body.setSize(32, 32);
+                this.body.setOffset(0, 0);
+            }else if(key === "candado"){
+                this.body.setSize(16, 32);
+                this.body.setOffset(0, -8);//comprobar
+            }else{
+                this.body.setSize(32, 32);
+                this.body.setOffset(16, 0); 
+            }
+            
+            //Area interaccion
+            this.interactionArea = this.scene.add.circle(x, y, 40, 0x000000, 0);
+            this.scene.physics.add.existing(this.interactionArea);
+            this.interactionArea.body.setCircle(40);
+            this.scene.physics.add.overlap(this.interactionArea, scene.player, this.showInteractionUI, null, this);
 
-        this.interactionText = this.scene.add.text(0, 0, 'Abrir puerta', {
-            fontSize: '16px',
-            fill: '#ffffff',
-            fontFamily: 'monogram',
-            backgroundColor: '#000000',
-            padding: { x: 5, y: 4 }
-        })
-            .setVisible(false)
-            .setDepth(25).setResolution(2);
+            //Colisiones -> when isLocked == false cambiar colisiones
+            this.collider = this.scene.physics.add.collider(this, scene.player, this.hitPlayer, null, this);
+            this.scene.physics.add.collider(this, scene.enemyGroup);
+            this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
 
-        this.eKeyIcon = this.scene.add.sprite(0, 0, 'key_E_action')
-            .setVisible(false)
-            .setDepth(20)
-            .play('key_E_action');
-        this.noKeyText = this.scene.add.text(this.x - 70, this.y - 40, '¡Necesitas una llave!', {
-            fontSize: '16px',
-            fill: '#ff0000',
-            fontFamily: 'monogram',
-            backgroundColor: '#000000',
-            padding: { x: 5, y: 4 }
-        })
-            .setVisible(false)
-            .setDepth(30).setResolution(2);
+            this.play(this.animation);
+            this.stop();
+            this.setFrame(this.ini);//Primer frame (puerta cerrada)
+
+            this.interactionText = this.scene.add.text(0, 0, 'Abrir puerta', {
+                fontSize: '16px',
+                fill: '#ffffff',
+                fontFamily: 'monogram',
+                backgroundColor: '#000000',
+                padding: { x: 5, y: 4 }
+            })
+                .setVisible(false)
+                .setDepth(25).setResolution(2);
+
+            this.eKeyIcon = this.scene.add.sprite(0, 0, 'key_E_action')
+                .setVisible(false)
+                .setDepth(20)
+                .play('key_E_action');
+            this.noKeyText = this.scene.add.text(this.x - 70, this.y - 40, '¡Necesitas una llave!', {
+                fontSize: '16px',
+                fill: '#ff0000',
+                fontFamily: 'monogram',
+                backgroundColor: '#000000',
+                padding: { x: 5, y: 4 }
+            })
+                .setVisible(false)
+                .setDepth(30).setResolution(2);
+        }else{
+            console.log("abierta");
+            this.play(this.animation);
+            this.stop();
+            this.setFrame(this.end);
+        }
     }
 
     showInteractionUI(door, player){
@@ -90,6 +117,8 @@ export default class Door extends SpriteBase {
 
                 this.play(this.animation);
                 this.once('animationcomplete', () => {
+                    console.log("key puerta: ", this.key);
+                    this.scene.player.openDoor(this.key);
                     this.disableDoor();
                 });
                 this.collider.active = false; 

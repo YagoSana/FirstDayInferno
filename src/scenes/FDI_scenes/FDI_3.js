@@ -71,7 +71,8 @@ export default class FDI_3 extends SalaBase {
         let transitionLayer = map.getObjectLayer("transiciones");
         
         transitionLayer.objects.forEach(obj => {
-            const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
+            const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height).setOrigin(0, 0).setOffset(0, 0);
+           
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
@@ -81,14 +82,16 @@ export default class FDI_3 extends SalaBase {
 
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+        this.doorFireManager.createFiresForZones(this.transitionZones);
+        this.doorFireManager.setupCollisions(this.player);
     }
 
     spawnProps(){
  
-            this.enemyGroup.add(new RangedAreaEnemy(this, 160, 240, "nerd"));
-            this.numEnemies++;
-    
-        }
+        this.enemyGroup.add(new RangedAreaEnemy(this, 160, 240, "nerd", true));
+        this.numEnemies++;
+
+    }
     
     spawnBlood(){
         this.add.sprite(154, 210, "blood").setVisible(true).setDepth(3).setFrame(12);

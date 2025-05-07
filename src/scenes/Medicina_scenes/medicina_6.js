@@ -4,6 +4,7 @@ import Enemy from "../../gameObjects/enemies/enemy.js";
 import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
 import rangedAreaEnemy from "../../gameObjects/enemies/rangedAreaEnemy.js";
+import BossMedicina from "../../gameObjects/enemies/bossMedicina.js";
 
 export default class medicina_6 extends SalaBase {
   constructor() {
@@ -12,6 +13,8 @@ export default class medicina_6 extends SalaBase {
 
   create() {
     super.create("medicina_6");
+
+    this.numEnemiesBeaten = 0;
 
     // Inicialización de grupos
     this.enemyGroup = this.physics.add.group();
@@ -30,11 +33,11 @@ export default class medicina_6 extends SalaBase {
 
     // Crear capas del mapa
     const layer1 = map.createLayer("suelo", [tileset1, tileset2], 0, 0);
-    const layer2 = map.createLayer("pared", [tileset1, tileset2], 0, 0);
-    const layer3 = map.createLayer("sin colision", [tileset1, tileset2], 0, 0);
+    const layer2 = map.createLayer("pared", [tileset1, tileset2], 0, 0); 
     const layer4 = map.createLayer("objetos", [tileset1, tileset2], 0, 0);
     const layer5 = map.createLayer("techo", [tileset1, tileset2], 0, 0);
-
+    const layer3 = map.createLayer("sin colision", [tileset1, tileset2], 0, 0);
+    
     console.log("Capas creadas");
 
     // Configurar colisiones
@@ -79,7 +82,7 @@ export default class medicina_6 extends SalaBase {
     const screenHeight = this.sys.game.config.height; // Alto de tu pantalla
     const mapWidth = map.widthInPixels;
     const mapHeight = map.heightInPixels;
-    const zoom = 1.8;
+    const zoom = 2;
     //const boundX = -(screenWidth / zoom - mapWidth) / 2;
     //const boundY = -(screenHeight / zoom - mapHeight) / 2;
 
@@ -154,23 +157,17 @@ export default class medicina_6 extends SalaBase {
         console.log(`Tipo del objeto de tiled ${type}`);
         if (type === "enemy") {
           switch (obj.name) {
-            case "cucaracha":
-              this.numEnemies++;
-              this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
-              break;
-            case "zombie":
-              this.numEnemies++;
-              this.enemyGroup.add(new rangedAreaEnemy(this, obj.x, obj.y, obj.name));
-              break;
             case "cat":
               console.log("GatosVivos: ", this.game.global.gatosVivos);  // Accede a gatosVivos
               this.game.global.gatosVivos.push(obj.id); // Añadir el ID del gato a la lista
               this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
               break;
-            //case "boss":
-              //this.numEnemies++;
-              //this.enemyGroup.add(new bossEnemy(this, obj.x, obj.y, obj.name));
-              //break;
+            case "bossMedicina":
+              this.numEnemies++;
+              let boss = new BossMedicina(this, obj.x, obj.y);
+              this.enemyGroup.add(boss);
+
+              break;
             default:
               console.log("Tipo de enemigo no reconocido:", obj.name);
           }
@@ -188,17 +185,11 @@ export default class medicina_6 extends SalaBase {
         }
       });
     }
-  }
-
-  bossStatus() {
-    if (this.numEnemiesBeaten == this.numEnemies) {
-      this.cameras.main.fadeOut(1000, 0, 0, 0);
-      this.cameras.main.once('camerafadeoutcomplete', () => {
-        this.manager.cambiarSala(zone);
-      });
-      this.manager.guardarPlayerStats(this.player.getStats());
-      this.manager.volverAlLobby("medicina_6");
-    }
+    this.sound.stopAll();
+    this.sonidoAmbiente = this.sound.add('bossMedicinaAmbiente', { volume: 0.7, loop: true });
+    this.musica = this.sound.add('bossMedicinaMusica', { volume: 0.7, loop: true });
+    this.musica.play();
+    this.sonidoAmbiente.play();
   }
 
   updateLight() {

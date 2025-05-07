@@ -468,6 +468,24 @@
                  "width":0,
                  "x":299.333333333333,
                  "y":437.333333333333
+                }, 
+                {
+                 "height":0,
+                 "id":23,
+                 "name":"bartender",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"tipo",
+                         "type":"string",
+                         "value":"merchant"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":386.666666666667,
+                 "y":100
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -476,7 +494,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":23,
+ "nextobjectid":24,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

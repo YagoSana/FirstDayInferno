@@ -4,6 +4,7 @@ import SpriteBase from '../spriteBase';
 export default class Bullet extends SpriteBase {
     constructor(scene, x, y, dirX, dirY, velocityX, velocityY, isPlayer, type, shooter) {
         super(scene, x, y, type);
+        this.type = type;
         if (isPlayer) {
             scene.bulletGroup.add(this);
             this.speed = 200; // Velocidad de la bala
@@ -23,6 +24,15 @@ export default class Bullet extends SpriteBase {
                     break;
                 case 'zombiebullet':
                     this.scale = 0.5;
+                    break;
+                case 'bossMedicinaBullet':
+                    this.body.setSize(25, 25);
+                    break;
+                case 'binaryBullet':
+                    this.scale = 0.8;
+                    break;
+                case 'printerBullet':
+                    this.scale = 0.8;
                     break;
             }
             this.setScale(this.scale);
@@ -69,5 +79,30 @@ export default class Bullet extends SpriteBase {
         this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
             this.destroy();
         });
+    }
+
+    disappear(){
+        this.body.setVelocity(0, 0);
+        this.body.enable = false;
+        this.destroy();
+    }
+
+    disparaOrbe(x, y){
+        const velocidad = 200;
+        this.scene.physics.moveTo(this, x, y, velocidad);
+    }
+
+    parry(){
+         // Deshabilitar colisión y movimiento
+         this.body.setVelocity(0, 0);
+         this.body.enable = false;
+ 
+         // Reproducir animación de explosión
+         this.play("parrySmoke").setScale(0.7);
+ 
+         // Esperar el tiempo de duración de la animación antes de destruir la bala
+         this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+             this.destroy();
+         });
     }
 }

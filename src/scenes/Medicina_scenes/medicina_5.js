@@ -6,15 +6,22 @@ import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
 import Door from "../../gameObjects/items/door.js";
 import Item from "../../gameObjects/items/item.js";
 
+import libreria from "../../../assets/imgs/libreria.png";
+
 export default class medicina_5 extends SalaBase {
   constructor() {
     super("medicina_5");
+  }
+
+  preload() {
+    this.load.image('libreria', libreria);
   }
 
   create() {
     super.create("medicina_5");
 
     console.log("Sala 5 de medicina inicializada");
+    this.load.image('libreria', libreria);
 
     // Inicialización de grupos
     this.enemyGroup = this.physics.add.group();
@@ -58,6 +65,10 @@ export default class medicina_5 extends SalaBase {
         zone.spawnX = obj.properties.find((p) => p.name === "spawnX")?.value;
         zone.spawnY = obj.properties.find((p) => p.name === "spawnY")?.value;
         zone.prev = "medicina_5";
+        zone.name = obj.name;
+        //solo para la sala del boss
+        zone.isBossTransition = obj.properties.find((p) => p.name === "isBossTransition")?.value || false;
+        zone.bossKey = obj.properties.find((p) => p.name === "bossKey")?.value || "bossMedicina";
       });
     }
 
@@ -70,12 +81,14 @@ export default class medicina_5 extends SalaBase {
     const screenHeight = this.sys.game.config.height; // Alto de tu pantalla
     const mapWidth = map.widthInPixels;
     const mapHeight = map.heightInPixels;
-    const zoom = 1.8;
+    const zoom = 2;
     const boundX = -(screenWidth / zoom - mapWidth) / 2;
-    //const boundY = -(screenHeight / zoom - mapHeight) / 2;
+    const boundY = -(screenHeight / zoom - mapHeight) / 2;
+    console.log("boundX: ", boundX);
+    console.log("boundY: ", boundY);
 
     this.cameras.main.setZoom(zoom);
-    this.cameras.main.setBounds(boundX, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.setBounds(boundX, boundY, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
     // Ajustar límites del mundo y cámara
@@ -133,6 +146,35 @@ export default class medicina_5 extends SalaBase {
     this.doorFireManager.createFiresForZones(this.transitionZones);
     this.doorFireManager.setupCollisions(this.player);
 
+    //libreria que se mueve
+    this.libreriaZone = this.physics.add.group();
+    let libreriaLayer = map.getObjectLayer("puerta");
+    if (libreriaLayer) {
+      libreriaLayer.objects.forEach((obj) => {
+        console.log("width: ", obj.width, " height: ", obj.height);
+        const zone = this.libreriaZone.create(obj.x, obj.y - 49, "libreria")
+          .setOrigin(0, 0)
+          .setOffset(0, 32);
+
+        // Make hitbox wider by 16px to the right only
+        zone.body.setSize(obj.width + 16, obj.height);
+        zone.body.setOffset(0, 32); // Keep the original vertical offset
+      });
+    }
+    this.libreriaZone.setVisible(true);
+    this.physics.add.overlap(this.player, this.libreriaZone, (player, door) => {
+      if (!door.hasMoved) {
+        door.hasMoved = true;
+        this.tweens.add({
+          targets: door,
+          x: door.x + 32,
+          tint: 0x999999,
+          duration: 500,
+          ease: 'Power2'
+        });
+      }
+    }, null, this);
+
     let spritesLayer = map.getObjectLayer("sprites");
     if (!this.status) {
       spritesLayer.objects.forEach(obj => {
@@ -156,8 +198,9 @@ export default class medicina_5 extends SalaBase {
             default:
               console.log("Tipo de enemigo no reconocido:", obj.name);
           }
-        } else if (type === "door"){
-          new Door(this, obj.x, obj.y, 'medDoor');
+        } else if (type === "door") {
+          let locked3 = this.playerStats.doorsLocked['medDoor'];
+          new Door(this, obj.x, obj.y, 'medDoor', locked3);
         }
       });
     }
@@ -169,10 +212,43 @@ export default class medicina_5 extends SalaBase {
             this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
           }
           else this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
+        } else if (type === "door"){
+          let locked3 = this.playerStats.doorsLocked['medDoor'];
+          new Door(this, obj.x, obj.y, 'medDoor', locked3);
         }
       });
     }
   }
+
+  cambiarSala(player, zone) {
+    if (!zone.spawnRoom || !this.player.canChangeRoom || !zone.open) return;
+    
+    this.player.canChangeRoom = false;
+    this.manager.guardarPlayerStats(this.player.getStats());
+    
+    this.time.delayedCall(1000, () => {
+        this.player.canChangeRoom = true;
+    });
+    
+    this.cameras.main.fadeOut(500, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+        if (zone.isBossTransition) {
+            // Si es transición al jefe, mostramos VS screen
+            this.scene.stop();
+            this.scene.start('VSScreen', {
+                bossKey: zone.bossKey,
+                nextScene: zone.spawnRoom, // medicina_6
+                playerStats: this.player.getStats(),
+                transitionData: zone,
+                managerKey: this.managerKey
+            });
+        } else {
+            // Transición normal, vamos directamente a la otra sala
+            this.scene.stop();
+            this.manager.cambiarSala(zone);
+        }
+    });
+}
 
   updateLight() {
     this.light.x = this.player.x;

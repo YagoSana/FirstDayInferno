@@ -19,15 +19,17 @@ export default class RangedEnemy extends Npc {
     this.invulnerable=false;
   }
 
-  preUpdate(t, dt) {
+  preUpdate(t, dt){
     super.preUpdate(t, dt);
+  }
 
+  mypreUpdate(t, dt) {
     if (this.health > 0) {
-      if (this.anims.currentAnim && this.anims.currentAnim.key === `${this.type}_shoot`) {
+      if (this.anims.currentAnim && this.anims.currentAnim.key === `${this.type}_attack`) {
         this.setTint(0xffffff);
       } else {
         this.setTint(0xffffff);
-        this.play(`${this.type}_move`, true);
+        this.play(`${this.type}_idle`, true);
 
       } if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <=300) {
         this.inmortal = false; // El enemigo deja de ser invencible cuando está en rango
@@ -68,33 +70,18 @@ export default class RangedEnemy extends Npc {
   }
 // Sobrescribir hitBullet de la clase base
 hitBullet(enemy, bullet){
-    //Enemigo muere
-    if(!this.inmortal && !this.invulnerable){
-    this.stunCounter = 30;
-    this.health--;
-    if(this.health <= 0){
-      if (Phaser.Math.Between(1, 100) <= 33) {
-        this.dropCoin();
-      }
-      this.scene.numEnemiesBeaten++;
-      this.body.setVelocity(0,0);
-      this.body.enable = false;
-      this.play("blood", true);
-      this.once('animationcomplete', () => {
-        this.scene.add.sprite(this.x, this.y, "blood").setVisible(true).setDepth(3).setFrame(12);
-        this.destroy();
-      });
-    }
-    
-}
-bullet.explode();
+  //Enemigo muere
+  if(!this.inmortal && !this.invulnerable){
+    super.hitBullet(enemy, bullet);
   }
+  else bullet.explode();
+}
   
   // Función para disparar 3 proyectiles en el eje X
   shoot() {
-    this.play(`${this.type}_shoot`, true);
+    this.play(`${this.type}_attack`, true);
     this.once('animationcomplete', () => {
-      this.play(`${this.type}_move`);
+      this.play(`${this.type}_idle`);
     });
 
     // Disparar balas constantemente en el eje X (hacia la derecha o izquierda)
@@ -102,13 +89,13 @@ bullet.explode();
 
     // Disparar 3 balas con un pequeño retraso entre ellas
     this.scene.time.delayedCall(0, () => {
-      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}bullet`);
+      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}Bullet`);
     });
     this.scene.time.delayedCall(this.shootDelay, () => {
-      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}bullet`);
+      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}Bullet`);
     });
     this.scene.time.delayedCall(this.shootDelay * 2, () => {
-      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}bullet`);
+      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}Bullet`);
     });
     
   }

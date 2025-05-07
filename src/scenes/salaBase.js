@@ -1,8 +1,6 @@
 import Phaser from "phaser";
 import Player from "../gameObjects/characters/player";
 import Bullet from "../gameObjects/projectiles/bullet";
-import PauseController from "../controller/pauseController";
-import UIController from "../controller/UIController";
 import DoorFireManager from "./doorFireManager";
 
 export default class SalaBase extends Phaser.Scene {
@@ -24,6 +22,7 @@ export default class SalaBase extends Phaser.Scene {
     }
 
     create() {
+        this.game.events.on('bossDefeated', this.bossDefeated, this);
         this.manager = this.scene.get(this.managerKey);
         if (this.player) {
             this.player.destroy();
@@ -31,21 +30,30 @@ export default class SalaBase extends Phaser.Scene {
         this.completed = false;
         this.numEnemiesBeaten = 0;
         this.numEnemies = 0;
-        // this.pauseController = new PauseController(this, { x: this.cameras.main.width - 250, y: 135, scale: 0.8 });
-        this.uiController = new UIController(this, {
-            position: {
-                pause: { x: this.cameras.main.width - 245, y: this.cameras.main.height - 420 }, // Posiciones personalizadas
-                mute: { x: this.cameras.main.width - 280, y: this.cameras.main.height - 420 },
-                fullscreen: { x: this.cameras.main.width - 245, y: this.cameras.main.height - 140 }
-            },
-            scale: 0.8
-        });
-        this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+
+        let uiButtonsScene = this.scene.get('UIButtons');
+        uiButtonsScene.updateScene(this.scene.key, this.managerKey);//le pasamos la key de la escena actual
+
         this.scene.stop('GUI');
         this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
         this.scene.bringToTop('GUI');
         this.doorFireManager = new DoorFireManager(this);
         this.isDoorLocked = false;
+        // emisor de partículas para el parry
+        this.emitterParry = this.add.particles(0, 0, 'spark', {
+            speed: 100,             // Velocidad fija
+            scale: { start: 1, end: 0 },
+            alpha: { start: 1, end: 0 },
+            lifespan: 500,         // 500ms de vida
+            blendMode: 'ADD',      // Para que brillen
+            gravityY: 100,         // Pequeña caída
+            emitZone: {            // Pequeña área circular
+                type: 'edge',
+                source: new Phaser.Geom.Circle(0, 0, 2),
+                quantity: 6
+            },
+            visible: false      // No visible por defecto
+        }).setDepth(9999);         // Máxima profundidad
     }
 
 
@@ -67,18 +75,12 @@ export default class SalaBase extends Phaser.Scene {
     }
 
     update() {
-        // console.log("Numero de enemigos: ", this.numEnemies);
-        // console.log("Numero de enemigos derrotados: ", this.numEnemiesBeaten);
-        if(this.updateLight) {
+        //console.log("Numero de enemigos: ", this.numEnemies);
+        //console.log("Numero de enemigos derrotados: ", this.numEnemiesBeaten);
+        if (this.updateLight) {
             this.updateLight();
         }
-        if(this.bossStatus){
-            this.bossStatus();
-        }
-        // Abrir el menú de pausa al presionar ESC
-        if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
-            this.uiController.togglePause();
-        }
+
         if (this.numEnemiesBeaten == this.numEnemies) {
             this.completed = true;
             this.transitionZones.getChildren().forEach(zone => {
@@ -90,10 +92,20 @@ export default class SalaBase extends Phaser.Scene {
             this.transitionZones.getChildren().forEach(zone => {
                 zone.open = false;
             });
-            if(!this.doorFireManager.checkCreatedFire()){
+            if (!this.doorFireManager.checkCreatedFire()) {
                 this.doorFireManager.createFiresForZones(this.transitionZones);
             }
         }
+    }
+
+    bossDefeated(texto) {
+        this.manager.guardarPlayerStats(this.player.getStats());
+        this.scene.pause(this.scene.key);
+        this.scene.start('MessageScreen', {
+            texto: texto,
+            prevScene: this.scene.key, // medicina_6
+            managerKey: this.managerKey
+        });
     }
 
     shutdown() {
@@ -101,4 +113,15 @@ export default class SalaBase extends Phaser.Scene {
             this.uiController.destroy();
         }
     }
+
+    freezeScene() {
+        this.physics.world.pause();
+        this.scenePaused = true; // opcional para lógica condicional
+    }
+
+    unfreezeScene() {
+        this.physics.world.resume();
+        this.scenePaused = false;
+    }
+
 }

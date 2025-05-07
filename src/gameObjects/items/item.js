@@ -19,6 +19,18 @@ export default class Item extends SpriteBase {
     // Tiempo de vida del objeto
     this.lifetime = LIFETIME; // 100 segundos
     this.startTime = this.scene.time.now;
+    this.buyable=false;
+    this.price=0;
+    this.sonidoCorazon = scene.sound.add('cogerCorazon');
+    this.sonidoComer = scene.sound.add('comer');
+    this.sonidoBeber = scene.sound.add('beber');
+    this.sonidoIsaac = scene.sound.add('isaac');
+    this.sonidoError = scene.sound.add('error');
+    this.sonidoBono = scene.sound.add('bono');
+    this.sonidoWindows = scene.sound.add('windows');
+    this.sonidoSmoke = scene.sound.add('smoke');
+    this.sonidoPipe = scene.sound.add('pipe');
+    this.sonidoCry = scene.sound.add('cry');
 
     this.setScale(DEFAULT_SIZE);
     this.setDepth(10);
@@ -31,32 +43,60 @@ export default class Item extends SpriteBase {
     // Acciones de los objetos
     this.actions = {
       "hamburguesa": (player) => {
+        this.sonidoComer.play();
         player.changeHealth(2, true);
         player.invertir(false);
       },
       "moneda": (player) => player.addCoin(1),
       "mini_tinto": (player) => {
+        this.sonidoBeber.play();
         player.changeHealth(4, true);
         player.changeSpeed(0.75);
+        player.invertir(false);
       },
       "llave": (player) => player.pickKey(1),
-      "bumbo": (player) => player.itemAppearance("bumbo", 0), // cabeza de Isaac
-      "pantallazo_azul": (player) => player.itemAppearance("pantallazo_azul", 1), // cabeza de Isaac
-
+      "bumbo": (player) => {
+        this.sonidoIsaac.play();
+        player.beNormal();
+        player.itemAppearance("bumbo", 0);
+      },
+      "pantallazo_azul": (player) => {
+        this.sonidoWindows.play();
+        player.beNormal();
+        player.itemAppearance("pantallazo_azul", 1); // cabeza de Isaac
+        player.doFreeze(true);
+      },
       "bono": (player) => {
+        this.sonidoBono.play();
+        player.beNormal();
         player.changeSpeed(1.3);
         player.changeCooldown(-150);//TODO VER ESTO
       },
-      "codigo": (player) => player.doDoubleshoot(true),
-      "corazon": (player) => player.changeHealth(1, false),
+      "codigo": (player) => {
+        this.sonidoError.play();
+        player.beNormal();
+        player.doDoubleshoot(true);
+      },
+      "corazon": (player) =>{
+        this.sonidoCorazon.play();
+        player.changeHealth(1, false);
+      },
       "maletin": (player) => {
+        this.sonidoPipe.play();
         player.changeSpeed(0.70);
         player.changeHealth(3, true);
+        player.invertir(false);
       },
       "bolsa_sospechosa": (player) => {
-        player.invertir(true);
-        player.doDoubleshoot(true);
-      }
+        this.sonidoSmoke.play();
+        player.beNormal();
+        player.itemAppearance("bolsa_sospechosa", 3);
+      },
+      "collar_macarrones": (player) => {
+        this.sonidoCry.play();
+        player.beNormal();
+        player.itemAppearance("collar_macarrones", 2);
+      },
     };
 
     // Texto del nombre del objeto encima del jugador
@@ -103,6 +143,14 @@ export default class Item extends SpriteBase {
     this.glowEffect = null; // Referencia al efecto de glow
   }
 
+  setBuyable(price){
+    this.price=price;
+    this.buyable=true;
+  }
+
+  setLifetime(lifetime){
+    this.lifetime=lifetime;
+  }
   // Formatea el nombre del ítem para mostrarlo bonito
   getItemName(type) {
     const itemNames = {
@@ -116,7 +164,6 @@ export default class Item extends SpriteBase {
       "maletin": "Maletin del Lab",
       "bolsa_sospechosa": "Bolsa Sospechosa",
       "corazon": "Corazon",
-      // Añade más mapeos según necesites
     };
 
     // Si existe en el mapeo, lo usamos, sino formateamos automáticamente
@@ -126,7 +173,7 @@ export default class Item extends SpriteBase {
   getDescription() {
     const descriptions = {
       "hamburguesa": {
-        description: "Recuperas 2 puntos de salud.",
+        description: "Fabricado en la cafe, puedes notar el sabor a parrilla.",
         effect: "Salud +2"
       },
       "mini_tinto": {
@@ -139,19 +186,19 @@ export default class Item extends SpriteBase {
       },
       "bono": {
         description: "Bono joven de transporte de la comunidad de Madrid. ¡Gracias Pedrito!",
-        effect: "Cooldown -150ms, Velocidad +30%"
+        effect: "Cooldown disparo -150ms, Velocidad +30%"
       },
       "codigo": {
         description: "Código que a veces funciona mal, ha dado time limit en el juez.",
-        effect: "Tus disparos hacen el doble de daño, 20% de probabilidades de que la bala se desvie."
+        effect: "Daño x2, 20% de probabilidades de desvio."
       },
       "pantallazo_azul": {
         description: "Actualizaste a Windows 11. Nadie sabe cómo funciona.",
-        effect: "Tu disparo puede bloquear a los enemigos durante 2 segundos."
+        effect: "Tu disparo congela a los enemigos durante 2 segundos."
       },
       "collar_macarrones": {
         description: "Creado con esfuerzo y sudor por un estudiante de magisterio como proyecto de TFG.",
-        effect: "El personaje cambia su proyectil a un cacho de plastilina."
+        effect: "Cooldown disparo -100ms, el proyectil cambia a un cacho de plastilina."
       },
       "maletin": {
         description: "Maletín que contiene una placa en su interior. Nadie sabe cómo funciona.",
@@ -159,7 +206,7 @@ export default class Item extends SpriteBase {
       },
       "bolsa_sospechosa": {
         description: "Contiene unas hojas verdes secas. Su olor te evoca recuerdos del sur de Madrid.",
-        effect: "Se invierten los controles de disparo pero hacen el doble de daño"
+        effect: "Daño x2, Controles de disparo invertidos"
       },
 
     };
@@ -183,7 +230,9 @@ export default class Item extends SpriteBase {
       ease: 'Sine.easeInOut'
     });
   }
-
+  setItemHitBox(width, height){
+    this.body.setSize(width, height); // Ajusta el tamaño de la hitbox
+  }
   showPickupHint(item, player) {
     player.nearItem = this; // Guardamos el objeto cerca
 
@@ -209,7 +258,7 @@ export default class Item extends SpriteBase {
 
     this.descriptionText.setPosition(
       this.scene.cameras.main.centerX - this.descriptionText.width / 2,
-      this.scene.cameras.main.height - 160
+      this.scene.cameras.main.height - 175
     );
     this.descriptionText.setVisible(true);
   }
@@ -313,12 +362,38 @@ export default class Item extends SpriteBase {
   }
 
   pick(item, player) {
-    if (this.actions[this.type]) {
-      this.actions[this.type](player); // Aplicar el efecto del objeto
+    if (this.buyable) {
+      if (!player.canAfford(this.price)) {
+        // Efecto visual: parpadeo en rojo
+        this.setTint(0xff0000); // Rojo
+  
+        this.scene.tweens.add({
+          targets: this,
+          alpha: 0.5,
+          duration: 100,
+          yoyo: true,
+          repeat: 3,
+          onComplete: () => {
+            this.clearTint();
+            this.setAlpha(1);
+          }
+        });
+  
+        return;
+      }
+  
+      player.spendCoins(this.price);
     }
+  
+    if (this.actions[this.type]) {
+      this.actions[this.type](player);
+    }
+  
     if (this.manualPickup) {
       this.hidePickupHint();
     }
+  
     this.destroy();
   }
+  
 }

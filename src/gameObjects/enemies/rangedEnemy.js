@@ -24,48 +24,51 @@ export default class RangedEnemy extends Npc {
   }
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
-  preUpdate(t, dt) {
+  preUpdate(t, dt){
     super.preUpdate(t, dt); // Llamamos a la función preUpdate de la clase base
+  }
+  
+  mypreUpdate(t, dt) {
     if(this.health>0){
-    if (this.anims.currentAnim && this.anims.currentAnim.key === `${this.type}_shoot`) {
-      this.setTint(0xffffff);;
-    }
-    else{
-      this.setTint(0xffffff);
-      this.play(`${this.type}_move`, true);
-    }
-    // Si el enemigo está lejos del jugador, sigue al jugador
-    if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <= this.attackRange) {
-      this.body.setVelocity(0,0);
-        // Si el enemigo está cerca del jugador y no está en cooldown, dispara
-      if (this.attackCooldown <= 0) {
-        this.shoot();
-        this.attackCooldown = this.attackSpeed;
-      }
-    }
-    else{
-      this.scene.physics.moveToObject(this, this.scene.player, this.speed);
-      if(this.body.velocity.x < 0){
-        this.flipX = false;
+      if (this.anims.currentAnim && this.anims.currentAnim.key === `${this.type}_shoot`) {
+        this.setTint(0xffffff);;
       }
       else{
-        this.flipX = true;                 
+        this.setTint(0xffffff);
+        this.play(`${this.type}_move`, true);
       }
-    }
-    
-    // Reducir el tiempo de cooldown
-    if (this.attackCooldown > 0) {
-      this.attackCooldown -= dt;
-    }
+      // Si el enemigo está lejos del jugador, sigue al jugador
+      if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <= this.attackRange) {
+        this.body.setVelocity(0,0);
+          // Si el enemigo está cerca del jugador y no está en cooldown, dispara
+        if (this.attackCooldown <= 0) {
+          this.shoot();
+          this.attackCooldown = this.attackSpeed;
+        }
+      }
+      else{
+        this.scene.physics.moveToObject(this, this.scene.player, this.speed);
+        if(this.body.velocity.x < 0){
+          this.flipX = false;
+        }
+        else{
+          this.flipX = true;                 
+        }
+      }
+      
+      // Reducir el tiempo de cooldown
+      if (this.attackCooldown > 0) {
+        this.attackCooldown -= dt;
+      }
 
-    if(this.stunCounter>0){
-      this.stunCounter--;
-      if(this.stunCounter>20){
-        this.setTint(0xff0000);
-      }      
-    } else {
-      this.setTint(0xffffff);
-    }
+      if(this.stunCounter>0){
+        this.stunCounter--;
+        if(this.stunCounter>20){
+          this.setTint(0xff0000);
+        }      
+      } else {
+        this.setTint(0xffffff);
+      }
     }
   }
 

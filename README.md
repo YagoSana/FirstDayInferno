@@ -23,10 +23,12 @@ Eres "Pepito", un estudiante de primer año en la Universidad Complutense de Mad
 
 ### ⭐ 1.4 Features Principales
 -   El jugador contará con las siguientes funciones:
+    - [] Sistema de dialogos con interfaz y NPCS.
 	 - [x] Movimiento multidireccional (Topdown).
 	 - [x] Movimiento multidireccional (Topdown).
 	 - [x] Disparo en 4 direcciones con inercia.
 	 - [x] Podrá equiparse algunos ítems (ver más adelante).
+ 	 - [ ] Podrá hacer "parry" a las balas de los enemigos para curarse o recibir bonificaciones.
 -   Habrá un **tutorial** que permitirá al jugador entender las mecánicas
 -   Habrá distintas facultades con varias salas, salas secretas y una sala bloqueada en la que estará el Boss de ese nivel. Los niveles serán:
 	 - [Depurando] **Facultad de Medicina** : 8 salas normales: de las cuales una es una tienda,  '1' con un mini boss (laboratorio) y   y 1 con un boss (a implementar aun)
@@ -80,6 +82,10 @@ Eres "Pepito", un estudiante de primer año en la Universidad Complutense de Mad
 -   Habrá cinemáticas o escenas de inicio y final
     
 -   Habrá 2 finales, uno secreto y otro normal
+  
+-   El juego contará con sonidos acordes a las diferentes acciones y situaciones del mismo.
+
+-   El juego contará con una banda sonora original para ambientar los diferentes escenarios y situaciones.
 
 ---
 

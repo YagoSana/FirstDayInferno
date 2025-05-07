@@ -171,8 +171,26 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":278.333333333333,
-                 "y":99
+                 "x":294.333333333333,
+                 "y":62.5
+                }, 
+                {
+                 "height":0,
+                 "id":4,
+                 "name":"cucaracha",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"tipo",
+                         "type":"string",
+                         "value":"enemy"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":238,
+                 "y":72
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -181,7 +199,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":4,
+ "nextobjectid":5,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

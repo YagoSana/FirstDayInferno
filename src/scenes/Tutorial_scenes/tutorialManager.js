@@ -1,9 +1,7 @@
 import Phaser from "phaser";
 import Player from "../../gameObjects/characters/player";
 
-//ENEMIGOS
-import cucaracha from "../../../assets/sprites/cucaracha.png";
-import enemydeath from "../../../assets/sprites/enemy_death.png";
+
 
 
 //MAPAS Y TILES
@@ -11,6 +9,7 @@ import tutorial_1 from "../../../assets/map/tutorial_1.json";
 import tutorial_2 from "../../../assets/map/tutorial_2.json";
 import tutorial_3 from "../../../assets/map/tutorial_3.json";
 import tutorial_debug from "../../../assets/map/tutorial_debug.json";
+import tutorial_debug2 from "../../../assets/map/tutorial_debug2.json";
 import img_interior from "../../../assets/map/Interiors_free_16x16.png";
 import img_muebles from "../../../assets/map/Room_Builder_free_16x16.png";
 
@@ -29,7 +28,7 @@ export default class tutorialManager extends Phaser.Scene {
             this.playerStats = data.playerStats;
             this.isTutorial = false;
         } else {
-            this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500, doubleshoot: false, invertirDisparo: false }; // Valores predeterminados
+            this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500, doubleshoot: false, doorsLocked: { 'secretDoor': true, 'fdiDoor': true, 'medDoor': true, 'candado': true } }; // Valores predeterminados
             this.isTutorial = true;
         }
     }
@@ -66,16 +65,6 @@ export default class tutorialManager extends Phaser.Scene {
             loadingText.destroy();
         });
 
-        this.load.spritesheet("cucaracha", cucaracha, {
-            frameWidth: 32, //cada frame tiene este ancho
-            frameHeight: 32, //todos son 32 px de alto
-        });
-
-        this.load.spritesheet("enemydeath", enemydeath, {
-            frameWidth: 32, //cada frame tiene este ancho
-            frameHeight: 32, //todos son 32 px de alto
-        });
-
         this.load.image("Interior", img_interior);
         this.load.image("Muebles", img_muebles);
 
@@ -83,24 +72,21 @@ export default class tutorialManager extends Phaser.Scene {
         this.load.tilemapTiledJSON("tutorial_2", tutorial_2);
         this.load.tilemapTiledJSON("tutorial_3", tutorial_3);
         this.load.tilemapTiledJSON("tutorial_debug", tutorial_debug);
+        this.load.tilemapTiledJSON("tutorial_debug2", tutorial_debug2);
     }
 
     create() {
-        this.tutorialSonido = this.sound.add("tutorialSonido", { volume: 0.5, loop: true });
-        this.anims.create({
-            key: "cucaracha",
-            frames: this.anims.generateFrameNames("cucaracha", {
-                frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-            }),
-            frameRate: 20,
-            repeat: -1,
-        });
-
-        this.anims.create({
-            key: "enemydeath",
-            frames: this.anims.generateFrameNames("enemydeath", { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] }),
-            frameRate: 24,
-            repeat: 0,
+        this.tutorialSonido = this.sound.add('tutorialSonido');
+       
+        let uiButtonsScene = this.scene.get('UIButtons');
+        uiButtonsScene.updateConfig({
+            position: {
+                pause: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 512 },
+                mute: { x: this.sys.game.config.width - 120, y: this.sys.game.config.height - 512 },
+                fullscreen: { x: this.sys.game.config.width - 50, y: this.sys.game.config.height - 50 }
+            },
+            scale: 1.6,
+            canPause: true
         });
 
         this.mapStatus = new Map();

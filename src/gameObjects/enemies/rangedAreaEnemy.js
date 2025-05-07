@@ -3,7 +3,7 @@ import Bullet from '../projectiles/bullet.js';
 import Npc from './npc.js';
 
 export default class RangedAreaEnemy extends Npc {
-  constructor(scene, x, y, type) {
+  constructor(scene, x, y, type, key = false) {
     super(scene, x, y, type);
     this.type = type;
     this.attackCooldown = 0;
@@ -12,10 +12,14 @@ export default class RangedAreaEnemy extends Npc {
     this.health = 4;
     this.speed = 90;
     this.stunCounter = 0;
+    this.dropKey = key;
   }
 
   preUpdate(t, dt) {
     super.preUpdate(t, dt);
+  }
+
+  mypreUpdate(t, dt) {
     if (this.health > 0) {
       if (this.anims.currentAnim && this.anims.currentAnim.key === `${this.type}_shoot`) {
         this.setTint(0xffffff);
@@ -23,7 +27,7 @@ export default class RangedAreaEnemy extends Npc {
         this.setTint(0xffffff);
         this.play(`${this.type}_move`, true);
       }
-      
+
       if (Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y) <= this.attackRange) {
         this.body.setVelocity(0, 0);
         if (this.attackCooldown <= 0) {
@@ -34,7 +38,7 @@ export default class RangedAreaEnemy extends Npc {
         this.scene.physics.moveToObject(this, this.scene.player, this.speed);
         this.flipX = this.body.velocity.x >= 0;
       }
-      
+
       if (this.attackCooldown > 0) {
         this.attackCooldown -= dt;
       }
@@ -61,7 +65,7 @@ export default class RangedAreaEnemy extends Npc {
       const angle = i * angleStep;
       const dirX = Math.cos(angle);
       const dirY = Math.sin(angle);
-      new Bullet(this.scene, this.x, this.y, dirX, dirY, 0, 0, false, `${this.type}bullet`);
+      new Bullet(this.scene, this.x, this.y, dirX, dirY, 0, 0, false, `${this.type}bullet`, this.type);
     }
   }
 }

@@ -38,14 +38,13 @@ export default class GUI extends Phaser.Scene {
             .setScrollFactor(0)
             .setDepth(this.depth + 2)
             .setScale(2.43);
-
-            if(this,this.itemKey){
-                this.playerFrame.play(`gui_${this.itemKey}_idle`);
-            }else{
-                this.playerFrame.play('gui_player_idle');
-            }
-
             
+
+        if (this.itemKey) {
+            this.playerFrame.play(`gui_${this.itemKey}_idle`);
+        } else {
+            this.playerFrame.play('gui_player_idle');
+        }
 
         // Marco de estado principal
         this.statusFrame = this.add.sprite(this.margin, this.margin, 'status_frame')
@@ -81,6 +80,9 @@ export default class GUI extends Phaser.Scene {
         const heartSpacing = 22;
         const heartStartX = this.statsPanel.x + heart_margin;
         const heartStartY = this.statsPanel.y + heart_margin;
+
+        this.hearts.forEach(h => h.destroy());
+        this.hearts = [];
 
         for (let i = 0; i < this.playerStats.maxHealth; i++) {
             let heart = this.add.sprite(heartStartX + (i * heartSpacing), heartStartY,
@@ -189,8 +191,9 @@ export default class GUI extends Phaser.Scene {
                 }
                 this.isPlayerHurt = false;
             });
-        }else if(state === 'idle'){
+        } else if (state === 'idle') {
             console.log(item);
+            console.log(this.playerFrame);
 
             if (item) {
                 this.playerFrame.play(`gui_${item}_idle`);

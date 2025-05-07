@@ -82,7 +82,7 @@ export default class introMedicina extends SalaBase {
     const screenHeight = this.sys.game.config.height; // Alto de tu pantalla
     const mapWidth = map.widthInPixels;
     const mapHeight = map.heightInPixels;
-    const zoom = 1.8;
+    const zoom = 2;
     //const boundX = -(screenWidth / zoom - mapWidth) / 2;
     //const boundY = -(screenHeight / zoom - mapHeight) / 2;
 

@@ -3,6 +3,8 @@ import SalaBase from "./salaBase.js";
 import Player from "../gameObjects/characters/player.js";
 import Item from "../gameObjects/items/item.js";
 import VendingMachine from "../gameObjects/items/vendingMachine.js";
+import Bartender from "../gameObjects/items/bartender.js";
+import DialogueNPC from "../gameObjects/items/DialogueNPC.js";
 
 export default class Tutorial_debug extends SalaBase {
     constructor(key) {
@@ -36,7 +38,7 @@ export default class Tutorial_debug extends SalaBase {
         const screenHeight = this.sys.game.config.height; // Alto de tu pantalla
         const mapWidth = map.widthInPixels;
         const mapHeight = map.heightInPixels;
-        const zoom = 1.8;
+        const zoom = 2;
         const boundX = -(screenWidth / zoom - mapWidth) / 2;
         const boundY = -(screenHeight / zoom - mapHeight) / 2;
         console.log("BoundX calculado:", Math.round(boundX));
@@ -63,6 +65,13 @@ export default class Tutorial_debug extends SalaBase {
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
 
+
+        const frasesCoche = [
+            "Kuchau",
+            "Brrrrrrr",
+            "(sonidos de coche y tal)",
+        ];
+
         let spritesLayer = map.getObjectLayer("sprites");
         spritesLayer.objects.forEach(obj => {
             let type = obj.properties.find(p => p.name === "tipo")?.value;
@@ -72,6 +81,9 @@ export default class Tutorial_debug extends SalaBase {
             }
             else if (type === "item") {
                 let it = new Item(this, obj.x, obj.y, obj.name);
+            }
+            else if (type === "merchant") {
+                let car = new DialogueNPC(this, obj.x, obj.y + 32, 'car', 'coche', frasesCoche, false, " ", 0, 'tinto');
             }
         });
 
