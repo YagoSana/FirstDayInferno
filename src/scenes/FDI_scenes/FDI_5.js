@@ -182,8 +182,7 @@ export default class FDI_5 extends SalaBase {
                 break;
             }
             case 3: {
-                if (s1) spawn(Enemy, s1.x, s1.y, 'cucaracha', false, 2);
-                if (s2) spawn(phantomEnemy, s2.x, s2.y, 'phantom', false, 2);
+            
                 if (s3) spawn(RangedAreaEnemy, s3.x, s3.y, 'nerd', true, 2);
                 if (s4) spawn(RangedAreaEnemy, s4.x, s4.y, 'nerd', true, 2);
                 break;
