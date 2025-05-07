@@ -222,7 +222,7 @@
                         {
                          "name":"spawnRoom",
                          "type":"string",
-                         "value":"FDI_3_1"
+                         "value":"FDI_Boss_1"
                         }, 
                         {
                          "name":"spawnX",
