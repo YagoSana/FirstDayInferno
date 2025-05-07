@@ -3,7 +3,6 @@ import SalaBase from "../../scenes/salaBase.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
 import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
-import Item from "../../gameObjects/items/item.js";
 
 export default class medicina_3 extends SalaBase {
   constructor() {

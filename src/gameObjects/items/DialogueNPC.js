@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import SpriteBase from '../spriteBase';
-import DialogueBox from '../../scenes/conversation.js';
 import Item from './item';
 
 export default class DialogueNPC extends SpriteBase {

@@ -1,7 +1,5 @@
 import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
-import Enemy from "../../gameObjects/enemies/enemy.js";
-import Item from "../../gameObjects/items/item.js";
 import DialogueNPC from "../../gameObjects/items/DialogueNPC.js";
 
 export default class FDI_1 extends SalaBase {

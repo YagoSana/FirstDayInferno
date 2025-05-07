@@ -1,8 +1,5 @@
 import SalaBase from "../salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
-import Enemy from "../../gameObjects/enemies/enemy.js";
-import RangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
-import Item from "../../gameObjects/items/item.js";
 import turretEnemy from "../../gameObjects/enemies/turretEnemy.js"
 import Door from "../../gameObjects/items/door.js";
 

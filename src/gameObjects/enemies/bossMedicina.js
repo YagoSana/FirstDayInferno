@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import Npc from './npc.js';
 import Bullet from '../projectiles/bullet.js';
-import DialogueBox from '../../scenes/conversation.js';
 
 export default class BossMedicina extends Npc {
 

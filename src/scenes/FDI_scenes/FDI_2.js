@@ -1,8 +1,5 @@
 import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
-import Enemy from "../../gameObjects/enemies/enemy.js";
-import Item from "../../gameObjects/items/item.js";
-import RangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import turretEnemy from "../../gameObjects/enemies/turretEnemy.js";
 export default class FDI_2 extends SalaBase {
 

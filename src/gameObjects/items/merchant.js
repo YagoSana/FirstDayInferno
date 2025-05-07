@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import SpriteBase from '../spriteBase';
 import Item from './item';
-import DialogueBox from '../../scenes/conversation.js';
 
 export default class Merchant extends SpriteBase {
     constructor(scene, x, y) {

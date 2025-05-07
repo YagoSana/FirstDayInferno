@@ -4,7 +4,6 @@ import Enemy from "../../gameObjects/enemies/enemy.js";
 import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
 import Door from "../../gameObjects/items/door.js";
-import Item from "../../gameObjects/items/item.js";
 
 import libreria from "../../../assets/imgs/libreria.png";
 

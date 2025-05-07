@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import BreakableObject from './BreakableObject';
+import BreakableObject from './breakableObject.js';
 
 export default class LiterallyJustAToilet extends BreakableObject {
     constructor(scene, x, y, weight, height, sprite) {
