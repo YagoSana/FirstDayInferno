@@ -1324,6 +1324,21 @@ export default class Boot extends Phaser.Scene {
       frameRate: 2,
       repeat: -1,
     });
+
+    this.anims.create({
+      key: "car_talk",
+      frames: this.anims.generateFrameNames("npcsPortrait", { start: 10, end: 11 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "seller_talk",
+      frames: this.anims.generateFrameNames("npcsPortrait", { start: 12, end: 13 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+    
     
     
 
