@@ -110,7 +110,7 @@ import mainMenu from "../../assets/sprites/mainmenu.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
 import game_over_screen from "../../assets/sprites/enemy_game_over.png";
 import bartenderImg from "../../assets/sprites/camarero.png";
-import vs_screen from "../../assets/sprites/vs_spritesheet.png";
+import vs_screen from "../../assets/sprites/VS_spritesheet.png";
 //BOSS MEDICINA ------------------------------------------------------
 import bossMedicinaIdle from "../../assets/sprites/bossMedicinaIdle.png";
 import bossMedicinaIdle2 from "../../assets/sprites/bossMedicinaIdle2.png";
