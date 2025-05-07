@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import SpriteBase from '../spriteBase';
-import Item from './item';
+import SpriteBase from '../spriteBase.js';
+import Item from './item.js';
 
 export default class Door extends SpriteBase {
     constructor(scene, x, y, key, isLocked) {

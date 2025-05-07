@@ -1,9 +1,6 @@
 import Player from "../../gameObjects/characters/player.js";
 import SalaBase from "../../scenes/salaBase.js";
-import Enemy from "../../gameObjects/enemies/enemy.js";
-import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
-import rangedAreaEnemy from "../../gameObjects/enemies/rangedAreaEnemy.js";
 import BossMedicina from "../../gameObjects/enemies/bossMedicina.js";
 
 export default class medicina_6 extends SalaBase {

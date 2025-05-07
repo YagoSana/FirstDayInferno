@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
-import SpriteBase from '../spriteBase';
-import DialogueBox from '../../scenes/conversation.js';
-import Item from './item';
+import SpriteBase from '../spriteBase.js';
+import Item from './item.js';
 
 export default class DialogueNPC extends SpriteBase {
   constructor(scene, x, y, spriteKey, nombre = 'NPC', frases = [], purchase, frasePurchase, purchaseCost, itemKey) {

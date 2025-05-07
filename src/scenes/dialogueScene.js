@@ -1,4 +1,3 @@
-// dialogueScene.js
 import Phaser from 'phaser';
 
 export default class DialogueScene extends Phaser.Scene {

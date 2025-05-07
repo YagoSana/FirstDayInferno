@@ -1,13 +1,9 @@
 import SalaBase from "../salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
-import RangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
-import Item from "../../gameObjects/items/item.js";
 import NPC from "../../gameObjects/items/NPC.js";
-import turretEnemy from "../../gameObjects/enemies/turretEnemy.js";
 import miniBossLab from "../../gameObjects/enemies/miniBossLab.js";
-import BreakableObjects from "../../gameObjects/items/BreakableObject.js";
-
+import BreakableObjects from "../../gameObjects/items/breakableObject.js";
 export default class FDI_2_2 extends SalaBase {
     constructor(key) {
         super('FDI_2_2');

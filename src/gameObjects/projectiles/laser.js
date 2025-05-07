@@ -1,3 +1,5 @@
+import Phaser from 'phaser';
+
 export default class Laser extends Phaser.GameObjects.Rectangle {
     constructor(scene, x, y) {
       super(scene, x, y, 10, 300, 0xff0000, 0.3); // rojo tenue

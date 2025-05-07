@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 import SpriteBase from "../spriteBase.js";
 import Item from "../items/item.js";
-import Player from "../characters/player.js";
 
 /**
  * Clase que representa la base sobre la que se sitúan las estrellas que aparecen en el juego

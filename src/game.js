@@ -6,7 +6,6 @@ import End from './scenes/end.js';
 import GUI from './scenes/gui.js';
 import GameOver from './scenes/gameOver.js';
 import UIButtons from './scenes/uiButtons.js';
-import DialogueBox from './scenes/conversation.js';
 import DialogueScene from './scenes/dialogueScene.js';
 import VSScreen from './scenes/vsScreen.js';
 import BossHealthBarScene from './scenes/BossHealthBar.js';

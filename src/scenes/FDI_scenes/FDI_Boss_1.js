@@ -1,13 +1,14 @@
+import Phaser from 'phaser';
 import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
-import BossFDI from "../../gameObjects/enemies/bossFDI.js";
 
 export default class FDI_Boss_1 extends SalaBase {
     constructor(key) {
         super('FDI_Boss_1');
     }
 
-    create() {
+    create
+    () {
          super.create('FDI_Boss_1');
                const map = this.make.tilemap({ key: 'FDI_Boss_1_TL' });
        

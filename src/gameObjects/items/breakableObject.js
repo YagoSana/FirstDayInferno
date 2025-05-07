@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import SpriteBase from '../spriteBase';
+import SpriteBase from '../spriteBase.js';
 
 export default class BreakableObject extends SpriteBase {
   /*
