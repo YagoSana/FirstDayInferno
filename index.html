@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="assets/imgs/Logo.png" type="image/png" />
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
+    <link rel="stylesheet" href="./css/game.css">
+
+    <title>First Day Inferno</title>
+</head>
+
+<body>
+
+    <div id="homepage-main-container"
+        class="container d-flex flex-column align-items-center justify-content-center text-center mt-5">
+
+        <div class="container">
+            <!-- Título -->
+            <div class="container mt-5">
+                <h1 id="title" class="display-1">First Day Inferno</h1>
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="container d-flex align-items-center justify-content-center mt-3 gap-3">
+            <!-- <button class="start" onclick="window.location.href='/FirstDayInferno/game.html'">JUGAR</button> -->
+            <!-- <a href="/ranking"> <button type="button" class="btn-outline-primary">Ranking</button></a>-->
+
+            <!-- El juego irá dentro de este <div> por la propiedad `parent` que pasamos `new Phaser.Game` -->
+            <div id="juego"></div>
+
+            <div class="links_container">
+                <a id="git_logo" href="https://github.com/YagoSana/firstdayinferno">
+                    <img class="icon" src="assets/imgs/github_logo.png" alt="repositorio de Git"> </a>
+                <a id="yt_logo" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                    <img class="icon" src="assets/imgs/yt_icon.png" alt="video explicatorio"> </a>
+            </div>
+
+            <div id="homepage-character-container">
+            </div>
+        </div>
+
+    </div>
+    <!-- Degradado en la parte inferior -->
+    <div class="degradado"></div>
+    <script src="./src/game.js" type="module"></script>
+
+    <!-- <script type="module" src="./js/animation.js"></script> -->
+</body>
+
+</html>
