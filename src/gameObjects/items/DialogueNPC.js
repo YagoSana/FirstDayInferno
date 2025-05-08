@@ -18,6 +18,9 @@ export default class DialogueNPC extends SpriteBase {
     this.purchaseCost = purchaseCost;
     this.itemKey = itemKey;
 
+    this.play(spriteKey);
+    this.setScale(1.2);
+
     // Recuperar el estado de compra desde localStorage
 
     // Asegurarse de que este NPC tiene un cuerpo físico y es inmóvil

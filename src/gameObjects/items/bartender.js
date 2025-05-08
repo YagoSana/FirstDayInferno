@@ -4,13 +4,13 @@ import ShopItem from './shopItem.js';
 
 export default class Bartender extends SpriteBase {
     constructor(scene, x, y) {
-        super(scene, x, y, 'merchant');
+        super(scene, x, y, 'bartender');
 
         this.scene = scene;
-        this.play('idle-front-bartender');
         this.body.setImmovable(true);
         this.body.allowGravity = false;
-        this.setScale(1.2);
+        this.play('bartender');
+        this.setScale(1.3);
 
         this.interactionRange = 60;
         this.itemsSpawned = false;
