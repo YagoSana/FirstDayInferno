@@ -38,13 +38,15 @@ export default class FDI_2_2 extends SalaBase {
             breakablesObjectLayer.objects.forEach(obj => {
                 const breakableType = obj.properties?.find(p => p.name === 'breakable')?.value;
                 if (breakableType === 'table') {
-                    const breakable = new BreakableObjects(this, obj.x, obj.y, 112, 25,'breakable-table');
+                    const breakable = new BreakableObjects(this, obj.x, obj.y, 112, 20,'breakable-table');
+                    breakable.setScale(1, 1.2);
                     this.breakableGroup.add(breakable);
                     breakable.body.setImmovable(true);  // Asegurar que el objeto sea inmovible
                 }
 
                 if (breakableType === 'chair') {
-                    const breakable = new BreakableObjects(this, obj.x, obj.y, 16,16,'breakable-chair');
+                    const breakable = new BreakableObjects(this, obj.x, obj.y, 16,16,'breakable-chair');4
+                    breakable.setScale(1.2, 1.2);
                     this.breakableGroup.add(breakable);
                     breakable.body.setImmovable(true);  // Asegurar que el objeto sea inmovible
                 }
@@ -85,6 +87,7 @@ export default class FDI_2_2 extends SalaBase {
         
 
         const teacher = new NPC(this, 255, 104);
+        
         teacher.on('npcDeath', (x, y) => {
             const boss = new miniBossLab(this, x, y, "nerd");
             boss.invulnerable = true;
