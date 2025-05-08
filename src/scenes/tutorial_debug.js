@@ -83,7 +83,9 @@ export default class Tutorial_debug extends SalaBase {
                 let it = new Item(this, obj.x, obj.y, obj.name);
             }
             else if (type === "merchant") {
-                let car = new DialogueNPC(this, obj.x, obj.y + 32, 'car', 'coche', frasesCoche, false, " ", 0, 'tinto');
+                // let car = new DialogueNPC(this, obj.x, obj.y + 32, 'car', 'coche', frasesCoche, false, " ", 0, 'tinto');
+                let spawneable = new Bartender(this, obj.x, obj.y - 10, 'bartender');
+
             }
         });
 

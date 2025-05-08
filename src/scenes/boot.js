@@ -25,17 +25,12 @@ import printer from "../../assets/sprites/printer_spritesheet.png";
 import skeleton from "../../assets/sprites/skeleton_spritesheet.png";
 import phantom from "../../assets/sprites/phantom.png";
 
-//CAMARERO
-import camarero from "../../assets/sprites/bartender_front_iddle.png";
 
 //PROFESOR
 import borja from "../../assets/sprites/borja.png"
 import borjaMalvado from "../../assets/sprites/borja_malvado.png";
 
 //NPCS 
-import hippie from "../../assets/sprites/sprite_hippie_32x32.png";
-import seller from "../../assets/sprites/alcohol_seller_32x32.png";
-import fdi_student from "../../assets/sprites/fdi_student_32x32.png";
 import car from "../../assets/sprites/car_crash_64x64.png";
 import npcPortrait from "../../assets/sprites/Characters_GUI.png"
 import npcs from "../../assets/sprites/npcs_sheet.png"

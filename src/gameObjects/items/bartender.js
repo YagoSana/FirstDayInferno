@@ -3,19 +3,24 @@ import SpriteBase from '../spriteBase.js';
 import ShopItem from './shopItem.js';
 
 export default class Bartender extends SpriteBase {
-    constructor(scene, x, y) {
-        super(scene, x, y, 'bartender');
-
+    constructor(scene, x, y, spriteKey) {
+        super(scene, x, y, spriteKey);
+        this.spriteKey = spriteKey;
         this.scene = scene;
-        this.body.setImmovable(true);
-        this.body.allowGravity = false;
-        this.play('bartender');
+
+
+        this.setDepth(10);
+
+        this.play(this.spriteKey);
         this.setScale(1.3);
 
         this.interactionRange = 60;
         this.itemsSpawned = false;
         this.dialogueActivo = false;
         this.playerIsNear = false;
+
+        this.scene.physics.add.existing(this);  // Aseguramos que este NPC tiene física
+        this.body.setImmovable(true);
 
         this.scene.physics.add.collider(this, scene.player);
 
@@ -82,18 +87,6 @@ export default class Bartender extends SpriteBase {
         }, this);
     }
 
-    preUpdate() {
-        this.playerIsNear = this.isPlayerInRange();
-    }
-
-
-    isPlayerInRange() {
-        if (!this.scene || !this.scene.player) return false;
-        return Phaser.Math.Distance.Between(
-            this.x, this.y, 
-            this.scene.player.x, this.scene.player.y
-        ) <= this.interactionRange;
-    }
 
     mostrarDialogo(frase) {
         this.dialogueActivo = true;

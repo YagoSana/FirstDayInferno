@@ -56,10 +56,24 @@ export default class FDI_4 extends SalaBase {
         this.physics.add.collider(this.bulletGroup, layer6, this.onBulletCollision);
         this.physics.add.collider(this.enemyBulletGroup, layer6, this.onBulletCollision);
 
-        this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.cameras.main.setBounds(0, -30, map.widthInPixels, map.heightInPixels);
-        this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
-        this.cameras.main.setZoom(1.8);
+    //Camaras
+    const screenWidth = this.sys.game.config.width; // Ancho de tu pantalla
+    const screenHeight = this.sys.game.config.height; // Alto de tu pantalla
+    const mapWidth = map.widthInPixels;
+    const mapHeight = map.heightInPixels;
+    const zoom = 2;
+    const boundX = -(screenWidth / zoom - mapWidth) / 2;
+    const boundY = -(screenHeight / zoom - mapHeight) / 2;
+
+    console.log(boundX,boundY);
+
+    this.cameras.main.setZoom(zoom);
+    this.cameras.main.setBounds(boundX, boundY, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
+
+    // Ajustar límites del mundo y cámara
+    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
 
         if (!this.status) {
             this.spawnProps();
@@ -89,16 +103,17 @@ export default class FDI_4 extends SalaBase {
 
         const spawnLayer = map.getObjectLayer('spawn');
         if (spawnLayer) {
-        spawnLayer.objects.forEach(obj => {
+            spawnLayer.objects.forEach(obj => {
                 const spawnType = obj.properties?.find(p => p.name === 'spawn')?.value;
                 if (spawnType === 'bartender') {
-                    let spawneable= new Bartender(this, obj.x, obj.y-10, 112, 25,'bartender');
+                    let spawneable = new Bartender(this, obj.x, obj.y - 10, 'bartender');
                 }
-                else if (spawnType==='vendingMachine'){
+                else if (spawnType === 'vendingMachine') {
                     let vm = new VendingMachine(this, obj.x, obj.y);
                 }
-        }
-    )};
+            }
+            )
+        };
 
         // Música aleatoria sin repetición inmediata
         const musicTracks = ['musicaCafe1', 'musicaCafe2', 'musicaCafe3', 'musicaCafe4'];
