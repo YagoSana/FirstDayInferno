@@ -1,6 +1,7 @@
 import SalaBase from "../salaBase";
 import Player from "../../gameObjects/characters/player";
 import VendingMachine from "../../gameObjects/items/vendingMachine";
+import Phaser from "phaser";
 
 export default class Paraninfo_secret extends SalaBase{
     constructor(key){

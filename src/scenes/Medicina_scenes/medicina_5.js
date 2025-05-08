@@ -4,7 +4,7 @@ import Enemy from "../../gameObjects/enemies/enemy.js";
 import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
 import Door from "../../gameObjects/items/door.js";
-
+import Phaser from "phaser";
 import libreria from "../../../assets/imgs/libreria.png";
 
 export default class medicina_5 extends SalaBase {

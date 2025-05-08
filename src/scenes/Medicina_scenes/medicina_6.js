@@ -2,6 +2,7 @@ import Player from "../../gameObjects/characters/player.js";
 import SalaBase from "../../scenes/salaBase.js";
 import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
 import BossMedicina from "../../gameObjects/enemies/bossMedicina.js";
+import Phaser from "phaser";
 
 export default class medicina_6 extends SalaBase {
   constructor() {

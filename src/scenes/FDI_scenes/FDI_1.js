@@ -1,6 +1,7 @@
 import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import DialogueNPC from "../../gameObjects/items/DialogueNPC.js";
+import Phaser from "phaser";
 
 export default class FDI_1 extends SalaBase {
 

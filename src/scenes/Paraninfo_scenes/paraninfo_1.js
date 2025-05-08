@@ -1,6 +1,7 @@
 import SalaBase from "../salaBase";
 import Player from "../../gameObjects/characters/player";
 import Enemy from "../../gameObjects/enemies/enemy";
+import Phaser from "phaser";
 
 export default class Paraninfo_1 extends SalaBase {
     constructor(key){

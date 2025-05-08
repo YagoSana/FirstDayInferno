@@ -5,7 +5,7 @@ import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import phantomEnemy from "../../gameObjects/enemies/phantomEnemy.js";
 import RangedAreaEnemy from "../../gameObjects/enemies/rangedAreaEnemy.js";
 import BreakableObjects from "../../gameObjects/items/breakableObject.js";
-
+import Phaser from "phaser";
 
 export default class FDI_5 extends SalaBase {
     constructor(key) {

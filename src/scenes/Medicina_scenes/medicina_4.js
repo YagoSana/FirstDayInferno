@@ -3,6 +3,7 @@ import SalaBase from "../../scenes/salaBase.js";
 import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
 import skeletonEnemy from "../../gameObjects/enemies/skeletonEnemy.js";
+import Phaser from "phaser";
 
 export default class medicina_4 extends SalaBase {
   constructor() {
@@ -119,6 +120,7 @@ export default class medicina_4 extends SalaBase {
 
     //this.physics.add.collider(this.enemyBulletGroup, layer2, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, layer3, this.onBulletCollision);
+    this.physics.add.collider(this.enemyBulletGroup, this.colisiones, this.onBulletCollision);
 
     this.physics.add.collider(this.enemyGroup, this.colisiones);
 

@@ -4,6 +4,8 @@ import Enemy from "../../gameObjects/enemies/enemy.js";
 import NPC from "../../gameObjects/items/NPC.js";
 import miniBossLab from "../../gameObjects/enemies/miniBossLab.js";
 import BreakableObjects from "../../gameObjects/items/breakableObject.js";
+import Phaser from "phaser";
+
 export default class FDI_2_2 extends SalaBase {
     constructor(key) {
         super('FDI_2_2');

@@ -1,4 +1,4 @@
-import Phaser from 'phaser'
+import Phaser from 'phaser';
 
 /**
  * Clase que representa la base sobre la que se sitúan las estrellas que aparecen en el juego
