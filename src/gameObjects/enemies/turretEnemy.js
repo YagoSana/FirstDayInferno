@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import Bullet from '../projectiles/bullet.js';
 import Npc from './npc.js';
 
-export default class RangedEnemy extends Npc {
+export default class TurretEnemy extends Npc {
   
   constructor(scene, x, y, type) {
     super(scene, x, y, type);

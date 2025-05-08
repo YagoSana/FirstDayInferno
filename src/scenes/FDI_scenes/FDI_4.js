@@ -1,7 +1,7 @@
 import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import VendingMachine from "../../gameObjects/items/vendingMachine.js";
-import bartender from "../../gameObjects/items/bartender.js";
+import Bartender from "../../gameObjects/items/bartender.js";
 
 export default class FDI_4 extends SalaBase {
 
@@ -91,7 +91,7 @@ export default class FDI_4 extends SalaBase {
         spawnLayer.objects.forEach(obj => {
                 const spawnType = obj.properties?.find(p => p.name === 'spawn')?.value;
                 if (spawnType === 'bartender') {
-                    let spawneable= new bartender(this, obj.x, obj.y-10, 112, 25,'bartender');
+                    let spawneable= new Bartender(this, obj.x, obj.y-10, 112, 25,'bartender');
                 }
                 else if (spawnType==='vendingMachine'){
                     let vm = new VendingMachine(this, obj.x, obj.y);
