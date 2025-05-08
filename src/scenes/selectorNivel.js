@@ -3,13 +3,12 @@ import Player from "../gameObjects/characters/player.js";
 
 //MAPA LOBBY ------------------------------------------------------
 import metro from "../../assets/imgs/LobbyMETRO.png";
-import fdi from "../../assets/imgs/LobbyFDI.png";
-import medicina from "../../assets/imgs/LobbyMEDICINA.png";
-import medicinaDestruido from "../../assets/imgs/LobbyMEDICINADestruido.png";
-import paraninfo from "../../assets/imgs/LobbyParaninfo.png";
 
 import lobby from "../../assets/map/lobby.json";
 import tileset_grass from "../../assets/map/TX Tileset Grass.png";
+import tileset_paraninfo from "../../assets/map/paraninfo.png";
+import tileset_interior from "../../assets/map/Interiors_free_16x16.png";
+import tileset_muebles from "../../assets/map/Room_Builder_free_16x16.png";
 
 export default class SelectorNivel extends Phaser.Scene {
   constructor() {
@@ -19,12 +18,12 @@ export default class SelectorNivel extends Phaser.Scene {
   preload() {
     //this.load.image('selectorNivel', mapa);
     this.load.image("Grass", tileset_grass);
+    this.load.image("Paraninfo", tileset_paraninfo);
+    this.load.image("Interior", tileset_interior);
+    this.load.image("Muebles", tileset_muebles);
+    
     this.load.tilemapTiledJSON("lobby", lobby);
     this.load.image('metro', metro);
-    this.load.image('medicina', medicina);
-    this.load.image('medicinaDestruido', medicinaDestruido);
-    this.load.image('paraninfo', paraninfo);
-    this.load.image('fdi', fdi);
   }
 
   init(data) {
@@ -46,33 +45,25 @@ export default class SelectorNivel extends Phaser.Scene {
 
     const map = this.make.tilemap({ key: 'lobby' });
     const tileset1 = map.addTilesetImage("TX Tileset Grass", "Grass");
+    const tileset2 = map.addTilesetImage("paraninfo", "Paraninfo");
+    const tileset3 = map.addTilesetImage("Interiors_free_16x16", "Interior");
+    const tileset4 = map.addTilesetImage("Room_Builder_free_16x16", "Muebles");
 
 
-    const layer2 = map.createLayer('cesped', [tileset1], 0, 0);
-    const layer1 = map.createLayer('suelo', [tileset1], 0, 0);
+    const layer2 = map.createLayer('cesped', [tileset1, tileset2, tileset3, tileset4], 0, 0);
+    const layer1 = map.createLayer('suelo', [tileset1, tileset2, tileset3, tileset4], 0, 0);
+    const layer3 = map.createLayer('sin colision', [tileset1, tileset2, tileset3, tileset4], 0, 0);
+    const layer4 = map.createLayer('objetos', [tileset1, tileset2, tileset3, tileset4], 0, 0);
+    const layer5 = map.createLayer('bordes', [tileset1, tileset2, tileset3, tileset4], 0, 0);
+
+    layer4.setCollisionByExclusion([-1], true);
+    layer5.setCollisionByExclusion([-1], true);
 
     this.player = new Player(this, 550, 180, this.playerStats);//1170, 460
 
-    let spritesLayer = map.getObjectLayer("objetos");
-    spritesLayer.objects.forEach(obj => {
-      if (obj.name == "metro") {
-        this.add.image(504, 210, 'metro').setOrigin(0, 0).setDisplaySize(100, 70);
-      }
-      else if (obj.name == "medicina") {
-        if (!this.medicinaBeaten) {
-          this.add.image(390, 0, 'medicina').setOrigin(0, 0).setDisplaySize(150, 79);
-        }
-        else {
-          this.add.image(390, 0, 'medicinaDestruido').setOrigin(0, 0).setDisplaySize(150, 79);
-        }
-      }
-      else if (obj.name == "fdi") {
-        this.add.image(65, 238, 'fdi').setOrigin(0, 0).setDisplaySize(231, 98);
-      }
-      else if (obj.name == "paraninfo") {
-        this.add.image(111, 51, 'paraninfo').setOrigin(0, 0).setDisplaySize(231, 110);
-      }
-    });
+    // Añadir colisiones
+    //this.physics.add.collider(this.player, layer4);
+    //this.physics.add.collider(this.bulletGroup, layer4, this.onBulletCollision);
 
     console.log("capas creadas");
 
@@ -99,16 +90,16 @@ export default class SelectorNivel extends Phaser.Scene {
 
 
     // Crear la colisión invisible
-    this.invisibleZone = this.add.zone(70, 250, 150, 80).setOrigin(0, 0).setName("informaticaManager");
+    this.invisibleZone = this.add.zone(85, 230, 150, 100).setOrigin(0, 0).setName("informaticaManager");
     this.invisibleZone.setInteractive(); // Hacerla interactiva para detectar overlaping
 
-    this.invisibleZoneMedicina = this.add.zone(400, 0, 130, 70).setOrigin(0, 0).setName("medicinaManager");
+    this.invisibleZoneMedicina = this.add.zone(435, 35, 155, 70).setOrigin(0, 0).setName("medicinaManager");
     this.invisibleZoneMedicina.setInteractive(); // Hacerla interactiva para detectar overlaping
 
     this.invisibleZoneMetro = this.add.zone(520, 220, 70, 50).setOrigin(0, 0).setName("tutorialManager");
     this.invisibleZoneMetro.setInteractive(); // Hacerla interactiva para detectar overlaping
 
-    this.invisibleZoneParaninfo = this.add.zone(145, 65, 160, 70).setOrigin(0, 0).setName("paraninfoManager");
+    this.invisibleZoneParaninfo = this.add.zone(180, 55, 120, 70).setOrigin(0, 0).setName("paraninfoManager");
     this.invisibleZoneParaninfo.setInteractive();
 
     this.physics.add.existing(this.invisibleZone); // Necesario para que funcione el overlap
