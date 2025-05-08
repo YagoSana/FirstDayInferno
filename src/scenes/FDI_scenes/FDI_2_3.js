@@ -1,6 +1,7 @@
 import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import LiterallyJustAToilet from "../../gameObjects/items/literallyJustAToilet.js";
+import Phaser from "phaser";
 
 export default class FDI_2_3 extends SalaBase {
     constructor(key) {

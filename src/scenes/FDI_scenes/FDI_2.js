@@ -1,6 +1,8 @@
 import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import TurretEnemy from "../../gameObjects/enemies/turretEnemy.js";
+import Phaser from "phaser";
+
 export default class FDI_2 extends SalaBase {
 
     constructor(key) {

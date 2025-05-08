@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import BossFDI from "../../gameObjects/enemies/bossFDI.js";
+import Phaser from "phaser";
 
 export default class FDI_Boss_2 extends SalaBase {
     constructor(key) {

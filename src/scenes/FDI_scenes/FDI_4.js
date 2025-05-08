@@ -2,6 +2,7 @@ import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import VendingMachine from "../../gameObjects/items/vendingMachine.js";
 import Bartender from "../../gameObjects/items/bartender.js";
+import Phaser from "phaser";
 
 export default class FDI_4 extends SalaBase {
 
