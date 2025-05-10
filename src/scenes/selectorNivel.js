@@ -10,6 +10,8 @@ import tileset_paraninfo from "../../assets/map/paraninfo.png";
 import tileset_interior from "../../assets/map/Interiors_free_16x16.png";
 import tileset_muebles from "../../assets/map/Room_Builder_free_16x16.png";
 
+import metro_img from "../../assets/imgs/metro.png";
+
 export default class SelectorNivel extends Phaser.Scene {
   constructor() {
     super({ key: 'selectorNivel' });
@@ -23,7 +25,7 @@ export default class SelectorNivel extends Phaser.Scene {
     this.load.image("Muebles", tileset_muebles);
     
     this.load.tilemapTiledJSON("lobby", lobby);
-    this.load.image('metro', metro);
+    this.load.image('metro_img', metro_img);
   }
 
   init(data) {
@@ -40,7 +42,6 @@ export default class SelectorNivel extends Phaser.Scene {
   create(data) {
 
     this.sound.stopAll();
-
     this.sonidoEntrar = this.sound.add('entrarFacultad');
 
     const map = this.make.tilemap({ key: 'lobby' });
@@ -61,9 +62,7 @@ export default class SelectorNivel extends Phaser.Scene {
 
     this.player = new Player(this, 550, 180, this.playerStats);//1170, 460
 
-    // Añadir colisiones
-    //this.physics.add.collider(this.player, layer4);
-    //this.physics.add.collider(this.bulletGroup, layer4, this.onBulletCollision);
+    this.add.image(528, 244, 'metro_img').setOrigin(0, 0).setDisplaySize(48, 32);
 
     console.log("capas creadas");
 
@@ -129,6 +128,7 @@ export default class SelectorNivel extends Phaser.Scene {
     }
     this.physics.add.overlap(this.player, this.invisibleZoneMetro, this.onOverlap, null, this);
     this.physics.add.overlap(this.player, this.invisibleZoneParaninfo, this.onOverlap, null, this);
+
 
     let uiButtonsScene = this.scene.get('UIButtons');
     uiButtonsScene.updateConfig({
