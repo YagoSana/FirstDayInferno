@@ -3,9 +3,6 @@ import Player from "../gameObjects/characters/player.js";
 
 //MAPA LOBBY ------------------------------------------------------
 import metro from "../../assets/imgs/LobbyMETRO.png";
-import fdi from "../../assets/imgs/LobbyFDI.png";
-import medicinaDestruido from "../../assets/imgs/LobbyMEDICINADestruido.png";
-import paraninfo from "../../assets/imgs/LobbyParaninfo.png";
 
 import lobby from "../../assets/map/lobby.json";
 import tileset_grass from "../../assets/map/TX Tileset Grass.png";
@@ -27,9 +24,6 @@ export default class SelectorNivel extends Phaser.Scene {
     
     this.load.tilemapTiledJSON("lobby", lobby);
     this.load.image('metro', metro);
-    this.load.image('medicinaDestruido', medicinaDestruido);
-    this.load.image('paraninfo', paraninfo);
-    this.load.image('fdi', fdi);
   }
 
   init(data) {

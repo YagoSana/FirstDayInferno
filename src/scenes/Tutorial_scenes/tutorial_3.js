@@ -1,6 +1,7 @@
 import SalaBase from "../salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import VendingMachine from "../../gameObjects/items/vendingMachine.js";
+import Phaser from "phaser";
 
 export default class Tutorial_3 extends SalaBase {
     constructor(key) {

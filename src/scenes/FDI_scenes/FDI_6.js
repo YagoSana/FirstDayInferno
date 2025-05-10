@@ -1,7 +1,7 @@
 import SalaBase from "../salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import RangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
-
+import Phaser from "phaser";
 
 export default class FDI_6 extends SalaBase {
 

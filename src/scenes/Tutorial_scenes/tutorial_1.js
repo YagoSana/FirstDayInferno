@@ -1,6 +1,7 @@
 import SalaBase from "../salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import FdiDoor from "../../gameObjects/items/door.js";
+import Phaser from "phaser";
 
 export default class Tutorial_1 extends SalaBase {
     constructor(key) {

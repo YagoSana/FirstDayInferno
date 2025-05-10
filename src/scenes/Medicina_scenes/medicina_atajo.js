@@ -3,7 +3,7 @@ import SalaBase from "../../scenes/salaBase.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
 import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import wakeEnemy from "../../gameObjects/enemies/wakeEnemy.js";
-
+import Phaser from "phaser";
 import libreria from "../../../assets/imgs/libreria.png";
 
 export default class medicina_atajo extends SalaBase {

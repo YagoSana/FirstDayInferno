@@ -1,6 +1,8 @@
 import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
-import turretEnemy from "../../gameObjects/enemies/turretEnemy.js";
+import TurretEnemy from "../../gameObjects/enemies/turretEnemy.js";
+import Phaser from "phaser";
+
 export default class FDI_2 extends SalaBase {
 
     constructor(key) {
@@ -90,9 +92,9 @@ export default class FDI_2 extends SalaBase {
        // this.enemyGroup.add(new RangedEnemy(this, 700, 80, "nerd"));
        // this.enemyGroup.add(new Enemy(this, 200, 80, "cucaracha"));
       this.numEnemies=3;
-      this.enemyGroup.add(new turretEnemy(this, 750, 65, "printer"));
-      this.enemyGroup.add(new turretEnemy(this, 750, 95, "printer"));
-      this.enemyGroup.add(new turretEnemy(this, 750, 125, "printer"));
+      this.enemyGroup.add(new TurretEnemy(this, 750, 65, "printer"));
+      this.enemyGroup.add(new TurretEnemy(this, 750, 95, "printer"));
+      this.enemyGroup.add(new TurretEnemy(this, 750, 125, "printer"));
    
     
       // Ahora aplicamos el retraso en el disparo para cada enemigo
