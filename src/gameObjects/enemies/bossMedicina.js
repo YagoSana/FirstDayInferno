@@ -243,11 +243,11 @@ export default class BossMedicina extends Npc {
       textSpeed: 35, // Velocidad del efecto de texto
       previousScene: this.scene.scene.key, // Pasar la escena actual
       onClose: () => {
-          this.iniciarCombate();
+        this.iniciarCombate();
       }
-  });
+    });
 
-  this.scene.scene.bringToTop('DialogueScene');
+    this.scene.scene.bringToTop('DialogueScene');
   }
 
   iniciarCombate() {
