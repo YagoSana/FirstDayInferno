@@ -25,19 +25,15 @@ import printer from "../../assets/sprites/printer_spritesheet.png";
 import skeleton from "../../assets/sprites/skeleton_spritesheet.png";
 import phantom from "../../assets/sprites/phantom.png";
 
-//CAMARERO
-import camarero from "../../assets/sprites/bartender_front_iddle.png";
 
 //PROFESOR
 import borja from "../../assets/sprites/borja.png"
 import borjaMalvado from "../../assets/sprites/borja_malvado.png";
 
 //NPCS 
-import hippie from "../../assets/sprites/sprite_hippie_32x32.png";
-import seller from "../../assets/sprites/alcohol_seller_32x32.png";
-import fdi_student from "../../assets/sprites/fdi_student_32x32.png";
 import car from "../../assets/sprites/car_crash_64x64.png";
 import npcPortrait from "../../assets/sprites/Characters_GUI.png"
+import npcs from "../../assets/sprites/npcs_sheet.png"
 
 //EXTRAS ------------------------------------------------------
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
@@ -241,22 +237,6 @@ export default class Boot extends Phaser.Scene {
     });
 
 //PERSONAJES DE LA FDI
-    this.load.spritesheet("hippie", hippie, {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
-
-
-    this.load.spritesheet("fdi_student1", fdi_student, {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
-
-    this.load.spritesheet("seller", seller, {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
-
     this.load.spritesheet("car", car,{
       frameWidth: 64,
       frameHeight: 64,
@@ -269,6 +249,11 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.load.spritesheet("borjaMalvado", borjaMalvado, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet("characters_npc", npcs, {
       frameWidth: 32,
       frameHeight: 32,
     });
@@ -307,10 +292,6 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32
     });
 
-    this.load.spritesheet("bartender", camarero, {
-      frameWidth: 32,
-      frameHeight: 32
-    });
 
     this.load.spritesheet('puff', puff, {
       frameWidth: 32,
@@ -498,16 +479,6 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "hippie",
-      frames: this.anims.generateFrameNames("hippie", {
-        start: 0,
-        end: 0,
-      }),
-      frameRate: 8,
-      repeat: 1,
-    });
-
-    this.anims.create({
       key: "bossMedicinaEspecial",
       frames: this.anims.generateFrameNames("bossMedicinaEspecial", {
         start: 0,
@@ -589,16 +560,48 @@ export default class Boot extends Phaser.Scene {
     });
 
 
+
     this.anims.create({
-      key: "idle-front-bartender",
-      frames: this.anims.generateFrameNames("bartender", {
+      key: "bartender",
+      frames: this.anims.generateFrameNames("characters_npc", {
         start: 0,
-        end: 2,
+        end: 4,
       }),
-      frameRate: 5,
+      frameRate: 6,
       repeat: -1,
     });
 
+    this.anims.create({
+      key: "hippie",
+      frames: this.anims.generateFrameNames("characters_npc", {
+        start: 5,
+        end: 9,
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "fdi_student1",
+      frames: this.anims.generateFrameNames("characters_npc", {
+        start: 10,
+        end: 14,
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "seller",
+      frames: this.anims.generateFrameNames("characters_npc", {
+        start: 15,
+        end: 19,
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+
+    
 
     //ENEMIGOS-------------------------------------------------------------------
 

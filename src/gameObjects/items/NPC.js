@@ -9,8 +9,8 @@ export default class NPC extends SpriteBase {
         this.scene = scene;
         this.body.setImmovable(true);
         this.body.allowGravity = false;
-        this.body.setSize(20, 10);
-        this.body.setOffset(6, 0);
+       
+     
         this.setScale(1.2);
         this.originalScaleX = 1.2;
         this.originalScaleY = 1.2;

@@ -30,7 +30,9 @@ export default class BreakableObject extends SpriteBase {
 
   }
 
-
+editScale(x, y){
+  this.setScale(x,y);
+}
   hitBullet(machine, bullet) {
     // Efecto visual
     // this.bulletText.setVisible(true);

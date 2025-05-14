@@ -200,12 +200,12 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":247
+                         "value":254
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":518
+                         "value":363
                         }],
                  "rotation":0,
                  "type":"",
@@ -222,7 +222,7 @@
                         {
                          "name":"spawnRoom",
                          "type":"string",
-                         "value":"FDI_Boss_1"
+                         "value":"FDI_3_1"
                         }, 
                         {
                          "name":"spawnX",
@@ -293,7 +293,7 @@
          "y":0
         }],
  "nextlayerid":10,
- "nextobjectid":21,
+ "nextobjectid":22,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
