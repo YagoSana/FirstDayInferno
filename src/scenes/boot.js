@@ -96,6 +96,8 @@ import bossMedicinaAmbiente from '../../assets/music/bossMedicinaAmbiente.ogg';
 import bossMedicinaDanyo from '../../assets/music/bossMedicinaDanyo.wav';
 import bossMedicinaOrbes from '../../assets/music/bossMedicinaOrbes.wav';
 import bossMedicinaMusica from '../../assets/music/bossMedicinaMusica.wav';
+import llamada from '../../assets/music/llamada.wav';
+import sonidoparry from '../../assets/music/sonidoparry.wav';
  
 //GUI ------------------------------------------------------
 import mainMenu from "../../assets/sprites/mainmenu.png";
@@ -114,6 +116,14 @@ import bossMedicinaBulletAppear from "../../assets/sprites/bossMedicinaBulletApp
 import bossMedicinaBulletDestroy from "../../assets/sprites/bossMedicinaDestroy.png";
 //BOSS FDI ------------------------------------------------------
 import bossFDIfase2 from "../../assets/sprites/bossFDIfase2.png";
+
+//TILES ------------------------------------------------------
+import tileset_grass from "../../assets/map/TX Tileset Grass.png";
+import tileset_paraninfo from "../../assets/map/paraninfo.png";
+import tileset_interior from "../../assets/map/Interiors_free_16x16.png";
+import tileset_muebles from "../../assets/map/Room_Builder_free_16x16.png";
+
+
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -143,7 +153,40 @@ export default class Boot extends Phaser.Scene {
    * Carga de los assets del juego
    */
   preload() {
-    //AUDIO
+    //BARRA DE CARGA
+    const { width, height } = this.cameras.main;
+
+    let progressBar = this.add.graphics();
+    let progressBox = this.add.graphics();
+    progressBox.fillStyle(0x222222, 0.8);
+    progressBox.fillRect(width / 2 - 160, height / 2 - 25, 320, 50);
+
+    const loadingText = this.make.text({
+      x: width / 2,
+      y: height / 2 - 50,
+      text: 'Cargando...',
+      style: {
+        font: '20px monospace',
+        fill: '#ffffff'
+      }
+    });
+    loadingText.setOrigin(0.5, 0.5);
+
+    this.load.on('progress', (value) => {
+      progressBar.clear();
+      progressBar.fillStyle(0xffffff, 1);
+      progressBar.fillRect(width / 2 - 150, height / 2 - 15, 300 * value, 30);
+    });
+
+    this.load.on('complete', () => {
+      progressBar.destroy();
+      progressBox.destroy();
+      loadingText.destroy();
+    });
+    //BARRA DE CARGA
+    //AUDIOç
+    this.load.audio('sonidoParry', sonidoparry);
+    this.load.audio('llamada', llamada);
     this.load.audio('bossMedicinaMusica', bossMedicinaMusica);
     this.load.audio('bossMedicinaAmbiente', bossMedicinaAmbiente);
     this.load.audio('bossMedicinaDanyo', bossMedicinaDanyo);
@@ -438,6 +481,11 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 32, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
     });
+
+    this.load.image("Grass", tileset_grass);
+    this.load.image("Paraninfo", tileset_paraninfo);
+    this.load.image("Interior", tileset_interior);
+    this.load.image("Muebles", tileset_muebles);
   }
 
   /**

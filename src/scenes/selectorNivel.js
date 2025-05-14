@@ -2,13 +2,8 @@ import Phaser from "phaser";
 import Player from "../gameObjects/characters/player.js";
 
 //MAPA LOBBY ------------------------------------------------------
-import metro from "../../assets/imgs/LobbyMETRO.png";
 
 import lobby from "../../assets/map/lobby.json";
-import tileset_grass from "../../assets/map/TX Tileset Grass.png";
-import tileset_paraninfo from "../../assets/map/paraninfo.png";
-import tileset_interior from "../../assets/map/Interiors_free_16x16.png";
-import tileset_muebles from "../../assets/map/Room_Builder_free_16x16.png";
 
 import metro_img from "../../assets/imgs/metro.png";
 
@@ -19,11 +14,7 @@ export default class SelectorNivel extends Phaser.Scene {
 
   preload() {
     //this.load.image('selectorNivel', mapa);
-    this.load.image("Grass", tileset_grass);
-    this.load.image("Paraninfo", tileset_paraninfo);
-    this.load.image("Interior", tileset_interior);
-    this.load.image("Muebles", tileset_muebles);
-    
+
     this.load.tilemapTiledJSON("lobby", lobby);
     this.load.image('metro_img', metro_img);
   }
@@ -101,10 +92,17 @@ export default class SelectorNivel extends Phaser.Scene {
     this.invisibleZoneParaninfo = this.add.zone(180, 55, 120, 70).setOrigin(0, 0).setName("paraninfoManager");
     this.invisibleZoneParaninfo.setInteractive();
 
+    //Zona invisible para tutorial del parry
+    this.invisibleZoneLlamadaParry = this.add.zone(520, 180, 70, 100).setOrigin(0, 0).setName("conversacionParry");
+    this.invisibleZoneParaninfo.setInteractive();
+    this.llamada = this.sound.add('llamada');
+    this.llamada.setVolume(0.5); // Ajusta el volumen según sea necesario
+
     this.physics.add.existing(this.invisibleZone); // Necesario para que funcione el overlap
     this.physics.add.existing(this.invisibleZoneMedicina);
     this.physics.add.existing(this.invisibleZoneMetro);
     this.physics.add.existing(this.invisibleZoneParaninfo);
+    this.physics.add.existing(this.invisibleZoneLlamadaParry);
 
     this.invisibleZone.body.setAllowGravity(false);
     this.invisibleZone.body.setImmovable(true);
@@ -118,16 +116,21 @@ export default class SelectorNivel extends Phaser.Scene {
     this.invisibleZoneParaninfo.body.setAllowGravity(false);
     this.invisibleZoneParaninfo.body.setImmovable(true);
 
+    this.invisibleZoneLlamadaParry.body.setAllowGravity(false);
+    this.invisibleZoneLlamadaParry.body.setImmovable(true);
+
     // Detectar cuando el jugador entra en la colisión invisible
     this.physics.add.overlap(this.player, this.invisibleZone, this.onOverlap, null, this);
     if (!this.medicinaBeaten) {
       this.physics.add.overlap(this.player, this.invisibleZoneMedicina, this.onOverlap, null, this);
     }
-    else{
+    else {
       this.physics.add.collider(this.player, this.invisibleZoneMedicina, null, null, this);
     }
     this.physics.add.overlap(this.player, this.invisibleZoneMetro, this.onOverlap, null, this);
     this.physics.add.overlap(this.player, this.invisibleZoneParaninfo, this.onOverlap, null, this);
+
+    this.physics.add.overlap(this.player, this.invisibleZoneLlamadaParry, this.onOverlapLlamada, null, this);
 
 
     let uiButtonsScene = this.scene.get('UIButtons');
@@ -150,6 +153,24 @@ export default class SelectorNivel extends Phaser.Scene {
     const mundoDestino = zone.name; // O usa zone.id si prefieres
     console.log(`Jugador entró en la zona que va a ${mundoDestino}`);
     this.startWorld(mundoDestino);
+  }
+
+  onOverlapLlamada(player, zone) {
+    zone.body.enable = false; // Desactivar la colisión para evitar múltiples llamadas
+    this.llamada.play(); // Reproducir el sonido de llamada
+    this.scene.pause('selectorNivel'); // Pausar la escena actual
+    this.scene.launch('DialogueScene', {
+      message: "Hey tio, estás de camino a la uni, no? Solo llamaba para recordarte que puedes evitar el daño de las balas de los enemigos pulsando la tecla 'F' en el momento justo. Sabrás si lo has hecho bien si te pones de color de verde o amarillo, además creo que tiene beneficios, mola verdad? ¡Suerte!",
+      speaker: 'Colega',
+      portraitKey: 'fdi_student1_talk',
+      textSpeed: 35, // Velocidad del efecto de texto
+      previousScene: this.scene.scene.key, // Pasar la escena actual
+      onClose: () => {
+        this.scene.resume('selectorNivel'); // Reanudar la escena actual
+      }
+    });
+
+    this.scene.bringToTop('DialogueScene');
   }
 
   startWorld(worldName) {

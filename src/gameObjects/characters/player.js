@@ -77,10 +77,11 @@ export default class Player extends SpriteBase {
         this.nearVendingMachine = null;
         this.nearDoor = null;
         this.pickupKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-        this.sonidoDisparo = scene.sound.add('disparaJugador', { volume: 0.5});
+        this.sonidoDisparo = scene.sound.add('disparaJugador', { volume: 0.5 });
         this.sonidoAndar = scene.sound.add('andarJugador');
-        this.sonidoMoneda = scene.sound.add('cogerMoneda', { volume: 0.5});
+        this.sonidoMoneda = scene.sound.add('cogerMoneda', { volume: 0.5 });
         this.sonidoLlave = scene.sound.add('cogerLlave');
+        this.sonidoParry = scene.sound.add('sonidoParry', { volume: 0.5 });
         this.stepTimer = 0;
         this.stepInterval = 500;
         this.originalShootCooldown = this.shootCooldown; // cooldown original
@@ -274,7 +275,7 @@ export default class Player extends SpriteBase {
             }
             this.body.setVelocity(0, 0);
             this.setTint(0xffffff);
-            this.body.enable = false; 
+            this.body.enable = false;
         }
     }
 
@@ -309,7 +310,7 @@ export default class Player extends SpriteBase {
     //Cambia la apariencia del jugador con un item
     itemAppearance(itemKey, spriteRow) {
         const spriteKey = `player_items`;
-        if (spriteRow != -1){
+        if (spriteRow != -1) {
             this.equippedItemRow = spriteRow;
         }
 
@@ -366,10 +367,10 @@ export default class Player extends SpriteBase {
         console.log(`Item ${this.equippedItem}: equipado`);
     }
 
-      //Cambia la apariencia del jugador con un item
-      firstItemAppearance(itemKey, spriteRow) {
+    //Cambia la apariencia del jugador con un item
+    firstItemAppearance(itemKey, spriteRow) {
         const spriteKey = `player_items`;
-        if (spriteRow != -1){
+        if (spriteRow != -1) {
             this.equippedItemRow = spriteRow;
         }
 
@@ -484,9 +485,9 @@ export default class Player extends SpriteBase {
                 new FreezeBullet(this.scene, this.x, this.y, (this.doubleshoot ? dirX + desvio : dirX), (this.doubleshoot ? dirY + desvio : dirY), this.body.velocity.x, this.body.velocity.y);
             } else {
                 console.log("valor: ", this.doubleshoot && !this.invertirDisparo);
-                if(this.doubleshoot && !this.invertirDisparo){
+                if (this.doubleshoot && !this.invertirDisparo) {
                     new Bullet(this.scene, this.x, this.y, dirX + desvio, dirY + desvio, this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
-                }else{
+                } else {
                     new Bullet(this.scene, this.x, this.y, dirX, dirY, this.body.velocity.x, this.body.velocity.y, true, this.bulletType);
                 }
             }
@@ -511,7 +512,13 @@ export default class Player extends SpriteBase {
         // ✅ Si está en modo parry, evitamos el daño
         if (this.isParrying) {
             const tiempoDesdeParry = currentTime - this.lastParryTime;
-
+            this.sonidoParry.play();
+            let zoom = this.scene.cameras.main.zoom;
+            //this.scene.cameras.main.flash(100, 255, 255, 255); queda guapo pero tema luces rapidas y tal pues eso
+            this.scene.cameras.main.zoomTo(zoom+0.15, 100); // zoom a 1.2x en 100ms
+            this.scene.time.delayedCall(200, () => {
+                this.scene.cameras.main.zoomTo(zoom, 100); // vuelve al zoom normal
+            });
             if (tiempoDesdeParry <= this.parryWindow) {
                 // parry perfecto
                 if (this.health < this.maxHealth) {
@@ -524,7 +531,7 @@ export default class Player extends SpriteBase {
                 // Al hacer parry
                 this.emitter.setPosition(this.x, this.y); // Ajusta Y para que salga más arriba del jugador
                 this.emitter.setVisible(true); // Asegúrate de que el emisor esté visible
-                this.emitter.explode(5); // Emite 15 partículas
+                this.emitter.explode(20); // Emite 15 partículas
                 console.log("Parry perfecto");
             } else {
                 // parry normal
@@ -711,7 +718,7 @@ export default class Player extends SpriteBase {
         this.scene.game.events.emit('playerState', { item: this.equippedItem, state: 'good' });
     }
 
-    beNormal(){
+    beNormal() {
         this.playerTint = 0xffffff;
         if (this.itemSprite) {
             this.itemAppearance(null, -1);
@@ -728,18 +735,18 @@ export default class Player extends SpriteBase {
         this.originalShootCooldown = this.shootCooldown;
     }
 
-    openDoor(key){
+    openDoor(key) {
         this.doorsLocked[key] = false;
     }
 
     changeSpeed(p) {
-        if(this.speed < 169){
+        if (this.speed < 169) {
             this.speed *= p;
         }
     }
 
     changeCooldown(p) {
-        if(this.shootCooldown > 350){
+        if (this.shootCooldown > 350) {
             this.shootCooldown += p; // En milisegundos
             this.originalShootCooldown = this.shootCooldown;
         }
@@ -818,14 +825,14 @@ export default class Player extends SpriteBase {
     activateNormalParryBoost(duration = 3000, boostFactor = 0.5) {
         // Evita aplicar múltiples boosts superpuestos
         if (!this.powerupTimer) {
-        this.shootCooldown *= boostFactor; // Reduce el cooldown (más velocidad)
-        this.powerupTimer = true; // Activa el temporizador del powerup
-        this.scene.time.delayedCall(duration, () => {
-            this.shootCooldown = this.originalShootCooldown;
-            this.powerupTimer = false
-        });
+            this.shootCooldown *= boostFactor; // Reduce el cooldown (más velocidad)
+            this.powerupTimer = true; // Activa el temporizador del powerup
+            this.scene.time.delayedCall(duration, () => {
+                this.shootCooldown = this.originalShootCooldown;
+                this.powerupTimer = false
+            });
 
-        console.log("Parry normal: velocidad de disparo aumentada temporalmente");
+            console.log("Parry normal: velocidad de disparo aumentada temporalmente");
         }
     }
 
