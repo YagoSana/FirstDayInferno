@@ -9,9 +9,6 @@ import medicina_5 from "../../../assets/map/medicinaJson/pasillo2Medicina.json";
 import medicina_6 from "../../../assets/map/medicinaJson/aulaFinalMedicina.json";
 import medicina_atajo from "../../../assets/map/medicinaJson/atajoMedicina.json";
 
-import img_interior from "../../../assets/map/Interiors_free_16x16.png";
-import img_muebles from "../../../assets/map/Room_Builder_free_16x16.png";
-import tileset_grass from "../../../assets/map/TX Tileset Grass.png";
 import tileset_plantas from "../../../assets/map/TX Plant.png";
 import tileset_props from "../../../assets/map/TX Props.png";
 import tileset_sombras from "../../../assets/map/TX Shadow.png";
@@ -75,10 +72,7 @@ export default class medicinaManager extends Phaser.Scene {
     });
 
 
-    //TODO AÑADIR TILES?
-    this.load.image("Interior", img_interior);
-    this.load.image("Muebles", img_muebles);
-    this.load.image("Grass", tileset_grass);
+    //TODO AÑADIR TILES
     this.load.image("Plantas", tileset_plantas);
     this.load.image("Props", tileset_props);
     this.load.image("Sombras", tileset_sombras);

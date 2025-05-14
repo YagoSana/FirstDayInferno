@@ -115,6 +115,14 @@ import bossMedicinaBulletDestroy from "../../assets/sprites/bossMedicinaDestroy.
 //BOSS FDI ------------------------------------------------------
 import bossFDIfase2 from "../../assets/sprites/bossFDIfase2.png";
 
+//TILES ------------------------------------------------------
+import tileset_grass from "../../assets/map/TX Tileset Grass.png";
+import tileset_paraninfo from "../../assets/map/paraninfo.png";
+import tileset_interior from "../../assets/map/Interiors_free_16x16.png";
+import tileset_muebles from "../../assets/map/Room_Builder_free_16x16.png";
+
+
+
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
  * Esta escena se puede mejorar añadiendo una imagen del juego y una 
@@ -438,6 +446,11 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 32, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
     });
+
+    this.load.image("Grass", tileset_grass);
+    this.load.image("Paraninfo", tileset_paraninfo);
+    this.load.image("Interior", tileset_interior);
+    this.load.image("Muebles", tileset_muebles);
   }
 
   /**

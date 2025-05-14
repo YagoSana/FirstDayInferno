@@ -2,13 +2,8 @@ import Phaser from "phaser";
 import Player from "../gameObjects/characters/player.js";
 
 //MAPA LOBBY ------------------------------------------------------
-import metro from "../../assets/imgs/LobbyMETRO.png";
 
 import lobby from "../../assets/map/lobby.json";
-import tileset_grass from "../../assets/map/TX Tileset Grass.png";
-import tileset_paraninfo from "../../assets/map/paraninfo.png";
-import tileset_interior from "../../assets/map/Interiors_free_16x16.png";
-import tileset_muebles from "../../assets/map/Room_Builder_free_16x16.png";
 
 import metro_img from "../../assets/imgs/metro.png";
 
@@ -19,11 +14,7 @@ export default class SelectorNivel extends Phaser.Scene {
 
   preload() {
     //this.load.image('selectorNivel', mapa);
-    this.load.image("Grass", tileset_grass);
-    this.load.image("Paraninfo", tileset_paraninfo);
-    this.load.image("Interior", tileset_interior);
-    this.load.image("Muebles", tileset_muebles);
-    
+        
     this.load.tilemapTiledJSON("lobby", lobby);
     this.load.image('metro_img', metro_img);
   }

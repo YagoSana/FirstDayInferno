@@ -7,9 +7,6 @@ import paraninfo_1 from "../../../assets/map/paraninfo_1.json";
 import paraninfo_2 from "../../../assets/map/paraninfo_2.json";
 import paraninfo_3 from "../../../assets/map/paraninfo_3.json";
 import paraninfo_secret from "../../../assets/map/paraninfo_secret.json";
-import img_interior from "../../../assets/map/Interiors_free_16x16.png";
-import img_muebles from "../../../assets/map/Room_Builder_free_16x16.png";
-import img_paraninfo from "../../../assets/map/paraninfo.png";
 
 export default class ParaninfoManager extends Phaser.Scene {
     constructor(){
@@ -32,10 +29,6 @@ export default class ParaninfoManager extends Phaser.Scene {
             frameWidth: 32, //cada frame tiene este ancho
             frameHeight: 32, //todos son 32 px de alto
         });
-
-        this.load.image("Interior", img_interior);
-        this.load.image("Muebles", img_muebles);
-        this.load.image("Paraninfo", img_paraninfo);
 
         this.load.tilemapTiledJSON("paraninfo_1", paraninfo_1);
         this.load.tilemapTiledJSON("paraninfo_2", paraninfo_2);
