@@ -20,15 +20,11 @@ export default class medicina_2 extends SalaBase {
 
     this.load.image('libreria', libreria);
 
-    // Crear grupos correctamente
     this.enemyGroup = this.physics.add.group();
     this.bulletGroup = this.physics.add.group();
     this.enemyBulletGroup = this.physics.add.group();
     this.obstaculos = this.physics.add.staticGroup();
 
-    console.log("Grupos de física inicializados");
-
-    // Cargar el mapa y los tilesets
     const map = this.make.tilemap({ key: "medicina_2" });
     const tileset1 = map.addTilesetImage("Interior16", "Interior");
     const tileset2 = map.addTilesetImage("ParedSuelo16", "Muebles");
@@ -43,15 +39,16 @@ export default class medicina_2 extends SalaBase {
     layer3.setCollisionByExclusion([-1], true);
     layer4.setCollisionByExclusion([-1], true);
 
-    // Inicializar jugador
     this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
 
-    // Configurar transiciones entre salas
     this.transitionZones = this.physics.add.group();
     let transitionLayer = map.getObjectLayer("transiciones");
     if (transitionLayer) {
       transitionLayer.objects.forEach((obj) => {
-        const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height).setOrigin(0, 0).setOffset(0, 0);
+        const zone = this.transitionZones.create(obj.x, obj.y, null)
+          .setSize(obj.width, obj.height)
+          .setOrigin(0, 0)
+          .setOffset(0, 0);
         zone.spawnRoom = obj.properties.find((p) => p.name === "spawnRoom")?.value;
         zone.spawnX = obj.properties.find((p) => p.name === "spawnX")?.value;
         zone.spawnY = obj.properties.find((p) => p.name === "spawnY")?.value;
@@ -65,19 +62,16 @@ export default class medicina_2 extends SalaBase {
     this.doorFireManager.createFiresForZones(this.transitionZones);
     this.doorFireManager.setupCollisions(this.player);
 
-    //libreria que se mueve
+    // Librería
     this.libreriaZone = this.physics.add.group();
     let libreriaLayer = map.getObjectLayer("puerta");
     if (libreriaLayer) {
       libreriaLayer.objects.forEach((obj) => {
-        console.log("width: ", obj.width, " height: ", obj.height);
         const zone = this.libreriaZone.create(obj.x, obj.y - 49, "libreria")
           .setOrigin(0, 0)
           .setOffset(0, 32);
-
-        // Make hitbox wider by 16px to the right only
         zone.body.setSize(obj.width + 16, obj.height);
-        zone.body.setOffset(0, 32); // Keep the original vertical offset
+        zone.body.setOffset(0, 32);
       });
     }
     this.libreriaZone.setVisible(true);
@@ -94,26 +88,21 @@ export default class medicina_2 extends SalaBase {
       }
     }, null, this);
 
-
-    console.log("Capas y transiciones cargadas");
-
-    //Camaras
-    const screenWidth = this.sys.game.config.width; // Ancho de tu pantalla
-    const screenHeight = this.sys.game.config.height; // Alto de tu pantalla
+    // Cámara
+    const screenWidth = this.sys.game.config.width;
+    const screenHeight = this.sys.game.config.height;
     const mapWidth = map.widthInPixels;
     const mapHeight = map.heightInPixels;
     const zoom = 2;
     const boundX = -(screenWidth / zoom - mapWidth) / 2;
-    //const boundY = -(screenHeight / zoom - mapHeight) / 2;
 
     this.cameras.main.setZoom(zoom);
-    this.cameras.main.setBounds(boundX, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.setBounds(boundX, 0, mapWidth, mapHeight);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
-    // Ajustar límites del mundo y cámara
-    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.physics.world.setBounds(0, 0, mapWidth, mapHeight);
 
-    // Añadir colisiones
+    // Colisiones
     this.physics.add.collider(this.player, layer2);
     this.physics.add.collider(this.player, layer3);
     this.physics.add.collider(this.player, layer4);
@@ -134,36 +123,57 @@ export default class medicina_2 extends SalaBase {
     this.physics.add.collider(this.enemyBulletGroup, layer4, this.onBulletCollision);
     this.physics.add.collider(this.enemyBulletGroup, this.obstaculos, this.onBulletCollision);
 
-    console.log("Colisiones añadidas correctamente");
-    // Crear una capa negra semitransparente
+    // Capa oscura general
     this.darkOverlay = this.add.rectangle(
       0, 0,
       this.cameras.main.width,
       this.cameras.main.height,
       0x000000,
-      0.4 // Opacidad (0 a 1)
+      0.4
     );
     this.darkOverlay.setOrigin(0, 0);
-    this.darkOverlay.setScrollFactor(0); // Fijo en la cámara
-    this.darkOverlay.setDepth(100); // Asegurar que está encima de todo
-    // Crear un gráfico para la "luz"
+    this.darkOverlay.setScrollFactor(0);
+    this.darkOverlay.setDepth(100);
+
+    // Luz principal del jugador
     this.light = this.make.graphics();
     this.light.fillStyle(0xffffff, 1);
-    this.light.fillCircle(0, 0, 40); // Radio de la luz
-
-    // Crear una máscara con el círculo de luz
+    this.light.fillCircle(0, 0, 40);
     this.lightMask = this.light.createGeometryMask();
-    this.lightMask.setInvertAlpha(true); // Invertir la máscara para que solo esta zona sea visible
-
-    // Aplicar la máscara a la capa oscura
+    this.lightMask.setInvertAlpha(true);
     this.darkOverlay.setMask(this.lightMask);
+
+    // Capa oscura para transición
+    this.transitionDarkOverlay = this.add.rectangle(
+      0, 0,
+      this.cameras.main.width,
+      this.cameras.main.height,
+      0x000000,
+      0.6
+    );
+    this.transitionDarkOverlay.setOrigin(0, 0);
+    this.transitionDarkOverlay.setScrollFactor(0);
+    this.transitionDarkOverlay.setDepth(101);
+
+    // Luces en zonas de transición
+    this.transitionLightGraphics = this.make.graphics({ x: 0, y: 0, add: false });
+    this.transitionMaskGraphics = this.make.graphics();
+    this.transitionMask = this.transitionMaskGraphics.createGeometryMask();
+    this.transitionMask.setInvertAlpha(true);
+    this.transitionDarkOverlay.setMask(this.transitionMask);
+
+    this.transitionLights = [];
+    this.transitionZones.getChildren().forEach(zone => {
+      const centerX = zone.x + zone.body.width / 2;
+      const centerY = zone.y + zone.body.height / 2;
+      this.transitionLights.push({ x: centerX, y: centerY, radius: 40 });
+    });
 
     let spritesLayer = map.getObjectLayer("sprites");
     if (!this.status) {
       spritesLayer.objects.forEach(obj => {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
         if (type === "enemy") {
-          console.log("AAA enemigo ", obj.name, ", id ", obj.id);
           switch (obj.name) {
             case "cucaracha":
               this.numEnemies++;
@@ -174,31 +184,52 @@ export default class medicina_2 extends SalaBase {
               this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
               break;
             case "cat":
-              console.log("GatosVivos: ", this.game.global.gatosVivos);  // Accede a gatosVivos
-              this.game.global.gatosVivos.push(obj.id); // Añadir el ID del gato a la lista
+              this.game.global.gatosVivos.push(obj.id);
               this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
               break;
-            default:
-              console.log("Tipo de enemigo no reconocido:", obj.name);
           }
         }
       });
-    }
-    else {
+    } else {
       spritesLayer.objects.forEach(obj => {
         let type = obj.properties.find(p => p.name === "tipo")?.value;
         if (type === "enemy") {
           if (obj.name == "cat" && this.game.global.gatosVivos.includes(obj.id)) {
             this.enemyGroup.add(new wakeEnemy(this, obj.x, obj.y, obj.name, obj.id));
+          } else {
+            this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
           }
-          else this.add.sprite(obj.x, obj.y, "blood").setVisible(true).setDepth(3).setFrame(12);
         }
       });
     }
   }
 
+  update(time, delta) {
+  super.update?.(time, delta);
+  this.updateLight();
+
+  if (this.doorFireManager.fireCreated === false) {
+    // Apaga efecto de luces de transición sin destruirlas
+    this.transitionMaskGraphics.clear(); // Borra los círculos
+    this.transitionDarkOverlay.clearMask(); // Oculta el efecto luminoso
+  } else {
+    // Restaura máscara y luces si los fuegos están activos
+    this.transitionMaskGraphics.clear();
+    this.transitionLights.forEach(light => {
+      this.transitionMaskGraphics.fillStyle(0xffffff, 1);
+      this.transitionMaskGraphics.fillCircle(light.x, light.y, light.radius);
+    });
+    this.transitionDarkOverlay.setMask(this.transitionMask); // Reactiva capa de luz
+    this.transitionDarkOverlay.setVisible(true);
+  }
+}
+
+
   updateLight() {
     this.light.x = this.player.x;
     this.light.y = this.player.y;
   }
+
+
+
 }
