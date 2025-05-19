@@ -65,8 +65,15 @@ export default class MessageScreen extends Phaser.Scene {
             this.cameras.main.fadeOut(500, 0, 0, 0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 // IMPORTANTE: Usamos el manager para cambiar de sala correctamente
-                this.manager.volverAlLobby(this.prevScene);
-                this.scene.stop('MessageScreen');
+                if (this.prevScene === 'FDI_Boss_2') {
+                    this.scene.stop('MessageScreen');
+                    this.scene.stop('GUI');
+                    this.scene.start('MainMenu');
+                }
+                else {
+                    this.manager.volverAlLobby(this.prevScene);
+                    this.scene.stop('MessageScreen');
+                }
             });
         }
     }

@@ -23,8 +23,8 @@ export default class BossFDI extends Npc {
     }
     this.scene = scene;
     this.fase = fase;
-    this.maxHealth = 1;
-    this.health = 1;
+    this.maxHealth = 100;
+    this.health = 100;
     this.speed = 50;
     this.stunCounter = 0;
     this.attackRange = 150; // Distancia máxima de ataque
