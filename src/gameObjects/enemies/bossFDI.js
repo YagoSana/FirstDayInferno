@@ -45,6 +45,7 @@ export default class BossFDI extends Npc {
     this.ataqueVacioCooldown = 2000; // Enfriamiento para ataque vacío
     this.ataqueLaserTime = 0; // Tiempo de ataque de láser
     this.ataqueVacioTime = 0; // Tiempo de ataque vacío
+    this.sonidoDying = this.scene.sound.add("FDIdying");
   }
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
@@ -112,6 +113,7 @@ export default class BossFDI extends Npc {
     });
 
     if (this.health <= 0) {
+      this.sonidoDying.play();
       this.scene.cameras.main.fadeOut(3000, 0, 0, 0);
       this.body.enable = false;
       this.body.setVelocity(0, 0);
