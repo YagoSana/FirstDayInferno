@@ -117,7 +117,7 @@ export default class introMedicina extends SalaBase {
           this.numEnemies++;
           switch (obj.name) {
             case "cucaracha":
-              this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+              this.enemyGroup.add(new Enemy(this, obj.x, obj.y, "nand"));
               break;
             case "zombie":
               this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));

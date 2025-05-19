@@ -88,7 +88,7 @@ export default class Paraninfo_1 extends SalaBase {
                 
                 if(type === "enemy"){
                     this.numEnemies++
-                    this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+                    this.enemyGroup.add(new Enemy(this, obj.x, obj.y, "nand"));
                 }
             });
         } else {
