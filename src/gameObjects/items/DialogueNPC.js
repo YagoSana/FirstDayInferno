@@ -1,29 +1,32 @@
 import Phaser from 'phaser';
-import SpriteBase from '../spriteBase';
-import DialogueBox from '../../scenes/conversation.js';
-import Item from './item';
+import SpriteBase from '../spriteBase.js';
+import Item from './item.js';
 
 export default class DialogueNPC extends SpriteBase {
   constructor(scene, x, y, spriteKey, nombre = 'NPC', frases = [], purchase, frasePurchase, purchaseCost, itemKey) {
     super(scene, x, y, spriteKey);
-
+    this.spriteKey = spriteKey;
     this.scene = scene;
     this.nombre = nombre;
     this.frases = frases.length > 0 ? frases : ['...'];
     this.dialogueActivo = false;
     this.interactionRange = 40;
-    this.bulletHits=0;
+    this.bulletHits = 0;
     this.health = 100;
     this.purchase = purchase;
     this.frasePurchase = frasePurchase;
     this.purchaseCost = purchaseCost;
     this.itemKey = itemKey;
 
+    this.body.setSize(12, 24);
+    this.play({ key: spriteKey, randomFrame: true });
+    this.setScale(1.2);
+
     // Recuperar el estado de compra desde localStorage
 
     // Asegurarse de que este NPC tiene un cuerpo físico y es inmóvil
     this.scene.physics.add.existing(this);  // Aseguramos que este NPC tiene física
-    this.body.setImmovable(true); 
+    this.body.setImmovable(true);
 
     this.scene.physics.add.collider(this, scene.player);
     this.scene.physics.add.collider(this, scene.bulletGroup, this.hitBullet, null, this);
@@ -47,13 +50,13 @@ export default class DialogueNPC extends SpriteBase {
       .play('key_E_action');
 
 
-      this.setupInteraction();
+    this.setupInteraction();
   }
 
   setupInteraction() {
     // Escucha la tecla E
     this.scene.input.keyboard.on('keydown-E', () => {
-      if (!this.playerInRange  || this.dialogueActivo) return;
+      if (!this.playerInRange || this.dialogueActivo) return;
 
       this.hablar();
     }, this);
@@ -65,7 +68,7 @@ export default class DialogueNPC extends SpriteBase {
       this.x, this.y,
       player.x, player.y
     );
-    
+
     // Si está dentro del rango circular
     if (distance <= this.interactionRange) {
       if (!this.playerInRange && !this.dialogueActivo) {
@@ -88,7 +91,7 @@ export default class DialogueNPC extends SpriteBase {
         this.x, this.y,
         this.scene.player.x, this.scene.player.y
       );
-      
+
       if (distance > this.interactionRange) {
         this.playerInRange = false;
         this.eKeyIcon.setVisible(false);
@@ -115,7 +118,7 @@ export default class DialogueNPC extends SpriteBase {
     }
   }
 
-  
+
   // Oculta la tecla E cuando el jugador sale del rango
   hideInteractionUI(area, player) {
     console.log('Saliendo de interactionRange');
@@ -137,30 +140,30 @@ export default class DialogueNPC extends SpriteBase {
   hablar() {
     const player = this.scene.player;
     let frase = "";
-  
+
     // Si el NPC vende algo
     if (this.purchase && !this.purchaseDone) {
       if (player.canAfford(this.purchaseCost)) {
         player.spendCoins(this.purchaseCost);
         this.purchaseDone = true;
-  
+
         localStorage.setItem(`purchaseDone_${this.nombre}`, JSON.stringify(this.purchaseDone));
-  
+
         frase = this.frasePurchase;
         this.dialogueActivo = true;
         this.purchase = false;
-  
+
         this.dispenseItemEffect();
       } else {
         frase = "No tienes suficientes monedas...";
         this.dialogueActivo = true;
       }
-  
+
       // Mostrar el diálogo ya sea por compra o por falta de monedas
       this.scene.scene.launch('DialogueScene', {
         message: frase,
         speaker: this.nombre,
-        portraitKey: this.texture.key + '-face',
+        portraitKey: `${this.spriteKey}_talk`,
         textSpeed: 35,
         previousScene: this.scene.scene.key,
         onClose: () => {
@@ -170,20 +173,20 @@ export default class DialogueNPC extends SpriteBase {
           }
         }
       });
-  
+
       this.scene.scene.bringToTop('DialogueScene');
       return;
     }
-  
+
     // Diálogo normal si no hay compra
     frase = Phaser.Utils.Array.GetRandom(this.frases);
     this.dialogueActivo = true;
     this.eKeyIcon.setVisible(false);
-  
+
     this.scene.scene.launch('DialogueScene', {
       message: frase,
       speaker: this.nombre,
-      portraitKey: this.texture.key + '-face',
+      portraitKey: `${this.spriteKey}_talk`,
       textSpeed: 35,
       previousScene: this.scene.scene.key,
       onClose: () => {
@@ -193,10 +196,10 @@ export default class DialogueNPC extends SpriteBase {
         }
       }
     });
-  
+
     this.scene.scene.bringToTop('DialogueScene');
   }
-  
+
 
   dispenseItemEffect() {
     const item = new Item(this.scene, this.x, this.y + 100, this.itemKey);

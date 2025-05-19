@@ -1,12 +1,11 @@
 import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
-import Item from "../../gameObjects/items/item.js";
 import rangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
 import phantomEnemy from "../../gameObjects/enemies/phantomEnemy.js";
 import RangedAreaEnemy from "../../gameObjects/enemies/rangedAreaEnemy.js";
-import BreakableObjects from "../../gameObjects/items/BreakableObject.js";
-
+import BreakableObjects from "../../gameObjects/items/breakableObject.js";
+import Phaser from "phaser";
 
 export default class FDI_5 extends SalaBase {
     constructor(key) {
@@ -182,8 +181,7 @@ export default class FDI_5 extends SalaBase {
                 break;
             }
             case 3: {
-                if (s1) spawn(Enemy, s1.x, s1.y, 'cucaracha', false, 2);
-                if (s2) spawn(phantomEnemy, s2.x, s2.y, 'phantom', false, 2);
+            
                 if (s3) spawn(RangedAreaEnemy, s3.x, s3.y, 'nerd', true, 2);
                 if (s4) spawn(RangedAreaEnemy, s4.x, s4.y, 'nerd', true, 2);
                 break;

@@ -1,8 +1,4 @@
 import Phaser from "phaser";
-import Player from "../../gameObjects/characters/player";
-
-
-
 
 //MAPAS Y TILES
 import tutorial_1 from "../../../assets/map/tutorial_1.json";

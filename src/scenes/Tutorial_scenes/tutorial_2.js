@@ -1,6 +1,7 @@
 import SalaBase from "../salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
 import Enemy from "../../gameObjects/enemies/enemy.js";
+import Phaser from "phaser";
 
 export default class Tutorial_2 extends SalaBase {
     constructor(key) {

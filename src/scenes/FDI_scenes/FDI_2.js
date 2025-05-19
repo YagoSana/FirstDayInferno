@@ -1,9 +1,8 @@
 import SalaBase from "../../scenes/salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
-import Enemy from "../../gameObjects/enemies/enemy.js";
-import Item from "../../gameObjects/items/item.js";
-import RangedEnemy from "../../gameObjects/enemies/rangedEnemy.js";
-import turretEnemy from "../../gameObjects/enemies/turretEnemy.js";
+import TurretEnemy from "../../gameObjects/enemies/turretEnemy.js";
+import Phaser from "phaser";
+
 export default class FDI_2 extends SalaBase {
 
     constructor(key) {
@@ -75,7 +74,7 @@ export default class FDI_2 extends SalaBase {
         let transitionLayer = map.getObjectLayer("transiciones");
         
         transitionLayer.objects.forEach(obj => {
-            const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height);
+            const zone = this.transitionZones.create(obj.x, obj.y, null).setSize(obj.width, obj.height).setOrigin(0, 0).setOffset(0, 0);
             zone.spawnRoom = obj.properties.find(p => p.name === "spawnRoom")?.value;
             zone.spawnX = obj.properties.find(p => p.name === "spawnX")?.value;
             zone.spawnY = obj.properties.find(p => p.name === "spawnY")?.value;
@@ -93,9 +92,9 @@ export default class FDI_2 extends SalaBase {
        // this.enemyGroup.add(new RangedEnemy(this, 700, 80, "nerd"));
        // this.enemyGroup.add(new Enemy(this, 200, 80, "cucaracha"));
       this.numEnemies=3;
-      this.enemyGroup.add(new turretEnemy(this, 750, 65, "printer"));
-      this.enemyGroup.add(new turretEnemy(this, 750, 95, "printer"));
-      this.enemyGroup.add(new turretEnemy(this, 750, 125, "printer"));
+      this.enemyGroup.add(new TurretEnemy(this, 750, 65, "printer"));
+      this.enemyGroup.add(new TurretEnemy(this, 750, 95, "printer"));
+      this.enemyGroup.add(new TurretEnemy(this, 750, 125, "printer"));
    
     
       // Ahora aplicamos el retraso en el disparo para cada enemigo

@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import SelectorNivel from './selectorNivel';
 
 export default class UIButtons extends Phaser.Scene {
     constructor() {

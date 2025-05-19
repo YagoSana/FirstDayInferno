@@ -1,9 +1,8 @@
-//Poner en el boot los paraninfos, y tambien tengo que poner en game las salas? mirar paraninfo_1 pq me faltaba algo mas creo, modificar el manager
 import SalaBase from "../salaBase";
 import Player from "../../gameObjects/characters/player";
 import Enemy from "../../gameObjects/enemies/enemy";
 import PhantomEnemy from "../../gameObjects/enemies/phantomEnemy";
-import RangedEnemy from "../../gameObjects/enemies/rangedEnemy";
+import Phaser from "phaser";
 
 export default class Paraninfo_2 extends SalaBase{
     constructor(key){

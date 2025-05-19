@@ -1,4 +1,3 @@
-// dialogueScene.js
 import Phaser from 'phaser';
 
 export default class DialogueScene extends Phaser.Scene {
@@ -50,16 +49,14 @@ export default class DialogueScene extends Phaser.Scene {
             .setScale(5);
 
         // Retrato
-        if (this.textures.exists(this.portraitKey)) {
+        if (this.anims.exists(this.portraitKey)) {
             this.portrait = this.add.sprite(
                 centerX - width / 2 + 25,
                 dialogueY + 25,
                 this.portraitKey
             ).setOrigin(0).setScale(4);
-
-            if (this.animationKey) {
-                this.portrait.play(this.animationKey);
-            }
+            console.log(this.portraitKey);
+            this.portrait.play(this.portraitKey);
         }
 
         this.eKeyIcon = this.add.sprite(width + 10, centerY + height + 10, 'key_E_action')
@@ -68,7 +65,7 @@ export default class DialogueScene extends Phaser.Scene {
 
         // Texto del mensaje (inicialmente vacío)
         this.text = this.add.text(
-            this.portrait ? this.portrait.x + this.portrait.displayWidth + 40 : centerX - width / 2 + 40,
+            this.portrait ? this.portrait.x + this.portrait.displayWidth + 40 :  250,
             dialogueY + 30,
             '',
             {
@@ -82,8 +79,8 @@ export default class DialogueScene extends Phaser.Scene {
         // Nombre del hablante
         if (this.speaker) {
             this.nameText = this.add.text(
-                this.portrait ? this.portrait.x + this.portrait.displayWidth / 2 : centerX - width / 2 + 30,
-                this.portrait ? this.portrait.y + this.portrait.displayHeight + 10 : centerY - height / 2 + 10,
+                this.portrait ? this.portrait.x + this.portrait.displayWidth / 2 :  140,
+                this.portrait ? this.portrait.y + this.portrait.displayHeight + 10 : centerY + height/2 + 100,
                 this.speaker,
                 {
                     fontSize: '32px',

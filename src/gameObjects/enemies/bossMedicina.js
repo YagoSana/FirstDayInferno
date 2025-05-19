@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import Npc from './npc.js';
 import Bullet from '../projectiles/bullet.js';
-import DialogueBox from '../../scenes/conversation.js';
 
 export default class BossMedicina extends Npc {
 
@@ -44,7 +43,7 @@ export default class BossMedicina extends Npc {
     this.haHablado = false;
     this.primerDialogo = false;
     this.dead = false;
-    this.sonidoDaño = scene.sound.add('bossMedicinaDaño', { volume: 0.1 });
+    this.sonidoDanyo = scene.sound.add('bossMedicinaDanyo', { volume: 0.1 });
     this.sonidoOrbes = scene.sound.add('bossMedicinaOrbes', { volume: 0.5 });
   }
 
@@ -206,7 +205,7 @@ export default class BossMedicina extends Npc {
   hitBullet(enemy, bullet) {
     //Enemigo muere
     if (Phaser.Math.Between(1, 100) <= 15) {
-      this.sonidoDaño.play();
+      this.sonidoDanyo.play();
     }
     this.stunCounter = 30;
     this.health--;
@@ -240,15 +239,15 @@ export default class BossMedicina extends Npc {
     this.scene.scene.launch('DialogueScene', {
       message: frase,
       speaker: 'La muerte',
-      portraitKey: 'bossMedicinaIdle2',
+      portraitKey: 'bossMedicina_talk',
       textSpeed: 35, // Velocidad del efecto de texto
       previousScene: this.scene.scene.key, // Pasar la escena actual
       onClose: () => {
-          this.iniciarCombate();
+        this.iniciarCombate();
       }
-  });
+    });
 
-  this.scene.scene.bringToTop('DialogueScene');
+    this.scene.scene.bringToTop('DialogueScene');
   }
 
   iniciarCombate() {

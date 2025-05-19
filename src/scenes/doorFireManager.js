@@ -1,3 +1,5 @@
+import Phaser from "phaser";
+
 export default class DoorFireManager {
     constructor(scene) {
         this.scene = scene;
@@ -80,6 +82,12 @@ export default class DoorFireManager {
         }
 
         this.doorFires.add(fire);
+        // Dibujar una luz para este fuego en el Graphics compartido
+if (this.lightGraphics) {
+  this.lightGraphics.fillStyle(0xffffff, 1);
+  this.lightGraphics.fillCircle(x, y, 60); // Radio ajustable
+}
+
         return fire;
     }
 

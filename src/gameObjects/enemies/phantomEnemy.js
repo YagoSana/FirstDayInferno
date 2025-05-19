@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import Npc from './npc.js';
 
 export default class PhantomEnemy extends Npc {
-    constructor(scene, x, y, type, key = false){
+    constructor(scene, x, y, type, key = false) {
         super(scene, x, y, type);
         this.type = type;
         this.dropKey = key;
@@ -16,16 +16,16 @@ export default class PhantomEnemy extends Npc {
         this.invisibleDuration = 2000; // permanece invisible 2 segundos
 
         this.ghostAngle = 0;
-this.ghostAngleTimer = 0;
-this.ghostAngleDuration = 500;
+        this.ghostAngleTimer = 0;
+        this.ghostAngleDuration = 500;
     }
 
-    preUpdate(t, dt){
+    preUpdate(t, dt) {
         super.preUpdate(t, dt);
     }
 
-    mypreUpdate(t, dt){
-        if(this.health > 0){
+    mypreUpdate(t, dt) {
+        if (this.health > 0) {
             this.invisibleTimer += dt;
             if (!this.invisible && this.invisibleTimer >= this.invisibleCooldown) {
                 this.invisible = true;
@@ -35,7 +35,7 @@ this.ghostAngleDuration = 500;
                 this.invisibleTimer = 0;
             }
 
-            if(this.invisible){
+            if (this.invisible) {
                 this.play(`${this.type}_invisible_move`, true);
                 this.ghostAngleTimer += dt;
                 if (this.ghostAngleTimer >= this.ghostAngleDuration) {
@@ -47,26 +47,26 @@ this.ghostAngleDuration = 500;
                 const vx = Math.cos(this.ghostAngle) * this.speed;
                 const vy = Math.sin(this.ghostAngle) * this.speed;
                 this.body.setVelocity(vx, vy);
-            }else{
+            } else {
                 this.play(`${this.type}`, true);
                 this.scene.physics.moveToObject(this, this.scene.player, this.speed);
             }
 
-            if(this.stunCounter>0){
+            if (this.stunCounter > 0) {
                 this.stunCounter--;
-                if(this.stunCounter>20){
+                if (this.stunCounter > 20) {
                     this.setTint(0xff0000);
-                }      
+                }
             } else {
                 this.setTint(0xffffff);
             }
         }
     }
 
-    hitBullet(enemy, bullet){//Sobreescribo hitBullet (si esta invisible no le afectan las balas)
-        if(!this.invisible){
+    hitBullet(enemy, bullet) {//Sobreescribo hitBullet (si esta invisible no le afectan las balas)
+        if (!this.invisible) {
             super.hitBullet(enemy, bullet);
-        }else{
+        } else {
             bullet.disappear();
         }
     }

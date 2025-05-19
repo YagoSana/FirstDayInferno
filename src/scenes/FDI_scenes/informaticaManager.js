@@ -17,6 +17,7 @@ import FDI_6_TL from "../../../assets/map/biblioteca.json";
 import FDI_2_1_TL from "../../../assets/map/pasillo.json";
 import FDI_2_2_TL from "../../../assets/map/laboratorio.json";
 import FDI_2_3_TL from "../../../assets/map/baño.json";
+import FDI_Boss_1_TL from "../../../assets/map/FDI_Boss_1.json";
 import FDI_Boss_2 from "../../../assets/map/FDI_Boss_2.json";
 
 import img_interior from "../../../assets/map/Interiors_free_16x16.png";
@@ -110,6 +111,8 @@ export default class informaticaManager extends Phaser.Scene {
     this.load.tilemapTiledJSON("FDI_2_1_TL", FDI_2_1_TL);
     this.load.tilemapTiledJSON("FDI_2_2_TL", FDI_2_2_TL);
     this.load.tilemapTiledJSON("FDI_2_3_TL", FDI_2_3_TL);
+    this.load.tilemapTiledJSON("FDI_2_3_TL", FDI_2_3_TL);
+    this.load.tilemapTiledJSON("FDI_Boss_1_TL", FDI_Boss_1_TL);
     this.load.tilemapTiledJSON("FDI_Boss_2", FDI_Boss_2);
 
   }
@@ -120,8 +123,8 @@ export default class informaticaManager extends Phaser.Scene {
    */
   create() {
     this.mapStatus = new Map();
-    this.mapStatus.set("FDI_Boss_2", false);
-    this.scene.start("FDI_Boss_2", {x: 358, y:170, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("FDI_Boss_2")}); 
+    this.mapStatus.set("FDI_4", false);
+    this.scene.start("FDI_4", {x: 100, y:170, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("FDI_Boss_1")}); 
     //this.scene.start("FDI_4", {x: 96, y:170, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("FDI_4")});    
   } //358 170
 
@@ -133,7 +136,7 @@ export default class informaticaManager extends Phaser.Scene {
       this.mapStatus.set(zone.spawnRoom, false);
     }
     this.scene.start(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get(zone.spawnRoom)});
-    this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
+    // this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
   }
 
   guardarPlayerStats(stats){

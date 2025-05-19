@@ -1,3 +1,4 @@
+import Phaser from "phaser";
 import RangedEnemy from './rangedEnemy.js';
 import Bullet from '../projectiles/bullet.js';
 import ChargedEnemy from './chargedEnemy.js';

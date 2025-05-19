@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import Npc from './npc.js';
-import Bullet from '../projectiles/bullet.js';
 import Laser from '../projectiles/laser.js';
 
 export default class BossFDI extends Npc {

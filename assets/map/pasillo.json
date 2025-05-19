@@ -200,12 +200,12 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":152
+                         "value":254
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":520
+                         "value":363
                         }],
                  "rotation":0,
                  "type":"",
@@ -227,12 +227,12 @@
                         {
                          "name":"spawnX",
                          "type":"int",
-                         "value":0
+                         "value":254
                         }, 
                         {
                          "name":"spawnY",
                          "type":"int",
-                         "value":0
+                         "value":307
                         }],
                  "rotation":0,
                  "type":"",
@@ -293,7 +293,7 @@
          "y":0
         }],
  "nextlayerid":10,
- "nextobjectid":21,
+ "nextobjectid":22,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -302,7 +302,7 @@
         {
          "columns":17,
          "firstgid":1,
-         "image":"Room_Builder_free_16x16.png",
+         "image":"..\/TILESETS\/Room_Builder_free_16x16.png",
          "imageheight":368,
          "imagewidth":272,
          "margin":0,
@@ -315,7 +315,7 @@
         {
          "columns":16,
          "firstgid":392,
-         "image":"Interiors_free_16x16.png",
+         "image":"..\/TILESETS\/Interiors_free_16x16.png",
          "imageheight":1424,
          "imagewidth":256,
          "margin":0,
@@ -328,13 +328,13 @@
         {
          "columns":2,
          "firstgid":1816,
-         "image":"tileset_nuevo.png",
-         "imageheight":400,
+         "image":"..\/TILESETS\/tileset_nuevo.png",
+         "imageheight":592,
          "imagewidth":32,
          "margin":0,
          "name":"tileset_nuevo",
          "spacing":0,
-         "tilecount":50,
+         "tilecount":74,
          "tileheight":16,
          "tilewidth":16
         }],

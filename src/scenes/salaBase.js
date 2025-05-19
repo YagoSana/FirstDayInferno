@@ -1,6 +1,4 @@
 import Phaser from "phaser";
-import Player from "../gameObjects/characters/player";
-import Bullet from "../gameObjects/projectiles/bullet";
 import DoorFireManager from "./doorFireManager";
 
 export default class SalaBase extends Phaser.Scene {

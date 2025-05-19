@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import SpriteBase from '../spriteBase';
+import SpriteBase from '../spriteBase.js';
 
 export default class BreakableObject extends SpriteBase {
   /*
@@ -30,7 +30,9 @@ export default class BreakableObject extends SpriteBase {
 
   }
 
-
+editScale(x, y){
+  this.setScale(x,y);
+}
   hitBullet(machine, bullet) {
     // Efecto visual
     // this.bulletText.setVisible(true);

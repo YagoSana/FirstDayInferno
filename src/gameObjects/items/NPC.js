@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import SpriteBase from '../spriteBase';
 import Item from './item';
-import DialogueBox from '../../scenes/conversation.js';
 
 export default class NPC extends SpriteBase {
     constructor(scene, x, y) {
@@ -10,8 +9,8 @@ export default class NPC extends SpriteBase {
         this.scene = scene;
         this.body.setImmovable(true);
         this.body.allowGravity = false;
-        this.body.setSize(20, 10);
-        this.body.setOffset(6, 0);
+       
+     
         this.setScale(1.2);
         this.originalScaleX = 1.2;
         this.originalScaleY = 1.2;
@@ -115,7 +114,7 @@ export default class NPC extends SpriteBase {
         this.scene.scene.launch('DialogueScene', {
             message: frase,
             speaker: 'Borja',
-            portraitKey: 'borjaPortrait',
+            portraitKey: 'borja_talk',
             textSpeed: 35,
             previousScene: this.scene.scene.key,
             onClose: () => {

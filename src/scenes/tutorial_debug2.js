@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import SalaBase from "./salaBase.js";
 import Player from "../gameObjects/characters/player.js";
 import Door from "../gameObjects/items/door.js";

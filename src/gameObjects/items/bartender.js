@@ -1,21 +1,26 @@
 import Phaser from 'phaser';
-import SpriteBase from '../spriteBase';
-import Item from './item';
+import SpriteBase from '../spriteBase.js';
+import ShopItem from './shopItem.js';
 
 export default class Bartender extends SpriteBase {
-    constructor(scene, x, y) {
-        super(scene, x, y, 'merchant');
-
+    constructor(scene, x, y, spriteKey) {
+        super(scene, x, y, spriteKey);
+        this.spriteKey = spriteKey;
         this.scene = scene;
-        this.play('idle-front-bartender');
-        this.body.setImmovable(true);
-        this.body.allowGravity = false;
-        this.setScale(1.2);
+
+
+        this.setDepth(10);
+
+        this.play(this.spriteKey);
+        this.setScale(1.3);
 
         this.interactionRange = 60;
         this.itemsSpawned = false;
         this.dialogueActivo = false;
         this.playerIsNear = false;
+
+        this.scene.physics.add.existing(this);  // Aseguramos que este NPC tiene física
+        this.body.setImmovable(true);
 
         this.scene.physics.add.collider(this, scene.player);
 
@@ -82,18 +87,6 @@ export default class Bartender extends SpriteBase {
         }, this);
     }
 
-    preUpdate() {
-        this.playerIsNear = this.isPlayerInRange();
-    }
-
-
-    isPlayerInRange() {
-        if (!this.scene || !this.scene.player) return false;
-        return Phaser.Math.Distance.Between(
-            this.x, this.y, 
-            this.scene.player.x, this.scene.player.y
-        ) <= this.interactionRange;
-    }
 
     mostrarDialogo(frase) {
         this.dialogueActivo = true;
@@ -102,7 +95,7 @@ export default class Bartender extends SpriteBase {
         this.scene.scene.launch('DialogueScene', {
             message: frase,
             speaker: 'Sánchez',
-            portraitKey: 'bartenderImg',
+            portraitKey: 'bartender_talk',
             textSpeed: 35, // Velocidad del efecto de texto
             previousScene: this.scene.scene.key, // Pasar la escena actual
             onClose: () => {
@@ -139,19 +132,3 @@ export default class Bartender extends SpriteBase {
     }
 }
 
-class ShopItem extends Item {
-    constructor(scene, x, y, texture, price) {
-        super(scene, x, y, texture);
-
-        this.price = price;
-        this.scene = scene;
-
-        this.priceText = scene.add.text(this.x, this.y - 30, `${price} €`, {
-            fontSize: '16px',
-            fill: '#ffff00',
-            fontFamily: 'monogram',
-            backgroundColor: '#000000',
-            padding: { x: 4, y: 2 }
-        }).setOrigin(0.5).setDepth(this.depth + 1).setResolution(2);
-    }
-}

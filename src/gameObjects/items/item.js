@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import SpriteBase from '../spriteBase';
+import SpriteBase from '../spriteBase.js';
 
 const DEFAULT_SIZE = 0.65;
 const HOVER_SIZE = 0.8;

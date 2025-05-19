@@ -25,21 +25,15 @@ import printer from "../../assets/sprites/printer_spritesheet.png";
 import skeleton from "../../assets/sprites/skeleton_spritesheet.png";
 import phantom from "../../assets/sprites/phantom.png";
 
-//CAMARERO
-import camarero from "../../assets/sprites/bartender_front_iddle.png"
 
 //PROFESOR
 import borja from "../../assets/sprites/borja.png"
-import borjaPortrait from "../../assets/sprites/borja_frontal_32x32.png";
 import borjaMalvado from "../../assets/sprites/borja_malvado.png";
 
 //NPCS 
-import hippie from "../../assets/sprites/sprite_hippie_32x32.png";
-import hippiePortrait from "../../assets/sprites/hippie.png";
-import seller from "../../assets/sprites/alcohol_seller_32x32.png";
-import fdi_student from "../../assets/sprites/fdi_student_32x32.png";
-import fdi_studentPortrait from "../../assets/sprites/fdi_student_portrait_32x32.png";
 import car from "../../assets/sprites/car_crash_64x64.png";
+import npcPortrait from "../../assets/sprites/Characters_GUI.png"
+import npcs from "../../assets/sprites/npcs_sheet.png"
 
 //EXTRAS ------------------------------------------------------
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
@@ -77,12 +71,12 @@ import cogerCorazon from '../../assets/music/pickupLife.wav';
 import comer from '../../assets/music/burger.mp3';
 import beber from '../../assets/music/beber.mp3';
 import isaac from '../../assets/music/isaac.mp3';
-import error from '../../assets/music/error.mp3';
+import errorSound from '../../assets/music/error.mp3';
 import bono from '../../assets/music/bono.mp3';
-import windows from '../../assets/music/windows.mp3';
+import windowsSound from '../../assets/music/windows.mp3';
 import smoke from '../../assets/music/smoke.mp3';
-import pipe from '../../assets/music/pipe.mp3';
-import cry from '../../assets/music/crying.mp3';
+import pipeSound from '../../assets/music/pipe.mp3';
+import crySound from '../../assets/music/cry.ogg';
 import cogerLlave from '../../assets/music/pickupKey.wav';
 import andarJugador from '../../assets/music/andarJugador.wav';
 import facultadMedicinaOst from '../../assets/music/facultadMedicina.ogg';
@@ -99,16 +93,17 @@ import musicaCafe3 from '../../assets/music/musicaCafe3.mp3';
 import musicaCafe4 from '../../assets/music/musicaCafe4.mp3';
 import motorSound from '../../assets/sounds/engine.mp3';
 import bossMedicinaAmbiente from '../../assets/music/bossMedicinaAmbiente.ogg';
-import bossMedicinaDaño from '../../assets/music/bossMedicinaDaño.wav';
+import bossMedicinaDanyo from '../../assets/music/bossMedicinaDanyo.wav';
 import bossMedicinaOrbes from '../../assets/music/bossMedicinaOrbes.wav';
 import bossMedicinaMusica from '../../assets/music/bossMedicinaMusica.wav';
+import llamada from '../../assets/music/llamada.wav';
+import sonidoparry from '../../assets/music/sonidoparry.wav';
  
 //GUI ------------------------------------------------------
 import mainMenu from "../../assets/sprites/mainmenu.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
 import game_over_screen from "../../assets/sprites/enemy_game_over.png";
-import bartenderImg from "../../assets/sprites/camarero.png";
-import vs_screen from "../../assets/sprites/vs_spritesheet.png";
+import vs_screen from "../../assets/sprites/VS_spritesheet.png";
 //BOSS MEDICINA ------------------------------------------------------
 import bossMedicinaIdle from "../../assets/sprites/bossMedicinaIdle.png";
 import bossMedicinaIdle2 from "../../assets/sprites/bossMedicinaIdle2.png";
@@ -122,6 +117,14 @@ import bossMedicinaBulletDestroy from "../../assets/sprites/bossMedicinaDestroy.
 //BOSS FDI ------------------------------------------------------
 import bossFDIfase2 from "../../assets/sprites/bossFDIfase2.png";
 import bossFDIBullet from "../../assets/sprites/bossFDIBullet.png";
+
+//TILES ------------------------------------------------------
+import tileset_grass from "../../assets/map/TX Tileset Grass.png";
+import tileset_paraninfo from "../../assets/map/paraninfo.png";
+import tileset_interior from "../../assets/map/Interiors_free_16x16.png";
+import tileset_muebles from "../../assets/map/Room_Builder_free_16x16.png";
+
+
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -151,10 +154,43 @@ export default class Boot extends Phaser.Scene {
    * Carga de los assets del juego
    */
   preload() {
-    //AUDIO
+    //BARRA DE CARGA
+    const { width, height } = this.cameras.main;
+
+    let progressBar = this.add.graphics();
+    let progressBox = this.add.graphics();
+    progressBox.fillStyle(0x222222, 0.8);
+    progressBox.fillRect(width / 2 - 160, height / 2 - 25, 320, 50);
+
+    const loadingText = this.make.text({
+      x: width / 2,
+      y: height / 2 - 50,
+      text: 'Cargando...',
+      style: {
+        font: '20px monospace',
+        fill: '#ffffff'
+      }
+    });
+    loadingText.setOrigin(0.5, 0.5);
+
+    this.load.on('progress', (value) => {
+      progressBar.clear();
+      progressBar.fillStyle(0xffffff, 1);
+      progressBar.fillRect(width / 2 - 150, height / 2 - 15, 300 * value, 30);
+    });
+
+    this.load.on('complete', () => {
+      progressBar.destroy();
+      progressBox.destroy();
+      loadingText.destroy();
+    });
+    //BARRA DE CARGA
+    //AUDIOç
+    this.load.audio('sonidoParry', sonidoparry);
+    this.load.audio('llamada', llamada);
     this.load.audio('bossMedicinaMusica', bossMedicinaMusica);
     this.load.audio('bossMedicinaAmbiente', bossMedicinaAmbiente);
-    this.load.audio('bossMedicinaDaño', bossMedicinaDaño);
+    this.load.audio('bossMedicinaDanyo', bossMedicinaDanyo);
     this.load.audio('bossMedicinaOrbes', bossMedicinaOrbes);
     this.load.audio('musicaMenu', musicaMenu);
     this.load.audio('buttonHover', buttonHover);
@@ -168,17 +204,17 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('comer', comer);
     this.load.audio('beber', beber);
     this.load.audio('isaac', isaac);
-    this.load.audio('error', error);
+    this.load.audio('error', errorSound);
     this.load.audio('bono', bono);
     this.load.audio('smoke', smoke);
-    this.load.audio('pipe', pipe);
-    this.load.audio('cry', cry);
-    this.load.audio('windows', windows);
+    this.load.audio('pipe', pipeSound);
+    this.load.audio('cry', crySound);
+    this.load.audio('windows', windowsSound); 
     this.load.audio('cogerLlave', cogerLlave);
-    this.load.audio('andarJugador', andarJugador);
-    this.load.audio('facultadMedicinaOst', facultadMedicinaOst);
     this.load.audio('pop', pop);
     this.load.audio('explode', explode);
+    this.load.audio('andarJugador', andarJugador);
+    this.load.audio('facultadMedicinaOst', facultadMedicinaOst);
     this.load.audio('musicaGameOver', musicaGameOver);
     this.load.audio('tutorialSonido', tutorialSonido);
     this.load.audio('sonidoMaquina', sonidoMaquina);
@@ -246,35 +282,11 @@ export default class Boot extends Phaser.Scene {
     });
 
 //PERSONAJES DE LA FDI
-    this.load.spritesheet("hippie", hippie, {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
-
-    this.load.spritesheet("hippie-face", hippiePortrait, {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
-
-    this.load.spritesheet("fdi_student", fdi_student, {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
-
-    this.load.spritesheet("fdi_student-face",fdi_studentPortrait, {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
-
-    this.load.spritesheet("seller", seller, {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
-
     this.load.spritesheet("car", car,{
       frameWidth: 64,
       frameHeight: 64,
     });
+
 
     this.load.spritesheet("borja", borja, {
       frameWidth: 32,
@@ -286,7 +298,7 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
-    this.load.spritesheet("borjaPortrait", borjaPortrait, {
+    this.load.spritesheet("characters_npc", npcs, {
       frameWidth: 32,
       frameHeight: 32,
     });
@@ -296,11 +308,6 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 64,
     });
     this.load.spritesheet("toilet", toilet, {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
-
-    this.load.spritesheet("bartenderImg", bartenderImg, {
       frameWidth: 32,
       frameHeight: 32,
     });
@@ -325,10 +332,11 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 32, //todos son 32 px de alto
     });
 
-    this.load.spritesheet("bartender", camarero, {
+    this.load.spritesheet("npcsPortrait", npcPortrait, {
       frameWidth: 32,
       frameHeight: 32
     });
+
 
     this.load.spritesheet('puff', puff, {
       frameWidth: 32,
@@ -475,6 +483,11 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 32, //cada frame tiene este ancho
       frameHeight: 32, //todos son 32 px de alto
     });
+
+    this.load.image("Grass", tileset_grass);
+    this.load.image("Paraninfo", tileset_paraninfo);
+    this.load.image("Interior", tileset_interior);
+    this.load.image("Muebles", tileset_muebles);
   }
 
   /**
@@ -513,16 +526,6 @@ export default class Boot extends Phaser.Scene {
       }),
       frameRate: 8,
       repeat: 0,
-    });
-
-    this.anims.create({
-      key: "hippie",
-      frames: this.anims.generateFrameNames("hippie", {
-        start: 0,
-        end: 0,
-      }),
-      frameRate: 8,
-      repeat: 1,
     });
 
     this.anims.create({
@@ -606,36 +609,49 @@ export default class Boot extends Phaser.Scene {
       repeat: -1,
     });
 
-    this.anims.create({
-      key: "borjaPortrait",
-      frames: this.anims.generateFrameNames("teacher_face", {
-        start: 0,
-        end: 0,
-      }),
-      frameRate: 5,
-      repeat: -1,
-    });
 
 
     this.anims.create({
-      key: "idle-front-bartender",
-      frames: this.anims.generateFrameNames("bartender", {
+      key: "bartender",
+      frames: this.anims.generateFrameNames("characters_npc", {
         start: 0,
-        end: 2,
+        end: 4,
       }),
-      frameRate: 5,
+      frameRate: 6,
       repeat: -1,
     });
 
     this.anims.create({
-      key: "bartender-face",
-      frames: this.anims.generateFrameNames("bartenderImg", {
-        start: 0,
-        end: 0,
+      key: "hippie",
+      frames: this.anims.generateFrameNames("characters_npc", {
+        start: 5,
+        end: 9,
       }),
-      frameRate: 5,
+      frameRate: 6,
       repeat: -1,
     });
+
+    this.anims.create({
+      key: "fdi_student1",
+      frames: this.anims.generateFrameNames("characters_npc", {
+        start: 10,
+        end: 14,
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "seller",
+      frames: this.anims.generateFrameNames("characters_npc", {
+        start: 15,
+        end: 19,
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+
+    
 
     //ENEMIGOS-------------------------------------------------------------------
 
@@ -664,7 +680,7 @@ export default class Boot extends Phaser.Scene {
       key: "zombie_move",
       frames: this.anims.generateFrameNames("zombie_move", {
         start: 0,
-        end: 4,
+        end: 3,
       }),
       frameRate: 10,
       repeat: -1,
@@ -1281,6 +1297,58 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.anims.create({
+      key: "bartender_talk",
+      frames: this.anims.generateFrameNames("npcsPortrait", { start: 0, end: 1 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "borja_talk",
+      frames: this.anims.generateFrameNames("npcsPortrait", { start: 2, end: 3 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "fdi_student1_talk",
+      frames: this.anims.generateFrameNames("npcsPortrait", { start: 4, end: 5 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "hippie_talk",
+      frames: this.anims.generateFrameNames("npcsPortrait", { start: 6, end: 7 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "bossMedicina_talk",
+      frames: this.anims.generateFrameNames("npcsPortrait", { start: 8, end: 9 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "car_talk",
+      frames: this.anims.generateFrameNames("npcsPortrait", { start: 10, end: 11 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "seller_talk",
+      frames: this.anims.generateFrameNames("npcsPortrait", { start: 12, end: 13 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+    
+    
+    
+
+    this.anims.create({
       key: "fire_start",
       frames: this.anims.generateFrameNames("fire", { start: 0, end: 3 }),
       frameRate: 8,
@@ -1340,13 +1408,13 @@ export default class Boot extends Phaser.Scene {
     this.textures.addSpriteSheet('nand_death', this.textures.get('game_over_screen').getSourceImage(), {
       frameWidth: 100,
       frameHeight: 100,
-      startFrame: 6
+      startFrame: 7
     });
 
     this.textures.addSpriteSheet('skeleton_death', this.textures.get('game_over_screen').getSourceImage(), {
       frameWidth: 100,
       frameHeight: 100,
-      startFrame: 7
+      startFrame: 6
     });
 
     this.textures.addSpriteSheet('uncanny_cat', this.textures.get('game_over_screen').getSourceImage(), {
