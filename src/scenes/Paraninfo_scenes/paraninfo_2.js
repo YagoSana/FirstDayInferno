@@ -82,7 +82,7 @@ export default class Paraninfo_2 extends SalaBase{
                 
                 if(obj.name === "cucaracha"){
                     this.numEnemies++
-                    this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+                    this.enemyGroup.add(new Enemy(this, obj.x, obj.y, "nand"));
                 }else if(obj.name == "phantom"){
                     this.numEnemies++;
                     this.enemyGroup.add(new PhantomEnemy(this, obj.x, obj.y, obj.name, true));

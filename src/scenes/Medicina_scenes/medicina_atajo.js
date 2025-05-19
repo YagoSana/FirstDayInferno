@@ -163,7 +163,7 @@ export default class medicina_atajo extends SalaBase {
           switch (obj.name) {
             case "cucaracha":
               this.numEnemies++;
-              this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+              this.enemyGroup.add(new Enemy(this, obj.x, obj.y, "nand"));
               break;
             case "zombie":
               this.numEnemies++;

@@ -93,7 +93,7 @@ export default class Tutorial_2 extends SalaBase {
                 }
                 else if (type === "enemy") {
                     this.numEnemies++
-                    this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+                    this.enemyGroup.add(new Enemy(this, obj.x, obj.y, "nand"));
                 }
             });
         } else {

@@ -133,7 +133,7 @@ export default class FDI_2_2 extends SalaBase {
                 let type = obj.properties.find(p => p.name === "tipo")?.value;
                 if (type === "enemy") {
                     this.numEnemies++
-                    this.enemyGroup.add(new Enemy(this, obj.x, obj.y-200, obj.name));
+                    this.enemyGroup.add(new Enemy(this, obj.x, obj.y-200, "nand"));
                 }
             });
         } else {
