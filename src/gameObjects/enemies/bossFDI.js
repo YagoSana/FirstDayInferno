@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import Npc from './npc.js';
 import Laser from '../projectiles/laser.js';
+import Bullet from '../projectiles/bullet.js';
 
 export default class BossFDI extends Npc {
 
@@ -22,8 +23,8 @@ export default class BossFDI extends Npc {
     }
     this.scene = scene;
     this.fase = fase;
-    this.maxHealth = 100;
-    this.health = 100;
+    this.maxHealth = 1;
+    this.health = 1;
     this.speed = 50;
     this.stunCounter = 0;
     this.attackRange = 150; // Distancia máxima de ataque
@@ -63,20 +64,7 @@ export default class BossFDI extends Npc {
       } else {
         this.setTint(0xffffff);
       }
-      if (this.fase == 1) {
-        this.play("bossFDIIdle", true);
-        // Lanzar escena de barra de vida
-        if (!this.scene.scene.isActive('BossHealthBarScene')) {
-          console.log('BOSS BAR LANZADA');
-          this.scene.scene.launch('BossHealthBarScene', {
-            type: this.type,
-            maxHealth: this.maxHealth,
-            currentHealth: this.health
-          });
-          this.scene.scene.bringToTop('BossHealthBarScene');
-        }
-      }
-      else if (this.fase == 2) {
+      if (this.fase == 2) {
         if (!this.scene.scene.isActive('BossHealthBarScene')) {
           console.log('BOSS BAR LANZADA');
           this.scene.scene.launch('BossHealthBarScene', {
@@ -124,17 +112,13 @@ export default class BossFDI extends Npc {
     });
 
     if (this.health <= 0) {
+      this.scene.cameras.main.fadeOut(3000, 0, 0, 0);
       this.body.enable = false;
       this.body.setVelocity(0, 0);
       this.dead = true;
-      if (this.fase == 1) {
-        //dialogo y cambio sala
-        this.scene.game.events.emit('bossDefeated');
-        this.scene.scene.stop('BossHealthBarScene');
-      }
-      else if (this.fase == 2) {
+      if (this.fase == 2) {
         //animacion final
-        this.scene.game.events.emit('bossDefeated', "Esto no ha hecho más que empezar...");
+        this.scene.game.events.emit('bossDefeated', "Esto no ha hecho \n más que empezar... \n Los mayores horrores \n jamás presenciados \n te esperan en la carrera...");
         this.scene.scene.stop('BossHealthBarScene');
       }
     }

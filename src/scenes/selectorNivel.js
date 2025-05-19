@@ -94,7 +94,7 @@ export default class SelectorNivel extends Phaser.Scene {
 
     //Zona invisible para tutorial del parry
     this.invisibleZoneLlamadaParry = this.add.zone(520, 180, 70, 100).setOrigin(0, 0).setName("conversacionParry");
-    this.invisibleZoneParaninfo.setInteractive();
+    this.invisibleZoneLlamadaParry.setInteractive();
     this.llamada = this.sound.add('llamada');
     this.llamada.setVolume(0.5); // Ajusta el volumen según sea necesario
 
