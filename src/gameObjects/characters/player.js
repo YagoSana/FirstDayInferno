@@ -510,7 +510,7 @@ export default class Player extends SpriteBase {
      */
     hurt(player, bullet) {
         const currentTime = this.scene.time.now;
-        // ✅ Si está en modo parry, evitamos el daño
+        //si esta en modo parry
         if (this.isParrying) {
             const tiempoDesdeParry = currentTime - this.lastParryTime;
             this.sonidoParry.play();
@@ -826,10 +826,9 @@ export default class Player extends SpriteBase {
     }
 
     activateNormalParryBoost(duration = 3000, boostFactor = 0.5) {
-        // Evita aplicar múltiples boosts superpuestos
         if (!this.powerupTimer) {
-            this.shootCooldown *= boostFactor; // Reduce el cooldown (más velocidad)
-            this.powerupTimer = true; // Activa el temporizador del powerup
+            this.shootCooldown *= boostFactor;
+            this.powerupTimer = true;
             this.scene.time.delayedCall(duration, () => {
                 this.shootCooldown = this.originalShootCooldown;
                 this.powerupTimer = false
@@ -842,7 +841,7 @@ export default class Player extends SpriteBase {
     activatePerfectParryEffect() {
         if (this.health < this.maxHealth) {
             this.health++;
-            this.scene.updateHealth(this.maxHealth, this.health); // si tienes este método en la escena
+            this.scene.updateHealth(this.maxHealth, this.health);
             console.log("Parry perfecto: vida restaurada");
         } else {
             console.log("Parry perfecto: ya tienes la vida al máximo");

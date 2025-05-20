@@ -27,13 +27,13 @@ import phantom from "../../assets/sprites/phantom.png";
 
 
 //PROFESOR
-import borja from "../../assets/sprites/borja.png"
+import borja from "../../assets/sprites/borja.png";
 import borjaMalvado from "../../assets/sprites/borja_malvado.png";
 
 //NPCS 
 import car from "../../assets/sprites/car_crash_64x64.png";
-import npcPortrait from "../../assets/sprites/Characters_GUI.png"
-import npcs from "../../assets/sprites/npcs_sheet.png"
+import npcPortrait from "../../assets/sprites/Characters_GUI.png";
+import npcs from "../../assets/sprites/npcs_sheet.png";
 
 //EXTRAS ------------------------------------------------------
 import keyboard_keys from "../../assets/sprites/keys_spritesheet.png";
@@ -51,7 +51,7 @@ import secretDoor from "../../assets/sprites/secretDoor_spritesheet.png";
 import lock from "../../assets/sprites/lock.png";
 import breakable_table from "../../assets/sprites/breakable_table.png";
 import breakable_chair from "../../assets/sprites/breakable_chair.png";
-import toilet from "../../assets/sprites/toilet.png"
+import toilet from "../../assets/sprites/toilet.png";
 
 //JUGADOR CON ITEMS ----------------------------------------------
 import player_items from "../../assets/sprites/player_item.png";
@@ -102,11 +102,11 @@ import MEDdying from '../../assets/music/meddying.wav';
 import FDIdying from '../../assets/music/fdidying.wav';
 import dying from '../../assets/music/dying.wav';
 import opendoor from '../../assets/music/opendoor.wav';
-import bossFDImusica from '../../assets/music/bossFDImusica.wav'; //120 BPM Industrial Drum Loop #13859 (WAV) by looplicator -- https://freesound.org/s/807236/ -- License: Attribution 4.0
+import bossFDImusica from '../../assets/music/bossFDImusica.wav';
 import laserFDI from '../../assets/music/laserFDI.wav'; 
 import whooshFDI from '../../assets/music/whooshFDI.wav';
-import musicaFDI from '../../assets/music/musicaFDI.wav'; //Beetle Museum Lobby by Beetlemuse -- https://freesound.org/s/533529/ -- License: Attribution 4.0
-import playerDamage from '../../assets/music/playerDamage.wav'; //8-bit - Damage by Antikore -- https://freesound.org/s/457195/ -- License: Attribution 4.0
+import musicaFDI from '../../assets/music/musicaFDI.wav';
+import playerDamage from '../../assets/music/playerDamage.wav';
 
 //GUI ------------------------------------------------------
 import mainMenu from "../../assets/sprites/mainmenu.png";
