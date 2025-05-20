@@ -1,4 +1,4 @@
-import Phaser from 'phaser'
+import Phaser from 'phaser';
 
 import Background from "../../assets/imgs/metro_background.jpg";
 import Button from "../../assets/imgs/boton_on.png";
