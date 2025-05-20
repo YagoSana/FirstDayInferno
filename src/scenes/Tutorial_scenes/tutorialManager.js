@@ -35,23 +35,26 @@ export default class tutorialManager extends Phaser.Scene {
 
         let progressBar = this.add.graphics();
         let progressBox = this.add.graphics();
-        progressBox.fillStyle(0x222222, 0.8);
+        progressBox.fillStyle(0xff6d05, 0.8);
         progressBox.fillRect(width / 2 - 160, height / 2 - 25, 320, 50);
+        progressBar.setDepth(100);
 
         const loadingText = this.make.text({
             x: width / 2,
             y: height / 2 - 50,
             text: 'Cargando...',
             style: {
-                font: '20px monospace',
-                fill: '#ffffff'
+                fontFamily: 'monogram',
+                color: '#FFF33F',
+                fontSize: '36px'
+
             }
         });
         loadingText.setOrigin(0.5, 0.5);
 
         this.load.on('progress', (value) => {
             progressBar.clear();
-            progressBar.fillStyle(0xffffff, 1);
+            progressBar.fillStyle(0xFFF33F, 1);
             progressBar.fillRect(width / 2 - 150, height / 2 - 15, 300 * value, 30);
         });
 
@@ -73,7 +76,7 @@ export default class tutorialManager extends Phaser.Scene {
 
     create() {
         this.tutorialSonido = this.sound.add('tutorialSonido');
-       
+
         let uiButtonsScene = this.scene.get('UIButtons');
         uiButtonsScene.updateConfig({
             position: {

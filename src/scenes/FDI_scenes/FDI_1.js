@@ -13,7 +13,7 @@ export default class FDI_1 extends SalaBase {
         super.create('FDI_1');
 
         const map = this.make.tilemap({ key: 'FDI_1_TL' }); // Cargamos el mapa
-        
+
         // Cargar los sonidos
         this.engineSound = this.sound.add('motorSound', { loop: true, volume: 0 });
 
@@ -43,7 +43,7 @@ export default class FDI_1 extends SalaBase {
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
         this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);
-        
+
         //Colisiones
         this.physics.add.collider(this.player, layer2);
         this.physics.add.collider(this.enemyGroup, layer2);
@@ -59,10 +59,20 @@ export default class FDI_1 extends SalaBase {
         this.physics.add.collider(this.enemyBulletGroup, layer5, this.onBulletCollision);
 
         //Camaras
+        let screenWidth = this.sys.game.config.width; // Ancho de tu pantalla
+        let screenHeight = this.sys.game.config.height; // Alto de tu pantalla
+        let mapWidth = map.widthInPixels;
+        let mapHeight = map.heightInPixels;
+        let zoom = 2;
+        let boundX = -(screenWidth / zoom - mapWidth) / 2;
+        let boundY = -(screenHeight / zoom - mapHeight) / 2;
+
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+        this.cameras.main.setZoom(zoom);
+        this.cameras.main.setBounds(boundX, 0, map.widthInPixels, map.heightInPixels);
+
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
-        this.cameras.main.setZoom(1.8);
 
         if (!this.status) {
             this.spawnProps();
@@ -70,7 +80,7 @@ export default class FDI_1 extends SalaBase {
         else {
             this.spawnBlood();
         }
-        
+
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
 
@@ -137,7 +147,7 @@ export default class FDI_1 extends SalaBase {
                     this.npcGroup.add(student);
                 }
                 else if (spawnType === 'crashed_car') {
-                    let car = new DialogueNPC(this, obj.x , obj.y + 32, 'car', 'coche', frasesCoche,  false, " ", 0, 'tinto');
+                    let car = new DialogueNPC(this, obj.x, obj.y + 32, 'car', 'coche', frasesCoche, false, " ", 0, 'tinto');
                     this.npcGroup.add(car);
                 }
             });
@@ -148,9 +158,9 @@ export default class FDI_1 extends SalaBase {
                 npc.body.setImmovable(true);
             }
         });
-        
+
         this.physics.add.collider(this.player, this.npcGroup);
-        this.physics.add.collider(this.bulletGroup, this.npcGroup,  this.onBulletCollision);
+        this.physics.add.collider(this.bulletGroup, this.npcGroup, this.onBulletCollision);
 
         // Rango de interacción con el coche
         this.time.addEvent({

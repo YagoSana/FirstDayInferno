@@ -148,7 +148,7 @@ export default class medicina_5 extends SalaBase {
       this.cameras.main.width,
       this.cameras.main.height,
       0x000000,
-      0.6
+      0.2
     );
     this.transitionDarkOverlay.setOrigin(0, 0);
     this.transitionDarkOverlay.setScrollFactor(0);

@@ -220,6 +220,16 @@
                  "name":"",
                  "properties":[
                         {
+                         "name":"bossKey",
+                         "type":"string",
+                         "value":"bossFDI"
+                        }, 
+                        {
+                         "name":"isBossTransition",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"spawnRoom",
                          "type":"string",
                          "value":"FDI_Boss_1"

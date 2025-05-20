@@ -102,7 +102,7 @@ import MEDdying from '../../assets/music/meddying.wav';
 import FDIdying from '../../assets/music/fdidying.wav';
 import dying from '../../assets/music/dying.wav';
 import opendoor from '../../assets/music/opendoor.wav';
- 
+
 //GUI ------------------------------------------------------
 import mainMenu from "../../assets/sprites/mainmenu.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
@@ -163,23 +163,26 @@ export default class Boot extends Phaser.Scene {
 
     let progressBar = this.add.graphics();
     let progressBox = this.add.graphics();
-    progressBox.fillStyle(0x222222, 0.8);
+    progressBox.fillStyle(0xff6d05, 0.8);
     progressBox.fillRect(width / 2 - 160, height / 2 - 25, 320, 50);
+    progressBar.setDepth(100);
 
     const loadingText = this.make.text({
       x: width / 2,
       y: height / 2 - 50,
       text: 'Cargando...',
       style: {
-        font: '20px monospace',
-        fill: '#ffffff'
+        fontFamily: 'monogram',
+        color: '#FFF33F',
+        fontSize: '36px'
+
       }
     });
     loadingText.setOrigin(0.5, 0.5);
 
     this.load.on('progress', (value) => {
       progressBar.clear();
-      progressBar.fillStyle(0xffffff, 1);
+      progressBar.fillStyle(0xFFF33F, 1);
       progressBar.fillRect(width / 2 - 150, height / 2 - 15, 300 * value, 30);
     });
 
@@ -189,7 +192,7 @@ export default class Boot extends Phaser.Scene {
       loadingText.destroy();
     });
     //BARRA DE CARGA
-    //AUDIOç
+    //AUDIO
     this.load.audio('sonidoParry', sonidoparry);
     this.load.audio('llamada', llamada);
     this.load.audio('bossMedicinaMusica', bossMedicinaMusica);
@@ -217,7 +220,7 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('smoke', smoke);
     this.load.audio('pipe', pipeSound);
     this.load.audio('cry', crySound);
-    this.load.audio('windows', windowsSound); 
+    this.load.audio('windows', windowsSound);
     this.load.audio('cogerLlave', cogerLlave);
     this.load.audio('pop', pop);
     this.load.audio('explode', explode);
@@ -289,8 +292,8 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 64,
     });
 
-//PERSONAJES DE LA FDI
-    this.load.spritesheet("car", car,{
+    //PERSONAJES DE LA FDI
+    this.load.spritesheet("car", car, {
       frameWidth: 64,
       frameHeight: 64,
     });
@@ -659,7 +662,7 @@ export default class Boot extends Phaser.Scene {
       repeat: -1,
     });
 
-    
+
 
     //ENEMIGOS-------------------------------------------------------------------
 
@@ -680,7 +683,7 @@ export default class Boot extends Phaser.Scene {
         start: 0,
         end: 9,
       }),
-      frameRate: 14,
+      frameRate: 16,
       repeat: -1,
     });
 
@@ -1352,9 +1355,9 @@ export default class Boot extends Phaser.Scene {
       frameRate: 2,
       repeat: -1,
     });
-    
-    
-    
+
+
+
 
     this.anims.create({
       key: "fire_start",
@@ -1461,6 +1464,12 @@ export default class Boot extends Phaser.Scene {
       startFrame: 13
     });
 
+        this.textures.addSpriteSheet('bossFDI_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 14
+    });
+
 
     this.textures.addSpriteSheet('paperbullet', this.textures.get('bullets').getSourceImage(), {
       frameWidth: 32,
@@ -1548,6 +1557,12 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 100,
       frameHeight: 100,
       startFrame: 2
+    });
+
+        this.textures.addSpriteSheet('vs_bossFDI', this.textures.get('vs_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 3
     });
 
     this.scene.start('UIButtons');

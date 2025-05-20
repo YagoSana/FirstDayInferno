@@ -89,13 +89,13 @@ hitBullet(enemy, bullet){
 
     // Disparar 3 balas con un pequeño retraso entre ellas
     this.scene.time.delayedCall(0, () => {
-      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}Bullet`);
+      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}Bullet`, this.type);
     });
     this.scene.time.delayedCall(this.shootDelay, () => {
-      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}Bullet`);
+      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}Bullet`, this.type);
     });
     this.scene.time.delayedCall(this.shootDelay * 2, () => {
-      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}Bullet`);
+      new Bullet(this.scene, this.x, this.y, direction, 0, 0, 0, false, `${this.type}Bullet`, this.type);
     });
     
   }

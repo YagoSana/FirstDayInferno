@@ -22,6 +22,39 @@ export default class ParaninfoManager extends Phaser.Scene {
     }
 
     preload(){
+                //BARRA DE CARGA
+        const { width, height } = this.cameras.main;
+
+        let progressBar = this.add.graphics();
+        let progressBox = this.add.graphics();
+        progressBox.fillStyle(0xff6d05, 0.8);
+        progressBox.fillRect(width / 2 - 160, height / 2 - 25, 320, 50);
+        progressBar.setDepth(100);
+
+        const loadingText = this.make.text({
+            x: width / 2,
+            y: height / 2 - 50,
+            text: 'Cargando...',
+            style: {
+                fontFamily: 'monogram',
+                color: '#FFF33F',
+                fontSize: '36px'
+
+            }
+        });
+        loadingText.setOrigin(0.5, 0.5);
+
+        this.load.on('progress', (value) => {
+            progressBar.clear();
+            progressBar.fillStyle(0xFFF33F, 1);
+            progressBar.fillRect(width / 2 - 150, height / 2 - 15, 300 * value, 30);
+        });
+
+        this.load.on('complete', () => {
+            progressBar.destroy();
+            progressBox.destroy();
+            loadingText.destroy();
+        });
 
         //Meter nuevo enemigo
 

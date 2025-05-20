@@ -149,7 +149,7 @@ export default class medicina_2 extends SalaBase {
       this.cameras.main.width,
       this.cameras.main.height,
       0x000000,
-      0.6
+      0.2
     );
     this.transitionDarkOverlay.setOrigin(0, 0);
     this.transitionDarkOverlay.setScrollFactor(0);
@@ -205,24 +205,24 @@ export default class medicina_2 extends SalaBase {
   }
 
   update(time, delta) {
-  super.update?.(time, delta);
-  this.updateLight();
+    super.update?.(time, delta);
+    this.updateLight();
 
-  if (this.doorFireManager.fireCreated === false) {
-    // Apaga efecto de luces de transición sin destruirlas
-    this.transitionMaskGraphics.clear(); // Borra los círculos
-    this.transitionDarkOverlay.clearMask(); // Oculta el efecto luminoso
-  } else {
-    // Restaura máscara y luces si los fuegos están activos
-    this.transitionMaskGraphics.clear();
-    this.transitionLights.forEach(light => {
-      this.transitionMaskGraphics.fillStyle(0xffffff, 1);
-      this.transitionMaskGraphics.fillCircle(light.x, light.y, light.radius);
-    });
-    this.transitionDarkOverlay.setMask(this.transitionMask); // Reactiva capa de luz
-    this.transitionDarkOverlay.setVisible(true);
+    if (this.doorFireManager.fireCreated === false) {
+      // Apaga efecto de luces de transición sin destruirlas
+      this.transitionMaskGraphics.clear(); // Borra los círculos
+      this.transitionDarkOverlay.clearMask(); // Oculta el efecto luminoso
+    } else {
+      // Restaura máscara y luces si los fuegos están activos
+      this.transitionMaskGraphics.clear();
+      this.transitionLights.forEach(light => {
+        this.transitionMaskGraphics.fillStyle(0xffffff, 1);
+        this.transitionMaskGraphics.fillCircle(light.x, light.y, light.radius);
+      });
+      this.transitionDarkOverlay.setMask(this.transitionMask); // Reactiva capa de luz
+      this.transitionDarkOverlay.setVisible(true);
+    }
   }
-}
 
 
   updateLight() {
