@@ -1,6 +1,6 @@
 # First Day Inferno (Prototipo)
 
-## 📌 Equipo de Desarrollo
+## 📌 Equipo de Desarrollo 
 - **Samuel Carrillo Menchero**
 - **Alicia Grado Guerrero**
 - **Washington Morocho Lema**
@@ -268,5 +268,6 @@ La experiencia debe ser dinámica, sencilla y requerirá poco esfuerzo para ente
 ---
 
 🎮 **¡Prepárate para la aventura universitaria más desafiante y absurda jamás creada!** 🚀
- 
+
+ 
  
