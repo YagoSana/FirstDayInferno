@@ -69,7 +69,7 @@ export default class FDI_4 extends SalaBase {
     console.log(boundX,boundY);
 
     this.cameras.main.setZoom(zoom);
-    this.cameras.main.setBounds(boundX, boundY, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.setBounds(boundX, boundY - 10, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
     // Ajustar límites del mundo y cámara
