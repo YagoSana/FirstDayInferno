@@ -49,6 +49,8 @@ export default class FDI_Boss_2 extends SalaBase {
         this.enemyGroup.add(new BossFDI(this, 270, 80, 2));
         this.numEnemies++;
         this.cameras.main.setBackgroundColor('#110011'); // tono oscuro
+        this.musica = this.sound.add('bossFDImusica', { loop: true });
+        this.musica.play();
     }
 
 }

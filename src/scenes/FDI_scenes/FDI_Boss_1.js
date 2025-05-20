@@ -83,13 +83,27 @@ export default class FDI_Boss_1 extends SalaBase {
         });
         this.transitionZones.setVisible(false);
         this.physics.add.overlap(this.player, this.transitionZones, this.cambiarSala, null, this);
+        this.sonido = this.sound.add('whooshFDI');
     }
 
     onOverlapBoss(player, zone) {
-        this.cameras.main.flash(1500, 255, 255, 255);
-        this.cameras.main.shake(1500, 0.01);
-        this.time.delayedCall(1500, () => {
-            this.cambiarSala(player, zone);
+        this.sound.stopAll();
+        zone.body.enable = false;
+        this.scene.launch('DialogueScene', {
+            message: "No me andaré con rodeos \n MUERE",
+            speaker: '???????',
+            portraitKey: '',
+            textSpeed: 10, // Velocidad del efecto de texto
+            previousScene: this.scene.key, // Pasar la escena actual
+            onClose: () => {
+                this.cameras.main.flash(1500, 255, 255, 255);
+                this.cameras.main.shake(1500, 0.01);
+                this.sonido.play();
+                this.time.delayedCall(1500, () => {
+                    this.cambiarSala(player, zone);
+                });
+            }
         });
+        this.scene.bringToTop('DialogueScene');
     }
 }

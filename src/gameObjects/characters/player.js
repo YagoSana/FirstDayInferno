@@ -99,6 +99,7 @@ export default class Player extends SpriteBase {
         if (this.equippedItem) {
             this.firstItemAppearance(this.equippedItem, this.equippedItemRow);
         }
+        this.damageSound = scene.sound.add('playerDamage', { volume: 0.2 });
     }
 
     /**
@@ -580,6 +581,7 @@ export default class Player extends SpriteBase {
         }
         //recibe daño
         if (currentTime - this.lastHurtTime >= this.damageCooldown) {
+            this.damageSound.play();
             this.scene.cameras.main.shake(200, 0.002);
             this.setTint(0xff0000);
             if (this.itemSprite) this.itemSprite.setTint(0xff0000);
@@ -651,6 +653,7 @@ export default class Player extends SpriteBase {
         const currentTime = this.scene.time.now; // Obtiene el tiempo actual en milisegundos
         if (currentTime - this.lastHurtTime >= this.damageCooldown) {
             this.scene.cameras.main.shake(200, 0.002);
+            this.damageSound.play();
             this.setTint(0xff0000);
             if (this.itemSprite) {
                 this.itemSprite.setTint(0xff0000);
