@@ -1,6 +1,5 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-    build: { chunkSizeWarningLimit: 5000 },
-    base:  '/FirstDayInferno/',
-});
+  base: '/FirstDayInferno/', // Muy importante para GitHub Pages
+})

@@ -268,3 +268,5 @@ La experiencia debe ser dinámica, sencilla y requerirá poco esfuerzo para ente
 ---
 
 🎮 **¡Prepárate para la aventura universitaria más desafiante y absurda jamás creada!** 🚀
+ 
+ 
