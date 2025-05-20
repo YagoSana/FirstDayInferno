@@ -1,7 +1,7 @@
 # First Day Inferno (Prototipo)
 
 ## 📌 Equipo de Desarrollo 
-- **Samuel Carrillo Menchero**
+- **Samuel Carrillo Menchero** 
 - **Alicia Grado Guerrero**
 - **Washington Morocho Lema**
 - **Javier Pasamontes Martín**
