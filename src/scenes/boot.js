@@ -96,7 +96,18 @@ import bossMedicinaAmbiente from '../../assets/music/bossMedicinaAmbiente.ogg';
 import bossMedicinaDanyo from '../../assets/music/bossMedicinaDanyo.wav';
 import bossMedicinaOrbes from '../../assets/music/bossMedicinaOrbes.wav';
 import bossMedicinaMusica from '../../assets/music/bossMedicinaMusica.wav';
- 
+import llamada from '../../assets/music/llamada.wav';
+import sonidoparry from '../../assets/music/sonidoparry.wav';
+import MEDdying from '../../assets/music/meddying.wav';
+import FDIdying from '../../assets/music/fdidying.wav';
+import dying from '../../assets/music/dying.wav';
+import opendoor from '../../assets/music/opendoor.wav';
+import bossFDImusica from '../../assets/music/bossFDImusica.wav'; //120 BPM Industrial Drum Loop #13859 (WAV) by looplicator -- https://freesound.org/s/807236/ -- License: Attribution 4.0
+import laserFDI from '../../assets/music/laserFDI.wav'; 
+import whooshFDI from '../../assets/music/whooshFDI.wav';
+import musicaFDI from '../../assets/music/musicaFDI.wav'; //Beetle Museum Lobby by Beetlemuse -- https://freesound.org/s/533529/ -- License: Attribution 4.0
+import playerDamage from '../../assets/music/playerDamage.wav'; //8-bit - Damage by Antikore -- https://freesound.org/s/457195/ -- License: Attribution 4.0
+
 //GUI ------------------------------------------------------
 import mainMenu from "../../assets/sprites/mainmenu.png";
 import player_gui from "../../assets/sprites/gui_spritesheet.png";
@@ -114,6 +125,7 @@ import bossMedicinaBulletAppear from "../../assets/sprites/bossMedicinaBulletApp
 import bossMedicinaBulletDestroy from "../../assets/sprites/bossMedicinaDestroy.png";
 //BOSS FDI ------------------------------------------------------
 import bossFDIfase2 from "../../assets/sprites/bossFDIfase2.png";
+import bossFDIBullet from "../../assets/sprites/bossFDIBullet.png";
 
 //TILES ------------------------------------------------------
 import tileset_grass from "../../assets/map/TX Tileset Grass.png";
@@ -151,7 +163,48 @@ export default class Boot extends Phaser.Scene {
    * Carga de los assets del juego
    */
   preload() {
+    //BARRA DE CARGA
+    const { width, height } = this.cameras.main;
+
+    let progressBar = this.add.graphics();
+    let progressBox = this.add.graphics();
+    progressBox.fillStyle(0xff6d05, 0.8);
+    progressBox.fillRect(width / 2 - 160, height / 2 - 25, 320, 50);
+    progressBar.setDepth(100);
+
+    const loadingText = this.make.text({
+      x: width / 2,
+      y: height / 2 - 50,
+      text: 'Cargando...',
+      style: {
+        fontFamily: 'monogram',
+        color: '#FFF33F',
+        fontSize: '36px'
+
+      }
+    });
+    loadingText.setOrigin(0.5, 0.5);
+
+    this.load.on('progress', (value) => {
+      progressBar.clear();
+      progressBar.fillStyle(0xFFF33F, 1);
+      progressBar.fillRect(width / 2 - 150, height / 2 - 15, 300 * value, 30);
+    });
+
+    this.load.on('complete', () => {
+      progressBar.destroy();
+      progressBox.destroy();
+      loadingText.destroy();
+    });
+    //BARRA DE CARGA
     //AUDIO
+    this.load.audio('playerDamage', playerDamage);
+    this.load.audio('musicaFDI', musicaFDI);
+    this.load.audio('whooshFDI', whooshFDI);
+    this.load.audio('laserFDI', laserFDI);
+    this.load.audio('bossFDImusica', bossFDImusica);
+    this.load.audio('sonidoParry', sonidoparry);
+    this.load.audio('llamada', llamada);
     this.load.audio('bossMedicinaMusica', bossMedicinaMusica);
     this.load.audio('bossMedicinaAmbiente', bossMedicinaAmbiente);
     this.load.audio('bossMedicinaDanyo', bossMedicinaDanyo);
@@ -163,8 +216,12 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('salirPausa', salirPausa);
     this.load.audio('enemigoSueltaMoneda', enemigoSueltaMoneda);
     this.load.audio('disparaJugador', disparaJugador);
+    this.load.audio('MEDdying', MEDdying);
+    this.load.audio('FDIdying', FDIdying);
+    this.load.audio("dying", dying);
     this.load.audio('cogerMoneda', cogerMoneda);
     this.load.audio('cogerCorazon', cogerCorazon);
+    this.load.audio('opendoor', opendoor);
     this.load.audio('comer', comer);
     this.load.audio('beber', beber);
     this.load.audio('isaac', isaac);
@@ -173,7 +230,7 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('smoke', smoke);
     this.load.audio('pipe', pipeSound);
     this.load.audio('cry', crySound);
-    this.load.audio('windows', windowsSound); 
+    this.load.audio('windows', windowsSound);
     this.load.audio('cogerLlave', cogerLlave);
     this.load.audio('pop', pop);
     this.load.audio('explode', explode);
@@ -191,6 +248,7 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('motorSound', motorSound);
     //AUDIO
     this.loadFont('monogram', monogram);
+    this.load.image('bossFDIBullet', bossFDIBullet);
     this.load.image('background', Background);
     this.load.image('title', titulo);
     this.load.image('button', Button);
@@ -244,8 +302,8 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 64,
     });
 
-//PERSONAJES DE LA FDI
-    this.load.spritesheet("car", car,{
+    //PERSONAJES DE LA FDI
+    this.load.spritesheet("car", car, {
       frameWidth: 64,
       frameHeight: 64,
     });
@@ -614,7 +672,7 @@ export default class Boot extends Phaser.Scene {
       repeat: -1,
     });
 
-    
+
 
     //ENEMIGOS-------------------------------------------------------------------
 
@@ -635,7 +693,7 @@ export default class Boot extends Phaser.Scene {
         start: 0,
         end: 9,
       }),
-      frameRate: 14,
+      frameRate: 16,
       repeat: -1,
     });
 
@@ -1307,9 +1365,9 @@ export default class Boot extends Phaser.Scene {
       frameRate: 2,
       repeat: -1,
     });
-    
-    
-    
+
+
+
 
     this.anims.create({
       key: "fire_start",
@@ -1416,6 +1474,12 @@ export default class Boot extends Phaser.Scene {
       startFrame: 13
     });
 
+        this.textures.addSpriteSheet('bossFDI_death', this.textures.get('game_over_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 14
+    });
+
 
     this.textures.addSpriteSheet('paperbullet', this.textures.get('bullets').getSourceImage(), {
       frameWidth: 32,
@@ -1503,6 +1567,12 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 100,
       frameHeight: 100,
       startFrame: 2
+    });
+
+        this.textures.addSpriteSheet('vs_bossFDI', this.textures.get('vs_screen').getSourceImage(), {
+      frameWidth: 100,
+      frameHeight: 100,
+      startFrame: 3
     });
 
     this.scene.start('UIButtons');

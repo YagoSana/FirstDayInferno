@@ -31,6 +31,8 @@ export default class Npc extends SpriteBase {
     );
     this.scene.physics.add.collider(this, scene.enemyGroup);
     this.sonidoDropMoneda = this.scene.sound.add("enemigoSueltaMoneda");
+    
+    this.sonidoDying = this.scene.sound.add("dying", {volume: 0.25});
     this.dropKey = key;
     this.isFrozen = false;
   }
@@ -52,6 +54,7 @@ export default class Npc extends SpriteBase {
     this.stunCounter = 30;
     this.health--;
     if (this.health <= 0) {
+      this.sonidoDying.play();
       if (this.dropKey) {
         const key = new Item(this.scene, this.x, this.y, "llave");
       } else {

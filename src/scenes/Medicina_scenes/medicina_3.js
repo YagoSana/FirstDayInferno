@@ -131,6 +131,32 @@ export default class medicina_3 extends SalaBase {
     // Aplicar la máscara a la capa oscura
     this.darkOverlay.setMask(this.lightMask);
 
+     // Capa oscura para transición
+    this.transitionDarkOverlay = this.add.rectangle(
+      0, 0,
+      this.cameras.main.width,
+      this.cameras.main.height,
+      0x000000,
+      0.2
+    );
+    this.transitionDarkOverlay.setOrigin(0, 0);
+    this.transitionDarkOverlay.setScrollFactor(0);
+    this.transitionDarkOverlay.setDepth(101);
+
+    // Luces en zonas de transición
+    this.transitionLightGraphics = this.make.graphics({ x: 0, y: 0, add: false });
+    this.transitionMaskGraphics = this.make.graphics();
+    this.transitionMask = this.transitionMaskGraphics.createGeometryMask();
+    this.transitionMask.setInvertAlpha(true);
+    this.transitionDarkOverlay.setMask(this.transitionMask);
+
+    this.transitionLights = [];
+    this.transitionZones.getChildren().forEach(zone => {
+      const centerX = zone.x + zone.body.width / 2;
+      const centerY = zone.y + zone.body.height / 2;
+      this.transitionLights.push({ x: centerX, y: centerY, radius: 40 });
+    });
+
     this.doorFireManager.createFiresForZones(this.transitionZones);
     this.doorFireManager.setupCollisions(this.player);
 
@@ -144,7 +170,7 @@ export default class medicina_3 extends SalaBase {
           this.numEnemies++;
           switch (obj.name) {
             case "cucaracha":
-              this.enemyGroup.add(new Enemy(this, obj.x, obj.y, obj.name));
+              this.enemyGroup.add(new Enemy(this, obj.x, obj.y, "nand"));
               break;
             case "zombie":
               this.enemyGroup.add(new rangedEnemy(this, obj.x, obj.y, obj.name));
@@ -168,6 +194,26 @@ export default class medicina_3 extends SalaBase {
       });
     }
   }
+
+ update(time, delta) {
+  super.update?.(time, delta);
+  this.updateLight();
+
+  if (this.doorFireManager.fireCreated === false) {
+    // Apaga efecto de luces de transición sin destruirlas
+    this.transitionMaskGraphics.clear(); // Borra los círculos
+    this.transitionDarkOverlay.clearMask(); // Oculta el efecto luminoso
+  } else {
+    // Restaura máscara y luces si los fuegos están activos
+    this.transitionMaskGraphics.clear();
+    this.transitionLights.forEach(light => {
+      this.transitionMaskGraphics.fillStyle(0xffffff, 1);
+      this.transitionMaskGraphics.fillCircle(light.x, light.y, light.radius);
+    });
+    this.transitionDarkOverlay.setMask(this.transitionMask); // Reactiva capa de luz
+    this.transitionDarkOverlay.setVisible(true);
+  }
+}
 
   updateLight() {
     this.light.x = this.player.x;

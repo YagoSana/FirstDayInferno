@@ -32,7 +32,7 @@ export default class medicinaManager extends Phaser.Scene {
       this.playerStats = { health: 5, maxHealth: 5, coins: 0, keys: 0, equipedItem: null, itemSprite: null, speed: 100, shootCooldown: 500, doubleshoot: false, doorsLocked: { 'secretDoor': true, 'fdiDoor': true, 'medDoor': true, 'candado': true } }; // Valores predeterminados
     }
 
-    this.game.global = {gatosVivos: []};
+    this.game.global = { gatosVivos: [] };
   }
 
   /**
@@ -45,23 +45,26 @@ export default class medicinaManager extends Phaser.Scene {
 
     let progressBar = this.add.graphics();
     let progressBox = this.add.graphics();
-    progressBox.fillStyle(0x222222, 0.8);
+    progressBox.fillStyle(0xff6d05, 0.8);
     progressBox.fillRect(width / 2 - 160, height / 2 - 25, 320, 50);
+    progressBar.setDepth(100);
 
     const loadingText = this.make.text({
       x: width / 2,
       y: height / 2 - 50,
       text: 'Cargando...',
       style: {
-        font: '20px monospace',
-        fill: '#ffffff'
+        fontFamily: 'monogram',
+        color: '#FFF33F',
+        fontSize: '36px'
+
       }
     });
     loadingText.setOrigin(0.5, 0.5);
 
     this.load.on('progress', (value) => {
       progressBar.clear();
-      progressBar.fillStyle(0xffffff, 1);
+      progressBar.fillStyle(0xFFF33F, 1);
       progressBar.fillRect(width / 2 - 150, height / 2 - 15, 300 * value, 30);
     });
 
@@ -93,7 +96,7 @@ export default class medicinaManager extends Phaser.Scene {
     this.music = this.sound.add("facultadMedicinaOst", { volume: 0.5, loop: true });
     this.music.play();
 
-   
+
     this.mapStatus = new Map();
     this.mapStatus.set("introMedicina", false);
     this.scene.start("introMedicina", { x: 320, y: 280, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get("introMedicina") });
@@ -107,7 +110,7 @@ export default class medicinaManager extends Phaser.Scene {
     if (!this.mapStatus.get(zone.spawnRoom)) {
       this.mapStatus.set(zone.spawnRoom, false);
     }
-    this.scene.start(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get(zone.spawnRoom)});
+    this.scene.start(zone.spawnRoom, { x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "medicinaManager", status: this.mapStatus.get(zone.spawnRoom) });
     this.scene.launch('GUI', this.playerStats);
   }
 
@@ -120,7 +123,7 @@ export default class medicinaManager extends Phaser.Scene {
     this.scene.stop(sala);
     this.mapStatus.set(sala, true);
     this.scene.sleep('medicinaManager');
-    this.scene.start('selectorNivel', {playerStats: this.playerStats, medicinaBeaten: true});
+    this.scene.start('selectorNivel', { playerStats: this.playerStats, medicinaBeaten: true });
   }
 
 }

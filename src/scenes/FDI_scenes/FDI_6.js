@@ -9,7 +9,7 @@ export default class FDI_6 extends SalaBase {
         super('FDI_6');
     }
 
-    create(){
+    create() {
         super.create('FDI_6');
 
         const map = this.make.tilemap({ key: 'FDI_6_TL' });
@@ -25,12 +25,12 @@ export default class FDI_6 extends SalaBase {
         const layer4 = map.createLayer('sin colision detras', [tileset1, tileset2], 0, 0);
         const layer5 = map.createLayer('sin colision', [tileset1, tileset2], 0, 0);
         const layer6 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
-        
+
         layer2.setCollisionByExclusion([-1], true);
         layer3.setCollisionByExclusion([-1], true);
         layer6.setCollisionByExclusion([-1], true);
 
-        
+
         layer3.setDepth(10);
         layer5.setDepth(10);
         layer6.setDepth(11);
@@ -40,10 +40,10 @@ export default class FDI_6 extends SalaBase {
         this.enemyGroup = this.physics.add.group();
         this.enemyBulletGroup = this.physics.add.group();
         this.player = new Player(this, this.xSpawn, this.ySpawn, this.playerStats);//865, 195
-        if(!this.status){
+        if (!this.status) {
             this.spawnProps();
         }
-        else{
+        else {
             this.spawBlood();
         }
         //Colisiones
@@ -68,10 +68,20 @@ export default class FDI_6 extends SalaBase {
         this.physics.add.collider(this.enemyBulletGroup, layer6, this.onBulletCollision);
 
         //Camaras
+        let screenWidth = this.sys.game.config.width; // Ancho de tu pantalla
+        let screenHeight = this.sys.game.config.height; // Alto de tu pantalla
+        let mapWidth = map.widthInPixels;
+        let mapHeight = map.heightInPixels;
+        let zoom = 2;
+        let boundX = -(screenWidth / zoom - mapWidth) / 2;
+        let boundY = -(screenHeight / zoom - mapHeight) / 2;
+
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+        this.cameras.main.setZoom(zoom);
+        this.cameras.main.setBounds(boundX, 0, map.widthInPixels, map.heightInPixels);
+
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
-        this.cameras.main.setZoom(1.8);
 
         this.transitionZones = this.physics.add.group();
         let transitionLayer = map.getObjectLayer("transiciones");
@@ -89,15 +99,15 @@ export default class FDI_6 extends SalaBase {
         this.doorFireManager.setupCollisions(this.player);
     }
 
-    spawnProps(){
+    spawnProps() {
         //this.enemyGroup.add(new WakeEnemy(this, 100, 240, "cat"));
-        this.enemyGroup.add(new RangedEnemy(this, 100, 240, "zombie", ));
+        this.enemyGroup.add(new RangedEnemy(this, 100, 240, "zombie",));
         this.numEnemies++;
         this.enemyGroup.add(new RangedEnemy(this, 300, 200, "zombie"));
         this.numEnemies++;
     }
 
-    spawBlood(){
+    spawBlood() {
         this.add.sprite(100, 240, "blood").setVisible(true).setDepth(3).setFrame(12);
         this.add.sprite(300, 200, "blood").setVisible(true).setDepth(3).setFrame(12);
     }

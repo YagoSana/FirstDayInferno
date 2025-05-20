@@ -40,7 +40,7 @@ export default class informaticaManager extends Phaser.Scene {
     super({ key: "informaticaManager" });
   }
 
-  init(data){
+  init(data) {
     if (data && data.playerStats) {
       this.playerStats = data.playerStats;
     } else {
@@ -58,23 +58,26 @@ export default class informaticaManager extends Phaser.Scene {
 
     let progressBar = this.add.graphics();
     let progressBox = this.add.graphics();
-    progressBox.fillStyle(0x222222, 0.8);
+    progressBox.fillStyle(0xff6d05, 0.8);
     progressBox.fillRect(width / 2 - 160, height / 2 - 25, 320, 50);
+    progressBar.setDepth(100);
 
     const loadingText = this.make.text({
       x: width / 2,
       y: height / 2 - 50,
       text: 'Cargando...',
       style: {
-        font: '20px monospace',
-        fill: '#ffffff'
+        fontFamily: 'monogram',
+        color: '#FFF33F',
+        fontSize: '36px'
+
       }
     });
     loadingText.setOrigin(0.5, 0.5);
 
     this.load.on('progress', (value) => {
       progressBar.clear();
-      progressBar.fillStyle(0xffffff, 1);
+      progressBar.fillStyle(0xFFF33F, 1);
       progressBar.fillRect(width / 2 - 150, height / 2 - 15, 300 * value, 30);
     });
 
@@ -122,32 +125,34 @@ export default class informaticaManager extends Phaser.Scene {
    * nivel del juego
    */
   create() {
+    this.musica = this.sound.add('musicaFDI');
+    this.musica.play({ loop: true });
     this.mapStatus = new Map();
-    this.mapStatus.set("FDI_4", false);
-    this.scene.start("FDI_4", {x: 100, y:170, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("FDI_Boss_1")}); 
+    this.mapStatus.set("FDI_1", false);
+    this.scene.start("FDI_1", { x: 100, y: 170, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("FDI_1") });
     //this.scene.start("FDI_4", {x: 96, y:170, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get("FDI_4")});    
   } //358 170
 
-  cambiarSala(zone){
+  cambiarSala(zone) {
     this.scene.stop(zone.prev);
     this.mapStatus.set(zone.prev, true);
     console.log(this.mapStatus);
-    if(!this.mapStatus.get(zone.spawnRoom)){
+    if (!this.mapStatus.get(zone.spawnRoom)) {
       this.mapStatus.set(zone.spawnRoom, false);
     }
-    this.scene.start(zone.spawnRoom, {x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get(zone.spawnRoom)});
+    this.scene.start(zone.spawnRoom, { x: zone.spawnX, y: zone.spawnY, playerStats: this.playerStats, managerKey: "informaticaManager", status: this.mapStatus.get(zone.spawnRoom) });
     // this.scene.launch('GUI', this.playerStats); // Lanzar la escena de la GUI
   }
 
-  guardarPlayerStats(stats){
+  guardarPlayerStats(stats) {
     this.playerStats = stats;
   }
 
-  volverAlLobby(actualizarStats){
+  volverAlLobby(actualizarStats) {
     this.scene.sleep('informaticaManager');
     this.scene.wake('selectorNivel');
     const selectorNivel = this.scene.get('selectorNivel');
-    if(actualizarStats){
+    if (actualizarStats) {
       selectorNivel.updatePlayerStats(this.playerStats);
     }
   }

@@ -18,12 +18,13 @@ export default class FDI_4 extends SalaBase {
         const tileset2 = map.addTilesetImage('Room_Builder_free_16x16', 'Muebles');
         const tileset3 = map.addTilesetImage('tileset_nuevo', 'Decorado');
 
-        const layer1 = map.createLayer('suelo', [tileset1, tileset2], 0, 0);
-        const layer2 = map.createLayer('pared', [tileset1, tileset2], 0, 0);
-        const layer5 = map.createLayer('sin colisiones', [tileset1, tileset2], 0, 0);
-        const layer3 = map.createLayer('objetos', [tileset1, tileset2], 0, 0);
-        const layer4 = map.createLayer('objetos2', [tileset1, tileset2], 0, 0);
-        const layer6 = map.createLayer('techo', [tileset1, tileset2], 0, 0);
+        const layer1 = map.createLayer('suelo', [tileset1, tileset2, tileset3], 0, 0);
+        const layer2 = map.createLayer('pared', [tileset1, tileset2, tileset3], 0, 0);
+      
+        const layer3 = map.createLayer('objetos', [tileset1, tileset2, tileset3], 0, 0);
+        const layer4 = map.createLayer('objetos2', [tileset1, tileset2, tileset3], 0, 0);
+          const layer5 = map.createLayer('sin colisiones', [tileset1, tileset2, tileset3], 0, 0);
+        const layer6 = map.createLayer('techo', [tileset1, tileset2, tileset3], 0, 0);
         const layer7 = map.createLayer('decoracion', [tileset1, tileset2, tileset3], 0, 0);
 
         layer2.setCollisionByExclusion([-1], true);
@@ -68,7 +69,7 @@ export default class FDI_4 extends SalaBase {
     console.log(boundX,boundY);
 
     this.cameras.main.setZoom(zoom);
-    this.cameras.main.setBounds(boundX, boundY, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.setBounds(boundX, boundY - 10, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
     // Ajustar límites del mundo y cámara

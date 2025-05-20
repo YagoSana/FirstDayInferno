@@ -101,7 +101,7 @@ export default class SalaBase extends Phaser.Scene {
         this.scene.pause(this.scene.key);
         this.scene.start('MessageScreen', {
             texto: texto,
-            prevScene: this.scene.key, // medicina_6
+            prevScene: this.scene.key,
             managerKey: this.managerKey
         });
     }

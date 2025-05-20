@@ -51,7 +51,7 @@ export default class DoorFireManager {
 
                         this.createFire(
                             xPos + fireWidth / 2 - 8,
-                            zone.y + doorHeight / 2,
+                            zone.y + doorHeight / 2 + 8,
                             false
                         );
                     }
@@ -75,13 +75,19 @@ export default class DoorFireManager {
         // Añadir cuerpo de física
         this.scene.physics.add.existing(fire);
         let fireSize = 16;
-        fire.body.setSize(fireSize, fireSize);
+        fire.body.setSize(fireSize, fireSize + 5);
 
         if (!isVertical) { //esto es para que el sprite cuadre con la hitbox en horizontal
-            fire.body.setOffset(fireSize / 2, fireSize);
+            fire.body.setOffset(fireSize / 2, fireSize - 5);
         }
 
         this.doorFires.add(fire);
+        // Dibujar una luz para este fuego en el Graphics compartido
+if (this.lightGraphics) {
+  this.lightGraphics.fillStyle(0xffffff, 1);
+  this.lightGraphics.fillCircle(x, y, 60); // Radio ajustable
+}
+
         return fire;
     }
 

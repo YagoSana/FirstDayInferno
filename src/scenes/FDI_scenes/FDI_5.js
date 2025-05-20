@@ -58,10 +58,20 @@ export default class FDI_5 extends SalaBase {
         this.physics.add.collider(this.bulletGroup, layer6, this.onBulletCollision);
         this.physics.add.collider(this.enemyBulletGroup, layer6, this.onBulletCollision);
 
+        let screenWidth = this.sys.game.config.width; // Ancho de tu pantalla
+        let screenHeight = this.sys.game.config.height; // Alto de tu pantalla
+        let mapWidth = map.widthInPixels;
+        let mapHeight = map.heightInPixels;
+        let zoom = 2;
+        let boundX = -(screenWidth / zoom - mapWidth) / 2;
+        let boundY = -(screenHeight / zoom - mapHeight) / 2;
+
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+        this.cameras.main.setZoom(zoom);
+        this.cameras.main.setBounds(boundX, 0, map.widthInPixels, map.heightInPixels);
+
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
-        this.cameras.main.setZoom(1.8);
 
         // Transiciones
         this.transitionZones = this.physics.add.group();
@@ -181,7 +191,7 @@ export default class FDI_5 extends SalaBase {
                 break;
             }
             case 3: {
-            
+
                 if (s3) spawn(RangedAreaEnemy, s3.x, s3.y, 'nerd', true, 2);
                 if (s4) spawn(RangedAreaEnemy, s4.x, s4.y, 'nerd', true, 2);
                 break;

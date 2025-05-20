@@ -97,13 +97,13 @@ export default class FDI_2_2 extends SalaBase {
             this.numEnemies = 3;
         });
         //Camaras
-        const screenWidth = this.sys.game.config.width; // Ancho de tu pantalla
-        const screenHeight = this.sys.game.config.height; // Alto de tu pantalla
-        const mapWidth = map.widthInPixels;
-        const mapHeight = map.heightInPixels;
-        const zoom = 2;
-        const boundX = -(screenWidth / zoom - mapWidth) / 2;
-        const boundY = -(screenHeight / zoom - mapHeight) / 2;
+        let screenWidth = this.sys.game.config.width; // Ancho de tu pantalla
+        let screenHeight = this.sys.game.config.height; // Alto de tu pantalla
+        let mapWidth = map.widthInPixels;
+        let mapHeight = map.heightInPixels;
+        let zoom = 2;
+        let boundX = -(screenWidth / zoom - mapWidth) / 2;
+        let boundY = -(screenHeight / zoom - mapHeight) / 2;
 
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
@@ -133,7 +133,7 @@ export default class FDI_2_2 extends SalaBase {
                 let type = obj.properties.find(p => p.name === "tipo")?.value;
                 if (type === "enemy") {
                     this.numEnemies++
-                    this.enemyGroup.add(new Enemy(this, obj.x, obj.y-200, obj.name));
+                    this.enemyGroup.add(new Enemy(this, obj.x, obj.y-200, "nand"));
                 }
             });
         } else {

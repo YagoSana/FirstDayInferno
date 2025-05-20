@@ -17,7 +17,6 @@ export default class Laser extends Phaser.GameObjects.Rectangle {
       scene.time.delayedCall(2000, () => {
         this.destroy();
       });
-      
     }
   }
   

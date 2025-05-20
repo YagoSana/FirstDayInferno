@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import Npc from './npc.js';
 import Laser from '../projectiles/laser.js';
+import Bullet from '../projectiles/bullet.js';
 
 export default class BossFDI extends Npc {
 
@@ -40,11 +41,12 @@ export default class BossFDI extends Npc {
     this.initialX = x;
     this.initialY = y;
     this.ataqueLaserCooldown = 15000; // Enfriamiento para ataque de láser
+    this.ataqueInvocacionCooldown = 20000; // Enfriamiento para invocación de enemigos
+    this.ataqueVacioCooldown = 2000; // Enfriamiento para ataque vacío
     this.ataqueLaserTime = 0; // Tiempo de ataque de láser
+    this.ataqueVacioTime = 0; // Tiempo de ataque vacío
+    this.sonidoDying = this.scene.sound.add("whooshFDI");
   }
-
-  // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
-
 
   preUpdate(t, dt) {
     super.preUpdate(t, dt);
@@ -60,20 +62,7 @@ export default class BossFDI extends Npc {
       } else {
         this.setTint(0xffffff);
       }
-      if (this.fase == 1) {
-        this.play("bossFDIIdle", true);
-        // Lanzar escena de barra de vida
-        if (!this.scene.scene.isActive('BossHealthBarScene')) {
-          console.log('BOSS BAR LANZADA');
-          this.scene.scene.launch('BossHealthBarScene', {
-            type: this.type,
-            maxHealth: this.maxHealth,
-            currentHealth: this.health
-          });
-          this.scene.scene.bringToTop('BossHealthBarScene');
-        }
-      }
-      else if (this.fase == 2) {
+      if (this.fase == 2) {
         if (!this.scene.scene.isActive('BossHealthBarScene')) {
           console.log('BOSS BAR LANZADA');
           this.scene.scene.launch('BossHealthBarScene', {
@@ -97,35 +86,35 @@ export default class BossFDI extends Npc {
             this.ataqueLaserTime = t;
           });
         }
+        if (t - this.ataqueVacioTime > this.ataqueVacioCooldown) {
+          this.ataqueVacioTime = t;
+          let vacio = new Bullet(this.scene, this.x, this.y, 0, 0, 0, 0, false, "bossFDIBullet", "bossFDI");
+          this.scene.enemyBulletGroup.add(vacio);
+          vacio.disparaVacio();
+        }
       }
     }
   }
 
   hitBullet(enemy, bullet) {
-    //Enemigo muere
     this.stunCounter = 30;
     this.health--;
     this.speed += 10;
-
     console.log("escena", this.scene);
-    // Emitir evento de cambio de salud
     this.scene.game.events.emit('bossHealthChanged', {
       currentHealth: this.health,
       maxHealth: this.maxHealth
     });
 
     if (this.health <= 0) {
+      this.sonidoDying.play();
+      this.scene.cameras.main.fadeOut(3000, 0, 0, 0);
       this.body.enable = false;
       this.body.setVelocity(0, 0);
       this.dead = true;
-      if (this.fase == 1) {
-        //dialogo y cambio sala
-        this.scene.game.events.emit('bossDefeated');
-        this.scene.scene.stop('BossHealthBarScene');
-      }
-      else if (this.fase == 2) {
-        //animacion final
-        this.scene.game.events.emit('bossDefeated');
+      if (this.fase == 2) {
+        //final
+        this.scene.game.events.emit('bossDefeated', "Esto no ha hecho \n más que empezar... \n Los mayores horrores \n jamás presenciados \n te esperan en la carrera...");
         this.scene.scene.stop('BossHealthBarScene');
       }
     }
@@ -137,10 +126,9 @@ export default class BossFDI extends Npc {
 
     offsets.forEach((offsetX, i) => {
       const laser = new Laser(this.scene, this.x + offsetX, this.y + 10);
+      this.scene.sound.play('laserFDI', { volume: 0.7 });
       this.scene.physics.add.existing(laser);
       this.scene.add.existing(laser);
-
-      // Colisión
       this.scene.physics.add.overlap(this.scene.player, laser, (player, laser) => {
         if (laser.damageActive) {
           player.hurt();

@@ -226,6 +226,7 @@ export default class GameOver extends Phaser.Scene {
             'server': 'Paso 1: instala Eduroam, Paso 2: muere',
             'fisica': 'No se que diría uno de fisica ... Bazinga',
             'phantom': 'Tío, yo antes molaba. Ahora soy un balón ...',
+            'bossFDI': '¿A qué no te esperabas que fuera asi el Boss?',
         };
         return texts[enemyType] || '¡Un enemigo te ha derrotado!';
     }

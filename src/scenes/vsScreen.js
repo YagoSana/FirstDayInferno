@@ -7,7 +7,7 @@ export default class VSScreen extends Phaser.Scene {
 
     init(data) {
         console.log('ENTRANDO A LA PANTALLA VS', data);
-        this.bossKey = data.bossKey || 'bossMedicina';
+        this.bossKey = data.bossKey;
         this.nextScene = data.nextScene;
         this.playerStats = data.playerStats;
         this.transitionData = data.transitionData; // Datos de transición
@@ -156,6 +156,8 @@ export default class VSScreen extends Phaser.Scene {
     getBossName(bossKey) {
         const bossNames = {
             'bossMedicina': 'LA MUERTE',
+            'bossFDI': 'PRESENCIA ASTRAL',
+
             // Puedes añadir más bosses aquí
         };
         return bossNames[bossKey] || 'BOSS';
