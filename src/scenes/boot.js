@@ -103,7 +103,7 @@ import FDIdying from '../../assets/music/fdidying.wav';
 import dying from '../../assets/music/dying.wav';
 import opendoor from '../../assets/music/opendoor.wav';
 import bossFDImusica from '../../assets/music/bossFDImusica.wav';
-import laserFDI from '../../assets/music/laserFDI.wav'; 
+import laserFDI from '../../assets/music/laserFDI.wav';
 import whooshFDI from '../../assets/music/whooshFDI.wav';
 import musicaFDI from '../../assets/music/musicaFDI.wav';
 import playerDamage from '../../assets/music/playerDamage.wav';
@@ -163,6 +163,7 @@ export default class Boot extends Phaser.Scene {
    * Carga de los assets del juego
    */
   preload() {
+    this.loadFont('monogram', monogram);
     //BARRA DE CARGA
     const { width, height } = this.cameras.main;
 
@@ -247,7 +248,6 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('musicaCafe4', musicaCafe4);
     this.load.audio('motorSound', motorSound);
     //AUDIO
-    this.loadFont('monogram', monogram);
     this.load.image('bossFDIBullet', bossFDIBullet);
     this.load.image('background', Background);
     this.load.image('title', titulo);
@@ -1474,7 +1474,7 @@ export default class Boot extends Phaser.Scene {
       startFrame: 13
     });
 
-        this.textures.addSpriteSheet('bossFDI_death', this.textures.get('game_over_screen').getSourceImage(), {
+    this.textures.addSpriteSheet('bossFDI_death', this.textures.get('game_over_screen').getSourceImage(), {
       frameWidth: 100,
       frameHeight: 100,
       startFrame: 14
@@ -1569,7 +1569,7 @@ export default class Boot extends Phaser.Scene {
       startFrame: 2
     });
 
-        this.textures.addSpriteSheet('vs_bossFDI', this.textures.get('vs_screen').getSourceImage(), {
+    this.textures.addSpriteSheet('vs_bossFDI', this.textures.get('vs_screen').getSourceImage(), {
       frameWidth: 100,
       frameHeight: 100,
       startFrame: 3
