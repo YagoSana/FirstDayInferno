@@ -102,6 +102,11 @@ import MEDdying from '../../assets/music/meddying.wav';
 import FDIdying from '../../assets/music/fdidying.wav';
 import dying from '../../assets/music/dying.wav';
 import opendoor from '../../assets/music/opendoor.wav';
+import bossFDImusica from '../../assets/music/bossFDImusica.wav'; //120 BPM Industrial Drum Loop #13859 (WAV) by looplicator -- https://freesound.org/s/807236/ -- License: Attribution 4.0
+import laserFDI from '../../assets/music/laserFDI.wav'; 
+import whooshFDI from '../../assets/music/whooshFDI.wav';
+import musicaFDI from '../../assets/music/musicaFDI.wav'; //Beetle Museum Lobby by Beetlemuse -- https://freesound.org/s/533529/ -- License: Attribution 4.0
+import playerDamage from '../../assets/music/playerDamage.wav'; //8-bit - Damage by Antikore -- https://freesound.org/s/457195/ -- License: Attribution 4.0
 
 //GUI ------------------------------------------------------
 import mainMenu from "../../assets/sprites/mainmenu.png";
@@ -193,6 +198,11 @@ export default class Boot extends Phaser.Scene {
     });
     //BARRA DE CARGA
     //AUDIO
+    this.load.audio('playerDamage', playerDamage);
+    this.load.audio('musicaFDI', musicaFDI);
+    this.load.audio('whooshFDI', whooshFDI);
+    this.load.audio('laserFDI', laserFDI);
+    this.load.audio('bossFDImusica', bossFDImusica);
     this.load.audio('sonidoParry', sonidoparry);
     this.load.audio('llamada', llamada);
     this.load.audio('bossMedicinaMusica', bossMedicinaMusica);

@@ -45,11 +45,8 @@ export default class BossFDI extends Npc {
     this.ataqueVacioCooldown = 2000; // Enfriamiento para ataque vacío
     this.ataqueLaserTime = 0; // Tiempo de ataque de láser
     this.ataqueVacioTime = 0; // Tiempo de ataque vacío
-    this.sonidoDying = this.scene.sound.add("FDIdying");
+    this.sonidoDying = this.scene.sound.add("whooshFDI");
   }
-
-  // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
-
 
   preUpdate(t, dt) {
     super.preUpdate(t, dt);
@@ -100,13 +97,10 @@ export default class BossFDI extends Npc {
   }
 
   hitBullet(enemy, bullet) {
-    //Enemigo muere
     this.stunCounter = 30;
     this.health--;
     this.speed += 10;
-
     console.log("escena", this.scene);
-    // Emitir evento de cambio de salud
     this.scene.game.events.emit('bossHealthChanged', {
       currentHealth: this.health,
       maxHealth: this.maxHealth
@@ -119,7 +113,7 @@ export default class BossFDI extends Npc {
       this.body.setVelocity(0, 0);
       this.dead = true;
       if (this.fase == 2) {
-        //animacion final
+        //final
         this.scene.game.events.emit('bossDefeated', "Esto no ha hecho \n más que empezar... \n Los mayores horrores \n jamás presenciados \n te esperan en la carrera...");
         this.scene.scene.stop('BossHealthBarScene');
       }
@@ -132,10 +126,9 @@ export default class BossFDI extends Npc {
 
     offsets.forEach((offsetX, i) => {
       const laser = new Laser(this.scene, this.x + offsetX, this.y + 10);
+      this.scene.sound.play('laserFDI', { volume: 0.7 });
       this.scene.physics.add.existing(laser);
       this.scene.add.existing(laser);
-
-      // Colisión
       this.scene.physics.add.overlap(this.scene.player, laser, (player, laser) => {
         if (laser.damageActive) {
           player.hurt();

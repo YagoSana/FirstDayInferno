@@ -29,7 +29,7 @@ export default class BossMedicina extends Npc {
     this.assaultDirection = new Phaser.Math.Vector2(); // Dirección de la embestida
     this.introduction = false;
     this.activar = false;
-    this.setScale(1);
+    this.setScale(1.5);
     this.body.setSize(65, 65); // Tamaño del cuerpo del enemigo
     this.body.setOffset(25, 25); // Ajustar el offset del cuerpo
     this.setVisible(false); // Inicialmente invisible

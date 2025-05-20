@@ -32,7 +32,7 @@ export default class Npc extends SpriteBase {
     this.scene.physics.add.collider(this, scene.enemyGroup);
     this.sonidoDropMoneda = this.scene.sound.add("enemigoSueltaMoneda");
     
-    this.sonidoDying = this.scene.sound.add("dying");
+    this.sonidoDying = this.scene.sound.add("dying", {volume: 0.25});
     this.dropKey = key;
     this.isFrozen = false;
   }
