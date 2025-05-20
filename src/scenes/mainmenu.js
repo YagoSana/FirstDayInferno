@@ -24,7 +24,7 @@ export default class MainMenu extends Phaser.Scene {
         // Creación de botones unificados
         this.createCompleteButton('Jugar', 0, () => this.changeScene("selectorNivel"));
         this.createCompleteButton('Tutorial', 1, () => this.changeScene("tutorialManager"));
-
+        
         // console.log(this.buttons);
 
         // Configurar controles de teclado
