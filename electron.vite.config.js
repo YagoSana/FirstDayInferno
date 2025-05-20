@@ -1,6 +1,6 @@
 import { defineConfig } from "electron-vite";
 // import react from '@vitejs/plugin-react';
-import { resolve } from 'path'
+import { resolve } from 'path';
 export default defineConfig({
     publicDir: false,
     main: {

@@ -1,6 +1,6 @@
 import SalaBase from "../salaBase.js";
 import Player from "../../gameObjects/characters/player.js";
-import turretEnemy from "../../gameObjects/enemies/turretEnemy.js"
+import turretEnemy from "../../gameObjects/enemies/turretEnemy.js";
 import Door from "../../gameObjects/items/door.js";
 import Phaser from "phaser";
 

@@ -9,7 +9,7 @@ import img_sombras from "../../../assets/map/TX Shadow.png";
 import img_sombra_plantas from "../../../assets/map/TX Shadow Plant.png";
 
 import FDI_1_TL from "../../../assets/map/exterior.json";
-import FDI_2_TL from "../../../assets/map/pasillo_plantaBaja.json"
+import FDI_2_TL from "../../../assets/map/pasillo_plantaBaja.json";
 import FDI_3_TL from "../../../assets/map/entrada.json";
 import FDI_4_TL from "../../../assets/map/cafe.json";
 import FDI_5_TL from "../../../assets/map/salon_actos.json";
