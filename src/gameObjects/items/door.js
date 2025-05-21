@@ -5,7 +5,7 @@ import Item from './item.js';
 export default class Door extends SpriteBase {
     constructor(scene, x, y, key, isLocked) {
         super(scene, x, y, key);
-        this.opendoor = scene.sound.add('opendoor');
+        //this.opendoor = scene.sound.add('opendoor');
 
         if(key === "fdiDoor"){
             this.animation = 'fdiDoor-open';
@@ -117,7 +117,7 @@ export default class Door extends SpriteBase {
                 this.scene.player.spendKey(1);
 
                 this.play(this.animation);
-                this.opendoor.play();
+                //this.opendoor.play();
                 this.once('animationcomplete', () => {
                     console.log("key puerta: ", this.key);
                     this.scene.player.openDoor(this.key);

@@ -45,7 +45,7 @@ export default class BossMedicina extends Npc {
     this.dead = false;
     this.sonidoDanyo = scene.sound.add('bossMedicinaDanyo', { volume: 0.1 });
     this.sonidoOrbes = scene.sound.add('bossMedicinaOrbes', { volume: 0.5 });
-    this.sonidoDying = this.scene.sound.add("MEDdying");
+    //this.sonidoDying = this.scene.sound.add("MEDdying");
   }
 
   // Sobrescribimos la función preUpdate para agregar la lógica de ataque a distancia
@@ -221,7 +221,7 @@ export default class BossMedicina extends Npc {
     });
 
     if (this.health <= 0) {
-      this.sonidoDying.play();
+      //this.sonidoDying.play();
       this.body.enable = false;
       this.body.setVelocity(0, 0);
       this.play("bossMedicinaDeath", true);
